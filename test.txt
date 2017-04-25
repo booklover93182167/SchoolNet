@@ -4,9 +4,6 @@ Orest Reveha
 Myndyk Mykola
 Vasyl Pavlyuk
 Pylyp Marian // some text
-This is some smart text added by Orest in his branch.
->>>>>>> 51b2de48bd4f4b00478613ab0aa97d2f6fc627c6
 Pylyp Marian
 Volodymyr's second commit
 SoftServe > VasylPavlyuk
->>>>>>> cb5b6ce20d26c2498dc989c6137fb8ab31c0bd0c
