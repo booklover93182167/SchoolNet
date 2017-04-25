@@ -3,7 +3,6 @@ Volodymyr Holodynskyi
 Orest Reveha
 Myndyk Mykola
 Vasyl Pavlyuk
-<<<<<<< HEAD
 Pylyp Marian
 Soltys Yaroslav - test
 Pylyp Marian - new branch
