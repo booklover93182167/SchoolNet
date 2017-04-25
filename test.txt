@@ -5,3 +5,6 @@ Myndyk Mykola
 Vasyl Pavlyuk
 Pylyp Marian - new branch
 This is some smart text added by Orest in his branch.
+Pylyp Marian
+Volodymyr's second commit
+SoftServe > VasylPavlyuk
