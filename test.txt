@@ -9,4 +9,7 @@ This is some smart text added by Orest in his branch.
 Pylyp Marian
 Volodymyr's second commit
 SoftServe > VasylPavlyuk
-
+Pylyp Marian // some text
+Pylyp Marian
+Volodymyr's second commit
+SoftServe > VasylPavlyuk
