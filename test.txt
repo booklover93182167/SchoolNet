@@ -3,4 +3,8 @@ Volodymyr Holodynskyi
 Orest Reveha
 Myndyk Mykola
 Vasyl Pavlyuk
-Pylyp Marian - new branch pylyp
+Pylyp Marian
+
+Volodymyr's second commit
+SoftServe > VasylPavlyuk
+>>>>>>> cb5b6ce20d26c2498dc989c6137fb8ab31c0bd0c
