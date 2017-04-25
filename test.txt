@@ -5,3 +5,5 @@ Myndyk Mykola
 Vasyl Pavlyuk
 Myndyk Mykola
 Pylyp Marian
+
+Volodymyr's second commit
