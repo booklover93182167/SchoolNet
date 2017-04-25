@@ -15,4 +15,3 @@ Pylyp Marian // some text
 Pylyp Marian
 Volodymyr's second commit
 SoftServe > VasylPavlyuk
-Added branch of Yaroslav
