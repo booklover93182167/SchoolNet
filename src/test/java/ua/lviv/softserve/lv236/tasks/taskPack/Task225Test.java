@@ -7,8 +7,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Vasyl on 23.04.2017.
  */
-public class Task225Test
-{
+public class Task225Test {
     private static Task225 task225;
 
     @BeforeClass
@@ -25,38 +24,33 @@ public class Task225Test
     }
 
     @Test
-    public void testGetResultNotNull() throws Exception
-    {
+    public void testGetResultNotNull() throws Exception {
         assertNotNull(task225.getResult()); // check not null
     }
 
     @Test
-    public void testGetResultEquals() throws Exception
-    {
+    public void testGetResultEquals() throws Exception {
         task225.setInput("100");
         task225.countResult();
         assertEquals("2, 5, 10", task225.getResult()); // check equals
     }
 
     @Test
-    public void testGetResultEmpty() throws Exception
-    {
+    public void testGetResultEmpty() throws Exception {
         task225.setInput("10");
         task225.countResult();
         assertEquals("", task225.getResult()); // check equals
     }
 
     @Test
-    public void testGetResultTrue() throws Exception
-    {
+    public void testGetResultTrue() throws Exception {
         task225.setInput("10000");
         task225.countResult();
         assertTrue("4, 20, 25, 50, 100".equals(task225.getResult())); // check if true
     }
 
     @Test
-    public void testGetResultIllegalArg() throws Exception
-    {
+    public void testGetResultIllegalArg() throws Exception {
         task225.setInput("-1");
         task225.countResult();
         assertTrue(task225.getResult().startsWith("Wrong")); // check if true

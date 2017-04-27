@@ -1,7 +1,6 @@
 package ua.lviv.softserve.lv236.tasks.taskPack;
 
-public abstract class GeneralTask
-{
+public abstract class GeneralTask {
     protected String name = "";
     protected String description = "";
     private String input = "";
@@ -9,46 +8,38 @@ public abstract class GeneralTask
 
     public abstract void countResult();
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         if (name != null)
             this.name = name.trim();
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description)
-    {
+    public void setDescription(String description) {
         if (description != null)
             this.description = description.trim();
     }
 
-    public String getInput()
-    {
+    public String getInput() {
         return input;
     }
 
-    public void setInput(String input)
-    {
+    public void setInput(String input) {
         if (input != null)
             this.input = input.trim();
     }
 
-    public String getResult()
-    {
+    public String getResult() {
         return result;
     }
 
-    public void setResult(String result)
-    {
+    public void setResult(String result) {
         if (result != null)
             this.result = result.trim();
     }

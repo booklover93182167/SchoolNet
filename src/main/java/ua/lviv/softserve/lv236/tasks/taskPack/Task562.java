@@ -3,8 +3,7 @@ package ua.lviv.softserve.lv236.tasks.taskPack;
 /**
  * Created by Vasyl on 22.04.2017.
  */
-public class Task562 extends GeneralTask
-{
+public class Task562 extends GeneralTask {
     {
         name = "562";
         description = "Натуральне число із n цифр являється числом Армстронга, якщо сума його цифр, піднятих в n-у степінь, " +
@@ -13,13 +12,10 @@ public class Task562 extends GeneralTask
     }
 
     @Override
-    public void countResult()
-    {
+    public void countResult() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 10, num = i, res = 0; i < 10000; i++, num = i, res = 0)
-        {
-            while (num > 0)
-            {
+        for (int i = 10, num = i, res = 0; i < 10000; i++, num = i, res = 0) {
+            while (num > 0) {
                 res += Math.pow(num % 10, i < 100 ? 2 : i < 1000 ? 3 : 4);
                 num /= 10;
             }
