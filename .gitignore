@@ -1,6 +1,5 @@
 ### General ###
 .*
-*.class
 
 ### Git ###
 *.orig
