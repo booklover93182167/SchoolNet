@@ -54,7 +54,7 @@ public class MainWindow extends JFrame {
 
         //general options
         generalPanel.setLayout(new FlowLayout());
-        generalPanel.setBackground(Color.gray);
+        generalPanel.setBackground(Color.lightGray);
         resultField.setFocusable(false);
         descriptionField.setFocusable(false);
         taskList.setSelectedIndex(-1);
