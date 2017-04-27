@@ -59,6 +59,7 @@ public class MainWindow extends JFrame {
         descriptionField.setFocusable(false);
         taskList.setSelectedIndex(-1);
         descriptionField.setLineWrap(true);
+        setResizable(false);
         setContentPane(generalPanel);
         setSize(550, 650);
         setLocationRelativeTo(null);
