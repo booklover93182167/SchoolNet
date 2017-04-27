@@ -1,5 +1,6 @@
 package ua.lviv.softserve.lv236.tasks;
 
+import ua.lviv.softserve.lv236.tasks.TasksGUI.MainWindow;
 import ua.lviv.softserve.lv236.tasks.taskPack.*;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class Main
     public static List<String> allNames = new ArrayList<>();
 
     //method for adding new task, use it only !!
-    public static void addToList(GeneralTask task)
+    private static void addToList(GeneralTask task)
     {
         allNames.add(task.getName());
         generalTaskList.add(task);
@@ -50,6 +51,7 @@ public class Main
         addToList(new Task561());
         addToList(new Task562());
 
-//        MainWindow mainWindow = new MainWindow();
+
+        MainWindow mainWindow = new MainWindow();
     }
 }
