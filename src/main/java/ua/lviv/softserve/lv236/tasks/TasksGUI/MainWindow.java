@@ -16,7 +16,7 @@ public class MainWindow extends JFrame {
     private GeneralTask localTask;
     private static String dropDown;
     private JPanel generalPanel = new JPanel();
-    private JComboBox taskList = new JComboBox(Main.allNames.toArray());
+    private JComboBox taskList = new JComboBox(Main.getAllNames().toArray());
     private JTextArea descriptionField = new JTextArea();
     private JTextArea inputField = new JTextArea();
     private JTextArea resultField = new JTextArea();
@@ -71,7 +71,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dropDown = (String) taskList.getSelectedItem();
-                for (GeneralTask task : Main.generalTaskList) {
+                for (GeneralTask task : Main.getGeneralTaskList()) {
                     if (dropDown.equalsIgnoreCase(task.getName()))
                         descriptionField.setText(task.getDescription());
                 }
@@ -83,7 +83,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    for (GeneralTask task : Main.generalTaskList) {
+                    for (GeneralTask task : Main.getGeneralTaskList()) {
                         if (dropDown.equalsIgnoreCase(task.getName())) {
                             localTask = task;
                             localTask.setInput(inputField.getText());

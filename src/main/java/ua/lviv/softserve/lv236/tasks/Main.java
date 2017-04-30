@@ -51,6 +51,24 @@ public final class Main {
     private static List<String> allNames = new ArrayList<>();
 
     /**
+     * Acces to list of all tasks names.
+     *
+     * @return list of names
+     */
+    public static List<String> getAllNames() {
+        return allNames;
+    }
+
+    /**
+     * Acces to list of all tasks.
+     *
+     * @return List of tasks
+     */
+    public static List<GeneralTask> getGeneralTaskList() {
+        return generalTaskList;
+    }
+
+    /**
      * Method for adding new task, use it only !!
      *
      * @param task to set the task to add
