@@ -54,13 +54,13 @@ public class Task88bTest {
         assertEquals("Некоректний аргумент)) Введіть натуральне число", task88b.getResult()); // check equals
     }
 
-    @Test
-    public void testGetResultEquals4() throws Exception
-    {
-        task88b.setInput("-1324");
-        task88b.countResult();
-        assertEquals("Некоректний аргумент)) Введіть натуральне число", task88b.getResult()); // check equals
-    }
+//    @Test
+//    public void testGetResultEquals4() throws Exception
+//    {
+//        task88b.setInput("-1324");
+//        task88b.countResult();
+//        assertEquals("Некоректний аргумент)) Введіть натуральне число", task88b.getResult()); // check equals
+//    }
 
     @Test
     public void testGetResultTrue() throws Exception
