@@ -39,6 +39,30 @@ public class Task88bTest {
     }
 
     @Test
+    public void testGetResultEquals2() throws Exception
+    {
+        task88b.setInput("");
+        task88b.countResult();
+        assertEquals("Некоректний аргумент)) Введіть натуральне число", task88b.getResult()); // check equals
+    }
+
+    @Test
+    public void testGetResultEquals3() throws Exception
+    {
+        task88b.setInput("sfsa1");
+        task88b.countResult();
+        assertEquals("Некоректний аргумент)) Введіть натуральне число", task88b.getResult()); // check equals
+    }
+
+    @Test
+    public void testGetResultEquals4() throws Exception
+    {
+        task88b.setInput("-1324");
+        task88b.countResult();
+        assertEquals("Некоректний аргумент)) Введіть натуральне число", task88b.getResult()); // check equals
+    }
+
+    @Test
     public void testGetResultTrue() throws Exception
     {
         task88b.setInput("8889");
