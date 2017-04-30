@@ -1,5 +1,17 @@
 Tasks/
 
+Vasyl - 225, 329, 562
+Marta - 107, 243 (a, b)
+Orest - 87, 559, 323
+Mykola - 86 (a, b), 330
+Yaroslav - 178 (g, d), 555
+Maryan - 88 (a, b), 322
+Vlad - 182, 323, 560
+Volodymyr - 325, 561, 108
+
+
+Test Tasks/
+
 Vasyl - 225, 561, 107
 Marta - 87, 108, 178d
 Orest - 330, 178g, 88a

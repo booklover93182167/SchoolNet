@@ -6,12 +6,14 @@ import static org.junit.Assert.*;
 
 /**
  * Created by Vasyl on 26.04.2017.
+ * Test case for 561 task.
  */
 public class Task561Test {
-    public static Task561 task561;
+    /** Object of Task561 for test */
+    static Task561 task561;
 
     @BeforeClass
-    public static void setUp() throws Exception // run one time before all tests
+    public static void beforeClass() throws Exception // run one time before all tests
     {
         task561 = new Task561();
     }

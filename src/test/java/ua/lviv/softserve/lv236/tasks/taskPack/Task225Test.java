@@ -6,12 +6,14 @@ import static org.junit.Assert.*;
 
 /**
  * Created by Vasyl on 23.04.2017.
+ * Test case for 225 task.
  */
 public class Task225Test {
-    private static Task225 task225;
+    /** Object of Task225 for test */
+    static Task225 task225;
 
     @BeforeClass
-    public static void setUp() throws Exception // run one time before all tests
+    public static void beforeClass() throws Exception // run one time before all tests
     {
         task225 = new Task225();
     }
@@ -54,18 +56,5 @@ public class Task225Test {
         task225.setInput("-1");
         task225.countResult();
         assertTrue(task225.getResult().startsWith("Wrong")); // check if true
-    }
-
-    @After
-    public void afterTest() throws Exception // run after each tests
-    {
-        task225.setInput("");
-        task225.setResult("");
-    }
-
-    @AfterClass
-    public static void tearDwon() throws Exception // run one time after all tests
-    {
-        task225 = null;
     }
 }
