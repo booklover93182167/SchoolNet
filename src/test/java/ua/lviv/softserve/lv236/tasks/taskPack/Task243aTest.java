@@ -25,8 +25,27 @@ public class Task243aTest {
     }
 
     @Test
-    public void testGetExceptionResult() throws Exception
-    {
+    public void testEmptyInput() throws Exception {
+        task243a.countResult();
+        assertSame("Wrong input!", task243a.getResult());
+    }
+
+    @Test
+    public void testNotNumberInput() throws Exception {
+        task243a.setInput("abc");
+        task243a.countResult();
+        assertSame("Wrong input!", task243a.getResult());
+    }
+
+    @Test
+    public void testNegativeNumberInput() throws Exception {
+        task243a.setInput("-1");
+        task243a.countResult();
+        assertSame("Wrong input!", task243a.getResult());
+    }
+
+    @Test
+    public void testZero() throws Exception {
         task243a.setInput("0");
         task243a.countResult();
         String result = "0 неможливо представити у вигляді суми квадратів двох натуральних чисел";
@@ -34,8 +53,7 @@ public class Task243aTest {
     }
 
     @Test
-    public void testGetResultEquals() throws Exception
-    {
+    public void testGetResultEquals() throws Exception {
         task243a.setInput("194");
         task243a.countResult();
         assertEquals("194= 5^2 +13^2", task243a.getResult());

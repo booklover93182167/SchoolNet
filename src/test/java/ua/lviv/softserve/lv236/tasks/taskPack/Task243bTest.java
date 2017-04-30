@@ -25,12 +25,33 @@ public class Task243bTest {
     }
 
     @Test
-    public void testGetExceptionResult() throws Exception
+    public void testEmptyInput() throws Exception
+    {
+        task243b.countResult();
+        assertSame("Wrong input!", task243b.getResult());
+    }
+
+    @Test
+    public void testNotNumberInput() throws Exception
+    {
+        task243b.setInput("abc");
+        task243b.countResult();
+        assertSame("Wrong input!", task243b.getResult());
+    }
+    @Test
+    public void testNegativeNumberInput() throws Exception
+    {
+        task243b.setInput("-1");
+        task243b.countResult();
+        assertSame("Wrong input!", task243b.getResult());
+    }
+
+    @Test
+    public void testZeroInput() throws Exception
     {
         task243b.setInput("0");
         task243b.countResult();
-        String result = "0 неможливо представити у вигляді суми квадратів двох натуральних чисел";
-        assertEquals(result, task243b.getResult());
+        assertSame("Wrong input!", task243b.getResult());
     }
 
     @Test
@@ -43,7 +64,7 @@ public class Task243bTest {
     }
 
     @Test
-    public void testGetResultEquals() throws Exception
+    public void testGetResult() throws Exception
     {
         task243b.setInput("194");
         task243b.countResult();

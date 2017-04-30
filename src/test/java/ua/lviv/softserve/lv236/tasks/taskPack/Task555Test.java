@@ -22,7 +22,7 @@ public class Task555Test {
     }
 
     @Test
-    public void testGetResultTrue() throws Exception {
+    public void testResult() throws Exception {
         task555.setInput("6");
         task555.countResult();
         String result = "1\n     1 1\n    1 2 1\n   1 3 3 1\n  1 4 6 4 1\n 1 5 10 10 5 1";
@@ -30,11 +30,26 @@ public class Task555Test {
     }
 
     @Test
-    public void testGetResultExceptionTrue() throws Exception {
+    public void testNegativeInput() throws Exception {
         task555.setInput("-1");
         task555.countResult();
-        String result = "Please, enter only one natural number in Integer range.";
-        assertTrue(result.equals(task555.getResult()));
+        String result = "Please, enter one natural number.";
+        assertEquals(result, task555.getResult());
+    }
+
+    @Test
+    public void testNotNumberInput() throws Exception
+    {
+        task555.setInput("abc");
+        task555.countResult();
+        assertSame("Please, enter one natural number.", task555.getResult());
+    }
+
+    @Test
+    public void testEmptyInput() throws Exception {
+        task555.countResult();
+        String result = "Please, enter one natural number.";
+        assertEquals(result, task555.getResult());
     }
 
     @After
