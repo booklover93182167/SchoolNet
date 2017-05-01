@@ -19,6 +19,9 @@ public class Task243b extends GeneralTask {
             String str = this.getInput();
 
             long m = Long.parseLong(str);
+            if (m <= 0) {
+                throw new InputMismatchException();
+            }
             boolean b = false;
 
             for (int x = 1; x * x < m; x++)
