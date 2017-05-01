@@ -21,6 +21,8 @@ public class Task243a extends GeneralTask{
             String str = this.getInput();
 
             long m = Long.parseLong(str);
+            if(m<=0){
+            throw new  InputMismatchException();}
             boolean b = false;
             int counter = 0;
             for (int x = 1; x * x < m; x++)
@@ -29,7 +31,6 @@ public class Task243a extends GeneralTask{
                         if ((x * x + y * y) == m) {
                             b = true;
                             counter += 1;
-                          // System.out.println(str + "= " + x + "^2 +" + y + "^2");
                             this.setResult(String.valueOf(str + "= " + x + "^2 +" + y + "^2 "));
                         }
                         if (counter == 1)
@@ -37,7 +38,7 @@ public class Task243a extends GeneralTask{
                     }
                 }
             if (b == false)
-                this.setResult(str+" неможливо представити у вигляді суми квадратів двох натуральних чисел");
+                this.setResult( str+" неможливо представити у вигляді суми квадратів двох натуральних чисел");
 
         }
         catch (IllegalArgumentException | InputMismatchException e)
