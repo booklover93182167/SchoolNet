@@ -30,6 +30,13 @@ public class Task562Test {
         assertTrue(task562.getResult().equalsIgnoreCase("153, 370, 371, 407, 1634, 8208, 9474"));
     }
 
+    @Test
+    public void testEquals(){
+        task562.setInput("234");
+        task562.countResult();
+        assertEquals(task562.getResult(), "153, 370, 371, 407, 1634, 8208, 9474");
+    }
+
    @After
     public void afterTeest(){
        task562.setInput("");

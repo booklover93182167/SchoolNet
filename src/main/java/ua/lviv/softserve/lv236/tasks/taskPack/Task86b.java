@@ -1,31 +1,30 @@
 package ua.lviv.softserve.lv236.tasks.taskPack;
 
 /**
- * Created by Kolja on 21.04.2017.
+ * Simple task class number 86b.
+ *
+ * @author Kolja
  */
-public class Task86b extends GeneralTask
-{
+public class Task86b extends GeneralTask {
     {
         name = "86b";
         description = "Сума чисел n";
     }
 
+    /**
+     * Overridden method for all task classes.
+     */
     @Override
-    public void countResult()
-    {
+    public void countResult() {
         if (getInput().matches("^[0-9]+")) {
             String str = this.getInput();
             int res = 0;
-            for (char c : str.toCharArray())
-            {
+            for (char c : str.toCharArray()) {
                 res += Character.getNumericValue(c);
             }
             this.setResult(String.valueOf(res));
-        }else{
+        } else {
             setResult("Wrong Input");
         }
-
-
-
     }
 }

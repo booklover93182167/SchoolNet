@@ -1,18 +1,21 @@
 package ua.lviv.softserve.lv236.tasks.taskPack;
 
 /**
- * Created by Kolja on 21.04.2017.
+ * Simple task class number 86a.
+ *
+ * @author Kolja
  */
 
 //my task example
-public class Task86a extends GeneralTask
-{
+public class Task86a extends GeneralTask {
     {
         name = "86a";
         description = "Скільки цифр в числі n";
     }
 
-    //overriding general method (main task)
+    /**
+     * Overridden method for all task classes.
+     */
     @Override
     public void countResult() {
 
@@ -21,7 +24,7 @@ public class Task86a extends GeneralTask
             int res = String.valueOf(this.getInput()).length();
             //setting result
             this.setResult(String.valueOf(res));
-        }else{
+        } else {
             setResult("Wrong Input");
         }
     }

@@ -1,16 +1,20 @@
 package ua.lviv.softserve.lv236.tasks.taskPack;
 
 /**
- * Created by Kolja on 22.04.2017.
+ * Simple task class number 330.
+ *
+ * @author Kolja
  */
-public class Task330 extends GeneralTask{
+public class Task330 extends GeneralTask {
 
     {
         name = "330";
         description = "Всі абсолютні числа";
     }
 
-
+    /**
+     * Overridden method for all task classes.
+     */
     @Override
     public void countResult() {
 
@@ -21,15 +25,19 @@ public class Task330 extends GeneralTask{
             for (int i = 2; i <= number; i++) {
                 int res = 0;
                 for (int k = 1; k < i; k++) {
-                    if (i % k == 0) res += k;
+                    if (i % k == 0) {
+                        res += k;
+                    }
                 }
-                if (res == i) result += (res + " ");
+                if (res == i) {
+                    result += (res + " ");
+                }
             }
             setResult(result);
-        }catch (Exception e){
+        } catch (Exception e) {
             setResult("Wrong Input!");
         }
     }
 
-    }
+}
 

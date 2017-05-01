@@ -51,7 +51,7 @@ public final class Main {
     private static List<String> allNames = new ArrayList<>();
 
     /**
-     * Acces to list of all tasks names.
+     * Access to list of all tasks names.
      *
      * @return list of names
      */
@@ -60,7 +60,7 @@ public final class Main {
     }
 
     /**
-     * Acces to list of all tasks.
+     * Access to list of all tasks.
      *
      * @return List of tasks
      */
