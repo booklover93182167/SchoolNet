@@ -21,7 +21,7 @@ public class Task87 extends GeneralTask {
             String[] strings = s.split(" ");
             Long n = Long.parseLong(strings[0]);
             Long m = Long.parseLong(strings[1]);
-            if(strings[0].length() < m){
+            if(strings[0].length() < m || n<=0 || m<=0){
                 throw new InputMismatchException();
             }
             Long result = 0L;
