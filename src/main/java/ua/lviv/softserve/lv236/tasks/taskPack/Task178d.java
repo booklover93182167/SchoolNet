@@ -16,8 +16,10 @@ import java.util.List;
 public class Task178d extends GeneralTask {
     {
         name = "178d";
-        description = "Дано натуральні числа n, A1,..,An. Визначити кількість членів Ak, послідовності" +
-                "A1,..,An, що відповідають умові:                  2^k < Ak < k!";
+        description = "Дано натуральні числа n, A1,..,An. "
+                + "Визначити кількість членів Ak, послідовності"
+                + "A1,..,An, що відповідають умові:"
+                + " 2^k < Ak < k!";
     }
 
     /**
@@ -38,7 +40,8 @@ public class Task178d extends GeneralTask {
                 list.add(n);
             }
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i) > Math.pow(2, i) && list.get(i) < factorial(i)) {
+                if (list.get(i) > Math.pow(2, i)
+                        && list.get(i) < factorial(i)) {
                     count++;
                 }
             }
@@ -55,7 +58,9 @@ public class Task178d extends GeneralTask {
      * @return factorial numbers
      */
     private static Integer factorial(int n) {
-        if (n == 0) return 1;
+        if (n == 0) {
+            return 1;
+        }
         return n * factorial(n - 1);
     }
 }
