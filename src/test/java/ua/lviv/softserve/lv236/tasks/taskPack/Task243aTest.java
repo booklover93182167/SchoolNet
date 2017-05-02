@@ -48,7 +48,7 @@ public class Task243aTest {
     public void testZero() throws Exception {
         task243a.setInput("0");
         task243a.countResult();
-        String result = "0 неможливо представити у вигляді суми квадратів двох натуральних чисел";
+        String result = "Wrong input!";
         assertEquals(result, task243a.getResult());
     }
 
