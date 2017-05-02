@@ -1,5 +1,7 @@
 package ua.lviv.softserve.lv236.tasks.taskPack;
 
+import java.util.InputMismatchException;
+
 /**
  * Created by inva on 4/22/2017.
  */
@@ -20,7 +22,7 @@ public class Task87 extends GeneralTask {
             Long n = Long.parseLong(strings[0]);
             Long m = Long.parseLong(strings[1]);
             if(strings[0].length() < m){
-                throw new IllegalArgumentException();
+                throw new InputMismatchException();
             }
             Long result = 0L;
             for(long i = 0; i < m; i++){
@@ -28,7 +30,10 @@ public class Task87 extends GeneralTask {
                 n = n/10;
             }
             setResult(String.valueOf(result));
-        } catch (Exception e){
+        }
+        catch (InputMismatchException e){
+            setResult("Wrong input! Can`t calculate.");
+        }catch (Exception e){
             setResult("Wrong input! Please enter two natural numbers, divided by a single space");
         }
 
