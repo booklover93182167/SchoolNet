@@ -35,6 +35,38 @@ public class Task178dTest { public static Task178d task178d;
 
     }
     @Test
+    public void countResultTestTrue1() throws Exception {
+        task178d.setInput("fgsvbd");
+        task178d.countResult();
+        Assert.assertEquals("Please, enter natural number in Integer range.",task178d.getResult());
+
+
+    }
+    @Test
+    public void countResultTestTrue2() throws Exception {
+        task178d.setInput("-647 4");
+        task178d.countResult();
+        Assert.assertEquals("Please, enter natural number in Integer range.",task178d.getResult());
+
+
+    }
+    @Test
+    public void countResultTestTrue3() throws Exception {
+        task178d.setInput("0 0 0");
+        task178d.countResult();
+        Assert.assertEquals("Please, enter natural number in Integer range.",task178d.getResult());
+
+
+    }
+    @Test
+    public void countResultTestTrue4() throws Exception {
+        task178d.setInput("7 7 7 7");
+        task178d.countResult();
+        Assert.assertEquals("0",task178d.getResult());
+
+
+    }
+    @Test
     public void countResultTestNotNull() throws Exception {
 
         Assert.assertNotNull(task178d.getResult());
