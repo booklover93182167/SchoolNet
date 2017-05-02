@@ -28,6 +28,30 @@ public class Task108Test {
 
     }
     @Test
+    public void countResultTestEquals1() throws Exception {
+        task108.setInput("-23");
+        task108.countResult();
+        Assert.assertEquals("Wrong input!",task108.getResult());
+
+
+    }
+    @Test
+    public void countResultTestEquals2() throws Exception {
+        task108.setInput("dfegfe");
+        task108.countResult();
+        Assert.assertEquals("Wrong input!",task108.getResult());
+
+
+    }
+    @Test
+    public void countResultTestEquals3() throws Exception {
+        task108.setInput("0.23");
+        task108.countResult();
+        Assert.assertEquals("Wrong input!",task108.getResult());
+
+
+    }
+    @Test
     public void countResultTestTrue() throws Exception {
         task108.setInput("3");
         task108.countResult();

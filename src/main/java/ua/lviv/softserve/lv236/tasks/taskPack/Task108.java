@@ -1,5 +1,7 @@
 package ua.lviv.softserve.lv236.tasks.taskPack;
 
+import java.util.InputMismatchException;
+
 public class Task108 extends GeneralTask {
 
     {
@@ -10,20 +12,27 @@ public class Task108 extends GeneralTask {
 
     @Override
     public void countResult() {
-        long number = Long.parseLong(this.getInput());
-        long twoInDegree = 1;
+        try {
+            String str = this.getInput();
+            long m = Long.parseLong(str);
+            long twoInDegree = 1;
+            if (m < 1 || m > Long.MAX_VALUE - 1)
+                throw new IllegalArgumentException();
 
-        if (number > Long.MAX_VALUE - 1) {
-            setResult("Your number is too big.");
-        } else {
+
             while (true) {
-                if (number >= twoInDegree) {
+                if (m >= twoInDegree) {
                     twoInDegree *= 2;
                 } else {
                     break;
                 }
             }
             setResult(Long.toString(twoInDegree));
+        } catch (IllegalArgumentException | InputMismatchException e) {
+            setResult("Wrong input!");
+
         }
     }
 }
+
+
