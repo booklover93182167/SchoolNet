@@ -118,7 +118,7 @@
             <artifactId>metrics-json</artifactId>
             <version>${dropwizard-metrics.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-jcache</artifactId>
@@ -550,10 +550,10 @@
                     <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
                     <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                     <driver>com.mysql.jdbc.Driver</driver>
-                    <url>jdbc:mysql://localhost:3306/SchoolNet</url>
-                    <defaultSchemaName>SchoolNet</defaultSchemaName>
+                    <url>jdbc:mysql://localhost:3306/schoolnet</url>
+                    <defaultSchemaName>schoolnet</defaultSchemaName>
                     <username>root</username>
-                    <password></password>
+                    <password>lv236</password>
                     <referenceUrl>hibernate:spring:com.inva.hipstertest.domain?dialect=org.hibernate.dialect.MySQL5InnoDBDialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
                     <verbose>true</verbose>
                     <logging>debug</logging>

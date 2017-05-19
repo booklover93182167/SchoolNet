@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity Attendances.
+    -->
+    <changeSet id="20170517213827-1" author="inva">
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/users2.csv"
+                  separator=";"
+                  tableName="jhi_user">
+            <column name="activated" type="boolean"/>
+            <column name="created_date" type="timestamp"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/school.csv"
+                  separator=";"
+                  tableName="school">
+            <column name="enabled" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/form.csv"
+                  separator=";"
+                  tableName="form">
+            <column name="enabled" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/pupill.csv"
+                  separator=";"
+                  tableName="pupil">
+            <column name="enabled" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/classroom.csv"
+                  separator=";"
+                  tableName="classroom">
+            <column name="enabled" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/lesson.csv"
+                  separator=";"
+                  tableName="lesson">
+            <column name="enabled" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/schedule.csv"
+                  separator=";"
+                  tableName="schedule">
+            <column name="enabled" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/parent.csv"
+                  separator=";"
+                  tableName="parent">
+            <column name="enabled" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/parent_pupil.csv"
+                  separator=";"
+                  tableName="parent_pupil"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/teacher.csv"
+                  separator=";"
+                  tableName="teacher">
+            <column name="enabled" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/teacher_lesson.csv"
+                  separator=";"
+                  tableName="teacher_lesson"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/user_authority.csv"
+                  separator=";"
+                  tableName="jhi_user_authority"/>
+    </changeSet>
+</databaseChangeLog>
