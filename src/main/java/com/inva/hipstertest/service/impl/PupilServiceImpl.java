@@ -1,14 +1,14 @@
 package com.inva.hipstertest.service.impl;
 
-import com.inva.hipstertest.service.PupilService;
 import com.inva.hipstertest.domain.Pupil;
 import com.inva.hipstertest.repository.PupilRepository;
+import com.inva.hipstertest.service.PupilService;
 import com.inva.hipstertest.service.dto.PupilDTO;
 import com.inva.hipstertest.service.mapper.PupilMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-public class PupilServiceImpl implements PupilService{
+public class PupilServiceImpl implements PupilService {
 
     private final Logger log = LoggerFactory.getLogger(PupilServiceImpl.class);
-    
+
     private final PupilRepository pupilRepository;
 
     private final PupilMapper pupilMapper;
@@ -48,9 +48,9 @@ public class PupilServiceImpl implements PupilService{
     }
 
     /**
-     *  Get all the pupils.
-     *  
-     *  @return the list of entities
+     * Get all the pupils.
+     *
+     * @return the list of entities
      */
     @Override
     @Transactional(readOnly = true)
@@ -64,10 +64,10 @@ public class PupilServiceImpl implements PupilService{
     }
 
     /**
-     *  Get one pupil by id.
+     * Get one pupil by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Override
     @Transactional(readOnly = true)
@@ -79,13 +79,21 @@ public class PupilServiceImpl implements PupilService{
     }
 
     /**
-     *  Delete the  pupil by id.
+     * Delete the  pupil by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Pupil : {}", id);
         pupilRepository.delete(id);
+    }
+
+    @Override
+    public List<PupilDTO> findAllByFormId(Long formId) {
+        log.debug("Request to find all pupils by formId : {}", formId);
+        List<Pupil> pupils = pupilRepository.findAllByFormId(formId);
+        List<PupilDTO> pupilDTOs = pupilMapper.pupilsToPupilDTOs(pupils);
+        return pupilDTOs;
     }
 }
