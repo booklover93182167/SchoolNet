@@ -1,6 +1,7 @@
 package com.inva.hipstertest.service;
 
 import com.inva.hipstertest.service.dto.PupilDTO;
+
 import java.util.List;
 
 /**
@@ -17,24 +18,31 @@ public interface PupilService {
     PupilDTO save(PupilDTO pupilDTO);
 
     /**
-     *  Get all the pupils.
-     *  
-     *  @return the list of entities
+     * Get all the pupils.
+     *
+     * @return the list of entities
      */
     List<PupilDTO> findAll();
 
     /**
-     *  Get the "id" pupil.
+     * Get the "id" pupil.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     PupilDTO findOne(Long id);
 
     /**
-     *  Delete the "id" pupil.
+     * Delete the "id" pupil.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     * Find all pupils by Form id.
+     *
+     * @param formId the id of the Form entity
+     */
+    List<PupilDTO> findAllByFormId(Long formId);
 }
