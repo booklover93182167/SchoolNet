@@ -18,7 +18,7 @@ public interface ScheduleService {
 
     /**
      *  Get all the schedules.
-     *  
+     *
      *  @return the list of entities
      */
     List<ScheduleDTO> findAll();

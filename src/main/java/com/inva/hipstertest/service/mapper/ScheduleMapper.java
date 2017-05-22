@@ -12,6 +12,9 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {LessonMapper.class, FormMapper.class, ClassroomMapper.class, })
 public interface ScheduleMapper {
 
+    @Mapping(source = "lesson.name", target = "lessonName")
+    @Mapping(source = "form.name", target = "formName")
+    @Mapping(source = "classroom.name", target = "classroomName")
     @Mapping(source = "lesson.id", target = "lessonId")
     @Mapping(source = "form.id", target = "formId")
     @Mapping(source = "classroom.id", target = "classroomId")
@@ -33,7 +36,7 @@ public interface ScheduleMapper {
      * @param id id of the entity
      * @return the entity instance
      */
-     
+
     default Schedule scheduleFromId(Long id) {
         if (id == null) {
             return null;
@@ -42,6 +45,6 @@ public interface ScheduleMapper {
         schedule.setId(id);
         return schedule;
     }
-    
+
 
 }

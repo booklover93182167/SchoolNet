@@ -36,17 +36,17 @@
                 <td>{{schedule.enabled}}</td>
                 <td>
                     <div *ngIf="schedule.lessonId">
-                        <a [routerLink]="['../lesson-my-suffix', schedule.lessonId  ]" >{{schedule.lessonId}}</a>
+                        <a [routerLink]="['../lesson-my-suffix', schedule.lessonId  ]" >{{schedule.lessonName}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="schedule.formId">
-                        <a [routerLink]="['../form-my-suffix', schedule.formId  ]" >{{schedule.formId}}</a>
+                        <a [routerLink]="['../form-my-suffix', schedule.formId  ]" >{{schedule.formName}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="schedule.classroomId">
-                        <a [routerLink]="['../classroom-my-suffix', schedule.classroomId  ]" >{{schedule.classroomId}}</a>
+                        <a [routerLink]="['../classroom-my-suffix', schedule.classroomId  ]" >{{schedule.classroomName}}</a>
                     </div>
                 </td>
                 <td class="text-right">

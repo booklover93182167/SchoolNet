@@ -9,6 +9,9 @@ export class ScheduleMySuffix {
         public lessonId?: number,
         public formId?: number,
         public classroomId?: number,
+        public lessonName?: string,
+        public formName?: string,
+        public classroomName?: string,
     ) {
         this.enabled = false;
     }

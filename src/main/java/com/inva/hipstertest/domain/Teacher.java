@@ -33,8 +33,7 @@ public class Teacher implements Serializable {
     @JoinColumn(unique = true)
     private User user;
 
-    @OneToOne(optional = false)
-    @NotNull
+    @OneToOne
     @JoinColumn(unique = true)
     private Form form;
 
