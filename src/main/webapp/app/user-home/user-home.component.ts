@@ -19,7 +19,7 @@ export class UserHomeComponent implements OnInit{
     constructor(private principal: Principal,
                 private jhiLanguageService: JhiLanguageService,
                 private userHomeService: UserHomeService) {
-        this.jhiLanguageService.setLocations(['user-home']);
+        this.jhiLanguageService.setLocations(['home, user-home']);
     }
 
     ngOnInit() {
@@ -27,6 +27,7 @@ export class UserHomeComponent implements OnInit{
             this.account = account;
         });
     }
+
 
 
 
