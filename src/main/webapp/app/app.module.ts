@@ -9,6 +9,8 @@ import { SchoolNetHomeModule } from './home/home.module';
 import { SchoolNetAdminModule } from './admin/admin.module';
 import { SchoolNetAccountModule } from './account/account.module';
 import { SchoolNetEntityModule } from './entities/entity.module';
+import { SchoolNetUserHomeModule } from './user-home/user-home.module';
+
 
 import { LayoutRoutingModule } from './layouts';
 import { customHttpProvider } from './blocks/interceptor/http.provider';
@@ -33,7 +35,8 @@ import {
         SchoolNetHomeModule,
         SchoolNetAdminModule,
         SchoolNetAccountModule,
-        SchoolNetEntityModule
+        SchoolNetEntityModule,
+         SchoolNetUserHomeModule
     ],
     declarations: [
         JhiMainComponent,

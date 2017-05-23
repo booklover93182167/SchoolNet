@@ -89,4 +89,12 @@ public class ScheduleServiceImpl implements ScheduleService{
         log.debug("Request to delete Schedule : {}", id);
         scheduleRepository.delete(id);
     }
+
+    @Override
+    public List<ScheduleDTO> findAllByFormIdAndMonth(Long id, Integer month) {
+        log.debug("Request to get schedules for form {}", id);
+        List<ScheduleDTO> schedules = scheduleRepository.findByFormIdAndMonth(id, month).stream()
+            .map(scheduleMapper::scheduleToScheduleDTO).collect(Collectors.toCollection(LinkedList::new));
+        return schedules;
+    }
 }

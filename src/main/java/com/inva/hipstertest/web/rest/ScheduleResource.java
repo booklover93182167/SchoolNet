@@ -1,6 +1,8 @@
 package com.inva.hipstertest.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.inva.hipstertest.domain.Schedule;
+import com.inva.hipstertest.repository.ScheduleRepository;
 import com.inva.hipstertest.service.ScheduleService;
 import com.inva.hipstertest.web.rest.util.HeaderUtil;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
@@ -28,7 +30,7 @@ public class ScheduleResource {
     private final Logger log = LoggerFactory.getLogger(ScheduleResource.class);
 
     private static final String ENTITY_NAME = "schedule";
-        
+
     private final ScheduleService scheduleService;
 
     public ScheduleResource(ScheduleService scheduleService) {
@@ -88,6 +90,19 @@ public class ScheduleResource {
         log.debug("REST request to get all Schedules");
         return scheduleService.findAll();
     }
+
+    /**
+     * GET  /schedules : get all the schedules for certain form id and month.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of schedules in body
+     */
+    @RequestMapping(value = "schedules/form{formId}&{month}", method = RequestMethod.GET)
+    @Timed
+    public List<ScheduleDTO> getSchedulesByFormIdAndMonth(@PathVariable("formId") Long formId, @PathVariable("month") Integer month) {
+        log.debug("REST request to get schedule by formId");
+        return scheduleService.findAllByFormIdAndMonth(formId, month);
+    }
+
 
     /**
      * GET  /schedules/:id : get the "id" schedule.
