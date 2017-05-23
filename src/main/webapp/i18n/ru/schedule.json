@@ -22,7 +22,8 @@
             "attendances": "Attendances",
             "lesson": "Lesson",
             "form": "Form",
-            "classroom": "Classroom"
+            "classroom": "Classroom",
+            "teacher": "Teacher"
         }
     }
 }

@@ -52,6 +52,7 @@ public class CacheConfiguration {
             cm.createCache(com.inva.hipstertest.domain.Pupil.class.getName() + ".parents", jcacheConfiguration);
             cm.createCache(com.inva.hipstertest.domain.Teacher.class.getName(), jcacheConfiguration);
             cm.createCache(com.inva.hipstertest.domain.Teacher.class.getName() + ".lessons", jcacheConfiguration);
+            cm.createCache(com.inva.hipstertest.domain.Teacher.class.getName() + ".schedules", jcacheConfiguration);
             cm.createCache(com.inva.hipstertest.domain.Classroom.class.getName(), jcacheConfiguration);
             cm.createCache(com.inva.hipstertest.domain.Classroom.class.getName() + ".schedules", jcacheConfiguration);
             cm.createCache(com.inva.hipstertest.domain.Lesson.class.getName(), jcacheConfiguration);

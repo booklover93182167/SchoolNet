@@ -9,6 +9,7 @@ export class ScheduleMySuffix {
         public lessonId?: number,
         public formId?: number,
         public classroomId?: number,
+        public teacherId?: number,
         public lessonName?: string,
         public formName?: string,
         public classroomName?: string,
