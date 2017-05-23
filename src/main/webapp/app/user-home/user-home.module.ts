@@ -12,7 +12,7 @@ import { USER_HOME_ROUTE, UserHomeComponent } from './';
 @NgModule({
     imports: [
         SchoolNetSharedModule,
-        RouterModule.forRoot([ USER_HOME_ROUTE ])
+        RouterModule.forRoot([ USER_HOME_ROUTE ], { useHash: true })
     ],
     declarations: [
         UserHomeComponent,
@@ -22,6 +22,7 @@ import { USER_HOME_ROUTE, UserHomeComponent } from './';
     providers: [
         UserHomeService
     ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
 export class SchoolNetUserHomeModule {}
