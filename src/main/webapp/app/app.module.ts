@@ -36,7 +36,7 @@ import {
         SchoolNetAdminModule,
         SchoolNetAccountModule,
         SchoolNetEntityModule,
-        // SchoolNetUserHomeModule
+         SchoolNetUserHomeModule
     ],
     declarations: [
         JhiMainComponent,
