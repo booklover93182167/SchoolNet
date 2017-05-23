@@ -37,4 +37,7 @@ public interface ScheduleService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+
+    List<ScheduleDTO> findAllByFormIdAndMonth(Long id, Integer month);
 }
