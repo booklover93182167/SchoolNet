@@ -14,6 +14,7 @@ import { SchoolNetSharedModule } from '../shared';
 import { UserHomeService } from './user-home.service';
 
 import { USER_HOME_ROUTE, UserHomeComponent } from './';
+import { DayScheduleComponent } from './day-schedule/day-schedule.component';
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import { USER_HOME_ROUTE, UserHomeComponent } from './';
     declarations: [
         CalendarComponent,
         UserHomeComponent,
+        DayScheduleComponent,
     ],
     entryComponents: [
     ],
