@@ -1,21 +1,29 @@
 package com.inva.hipstertest.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.inva.hipstertest.domain.Authority;
+import com.inva.hipstertest.domain.User;
+import com.inva.hipstertest.repository.TeacherRepository;
+import com.inva.hipstertest.repository.UserRepository;
+import com.inva.hipstertest.service.MailService;
 import com.inva.hipstertest.service.TeacherService;
 import com.inva.hipstertest.web.rest.util.HeaderUtil;
 import com.inva.hipstertest.service.dto.TeacherDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -28,8 +36,13 @@ public class TeacherResource {
     private final Logger log = LoggerFactory.getLogger(TeacherResource.class);
 
     private static final String ENTITY_NAME = "teacher";
-        
+
     private final TeacherService teacherService;
+
+    @Autowired
+    private MailService mailService;
+    @Autowired
+    private UserRepository userRepository;
 
     public TeacherResource(TeacherService teacherService) {
         this.teacherService = teacherService;
@@ -97,9 +110,32 @@ public class TeacherResource {
      */
     @GetMapping("/teachers/{id}")
     @Timed
-    public ResponseEntity<TeacherDTO> getTeacher(@PathVariable Long id) {
+    public ResponseEntity<TeacherDTO> getTeacher(@PathVariable Long id, Principal principal) {
         log.debug("REST request to get Teacher : {}", id);
+
         TeacherDTO teacherDTO = teacherService.findOne(id);
+
+        Optional<User> s = userRepository.findOneWithAuthoritiesByLogin(principal.getName());
+        Set<Authority> set = s.get().getAuthorities();
+        Long ssss = userRepository.findByLoginUserId(principal.getName());
+        System.out.println(ssss + " //////////////");
+        System.out.println(teacherService.findOneWithSchool(ssss).getSchool());
+        //System.out.println(teacherService.findOne(ssss) + "   ////////////////////");
+        //System.out.println(teacherService.findOne(ssss).getSchoolId() + "    ///////////////");
+
+
+  /*      ///////////////////////////////////////////////
+        TeacherDTO teacherDTOs = new TeacherDTO();
+        User user = new User();
+        //Set userDTO
+        user.setEmail("marianpulup@gmail.com");
+        user.setFirstName("marian");
+        user.setLastName("pylyp");
+        String context = teacherService.saveTeacherWithUser(teacherDTOs, user);
+        mailService.sendSimpleEmail(user.getEmail(), context);
+
+*/
+
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(teacherDTO));
     }
 

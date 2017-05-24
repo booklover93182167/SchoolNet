@@ -34,7 +34,7 @@ public class Teacher implements Serializable {
     private User user;
 
     @OneToOne(optional = false)
-    @NotNull
+    //@NotNull
     @JoinColumn(unique = true)
     private Form form;
 
@@ -46,7 +46,7 @@ public class Teacher implements Serializable {
     private Set<Lesson> lessons = new HashSet<>();
 
     @ManyToOne(optional = false)
-    @NotNull
+    //@NotNull
     private School school;
 
     public Long getId() {

@@ -28,7 +28,7 @@
             <column name="user_id" type="bigint">
                 <constraints unique="true" nullable="false" />
             </column>            <column name="form_id" type="bigint">
-                <constraints unique="true" nullable="false" />
+                <constraints unique="true" nullable="true" />
             </column>
             <column name="school_id" type="bigint">
                 <constraints nullable="false" />
