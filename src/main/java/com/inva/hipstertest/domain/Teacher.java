@@ -1,5 +1,6 @@
 package com.inva.hipstertest.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -33,8 +34,8 @@ public class Teacher implements Serializable {
     @JoinColumn(unique = true)
     private User user;
 
+
     @OneToOne(optional = false)
-    //@NotNull
     @JoinColumn(unique = true)
     private Form form;
 
@@ -48,6 +49,11 @@ public class Teacher implements Serializable {
     @ManyToOne(optional = false)
     //@NotNull
     private School school;
+
+    @OneToMany(mappedBy = "teacher")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Schedule> schedules = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -132,6 +138,31 @@ public class Teacher implements Serializable {
 
     public void setSchool(School school) {
         this.school = school;
+    }
+
+    public Set<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public Teacher schedules(Set<Schedule> schedules) {
+        this.schedules = schedules;
+        return this;
+    }
+
+    public Teacher addSchedule(Schedule schedule) {
+        this.schedules.add(schedule);
+        schedule.setTeacher(this);
+        return this;
+    }
+
+    public Teacher removeSchedule(Schedule schedule) {
+        this.schedules.remove(schedule);
+        schedule.setTeacher(null);
+        return this;
+    }
+
+    public void setSchedules(Set<Schedule> schedules) {
+        this.schedules = schedules;
     }
 
     @Override

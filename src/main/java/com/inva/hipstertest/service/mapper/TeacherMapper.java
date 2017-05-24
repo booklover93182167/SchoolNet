@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Mapper for the entity Teacher and its DTO TeacherDTO.
  */
-@Mapper(componentModel = "spring", uses = {UserMapper.class, FormMapper.class, LessonMapper.class, SchoolMapper.class, })
+@Mapper(componentModel = "spring", uses = {UserMapper.class, FormMapper.class, LessonMapper.class, SchoolMapper.class, ScheduleMapper.class,})
 public interface TeacherMapper {
 
     @Mapping(source = "user.id", target = "userId")
@@ -22,6 +22,7 @@ public interface TeacherMapper {
     @Mapping(source = "userId", target = "user")
     @Mapping(source = "formId", target = "form")
     @Mapping(source = "schoolId", target = "school")
+    @Mapping(target = "schedules", ignore = true)
     Teacher teacherDTOToTeacher(TeacherDTO teacherDTO);
 
     List<Teacher> teacherDTOsToTeachers(List<TeacherDTO> teacherDTOs);
@@ -32,7 +33,7 @@ public interface TeacherMapper {
      * @param id id of the entity
      * @return the entity instance
      */
-     
+
     default Teacher teacherFromId(Long id) {
         if (id == null) {
             return null;
@@ -41,6 +42,6 @@ public interface TeacherMapper {
         teacher.setId(id);
         return teacher;
     }
-    
+
 
 }

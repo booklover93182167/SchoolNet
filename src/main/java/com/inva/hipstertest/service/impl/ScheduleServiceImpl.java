@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class ScheduleServiceImpl implements ScheduleService{
 
     private final Logger log = LoggerFactory.getLogger(ScheduleServiceImpl.class);
-    
+
     private final ScheduleRepository scheduleRepository;
 
     private final ScheduleMapper scheduleMapper;
@@ -49,13 +49,14 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     /**
      *  Get all the schedules.
-     *  
+     *
      *  @return the list of entities
      */
     @Override
     @Transactional(readOnly = true)
     public List<ScheduleDTO> findAll() {
         log.debug("Request to get all Schedules");
+        //log.debug(scheduleRepository.findAllByFormId(1L).toString());
         List<ScheduleDTO> result = scheduleRepository.findAll().stream()
             .map(scheduleMapper::scheduleToScheduleDTO)
             .collect(Collectors.toCollection(LinkedList::new));

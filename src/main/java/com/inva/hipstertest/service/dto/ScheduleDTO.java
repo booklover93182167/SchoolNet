@@ -32,6 +32,14 @@ public class ScheduleDTO implements Serializable {
 
     private Long classroomId;
 
+    private Long teacherId;
+
+    private String lessonName;
+
+    private String formName;
+
+    private String classroomName;
+
     public Long getId() {
         return id;
     }
@@ -92,6 +100,39 @@ public class ScheduleDTO implements Serializable {
         this.classroomId = classroomId;
     }
 
+    public Long getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
+    }
+
+    public String getLessonName() {
+        return lessonName;
+    }
+
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
+    }
+
+    public String getFormName() {
+        return formName;
+    }
+
+    public void setFormName(String formName) {
+        this.formName = formName;
+    }
+
+    public String getClassroomName() {
+        return classroomName;
+    }
+
+    public void setClassroomName(String classroomName) {
+        this.classroomName = classroomName;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -123,4 +164,5 @@ public class ScheduleDTO implements Serializable {
             ", enabled='" + enabled + "'" +
             '}';
     }
+
 }
