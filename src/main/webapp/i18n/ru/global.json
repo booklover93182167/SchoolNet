@@ -91,7 +91,7 @@
             "id" : "ID"
         },
         "ribbon": {
-            "dev":"Development"
+            "dev":"Lv-236.Java"
         }
     },
     "entity": {
@@ -136,5 +136,5 @@
         "emailexists": "Эл. почта уже используется!!",
         "idexists": "Новый {{entityName}} не может иметь данный ID"
     },
-    "footer": "Это ваш футтер"
+    "footer": "Сделано групой Lv-236.Java :)"
 }

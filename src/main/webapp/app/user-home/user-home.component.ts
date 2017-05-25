@@ -2,7 +2,7 @@
  * Created by Kolja on 22.05.2017.
  */
 import {Component, OnInit} from '@angular/core';
-
+import { Response } from '@angular/http';
 import {Principal} from '../shared';
 import {UserHomeService} from "./user-home.service";
 import { EventManager, JhiLanguageService } from 'ng-jhipster';
@@ -13,7 +13,6 @@ import { EventManager, JhiLanguageService } from 'ng-jhipster';
     styleUrls: ['user-home.component.css'],
 })
 export class UserHomeComponent implements OnInit{
-
     account: any;
 
     constructor(private principal: Principal,
@@ -27,8 +26,5 @@ export class UserHomeComponent implements OnInit{
             this.account = account;
         });
     }
-
-
-
 
 }

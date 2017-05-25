@@ -91,9 +91,9 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     @Override
-    public List<ScheduleDTO> findAllByFormIdAndMonth(Long id, Integer month) {
+    public List<ScheduleDTO> findAllByFormIdAndMonth(Long id) {
         log.debug("Request to get schedules for form {}", id);
-        List<ScheduleDTO> schedules = scheduleRepository.findByFormIdAndMonth(id, month).stream()
+        List<ScheduleDTO> schedules = scheduleRepository.findByFormIdAndMonth(id).stream()
             .map(scheduleMapper::scheduleToScheduleDTO).collect(Collectors.toCollection(LinkedList::new));
         return schedules;
     }

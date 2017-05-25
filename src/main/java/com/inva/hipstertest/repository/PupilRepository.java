@@ -13,7 +13,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface PupilRepository extends JpaRepository<Pupil, Long> {
 
-//    @Query(value = "select pupil from Pupil pupil left join pupil.form form where form.id = :formId")
-//    List<Pupil> findAllByFormId(@Param("formId") Long formId);
+    @Query(value = "select pupil from Pupil pupil left join pupil.form form where form.id = :formId")
+    List<Pupil> findAllByFormId(@Param("formId") Long formId);
 
 }

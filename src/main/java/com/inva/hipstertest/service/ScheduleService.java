@@ -39,5 +39,5 @@ public interface ScheduleService {
     void delete(Long id);
 
 
-    List<ScheduleDTO> findAllByFormIdAndMonth(Long id, Integer month);
+    List<ScheduleDTO> findAllByFormIdAndMonth(Long id);
 }
