@@ -24,7 +24,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let schedule of userSchedules ;trackBy: trackId">
+            <tr *ngFor="let schedule of userSchedules ;trackBy: trackId" >
+                <div *ngIf="checkDate(schedule.date)">
                 <td><a [routerLink]="['../schedule-my-suffix', schedule.id ]">{{schedule.id}}</a></td>
                 <td>{{schedule.date | date:'medium'}}</td>
                 <td>{{schedule.homework}}</td>
@@ -50,7 +51,7 @@
                         <a [routerLink]="['../teacher-my-suffix', schedule.teacherId  ]" >{{schedule.teacherId}}</a>
                     </div>
                 </td>
-
+                </div>
             </tr>
             </tbody>
         </table>

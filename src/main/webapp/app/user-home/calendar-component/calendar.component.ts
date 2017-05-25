@@ -1,9 +1,11 @@
 /**
  * Created by Kolja on 24.05.2017.
  */
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+    Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import {UserHomeService} from "../user-home.service";
+
 
 @Component({
     selector: 'mwl-demo-component',
@@ -37,6 +39,7 @@ export class CalendarComponent {
         // console.log('Sibling1Component-received from sibling2: ' + this._sharedService.subscribeData());
         console.log('Form submitted-sibling1Form');
         let dateToSend = this.selectedDay.date;
+
         this.userHomeService.publishData(dateToSend);
     }
 
@@ -44,7 +47,6 @@ export class CalendarComponent {
         this.selectedDay = day;
         this.date = this.selectedDay.date;
         console.log(this.selectedDay.date);
-        console.log(this.date);
         this.onSubmit();
     }
 

@@ -4,7 +4,7 @@
 export class UserHomeSchedules{
     constructor(
         public id?: number,
-        public date?: any,
+        public date?: Date,
         public homework?: string,
         public lessonPosition?: number,
         public enabled?: boolean,
