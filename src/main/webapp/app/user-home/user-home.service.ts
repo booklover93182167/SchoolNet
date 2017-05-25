@@ -14,8 +14,8 @@ export class UserHomeService {
 
     constructor(private http: Http, private dateUtils: DateUtils) { }
 
-    findByFormAndMonth(formId: number, month: number): Observable<Response> {
-        return this.http.get(`${this.resourceUrl}/${formId}/${month}`).map((res: Response) =>
+    findByFormAndMonth(formId: number): Observable<Response> {
+        return this.http.get(`${this.resourceUrl}/${formId}`).map((res: Response) =>
             this.convertResponse(res));
     }
 

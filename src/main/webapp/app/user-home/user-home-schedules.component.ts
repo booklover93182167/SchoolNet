@@ -32,7 +32,7 @@ export class UserHomeSchedulesComponent implements OnInit {
     //function to load form by ID and Month, with hardcoded formId 1 and month June
     // TODO: add year param and tether with UI event
     loadByFormIdAndMonth() {
-        this.userHomeService.findByFormAndMonth(1, 6).subscribe(
+        this.userHomeService.findByFormAndMonth(1).subscribe(
             (res: Response) => {
                 this.userSchedules = res.json();
             },

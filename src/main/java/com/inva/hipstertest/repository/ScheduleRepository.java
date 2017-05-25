@@ -12,6 +12,6 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 public interface ScheduleRepository extends JpaRepository<Schedule,Long> {
-    @Query("select schedule from Schedule schedule where schedule.form.id =:formId and month(schedule.date) = :month")
-    List<Schedule> findByFormIdAndMonth(@Param("formId") Long formId, @Param("month") Integer month);
+    @Query("select schedule from Schedule schedule where schedule.form.id =:formId")
+    List<Schedule> findByFormIdAndMonth(@Param("formId") Long formId);
 }
