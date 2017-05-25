@@ -105,4 +105,10 @@ public class ScheduleServiceImpl implements ScheduleService{
         List<ScheduleDTO> scheduleDTOS = scheduleMapper.schedulesToScheduleDTOs(schedules);
         return scheduleDTOS;
     }
+
+    @Override
+    public void updateHomeworkById(String homework, Long scheduleId) {
+        log.debug("Request to set homework for schedule {}", homework, scheduleId);
+        scheduleRepository.updateHomeworkById(homework, scheduleId);
+    }
 }

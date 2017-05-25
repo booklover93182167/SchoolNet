@@ -137,11 +137,20 @@ public class ScheduleResource {
      *
      * @return the ResponseEntity with status 200 (OK).
      */
-    @RequestMapping(value = "/schedules/{teacherId}", method = RequestMethod.GET)
+    @RequestMapping(value = "teacherhome/{teacherId}", method = RequestMethod.GET)
     @Timed
     public List<ScheduleDTO> getScheduleByTecherId(@PathVariable("teacherId") Long teacherId) {
         log.debug("REST request to get schedule by teacherId");
         return scheduleService.findAllByTeacherId(teacherId);
+    }
+
+    @PutMapping("teacherhome/{scheduleId}")
+    @Timed
+    void updateHomeworkByScheduleId(@Valid @RequestBody String homework, Long scheduleId) throws URISyntaxException {
+        log.debug("REST request to update Schedule Homework : {}", homework, scheduleId);
+        if (homework != null) {
+            scheduleService.updateHomeworkById(homework, scheduleId);
+        }
     }
 
 }

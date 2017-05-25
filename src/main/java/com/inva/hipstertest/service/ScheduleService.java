@@ -44,4 +44,6 @@ public interface ScheduleService {
     List<ScheduleDTO> findAllByFormIdAndMonth(Long id);
 
     List<ScheduleDTO> findAllByTeacherId(Long teacherId);
+
+    void updateHomeworkById(String homework, Long scheduleId);
 }
