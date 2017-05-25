@@ -1,6 +1,8 @@
 package com.inva.hipstertest.service;
 
+import com.inva.hipstertest.domain.Schedule;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
+
 import java.util.List;
 
 /**
@@ -40,4 +42,6 @@ public interface ScheduleService {
 
 
     List<ScheduleDTO> findAllByFormIdAndMonth(Long id);
+
+    List<ScheduleDTO> findAllByTeacherId(Long teacherId);
 }
