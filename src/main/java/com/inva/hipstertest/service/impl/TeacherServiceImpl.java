@@ -1,17 +1,24 @@
 package com.inva.hipstertest.service.impl;
 
+import com.inva.hipstertest.domain.*;
+import com.inva.hipstertest.repository.SchoolRepository;
 import com.inva.hipstertest.service.TeacherService;
-import com.inva.hipstertest.domain.Teacher;
 import com.inva.hipstertest.repository.TeacherRepository;
+import com.inva.hipstertest.service.UserService;
 import com.inva.hipstertest.service.dto.TeacherDTO;
+import com.inva.hipstertest.service.dto.UserDTO;
 import com.inva.hipstertest.service.mapper.TeacherMapper;
+import com.inva.hipstertest.service.util.RandomUtil;
+import com.inva.hipstertest.support.methods.SupportCreate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.security.Principal;
+import java.time.ZonedDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -19,15 +26,22 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-public class TeacherServiceImpl implements TeacherService{
+public class TeacherServiceImpl extends SupportCreate implements TeacherService{
 
     private final Logger log = LoggerFactory.getLogger(TeacherServiceImpl.class);
-    
+
     private final TeacherRepository teacherRepository;
 
     private final TeacherMapper teacherMapper;
 
-    public TeacherServiceImpl(TeacherRepository teacherRepository, TeacherMapper teacherMapper) {
+    //@Autowired
+    //private SchoolRepository schoolRepository;
+
+    @Autowired
+    private UserService service;
+
+    public TeacherServiceImpl(TeacherRepository teacherRepository,
+                              TeacherMapper teacherMapper) {
         this.teacherRepository = teacherRepository;
         this.teacherMapper = teacherMapper;
     }
@@ -49,7 +63,7 @@ public class TeacherServiceImpl implements TeacherService{
 
     /**
      *  Get all the teachers.
-     *  
+     *
      *  @return the list of entities
      */
     @Override
@@ -88,4 +102,40 @@ public class TeacherServiceImpl implements TeacherService{
         log.debug("Request to delete Teacher : {}", id);
         teacherRepository.delete(id);
     }
+
+
+    /**
+     * Save a teacher.
+     *
+     * @param teacherDTO the entity to save         //NEED CORRECTION
+     */
+
+    @Override
+    public String saveTeacherWithUser(TeacherDTO teacherDTO, User userStart, Principal principal) {
+        log.debug("Request to save Teacher : {}", teacherDTO, userStart);
+        Map<String, Object> information = super.saveUserWithRole(userStart, "headTeacher");
+        User user1 = (User) information.get("id");
+        String content = (String) information.get("content");
+        teacherDTO.setEnabled(true);
+        Teacher teacher = teacherMapper.teacherDTOToTeacher(teacherDTO);
+
+        //System.out.println(principal.getName()); // LOGIN
+
+        School school = new School();
+        school.setEnabled(true);
+        school.setId(1L);
+        school.setName("?? ?91");
+        teacher.setSchool(school);
+
+        teacher.setUser(user1);
+        teacherRepository.save(teacher);
+        return content;
+    }
+
+    @Override
+    public Teacher findOneWithSchool(Long id){
+        return teacherRepository.findOneWithSchool(id);
+    }
+
+
 }
