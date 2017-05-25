@@ -40,8 +40,10 @@ Volodymyr: 24.05.2017
 ---------------25.05.2017 --------------
 1)
 * Created SQL query
+* Designed "Teacher schedule" page with Bootstrap
 2)
 * Insert sql query to Java class and output data to the UI
+* Add datepicker component to project
 3) -
 ----------------------------------------
 ----------------------------------------
