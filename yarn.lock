@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@angular/animations@^4.1.3":
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-4.1.3.tgz#6e89a1e0fbfd6d0e90be4f2ae190aac67f83a411"
+
 "@angular/cli@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-1.0.0.tgz#7bfde1e7c5f28bf5bed4dda1352ee67ee887302f"
@@ -214,6 +218,24 @@ alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
 amdefine@>=0.0.4, amdefine@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
+
+angular-calendar@^0.15.4:
+  version "0.15.4"
+  resolved "https://registry.yarnpkg.com/angular-calendar/-/angular-calendar-0.15.4.tgz#57b91cb42f436700621a7b53817b520508ea9876"
+  dependencies:
+    angular-draggable-droppable "^1.0.1"
+    angular-resizable-element "^1.0.0"
+    calendar-utils "0.0.48"
+    date-fns "^1.15.1"
+    positioning "^1.0.4"
+
+angular-draggable-droppable@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/angular-draggable-droppable/-/angular-draggable-droppable-1.0.1.tgz#7ad70c310994b0f980f40d382dce59946fe30dcf"
+
+angular-resizable-element@^1.0.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/angular-resizable-element/-/angular-resizable-element-1.1.1.tgz#2e841277a2fc060b8f1dda210252d25f19fbc13e"
 
 angular2-cookie@1.2.6:
   version "1.2.6"
@@ -849,6 +871,10 @@ bytes@2.3.0:
 bytes@2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-2.4.0.tgz#7d97196f9d5baf7f6935e25985549edd2a6c2339"
+
+calendar-utils@0.0.48:
+  version "0.0.48"
+  resolved "https://registry.yarnpkg.com/calendar-utils/-/calendar-utils-0.0.48.tgz#10c17ac0bab4a2f95700d99cef328baf85fe846d"
 
 callsite@1.0.0:
   version "1.0.0"
@@ -1629,6 +1655,10 @@ dashdash@^1.12.0:
   resolved "https://registry.yarnpkg.com/dashdash/-/dashdash-1.14.1.tgz#853cfa0f7cbe2fed5de20326b8dd581035f6e2f0"
   dependencies:
     assert-plus "^1.0.0"
+
+date-fns@^1.15.1:
+  version "1.28.5"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.28.5.tgz#257cfc45d322df45ef5658665967ee841cd73faf"
 
 date-now@^0.1.4:
   version "0.1.4"
@@ -5206,6 +5236,10 @@ portscanner@2.1.1:
   dependencies:
     async "1.5.2"
     is-number-like "^1.0.3"
+
+positioning@^1.0.4:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/positioning/-/positioning-1.1.0.tgz#9284bf36b2e38035728e19afc5e07ee89711e58c"
 
 postcss-calc@^5.2.0:
   version "5.3.1"

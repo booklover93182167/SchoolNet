@@ -96,11 +96,11 @@ public class ScheduleResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of schedules in body
      */
-    @RequestMapping(value = "userhome/{formId}/{month}", method = RequestMethod.GET)
+    @RequestMapping(value = "userhome/{formId}", method = RequestMethod.GET)
     @Timed
-    public List<ScheduleDTO> getSchedulesByFormIdAndMonth(@PathVariable("formId") Long formId, @PathVariable("month") Integer month) {
+    public List<ScheduleDTO> getSchedulesByFormIdAndMonth(@PathVariable("formId") Long formId) {
         log.debug("REST request to get schedule by formId");
-        return scheduleService.findAllByFormIdAndMonth(formId, month);
+        return scheduleService.findAllByFormIdAndMonth(formId);
     }
 
 
