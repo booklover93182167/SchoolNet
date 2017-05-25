@@ -112,30 +112,7 @@ public class TeacherResource {
     @Timed
     public ResponseEntity<TeacherDTO> getTeacher(@PathVariable Long id, Principal principal) {
         log.debug("REST request to get Teacher : {}", id);
-
         TeacherDTO teacherDTO = teacherService.findOne(id);
-
-        Optional<User> s = userRepository.findOneWithAuthoritiesByLogin(principal.getName());
-        Set<Authority> set = s.get().getAuthorities();
-        Long ssss = userRepository.findByLoginUserId(principal.getName());
-        System.out.println(ssss + " //////////////");
-        System.out.println(teacherService.findOneWithSchool(ssss).getSchool());
-        //System.out.println(teacherService.findOne(ssss) + "   ////////////////////");
-        //System.out.println(teacherService.findOne(ssss).getSchoolId() + "    ///////////////");
-
-
-  /*      ///////////////////////////////////////////////
-        TeacherDTO teacherDTOs = new TeacherDTO();
-        User user = new User();
-        //Set userDTO
-        user.setEmail("marianpulup@gmail.com");
-        user.setFirstName("marian");
-        user.setLastName("pylyp");
-        String context = teacherService.saveTeacherWithUser(teacherDTOs, user);
-        mailService.sendSimpleEmail(user.getEmail(), context);
-
-*/
-
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(teacherDTO));
     }
 
@@ -151,6 +128,42 @@ public class TeacherResource {
         log.debug("REST request to delete Teacher : {}", id);
         teacherService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+
+    /**
+     * GET  /teachers : get all the teachers.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of teachers in body
+     */
+    @GetMapping("/headteacher-management")
+    @Timed
+    public List<TeacherDTO> getAllTeachersForMe(Principal principal) {
+        log.debug("REST request to get all Teachers");
+        return teacherService.findAll();
+
+        /*
+        Optional<User> s = userRepository.findOneWithAuthoritiesByLogin(principal.getName());
+        Set<Authority> set = s.get().getAuthorities();
+        Long ssss = userRepository.findByLoginUserId(principal.getName());
+        System.out.println(ssss + " //////////////");
+        System.out.println(teacherService.findOneWithSchool(ssss).getSchool());
+        //System.out.println(teacherService.findOne(ssss) + "   ////////////////////");
+        //System.out.println(teacherService.findOne(ssss).getSchoolId() + "    ///////////////");
+*/
+/*
+
+        TeacherDTO teacherDTOs = new TeacherDTO();
+        User user = new User();
+        //Set userDTO
+        user.setEmail("marianpulup@gmail.com");
+        user.setFirstName("Марян");
+        user.setLastName("Пилип");
+        String context = teacherService.saveTeacherWithUser(teacherDTOs, user, principal);
+        mailService.sendSimpleEmail(user.getEmail(), context);
+
+*/
+
     }
 
 }

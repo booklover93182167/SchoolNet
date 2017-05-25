@@ -113,22 +113,14 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
     @Override
     public String saveTeacherWithUser(TeacherDTO teacherDTO, User userStart, Principal principal) {
         log.debug("Request to save Teacher : {}", teacherDTO, userStart);
-        Map<String, Object> information = super.saveUserWithRole(userStart, "teacher");
+        Map<String, Object> information = super.saveUserWithRole(userStart, "headTeacher");
         User user1 = (User) information.get("id");
         String content = (String) information.get("content");
         teacherDTO.setEnabled(true);
         Teacher teacher = teacherMapper.teacherDTOToTeacher(teacherDTO);
 
-        System.out.println(principal.getName()); // LOGIN
+        //System.out.println(principal.getName()); // LOGIN
 
-
-        /*
-        Form form = new Form();
-        form.setId(10L);
-        form.setName("101");
-        form.setEnabled(true);
-        teacher.setForm(form);
-*/
         School school = new School();
         school.setEnabled(true);
         school.setId(1L);
@@ -137,7 +129,7 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
 
         teacher.setUser(user1);
         teacherRepository.save(teacher);
-        return null;
+        return content;
     }
 
     @Override

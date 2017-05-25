@@ -37,7 +37,8 @@ abstract public class SupportCreate {
     public Map<String, Object> saveUserWithRole(User paramFromPage, String role){
         log.debug("Request to save user", paramFromPage, role);
         User user = new User();
-        String login =  RandomUtil.generateLogin(user.getFirstName(), user.getLastName());
+        String login =  RandomUtil.generateLogin(paramFromPage.getFirstName(), paramFromPage.getLastName());
+        user.setLogin(login);
         user.setFirstName(paramFromPage.getFirstName());
         user.setLastName(paramFromPage.getLastName());
         user.setEmail(paramFromPage.getEmail());
@@ -62,6 +63,9 @@ abstract public class SupportCreate {
             user.setActivated(false);
         }else{
             System.out.println("BAD PARAM(role) IN METHOD saveUserWithRole");
+            authority.setName("ROLE_USER");
+            auto.add(authority);
+            user.setActivated(false);
         }
         user.setAuthorities(auto);
         String noEncryptedPassword = RandomUtil.generatePassword();
