@@ -2,10 +2,9 @@
  * Created by Kolja on 22.05.2017.
  */
 import { Injectable } from '@angular/core';
+import {Subject, Observable} from "rxjs";
 import { Http, Response, URLSearchParams, BaseRequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-
-import { UserHomeSchedules } from './user-home-schedules.model';
+import { UserHomeSchedules } from './user-home-schedules/user-home-schedules.model';
 import { DateUtils } from 'ng-jhipster';
 @Injectable()
 export class UserHomeService {
@@ -28,4 +27,17 @@ export class UserHomeService {
         res._body = jsonResponse;
         return res;
     }
+
+    ///////////////////////////////////////////////////////////
+    // Observable string sources
+    private dateToSend = new Subject<Date>();
+
+    // Observable string streams
+    dateToSend$ = this.dateToSend.asObservable();
+
+    // Service message commands
+    publishData(data: Date) {
+        this.dateToSend.next(data);
+    }
+    /////////////////////////////////////////////////////////////////
 }

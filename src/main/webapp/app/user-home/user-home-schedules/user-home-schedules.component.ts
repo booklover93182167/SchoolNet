@@ -4,8 +4,8 @@ import { Subscription } from 'rxjs/Rx';
 import { EventManager, JhiLanguageService, AlertService } from 'ng-jhipster';
 
 import { UserHomeSchedules } from './user-home-schedules.model';
-import { UserHomeService } from './user-home.service';
-import { ITEMS_PER_PAGE, Principal } from '../shared';
+import { UserHomeService } from '../user-home.service';
+import { ITEMS_PER_PAGE, Principal } from '../../shared';
 //service to retrieve schedules for pupil
 @Component({
     selector: 'jhi-user-home-schedules',
@@ -16,6 +16,8 @@ export class UserHomeSchedulesComponent implements OnInit {
     currentAccount: any;
     eventSubscriber: Subscription;
 
+    selectedDate: any;
+
     constructor(
         private jhiLanguageService: JhiLanguageService,
         private userHomeService: UserHomeService,
@@ -23,7 +25,7 @@ export class UserHomeSchedulesComponent implements OnInit {
         private eventManager: EventManager,
         private principal: Principal
     ) {
-        this.jhiLanguageService.setLocations(['schedule']);
+        this.jhiLanguageService.setLocations(['home']);
     }
 
     ngOnInit(){
@@ -38,6 +40,11 @@ export class UserHomeSchedulesComponent implements OnInit {
             },
             (res: Response) => this.onError(res.json())
         );
+        //subscribe on chsnges in calendar
+        this.userHomeService.dateToSend$.subscribe(
+            data => {
+        this.selectedDate = data;
+        });
     }
 
     trackId(index: number, item: UserHomeSchedules) {
@@ -47,4 +54,6 @@ export class UserHomeSchedulesComponent implements OnInit {
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
+
+
 }

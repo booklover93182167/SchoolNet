@@ -3,7 +3,7 @@
  */
 
 import { Route } from '@angular/router';
-import { UserRouteAccessService } from '../shared';
+import { UserRouteAccessService } from '../../shared';
 import { UserHomeSchedulesComponent} from "./user-home-schedules.component";
 
 export const USER_HOME_SCHEDULES_ROUTE: Route = {

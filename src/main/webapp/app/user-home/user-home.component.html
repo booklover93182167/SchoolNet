@@ -2,20 +2,23 @@
 
 <br>
 
-<!--<a *ngFor="let month of months">{{month.name}}</a>-->
 
-<ul>
-    <li><a>January</a></li>
-    <li><a>February</a></li>
-    <li><a>March</a></li>
-    <li><a>April</a></li>
-    <li><a [routerLink]>May</a></li>
-    <li><a>June</a></li>
-    <li><a>July</a></li>
-    <li><a>August</a></li>
-    <li><a>September</a></li>
-    <li><a>October</a></li>
-    <li><a>November</a></li>
-    <li><a>December</a></li>
-    <jhi-user-home-schedules></jhi-user-home-schedules>
-</ul>
+<div class="row">
+    <div class="col-md-6">
+<jhi-user-home-schedules></jhi-user-home-schedules>
+    </div>
+
+    <div class="col-md-6 text-right">
+            <mwl-demo-component></mwl-demo-component>
+    </div>
+</div>
+
+
+<!--searchDateToSend: any;-->
+
+<!--constructor(private userHomeService: UserHomeService) {-->
+<!--this.userHomeService.dateToSend$.subscribe(-->
+<!--data => {-->
+<!--this.searchDateToSend = data;-->
+<!--});-->
+<!--}-->
