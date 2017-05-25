@@ -26,3 +26,17 @@ Volodymyr: 24.05.2017
 1) Created subtasks;
 2) Create connection between Andgular and database;
 3) No blockers;
+----------------------------------------
+----------------Vlad--------------------
+24.05.2017
+1)
+* Added menu item "Schedules" with submenu item "Teacher schedule";
+* Added new component "TeacherSchedule" with routing module;
+* Linked menu item with the TeacherScheduleComponent (created new page "Teacher schedule");
+* Added translation for menu items and page title;
+2)
+* Create query
+* Output data to the UI
+3) -
+----------------------------------------
+----------------------------------------
