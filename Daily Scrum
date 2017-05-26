@@ -52,4 +52,9 @@ Myndyk Mykola: 25.05.2017
    removed link to user-home page from start screen, only after login link appears
 2) Add homework window that will appear after click on homeworkButton
 3) none
-
+----------------------------------------
+----------------------------------------
+Volodymyr: 26.05.2017
+1) Now I can create classrooms. Changed design of page
+2) Change query to show school name;
+3) Can't change query, still show school id or show nothing, or just crush
