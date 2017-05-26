@@ -3,6 +3,7 @@
         "title": "SchoolNet",
         "browsehappy": "Ваш браузер <strong>устарел</strong>. Пожалуйста <a href=\"http://browsehappy.com/?locale=ru\">обновите ваш браузер</a>.",
         "menu": {
+            "user-home": "User Home",
             "home": "Главная",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
@@ -50,7 +51,9 @@
             "confirmpassword": "Подтверждение нового пароля",
             "confirmpassword.placeholder": "Подтвердите новый пароль",
             "email": "Email",
-            "email.placeholder": "Ваш email"
+            "email.placeholder": "Ваш email",
+            "imageUrl": "URL-адрес для фотографии пользователя",
+            "imageUrl.placeholder": "Ваш URL-адрес для фотографии"
         },
         "messages": {
             "info": {
@@ -91,7 +94,7 @@
             "id" : "ID"
         },
         "ribbon": {
-            "dev":"Development"
+            "dev":"Lv-236.Java"
         }
     },
     "entity": {
@@ -136,5 +139,5 @@
         "emailexists": "Эл. почта уже используется!!",
         "idexists": "Новый {{entityName}} не может иметь данный ID"
     },
-    "footer": "Это ваш футтер"
+    "footer": "Сделано групой Lv-236.Java :)"
 }

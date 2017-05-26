@@ -51,7 +51,9 @@
             "confirmpassword": "New password confirmation",
             "confirmpassword.placeholder": "Confirm the new password",
             "email": "Email",
-            "email.placeholder": "Your email"
+            "email.placeholder": "Your email",
+            "imageUrl": "URL for user photo",
+            "imageUrl.placeholder": "Your URL for photo"
         },
         "messages": {
             "info": {
@@ -92,7 +94,7 @@
             "id": "ID"
         },
         "ribbon": {
-            "dev":"Development"
+            "dev":"Lv-236.Java"
         }
     },
     "entity": {
@@ -137,5 +139,5 @@
         "emailexists": "Email is already in use!",
         "idexists": "A new {{ entityName }} cannot already have an ID"
     },
-    "footer": "This is your footer"
+    "footer": "Created by Lv-236.Java group :)"
 }
