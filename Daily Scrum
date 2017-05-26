@@ -72,3 +72,19 @@ Marta: 25.05.2017
 2) Change UI design of view of class
 3) -
 ----------------------------------------
+Orest: 26.05.2017
+1) 
+- Added query to get formId for Pupil using principal.login
+- Added query to get all schedules for certain formId
+- Changed back-end to receive REST request for a given URL/method
+and to respond with respective .json file
+- Created service for user-home(pupil-home) to send request for
+schedules
+- Created user-home-schedules model for received .json response
+2) 
+- Change onInit() front-end methods for user(pupil) component.
+- Change onClick() logic for calendar event
+- Refactor user-home to pupil-home
+- Refactor user-home component -> move business logic to service
+3) -
+----------------------------------------
