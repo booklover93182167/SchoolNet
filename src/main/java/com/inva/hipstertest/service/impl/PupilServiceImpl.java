@@ -90,10 +90,10 @@ public class PupilServiceImpl implements PupilService {
     }
 
     @Override
-    public List<PupilDTO> findAllByFormId(Long formId) {
+    public List<Long> findAllByFormId(Long formId) {
         log.debug("Request to find all pupils by formId : {}", formId);
-        List<Pupil> pupils = pupilRepository.findAllByFormId(formId);
-        List<PupilDTO> pupilDTOs = pupilMapper.pupilsToPupilDTOs(pupils);
-        return pupilDTOs;
+        List<Long> pupilsId = pupilRepository.findAllByFormId(formId);
+        //List<PupilDTO> pupilDTOs = pupilMapper.pupilsToPupilDTOs(pupils);
+        return pupilsId;
     }
 }

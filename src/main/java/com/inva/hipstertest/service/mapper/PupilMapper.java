@@ -20,7 +20,7 @@ public interface PupilMapper {
 
     @Mapping(source = "userId", target = "user")
     @Mapping(target = "attendances", ignore = true)
-    @Mapping(source = "formId", target = "form")
+    @Mapping(source = "formId",target="form")
     @Mapping(target = "parents", ignore = true)
     Pupil pupilDTOToPupil(PupilDTO pupilDTO);
 
@@ -32,7 +32,7 @@ public interface PupilMapper {
      * @param id id of the entity
      * @return the entity instance
      */
-     
+
     default Pupil pupilFromId(Long id) {
         if (id == null) {
             return null;
@@ -41,6 +41,6 @@ public interface PupilMapper {
         pupil.setId(id);
         return pupil;
     }
-    
+
 
 }

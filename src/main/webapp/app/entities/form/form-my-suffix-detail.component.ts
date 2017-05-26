@@ -48,5 +48,7 @@ export class FormMySuffixDetailComponent implements OnInit, OnDestroy {
 
     registerChangeInForms() {
         this.eventSubscriber = this.eventManager.subscribe('formListModification', (response) => this.load(this.form.id));
-    }
-}
+    }}
+
+
+

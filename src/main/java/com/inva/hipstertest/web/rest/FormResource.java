@@ -2,11 +2,14 @@ package com.inva.hipstertest.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.inva.hipstertest.service.FormService;
+import com.inva.hipstertest.service.PupilService;
+import com.inva.hipstertest.service.dto.PupilDTO;
 import com.inva.hipstertest.web.rest.util.HeaderUtil;
 import com.inva.hipstertest.service.dto.FormDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +31,10 @@ public class FormResource {
     private final Logger log = LoggerFactory.getLogger(FormResource.class);
 
     private static final String ENTITY_NAME = "form";
-        
+
     private final FormService formService;
+    @Autowired
+    private PupilService pupilService;
 
     public FormResource(FormService formService) {
         this.formService = formService;
@@ -100,8 +105,11 @@ public class FormResource {
     public ResponseEntity<FormDTO> getForm(@PathVariable Long id) {
         log.debug("REST request to get Form : {}", id);
         FormDTO formDTO = formService.findOne(id);
+        List<Long> pupilsId=pupilService.findAllByFormId(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(formDTO));
     }
+
+
 
     /**
      * DELETE  /forms/:id : delete the "id" form.

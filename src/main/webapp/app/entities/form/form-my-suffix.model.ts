@@ -6,6 +6,7 @@ export class FormMySuffix {
         public pupilId?: number,
         public scheduleId?: number,
         public schoolId?: number,
+        public pupilsId?:object[]
     ) {
         this.enabled = false;
     }

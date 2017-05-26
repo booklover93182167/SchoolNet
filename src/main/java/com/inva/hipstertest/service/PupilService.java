@@ -44,5 +44,5 @@ public interface PupilService {
      *
      * @param formId the id of the Form entity
      */
-    List<PupilDTO> findAllByFormId(Long formId);
+    List<Long> findAllByFormId(Long formId);
 }
