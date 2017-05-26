@@ -9,5 +9,3 @@ export * from './pupil-home-schedules/pupil-home-schedules.component'
 export * from './pupil-home-schedules/pupil-home-schedules.model'
 export * from './pupil-home-schedules/pupil-home-schedules.route';
 export * from './pupil-home.module';
-
-

@@ -2,7 +2,7 @@
  * Created by Kolja on 22.05.2017.
  */
 import { Injectable } from '@angular/core';
-import {Subject, Observable} from "rxjs";
+import {Subject, Observable} from 'rxjs';
 import { Http, Response, URLSearchParams, BaseRequestOptions } from '@angular/http';
 import { PupilHomeSchedules } from './pupil-home-schedules/pupil-home-schedules.model';
 import { DateUtils } from 'ng-jhipster';
@@ -11,9 +11,16 @@ export class PupilHomeService {
 
     private resourceUrl = 'api/pupilhome';
 
+    ///////////////////////////////////////////////////////////
+    // Observable string sources
+    private dateToSend = new Subject<Date>();
+
+    // Observable string streams
+    dateToSend$ = this.dateToSend.asObservable();
+
     constructor(private http: Http, private dateUtils: DateUtils) { }
 
-    findByFormAndMonth(): Observable<Response> {
+    findByForm(): Observable<Response> {
         return this.http.get(`${this.resourceUrl}/getschedules`).map((res: Response) =>
             this.convertResponse(res));
     }
@@ -27,13 +34,6 @@ export class PupilHomeService {
         res._body = jsonResponse;
         return res;
     }
-
-    ///////////////////////////////////////////////////////////
-    // Observable string sources
-    private dateToSend = new Subject<Date>();
-
-    // Observable string streams
-    dateToSend$ = this.dateToSend.asObservable();
 
     // Service message commands
     publishData(data: Date) {

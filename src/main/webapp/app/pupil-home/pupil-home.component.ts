@@ -4,7 +4,7 @@
 import {Component, OnInit} from '@angular/core';
 import { Response } from '@angular/http';
 import {Principal} from '../shared';
-import {PupilHomeService} from "./pupil-home.service";
+import {PupilHomeService} from './pupil-home.service';
 import { EventManager, JhiLanguageService } from 'ng-jhipster';
 
 @Component({
@@ -12,7 +12,7 @@ import { EventManager, JhiLanguageService } from 'ng-jhipster';
     templateUrl: 'pupil-home.component.html',
     styleUrls: ['pupil-home.component.css'],
 })
-export class PupilHomeComponent implements OnInit{
+export class PupilHomeComponent implements OnInit {
     account: any;
 
     constructor(private principal: Principal,

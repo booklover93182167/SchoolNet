@@ -11,7 +11,6 @@ import { SchoolNetAccountModule } from './account/account.module';
 import { SchoolNetEntityModule } from './entities/entity.module';
 import { SchoolNetPupilHomeModule } from './pupil-home/pupil-home.module';
 
-
 import { LayoutRoutingModule } from './layouts';
 import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
