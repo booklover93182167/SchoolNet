@@ -51,7 +51,9 @@
             "confirmpassword": "Підтвердження нового пароля",
             "confirmpassword.placeholder": "Підтвердіть новий пароль",
             "email": "Email",
-            "email.placeholder": "Ваш email"
+            "email.placeholder": "Ваш email",
+            "imageUrl": "URL-адреса для фотографії користувача",
+            "imageUrl.placeholder": "Ваша URL-адреса для фотографії"
         },
         "messages": {
             "info": {
