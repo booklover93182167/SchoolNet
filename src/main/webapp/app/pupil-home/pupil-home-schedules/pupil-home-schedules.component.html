@@ -12,11 +12,9 @@
             <thead>
             <tr>
                 <div>
-                <th><span>ID</span></th>
                 <th><span>Date</span></th>
                 <th><span>Homework</span></th>
                 <th><span>Lesson Position</span></th>
-                <th><span>Enabled</span></th>
                 <th><span>Lesson</span></th>
                 <th><span>Form</span></th>
                 <th><span>Classroom</span></th>
@@ -26,13 +24,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let schedule of pupilSchedules ;trackBy: trackId" >
+            <tr *ngFor="let schedule of pupilSchedules | schedulessort ;trackBy: trackId" >
                 <div *ngIf="checkDate(schedule.date)">
-                <td><a [routerLink]="['../schedule-my-suffix', schedule.id ]">{{schedule.id}}</a></td>
-                <td>{{schedule.date | date:'medium'}}</td>
+                <td>{{schedule.date | date:'shortDate'}}</td>
                 <td>{{schedule.homework}}</td>
                 <td>{{schedule.lessonPosition}}</td>
-                <td>{{schedule.enabled}}</td>
                 <td>
                     <div *ngIf="schedule.lessonId">
                         <a [routerLink]="['../lesson-my-suffix', schedule.lessonId  ]" >{{schedule.lessonName}}</a>
