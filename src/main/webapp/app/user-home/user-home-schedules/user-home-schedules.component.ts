@@ -37,12 +37,13 @@ export class UserHomeSchedulesComponent implements OnInit{
     ngOnInit() {
         this.loadByFormIdAndMonth();
         this.selectedDate = new Date(Date.now());
+        this.checkDate(this.selectedDate);
     }
 
     //function to load form by ID
     // TODO: add year param and tether with UI event
     loadByFormIdAndMonth() {
-        this.userHomeService.findByFormAndMonth(1).subscribe(
+        this.userHomeService.findByFormAndMonth().subscribe(
             (res: Response) => {
                 this.userSchedules = res.json();
             },

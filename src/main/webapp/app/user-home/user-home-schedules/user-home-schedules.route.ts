@@ -7,7 +7,7 @@ import { UserRouteAccessService } from '../../shared';
 import { UserHomeSchedulesComponent} from "./user-home-schedules.component";
 
 export const USER_HOME_SCHEDULES_ROUTE: Route = {
-    path: 'user-home/:formid/:month',
+    path: 'user-home/getschedules',
         component:
         UserHomeSchedulesComponent,
         data:
