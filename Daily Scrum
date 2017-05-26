@@ -58,3 +58,12 @@ Volodymyr: 26.05.2017
 1) Now I can create classrooms. Changed design of page
 2) Change query to show school name;
 3) Can't change query, still show school id or show nothing, or just crush
+----------------------------------------
+Vasyl: 26.05.2017
+1) Added and translate to Ukrainian language localization for project,
+    added posibilities to reset password and register new user throught email verification,
+    added possibilities to add and show user photo avatar,
+    small\cosmetic changes to whole project.
+2) Add field for saving user phone number and maybe saving avatar in DB.
+3) -
+----------------------------------------
