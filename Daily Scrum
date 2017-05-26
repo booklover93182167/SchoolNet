@@ -56,8 +56,8 @@ Myndyk Mykola: 25.05.2017
 ----------------------------------------
 Volodymyr: 26.05.2017
 1) Now I can create classrooms. Changed design of page
-2) Change query to show school name;
-3) Can't change query, still show school id or show nothing, or just crush
+2) Change structure, move creating of classroom to headteacher. connect to angular
+3) none
 ----------------------------------------
 Vasyl: 26.05.2017
 1) Added and translate to Ukrainian language localization for project,
