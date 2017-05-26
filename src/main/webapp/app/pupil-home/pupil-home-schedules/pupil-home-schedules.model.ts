@@ -1,7 +1,7 @@
 /**
  * Created by inva on 23-May-17.
  */
-export class UserHomeSchedules{
+export class PupilHomeSchedules {
     constructor(
         public id?: number,
         public date?: Date,

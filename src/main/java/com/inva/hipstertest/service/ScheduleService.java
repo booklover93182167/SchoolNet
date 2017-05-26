@@ -38,6 +38,10 @@ public interface ScheduleService {
      */
     void delete(Long id);
 
-
-    List<ScheduleDTO> findAllByFormIdAndMonth(Long id);
+    /**
+     * Find all Schedules by form ID
+     * @param id form Id of Pupil
+     * @return
+     */
+    List<ScheduleDTO> findAllByFormId(Long id);
 }

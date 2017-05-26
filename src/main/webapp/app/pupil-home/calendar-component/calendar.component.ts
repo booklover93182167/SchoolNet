@@ -4,11 +4,10 @@
 import {
     Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
-import {UserHomeService} from "../user-home.service";
-
+import {PupilHomeService} from '../pupil-home.service';
 
 @Component({
-    selector: 'mwl-demo-component',
+    selector: 'jhi-demo-component',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: 'calendar.component.html',
     styleUrls: ['calendar.component.css'],
@@ -20,13 +19,12 @@ export class CalendarComponent {
     viewDate: Date = new Date();
     selectedDay: CalendarMonthViewDay;
 
-
     @Input() excludeDays: number[] = [];
     @Input() weekStartsOn: number;
 
     selectDay: (day: CalendarMonthViewDay) => void;
 
-    constructor(private userHomeService:UserHomeService) {
+    constructor(private pupilHomeService: PupilHomeService) {
         this.selectDay = (day: CalendarMonthViewDay): void => {
             if (this.selectedDay && day.date.getTime() === this.selectedDay.date.getTime()) {
                 day.cssClass = 'cal-day-selected';
@@ -39,8 +37,7 @@ export class CalendarComponent {
         // console.log('Sibling1Component-received from sibling2: ' + this._sharedService.subscribeData());
         console.log('Form submitted-sibling1Form');
         let dateToSend = this.selectedDay.date;
-
-        this.userHomeService.publishData(dateToSend);
+        this.pupilHomeService.publishData(dateToSend);
     }
 
     dayClicked(day: CalendarMonthViewDay): void {
@@ -49,7 +46,4 @@ export class CalendarComponent {
         console.log(this.selectedDay.date);
         this.onSubmit();
     }
-
-
-
 }

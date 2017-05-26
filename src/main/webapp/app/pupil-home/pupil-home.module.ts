@@ -11,9 +11,9 @@ import { CalendarModule } from 'angular-calendar';
 import { CalendarComponent } from './calendar-component/calendar.component';
 
 import { SchoolNetSharedModule } from '../shared';
-import { UserHomeService } from './user-home.service';
+import { PupilHomeService } from './pupil-home.service';
 
-import { USER_HOME_ROUTE, USER_HOME_SCHEDULES_ROUTE, UserHomeComponent, UserHomeSchedulesComponent } from './';
+import { PUPIL_HOME_ROUTE, PUPIL_HOME_SCHEDULES_ROUTE, PupilHomeComponent, PupilHomeSchedulesComponent } from './';
 
 @NgModule({
     imports: [
@@ -23,22 +23,22 @@ import { USER_HOME_ROUTE, USER_HOME_SCHEDULES_ROUTE, UserHomeComponent, UserHome
         BrowserAnimationsModule,
         CalendarModule.forRoot(),
         SchoolNetSharedModule,
-        RouterModule.forRoot([ USER_HOME_ROUTE ], { useHash: true }),
-        RouterModule.forRoot([ USER_HOME_SCHEDULES_ROUTE ], { useHash: true })
+        RouterModule.forRoot([ PUPIL_HOME_ROUTE ], { useHash: true }),
+        RouterModule.forRoot([ PUPIL_HOME_SCHEDULES_ROUTE ], { useHash: true })
     ],
     declarations: [
         CalendarComponent,
-        UserHomeComponent,
-        UserHomeSchedulesComponent,
+        PupilHomeComponent,
+        PupilHomeSchedulesComponent,
     ],
     entryComponents: [
-        UserHomeComponent,
-        UserHomeSchedulesComponent
+        PupilHomeComponent,
+        PupilHomeSchedulesComponent
     ],
     providers: [
-        UserHomeService
+        PupilHomeService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
-export class SchoolNetUserHomeModule {}
+export class SchoolNetPupilHomeModule {}
