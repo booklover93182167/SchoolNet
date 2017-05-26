@@ -4,20 +4,20 @@
 import {Component, OnInit} from '@angular/core';
 import { Response } from '@angular/http';
 import {Principal} from '../shared';
-import {UserHomeService} from "./user-home.service";
+import {PupilHomeService} from "./pupil-home.service";
 import { EventManager, JhiLanguageService } from 'ng-jhipster';
 
 @Component({
-    selector: 'user-home',
-    templateUrl: 'user-home.component.html',
-    styleUrls: ['user-home.component.css'],
+    selector: 'pupil-home',
+    templateUrl: 'pupil-home.component.html',
+    styleUrls: ['pupil-home.component.css'],
 })
-export class UserHomeComponent implements OnInit{
+export class PupilHomeComponent implements OnInit{
     account: any;
 
     constructor(private principal: Principal,
                 private jhiLanguageService: JhiLanguageService,
-                private userHomeService: UserHomeService) {
+                private pupilHomeService: PupilHomeService) {
         this.jhiLanguageService.setLocations(['home']);
     }
 

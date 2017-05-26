@@ -100,7 +100,7 @@ public class ScheduleResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of schedules in body
      */
-    @RequestMapping(value = "userhome/getschedules", method = RequestMethod.GET)
+    @RequestMapping(value = "pupilhome/getschedules", method = RequestMethod.GET)
     @Timed
     public List<ScheduleDTO> getSchedulesByFormIdAndMonth() {
         log.debug("REST request to get schedule by formId");

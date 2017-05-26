@@ -7,7 +7,7 @@
     <div class="row">
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="userSchedules">
+    <div class="table-responsive" *ngIf="pupilSchedules">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -26,7 +26,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let schedule of userSchedules ;trackBy: trackId" >
+            <tr *ngFor="let schedule of pupilSchedules ;trackBy: trackId" >
                 <div *ngIf="checkDate(schedule.date)">
                 <td><a [routerLink]="['../schedule-my-suffix', schedule.id ]">{{schedule.id}}</a></td>
                 <td>{{schedule.date | date:'medium'}}</td>

@@ -4,12 +4,12 @@
 import { Injectable } from '@angular/core';
 import {Subject, Observable} from "rxjs";
 import { Http, Response, URLSearchParams, BaseRequestOptions } from '@angular/http';
-import { UserHomeSchedules } from './user-home-schedules/user-home-schedules.model';
+import { PupilHomeSchedules } from './pupil-home-schedules/pupil-home-schedules.model';
 import { DateUtils } from 'ng-jhipster';
 @Injectable()
-export class UserHomeService {
+export class PupilHomeService {
 
-    private resourceUrl = 'api/userhome';
+    private resourceUrl = 'api/pupilhome';
 
     constructor(private http: Http, private dateUtils: DateUtils) { }
 

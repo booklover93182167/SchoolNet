@@ -3,30 +3,30 @@ import {Response} from '@angular/http';
 import {Subscription} from 'rxjs/Rx';
 import {EventManager, JhiLanguageService, AlertService} from 'ng-jhipster';
 
-import {UserHomeSchedules} from './user-home-schedules.model';
-import {UserHomeService} from '../user-home.service';
+import {PupilHomeSchedules} from './pupil-home-schedules.model';
+import {PupilHomeService} from '../pupil-home.service';
 import {ITEMS_PER_PAGE, Principal} from '../../shared';
 //service to retrieve schedules for pupil
 @Component({
-    selector: 'jhi-user-home-schedules',
-    templateUrl: './user-home-schedules.component.html',
+    selector: 'jhi-pupil-home-schedules',
+    templateUrl: './pupil-home-schedules.component.html',
 })
-export class UserHomeSchedulesComponent implements OnInit{
-    userSchedules: UserHomeSchedules[] = [];
+export class PupilHomeSchedulesComponent implements OnInit{
+    pupilSchedules: PupilHomeSchedules[] = [];
     currentAccount: any;
     eventSubscriber: Subscription;
 
-    selectedDayArray: UserHomeSchedules[];
+    selectedDayArray: PupilHomeSchedules[];
 
     selectedDate: Date;
 
     constructor(private jhiLanguageService: JhiLanguageService,
-                private userHomeService: UserHomeService,
+                private pupilHomeService: PupilHomeService,
                 private alertService: AlertService,
                 private eventManager: EventManager,
                 private principal: Principal) {
         //subscribe on chsnges in calendar
-        this.userHomeService.dateToSend$.subscribe(
+        this.pupilHomeService.dateToSend$.subscribe(
             data => {
                 this.selectedDate = data;
             });
@@ -43,16 +43,16 @@ export class UserHomeSchedulesComponent implements OnInit{
     //function to load form by ID
     // TODO: add year param and tether with UI event
     loadByFormIdAndMonth() {
-        this.userHomeService.findByFormAndMonth().subscribe(
+        this.pupilHomeService.findByFormAndMonth().subscribe(
             (res: Response) => {
-                this.userSchedules = res.json();
+                this.pupilSchedules = res.json();
             },
             (res: Response) => this.onError(res.json())
         );
 
     }
 
-    trackId(index: number, item: UserHomeSchedules) {
+    trackId(index: number, item: PupilHomeSchedules) {
         return item.id;
     }
 
