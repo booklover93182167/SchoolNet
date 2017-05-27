@@ -16,7 +16,7 @@ export class PupilHomeSchedulesComponent implements OnInit {
     currentAccount: any;
     eventSubscriber: Subscription;
 
-    selectedDate: Date;
+    selectedDate: Date = new Date(Date.now());
 
     constructor(private jhiLanguageService: JhiLanguageService,
                 private pupilHomeService: PupilHomeService,
@@ -34,7 +34,6 @@ export class PupilHomeSchedulesComponent implements OnInit {
 
     ngOnInit() {
         this.loadByFormId();
-        this.selectedDate = new Date(Date.now());
     }
 
     // function to load schedules for form for current user(if he is pupil)
