@@ -6,7 +6,6 @@ import { Route } from '@angular/router';
 import { UserRouteAccessService } from '../shared';
 import { PupilHomeComponent } from './';
 
-
 export const PUPIL_HOME_ROUTE: Route = {
     path: 'pupil-home',
     component:

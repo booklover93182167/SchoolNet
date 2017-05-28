@@ -15,6 +15,7 @@ export class PupilHomeSchedulesComponent implements OnInit {
     pupilSchedules: PupilHomeSchedules[] = [];
     currentAccount: any;
     eventSubscriber: Subscription;
+    currentSchedules: PupilHomeSchedules[] = [];
 
     selectedDate: Date = new Date(Date.now());
 
@@ -23,10 +24,14 @@ export class PupilHomeSchedulesComponent implements OnInit {
                 private alertService: AlertService,
                 private eventManager: EventManager,
                 private principal: Principal) {
+
         // subscribe on changes in calendar
         this.pupilHomeService.dateToSend$.subscribe(
             (data) => {
                 this.selectedDate = data;
+
+                //update schedules when new date is selected
+                this.currentSchedules = this.getSchedules();
             });
         this.jhiLanguageService.setLocations(['home']);
 
@@ -41,6 +46,8 @@ export class PupilHomeSchedulesComponent implements OnInit {
         this.pupilHomeService.findByForm().subscribe(
             (res: Response) => {
                 this.pupilSchedules = res.json();
+                //initialize schedules for today
+                this.currentSchedules = this.pupilHomeService.getSchedulesForDate(this.selectedDate, this.pupilSchedules);
             },
             (res: Response) => this.onError(res.json())
         );
@@ -55,6 +62,7 @@ export class PupilHomeSchedulesComponent implements OnInit {
         this.alertService.error(error.message, null, null);
     }
 
+    //deprecated
     checkDate(date: Date): boolean {
         if (date.getDate() === this.selectedDate.getDate() &&
             date.getFullYear() === this.selectedDate.getFullYear() &&
@@ -62,6 +70,12 @@ export class PupilHomeSchedulesComponent implements OnInit {
             console.log('profit');
             return true;
         }
+    }
+
+    //get an array of schedules fom pupilSchedules for selectedDate
+    getSchedules(): PupilHomeSchedules[] {
+        console.log('entered getSchedules');
+        return this.pupilHomeService.getSchedulesForDate(this.selectedDate, this.pupilSchedules);
     }
 
 }
