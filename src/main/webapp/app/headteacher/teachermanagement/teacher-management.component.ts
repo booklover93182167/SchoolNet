@@ -1,13 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Response } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { Subscription } from 'rxjs/Rx';
 import { EventManager, ParseLinks, PaginationUtil, JhiLanguageService, AlertService } from 'ng-jhipster';
 
 import { TeacherManagement } from './teacher-management.model';
 import { TeacherManagementService } from './teacher-management.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
-import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+
+
+
+
 
 @Component({
     selector: 'jhi-teacher-management',
@@ -17,15 +21,17 @@ export class TeacherManagementComponent implements OnInit, OnDestroy {
 teachers: TeacherManagement[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    authorities: any[];
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
         private teacherService: TeacherManagementService,
         private alertService: AlertService,
         private eventManager: EventManager,
-        private principal: Principal
+        private principal: Principal,
+
     ) {
-        this.jhiLanguageService.setLocations(['teacher']);
+        this.jhiLanguageService.setLocations(['teacher','user-management']);
     }
 
     loadAll() {
