@@ -50,7 +50,7 @@ public class Teacher implements Serializable {
     //@NotNull
     private School school;
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Schedule> schedules = new HashSet<>();

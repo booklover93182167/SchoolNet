@@ -10,10 +10,10 @@
     </div>
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" routerLink="user-home" (click)="collapseNavbar()">
+            <li *jhiHasAnyAuthority="'ROLE_USER'"class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="pupil-home" (click)="collapseNavbar()">
                     <i class="fa fa-home" aria-hidden="true"></i>
-                    <span jhiTranslate="global.menu.user-home">User-Home</span>
+                    <span jhiTranslate="global.menu.pupil-home">Pupil-Home</span>
                 </a>
             </li>
             <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -107,12 +107,6 @@
                         <a class="dropdown-item" routerLink="parent-my-suffix" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
                             <span jhiTranslate="global.menu.entities.parentMySuffix">Parent My Suffix</span>
-                        </a>
-                    </li>
-                    <li uiSrefActive="active">
-                        <a class="dropdown-item" routerLink="schedule-demo" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>ScheduleDemo</span>
                         </a>
                     </li>
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->

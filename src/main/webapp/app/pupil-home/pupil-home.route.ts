@@ -4,13 +4,12 @@
 import { Route } from '@angular/router';
 
 import { UserRouteAccessService } from '../shared';
-import { UserHomeComponent } from './';
+import { PupilHomeComponent } from './';
 
-
-export const USER_HOME_ROUTE: Route = {
-    path: 'user-home',
+export const PUPIL_HOME_ROUTE: Route = {
+    path: 'pupil-home',
     component:
-    UserHomeComponent,
+    PupilHomeComponent,
     data:
     {
         authorities: ['ROLE_USER'],
