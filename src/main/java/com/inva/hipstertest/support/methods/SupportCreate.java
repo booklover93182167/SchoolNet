@@ -47,7 +47,7 @@ abstract public class SupportCreate {
         user.setActivated(true);
         Set<Authority> auto = new HashSet<>();
         Authority authority = new Authority();
-        if(role.equals("headTeacher")){
+        if(role.equals("headTeacher")){ //enum
             authority.setName("ROLE_HEAD_TEACHER");
             auto.add(authority);
         }else if(role.equals("teacher")){
@@ -73,10 +73,10 @@ abstract public class SupportCreate {
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(ZonedDateTime.now());
-        User u = userRepository.save(user);
+        user = userRepository.save(user);
         String content = "Your login: (" + login + "). And password: (" + noEncryptedPassword + ").";
         Map<String, Object> map = new HashMap<>();
-        map.put("id", u);
+        map.put("id", user);
         map.put("content", content);
         return map;
     }

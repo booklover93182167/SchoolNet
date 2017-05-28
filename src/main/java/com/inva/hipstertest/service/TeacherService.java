@@ -51,7 +51,7 @@ public interface TeacherService {
      * we take this entity in UI level(some form).
      * @return String information about login and password.
      */
-    String saveTeacherWithUser(TeacherDTO teacherDTO, User userForPage, Principal principal);
+    String  saveTeacherWithUser(TeacherDTO teacherDTO, User userForPage, Principal principal);
 
 
 

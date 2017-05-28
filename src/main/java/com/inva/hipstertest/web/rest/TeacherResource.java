@@ -7,6 +7,7 @@ import com.inva.hipstertest.repository.TeacherRepository;
 import com.inva.hipstertest.repository.UserRepository;
 import com.inva.hipstertest.service.MailService;
 import com.inva.hipstertest.service.TeacherService;
+import com.inva.hipstertest.service.dto.UserDTO;
 import com.inva.hipstertest.web.rest.util.HeaderUtil;
 import com.inva.hipstertest.service.dto.TeacherDTO;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -165,5 +166,29 @@ public class TeacherResource {
 */
 
     }
+
+    @PostMapping("/headteacher-management")
+    @Timed
+    public String createTeacherWithUser(@Valid @RequestBody UserDTO userDTO, Principal principal) throws URISyntaxException {
+        log.debug("REST request to save Teacher : {}", userDTO);
+        //TeacherDTO teacherDTO = new TeacherDTO();
+        System.out.println(principal);
+        TeacherDTO teacherDTOs = new TeacherDTO();
+        User user = new User();
+        //Set userDTO
+        user.setEmail(userDTO.getEmail());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        String context = teacherService.saveTeacherWithUser(teacherDTOs, user, principal);
+        mailService.sendSimpleEmail(user.getEmail(), context);
+
+        //TeacherDTO result = teacherService.save(teacherDTOs);
+//        return ResponseEntity.created(new URI("/api/headteacher-management/" + teacherDTOs))
+//            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, teacherDTOs.toString()))
+//            .body(teacherDTOs);
+
+        return "redirect/headteacher-management";
+    }
+
 
 }
