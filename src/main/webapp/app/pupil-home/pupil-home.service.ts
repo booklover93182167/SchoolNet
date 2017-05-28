@@ -39,5 +39,19 @@ export class PupilHomeService {
     publishData(data: Date) {
         this.dateToSend.next(data);
     }
+
+    //get schedules array for specified date
+    getSchedulesForDate(date: Date, pupilSchedules: PupilHomeSchedules[]): PupilHomeSchedules[] {
+        console.log('entered getschedules for date');
+        let schedulesForDate: PupilHomeSchedules[] = [];
+        for(let schedule of pupilSchedules){
+            if (date.getDate() === schedule.date.getDate() &&
+                date.getFullYear() === schedule.date.getFullYear() &&
+                date.getMonth() === schedule.date.getMonth()) {
+                schedulesForDate.push(schedule);
+            }
+        }
+        return schedulesForDate;
+    }
     /////////////////////////////////////////////////////////////////
 }

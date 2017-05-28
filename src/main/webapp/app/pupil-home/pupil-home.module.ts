@@ -13,6 +13,7 @@ import { CalendarComponent } from './calendar-component/calendar.component';
 import { SchoolNetSharedModule } from '../shared';
 import { PupilHomeService } from './pupil-home.service';
 import { PupilHomeSchedulesSortPipe } from './pupil-home-schedules/pupil-home-schedules-sortpipe';
+import { PupilHomeSchedulesMapToIterablePipe } from './pupil-home-maptoiterable';
 
 import { PUPIL_HOME_ROUTE, PUPIL_HOME_SCHEDULES_ROUTE, PupilHomeComponent, PupilHomeSchedulesComponent } from './';
 
@@ -29,6 +30,7 @@ import { PUPIL_HOME_ROUTE, PUPIL_HOME_SCHEDULES_ROUTE, PupilHomeComponent, Pupil
     ],
     declarations: [
         PupilHomeSchedulesSortPipe,
+        PupilHomeSchedulesMapToIterablePipe,
         CalendarComponent,
         PupilHomeComponent,
         PupilHomeSchedulesComponent,
