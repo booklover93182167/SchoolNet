@@ -25,6 +25,10 @@ public class TeacherDTO implements Serializable {
 
     private Long schoolId;
 
+    private String lastName;
+
+    private String firstName;
+
     public Long getId() {
         return id;
     }
@@ -70,6 +74,22 @@ public class TeacherDTO implements Serializable {
 
     public void setSchoolId(Long schoolId) {
         this.schoolId = schoolId;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     @Override
