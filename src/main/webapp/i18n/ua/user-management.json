@@ -16,7 +16,7 @@
         },
         "login": "Логін",
         "firstName": "Ім'я",
-        "lastName": "Фамілія",
+        "lastName": "Прізвище",
         "email": "Email",
         "activated": "Активний",
         "deactivated": "Не активний",

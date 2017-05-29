@@ -47,13 +47,9 @@ public interface TeacherService {
      * Save a teacher.
      *
      * @param teacherDTO the entity to save
-     * @param userForPage the entity to save and
      * we take this entity in UI level(some form).
      * @return String information about login and password.
      */
-    String  saveTeacherWithUser(TeacherDTO teacherDTO, User userForPage, Principal principal);
+    TeacherDTO saveTeacherWithUser(TeacherDTO teacherDTO);
 
-
-
-    Teacher findOneWithSchool(Long id);
 }

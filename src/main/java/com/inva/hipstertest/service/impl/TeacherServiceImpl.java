@@ -2,6 +2,8 @@ package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.*;
 import com.inva.hipstertest.repository.SchoolRepository;
+import com.inva.hipstertest.service.MailService;
+import com.inva.hipstertest.service.SchoolService;
 import com.inva.hipstertest.service.TeacherService;
 import com.inva.hipstertest.repository.TeacherRepository;
 import com.inva.hipstertest.service.UserService;
@@ -9,6 +11,7 @@ import com.inva.hipstertest.service.dto.TeacherDTO;
 import com.inva.hipstertest.service.dto.UserDTO;
 import com.inva.hipstertest.service.mapper.TeacherMapper;
 import com.inva.hipstertest.service.util.RandomUtil;
+import com.inva.hipstertest.support.methods.ROLE_ENUM;
 import com.inva.hipstertest.support.methods.SupportCreate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +37,11 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
 
     private final TeacherMapper teacherMapper;
 
-    //@Autowired
-    //private SchoolRepository schoolRepository;
+    @Autowired
+    private MailService mailService;
+
+    @Autowired
+    private SchoolService schoolService;
 
     @Autowired
     private UserService service;
@@ -109,33 +115,23 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
      *
      * @param teacherDTO the entity to save         //NEED CORRECTION
      */
-
     @Override
-    public String saveTeacherWithUser(TeacherDTO teacherDTO, User userStart, Principal principal) {
-        log.debug("Request to save Teacher : {}", teacherDTO, userStart);
-        Map<String, Object> information = super.saveUserWithRole(userStart, "headTeacher");
-        User user1 = (User) information.get("id");
+    public TeacherDTO saveTeacherWithUser(TeacherDTO teacherDTO) {
+        log.debug("Request to save Teacher : {}", teacherDTO);
+        Map<String, Object> information = super.saveUserWithRole(teacherDTO, ROLE_ENUM.HEAD_TEACHER);
+        User user = (User) information.get("userObject");
         String content = (String) information.get("content");
         teacherDTO.setEnabled(true);
         Teacher teacher = teacherMapper.teacherDTOToTeacher(teacherDTO);
 
-        //System.out.println(principal.getName()); // LOGIN
+        //System.out.println(teacherRepository.findOneWithSchool().getSchool().toString());
 
-        School school = new School();
-        school.setEnabled(true);
-        school.setId(1L);
-        school.setName("?? ?91");
-        teacher.setSchool(school);
+        mailService.sendSimpleEmail(teacherDTO.getEmail(), content);
 
-        teacher.setUser(user1);
-        teacherRepository.save(teacher);
-        return content;
+        teacher.setSchool(teacherRepository.findOneWithSchool().getSchool());
+        teacher.setUser(user);
+        TeacherDTO teacherDTOs = teacherMapper.teacherToTeacherDTO(teacherRepository.save(teacher));
+        return teacherDTOs;
     }
-
-    @Override
-    public Teacher findOneWithSchool(Long id){
-        return teacherRepository.findOneWithSchool(id);
-    }
-
 
 }

@@ -4,6 +4,12 @@
         "browsehappy": "Ваш браузер <strong>устарел</strong>. Пожалуйста <a href=\"http://browsehappy.com/?locale=ru\">обновите ваш браузер</a>.",
         "menu": {
             "pupil-home": "Pupil Home",
+            "management":"Управления",
+            "teacher-management":{
+                "teachers":"Учителя",
+                "schedules":"Расписания",
+                "forms":"Класи"
+            },
             "home": "Главная",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
