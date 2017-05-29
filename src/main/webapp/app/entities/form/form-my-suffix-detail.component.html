@@ -16,10 +16,10 @@
             </div>
         </dd>
         <dt><span jhiTranslate="schoolNetApp.form.pupils">Pupils</span></dt>
-        <dd> 
+        <dd>
 
-                <div *ngIf="form.pupilsId">
-                    <a >{{form.pupilsId.name}}</a>
+                <div *ngFor="let i of form.pupilsId">
+                    <a>{{i.id}}</a>
                 </div>
 
         </dd>
