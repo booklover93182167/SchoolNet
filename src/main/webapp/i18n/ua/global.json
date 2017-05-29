@@ -3,7 +3,7 @@
         "title": "SchoolNet",
         "browsehappy": "Ваш браузер <strong>застарів</strong>. Будь-ласка <a href=\"http://browsehappy.com/?locale=ru\">оновіть ваш браузер</a>.",
         "menu": {
-            "user-home": "User Home",
+            "pupil-home": "Pupil Home",
             "home": "Головна",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {

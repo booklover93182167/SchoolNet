@@ -25,11 +25,11 @@ public class TeacherDTO implements Serializable {
 
     private Long schoolId;
 
-    private String teacherFirsName;
+    private String lastName;
 
-    private String teacherLastName;
+    private String firstName;
 
-    private String teacherEmail;
+    private String email;
 
     public Long getId() {
         return id;
@@ -78,28 +78,28 @@ public class TeacherDTO implements Serializable {
         this.schoolId = schoolId;
     }
 
-    public String getTeacherFirsName() {
-        return teacherFirsName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setTeacherFirsName(String teacherFirsName) {
-        this.teacherFirsName = teacherFirsName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getTeacherLastName() {
-        return teacherLastName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setTeacherLastName(String teacherLastName) {
-        this.teacherLastName = teacherLastName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getTeacherEmail() {
-        return teacherEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setTeacherEmail(String teacherEmail) {
-        this.teacherEmail = teacherEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

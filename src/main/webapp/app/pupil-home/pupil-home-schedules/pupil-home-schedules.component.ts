@@ -19,6 +19,20 @@ export class PupilHomeSchedulesComponent implements OnInit {
 
     selectedDate: Date = new Date(Date.now());
 
+    //values to show selected homework
+    selectedHomework: string = null;
+    isSelectedHomework: boolean = false;
+
+    selectHomework(homework: string): void {
+        if(this.isSelectedHomework){
+            this.selectedHomework = null;
+            this.isSelectedHomework = false;
+        }else{
+            this.selectedHomework = homework;
+            this.isSelectedHomework = true;
+        }
+    }
+
     constructor(private jhiLanguageService: JhiLanguageService,
                 private pupilHomeService: PupilHomeService,
                 private alertService: AlertService,
@@ -62,20 +76,9 @@ export class PupilHomeSchedulesComponent implements OnInit {
         this.alertService.error(error.message, null, null);
     }
 
-    //deprecated
-    checkDate(date: Date): boolean {
-        if (date.getDate() === this.selectedDate.getDate() &&
-            date.getFullYear() === this.selectedDate.getFullYear() &&
-            date.getMonth() === this.selectedDate.getMonth()) {
-            console.log('profit');
-            return true;
-        }
-    }
-
     //get an array of schedules fom pupilSchedules for selectedDate
     getSchedules(): PupilHomeSchedules[] {
         console.log('entered getSchedules');
         return this.pupilHomeService.getSchedulesForDate(this.selectedDate, this.pupilSchedules);
     }
-
 }

@@ -16,6 +16,8 @@ export class PupilHomeSchedules {
         public lessonName?: string,
         public formName?: string,
         public classroomName?: string,
+        public teacherLastName?: string,
+        public teacherFirstName?: string,
     ) {
         this.enabled = false;
     }
