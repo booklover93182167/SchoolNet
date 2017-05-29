@@ -88,3 +88,14 @@ schedules
 - Refactor user-home component -> move business logic to service
 3) -
 ----------------------------------------
+Orest: 28.05.2017
+1)
+- Refactored pupil-home (moved schedules logic to service),
+added another array generation for current day schedules,
+linked it with calendar.
+- Slight changes for onInit() method according to refactoring
+2)
+- Add creation of schedules table with fixed number of rows,
+add empty rows in table without lesson
+3) -
+----------------------------------------
