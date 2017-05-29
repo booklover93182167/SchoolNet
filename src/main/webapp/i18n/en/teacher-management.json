@@ -19,7 +19,9 @@
             "enabled": "Enabled",
             "classroom": "Classroom",
             "form": "Form",
-            "teacher": "Teacher"
+            "teacher": "Teacher",
+            "firstName":"First Name",
+            "lastName":"Last Name"
         }
     }
 }

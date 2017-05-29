@@ -1,5 +1,6 @@
 package com.inva.hipstertest.repository;
 
+import com.inva.hipstertest.domain.School;
 import com.inva.hipstertest.domain.User;
 
 import java.time.ZonedDateTime;
@@ -36,7 +37,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Page<User> findAllByLoginNot(Pageable pageable, String login);
 
-    @Query("select u.id from User u where u.login = ?1")
-    Long findByLoginUserId(String login);
+    //@Query("select u.id from User u where u.login =?#{principal.username}")
+    //Long findByLoginUserId();
 
 }

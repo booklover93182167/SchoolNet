@@ -2,6 +2,7 @@ package com.inva.hipstertest.support.methods;
 
 import com.inva.hipstertest.domain.*;
 import com.inva.hipstertest.repository.UserRepository;
+import com.inva.hipstertest.service.dto.TeacherDTO;
 import com.inva.hipstertest.service.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,34 +31,34 @@ abstract public class SupportCreate {
 
     /**
      *
-     * @param paramFromPage must have:
+     * @param teacherDTO must have:
      * firstName, lastName, email.
-     * @param role [teacher, pupil, headTeacher, parent]
+     * @param role ROLE_ENUM [HEAD_TEACHER, PARENT, PUPIL, TEACHER]
      * */
-    public Map<String, Object> saveUserWithRole(User paramFromPage, String role){
-        log.debug("Request to save user", paramFromPage, role);
+    public Map<String, Object> saveUserWithRole(TeacherDTO teacherDTO, ROLE_ENUM role){
+        log.debug("Request to save user", teacherDTO, role);
         User user = new User();
-        String login =  RandomUtil.generateLogin(paramFromPage.getFirstName(), paramFromPage.getLastName());
+        String login =  RandomUtil.generateLogin(teacherDTO.getFirstName(), teacherDTO.getLastName());
         user.setLogin(login);
-        user.setFirstName(paramFromPage.getFirstName());
-        user.setLastName(paramFromPage.getLastName());
-        user.setEmail(paramFromPage.getEmail());
+        user.setFirstName(teacherDTO.getFirstName());
+        user.setLastName(teacherDTO.getLastName());
+        user.setEmail(teacherDTO.getEmail());
         user.setLangKey("en");
         /* For user what we need use true */
         user.setActivated(true);
         Set<Authority> auto = new HashSet<>();
         Authority authority = new Authority();
-        if(role.equals("headTeacher")){ //enum
+        if(role.equals(ROLE_ENUM.HEAD_TEACHER)){
             authority.setName("ROLE_HEAD_TEACHER");
             auto.add(authority);
-        }else if(role.equals("teacher")){
+        }else if(role.equals(ROLE_ENUM.TEACHER)){
             authority.setName("ROLE_TEACHER");
             auto.add(authority);
-        }else if(role.equals("pupil")){
+        }else if(role.equals(ROLE_ENUM.PUPIL)){
             authority.setName("ROLE_PUPIL");
             auto.add(authority);
             user.setActivated(false);
-        }else if(role.equals("parent")){
+        }else if(role.equals(ROLE_ENUM.PARENT)){
             authority.setName("ROLE_PARENT");
             auto.add(authority);
             user.setActivated(false);
@@ -76,7 +77,7 @@ abstract public class SupportCreate {
         user = userRepository.save(user);
         String content = "Your login: (" + login + "). And password: (" + noEncryptedPassword + ").";
         Map<String, Object> map = new HashMap<>();
-        map.put("id", user);
+        map.put("userObject", user);
         map.put("content", content);
         return map;
     }
