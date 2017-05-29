@@ -1,5 +1,5 @@
 <div>
-    <h2>{{selectedDate}}</h2>
+    <h2>{{selectedDate | date:'shortDate'}}</h2>
     <h2>
         <span>User Schedules</span>
     </h2>
@@ -12,10 +12,8 @@
             <thead>
             <tr>
                     <th><span>Lesson Position</span></th>
-                    <th><span>Date</span></th>
                     <th><span>Lesson</span></th>
                     <th><span>Homework</span></th>
-                    <th><span>Form</span></th>
                     <th><span>Classroom</span></th>
                     <th><span>Teacher</span></th>
             </tr>
@@ -23,18 +21,12 @@
             <tbody>
             <tr *ngFor="let schedule of currentSchedules | mapToIterable">
                     <td>{{schedule.lessonPosition}}</td>
-                    <td>{{schedule.date | date:'shortDate'}}</td>
                     <td>
                         <div *ngIf="schedule.lessonId">
                             <a [routerLink]="['../lesson-my-suffix', schedule.lessonId  ]" >{{schedule.lessonName}}</a>
                         </div>
                     </td>
-                    <td>{{schedule.homework}}</td>
-                    <td>
-                        <div *ngIf="schedule.formId">
-                            <a [routerLink]="['../form-my-suffix', schedule.formId  ]" >{{schedule.formName}}</a>
-                        </div>
-                    </td>
+                <a (click)="selectHomework(schedule.homework)"> <td>{{schedule.homework | lengthPipe : 10}}</td></a>
                     <td>
                         <div *ngIf="schedule.classroomId">
                             <a [routerLink]="['../classroom-my-suffix', schedule.classroomId  ]" >{{schedule.classroomName}}</a>
@@ -48,5 +40,7 @@
             </tr>
             </tbody>
         </table>
+        <!--show selected homework-->
+        <h2>{{selectedHomework}}</h2>
     </div>
 </div>
