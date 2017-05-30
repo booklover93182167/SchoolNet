@@ -24,6 +24,7 @@ import {
     ActiveMenuDirective,
     ErrorComponent
 } from './layouts';
+import {SchoolNetTeacherHomeModule} from './teacher-home/teacher-home.module';
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import {
         SchoolNetAdminModule,
         SchoolNetAccountModule,
         SchoolNetEntityModule,
-         SchoolNetPupilHomeModule
+         SchoolNetPupilHomeModule,
+        SchoolNetTeacherHomeModule
     ],
     declarations: [
         JhiMainComponent,

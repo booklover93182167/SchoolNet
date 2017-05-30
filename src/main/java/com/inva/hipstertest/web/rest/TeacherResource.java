@@ -28,7 +28,7 @@ public class TeacherResource {
     private final Logger log = LoggerFactory.getLogger(TeacherResource.class);
 
     private static final String ENTITY_NAME = "teacher";
-        
+
     private final TeacherService teacherService;
 
     public TeacherResource(TeacherService teacherService) {
@@ -100,6 +100,19 @@ public class TeacherResource {
     public ResponseEntity<TeacherDTO> getTeacher(@PathVariable Long id) {
         log.debug("REST request to get Teacher : {}", id);
         TeacherDTO teacherDTO = teacherService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(teacherDTO));
+    }
+
+    /**
+     * GET  /teachers/current : get current teacher.
+     *
+     * @return the ResponseEntity with status 200 (OK) and with body the current teacherDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/teachers/current")
+    @Timed
+    public ResponseEntity<TeacherDTO> getCurrentTeacher() {
+        log.debug("REST request to get current Teacher");
+        TeacherDTO teacherDTO = teacherService.findTeacherByCurrentUser();
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(teacherDTO));
     }
 

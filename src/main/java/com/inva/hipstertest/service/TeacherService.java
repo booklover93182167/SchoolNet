@@ -18,7 +18,7 @@ public interface TeacherService {
 
     /**
      *  Get all the teachers.
-     *  
+     *
      *  @return the list of entities
      */
     List<TeacherDTO> findAll();
@@ -30,6 +30,13 @@ public interface TeacherService {
      *  @return the entity
      */
     TeacherDTO findOne(Long id);
+
+    /**
+     *  Find teacher by current user
+     *
+     *  @return the entity
+     */
+    TeacherDTO findTeacherByCurrentUser();
 
     /**
      *  Delete the "id" teacher.

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class TeacherServiceImpl implements TeacherService{
 
     private final Logger log = LoggerFactory.getLogger(TeacherServiceImpl.class);
-    
+
     private final TeacherRepository teacherRepository;
 
     private final TeacherMapper teacherMapper;
@@ -49,7 +49,7 @@ public class TeacherServiceImpl implements TeacherService{
 
     /**
      *  Get all the teachers.
-     *  
+     *
      *  @return the list of entities
      */
     @Override
@@ -76,6 +76,17 @@ public class TeacherServiceImpl implements TeacherService{
         Teacher teacher = teacherRepository.findOneWithEagerRelationships(id);
         TeacherDTO teacherDTO = teacherMapper.teacherToTeacherDTO(teacher);
         return teacherDTO;
+    }
+
+    /**
+     *  Find teacher by current user.
+     *
+     *  @return the entity
+     */
+    @Override
+    public TeacherDTO findTeacherByCurrentUser() {
+        log.debug("Request to get Teacher by current user");
+        return teacherMapper.teacherToTeacherDTO(teacherRepository.findTeacherByCurrentUser());
     }
 
     /**
