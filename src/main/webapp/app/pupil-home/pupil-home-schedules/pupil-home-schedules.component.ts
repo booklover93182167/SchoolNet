@@ -16,18 +16,19 @@ export class PupilHomeSchedulesComponent implements OnInit {
     currentAccount: any;
     eventSubscriber: Subscription;
     currentSchedules: PupilHomeSchedules[] = [];
+    schedulesWithBlanks: PupilHomeSchedules[] = [];
 
     selectedDate: Date = new Date(Date.now());
 
-    //values to show selected homework
+    // values to show selected homework
     selectedHomework: string = null;
     isSelectedHomework: boolean = false;
 
     selectHomework(homework: string): void {
-        if(this.isSelectedHomework){
+        if (this.isSelectedHomework) {
             this.selectedHomework = null;
             this.isSelectedHomework = false;
-        }else{
+        }else {
             this.selectedHomework = homework;
             this.isSelectedHomework = true;
         }
@@ -44,8 +45,8 @@ export class PupilHomeSchedulesComponent implements OnInit {
             (data) => {
                 this.selectedDate = data;
 
-                //update schedules when new date is selected
-                this.currentSchedules = this.getSchedules();
+                // update schedules when new date is selected
+                this.schedulesWithBlanks = this.getSchedulesWithBlanks();
             });
         this.jhiLanguageService.setLocations(['home']);
 
@@ -60,7 +61,7 @@ export class PupilHomeSchedulesComponent implements OnInit {
         this.pupilHomeService.findByForm().subscribe(
             (res: Response) => {
                 this.pupilSchedules = res.json();
-                //initialize schedules for today
+                // initialize schedules for today
                 this.currentSchedules = this.pupilHomeService.getSchedulesForDate(this.selectedDate, this.pupilSchedules);
             },
             (res: Response) => this.onError(res.json())
@@ -76,9 +77,35 @@ export class PupilHomeSchedulesComponent implements OnInit {
         this.alertService.error(error.message, null, null);
     }
 
-    //get an array of schedules fom pupilSchedules for selectedDate
+    // get an array of schedules fom pupilSchedules for selectedDate
     getSchedules(): PupilHomeSchedules[] {
         console.log('entered getSchedules');
-        return this.pupilHomeService.getSchedulesForDate(this.selectedDate, this.pupilSchedules);
+        return this.generateArray(this.pupilHomeService.getSchedulesForDate(this.selectedDate, this.pupilSchedules));
     }
+
+    // helper method to make new array iterable
+    generateArray(obj) {
+        return Object.keys(obj).map((key) => obj[key] );
+    }
+
+    //generate schedules table with blank fields(where there is no lesson at this position)
+    getSchedulesWithBlanks(): PupilHomeSchedules[] {
+        this.schedulesWithBlanks = [];
+        let currentSched = this.getSchedules();
+        for (var i = 1; i < 11; i++) {
+            let match = false;
+            for (var j = 0; j < currentSched.length; j++) {
+                if(currentSched[j].lessonPosition === i) {
+                    this.schedulesWithBlanks.push(currentSched[j]);
+                    match = true;
+                }
+            }
+            if (match === false) {
+                let blankSchedule = new PupilHomeSchedules(null, null, "n/a", i, true, null, null, null, null, null, "n/a", null, "n/a", "n/a", "n/a");
+                this.schedulesWithBlanks.push(blankSchedule);
+            }
+        }
+        return this.schedulesWithBlanks;
+    }
+
 }

@@ -19,7 +19,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let schedule of currentSchedules | mapToIterable">
+            <tr *ngFor="let schedule of getSchedulesWithBlanks()">
                     <td>{{schedule.lessonPosition}}</td>
                     <td>
                         <div *ngIf="schedule.lessonId">
