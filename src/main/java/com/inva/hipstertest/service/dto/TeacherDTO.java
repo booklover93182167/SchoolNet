@@ -29,6 +29,8 @@ public class TeacherDTO implements Serializable {
 
     private String firstName;
 
+    private String email;
+
     public Long getId() {
         return id;
     }
@@ -76,14 +78,6 @@ public class TeacherDTO implements Serializable {
         this.schoolId = schoolId;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -92,11 +86,28 @@ public class TeacherDTO implements Serializable {
         this.firstName = firstName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
+
         if (o == null || getClass() != o.getClass()) {
             return false;
         }

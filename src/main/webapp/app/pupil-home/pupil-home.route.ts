@@ -12,7 +12,7 @@ export const PUPIL_HOME_ROUTE: Route = {
     PupilHomeComponent,
     data:
     {
-        authorities: ['ROLE_USER'],
+        authorities: ['ROLE_PUPIL'],
     },
     canActivate: [UserRouteAccessService]
 };

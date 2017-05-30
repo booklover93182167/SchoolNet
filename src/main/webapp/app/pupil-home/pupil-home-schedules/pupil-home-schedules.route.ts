@@ -12,7 +12,7 @@ export const PUPIL_HOME_SCHEDULES_ROUTE: Route = {
         PupilHomeSchedulesComponent,
         data:
         {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_PUPIL'],
             pageTitle: 'schoolNetApp.schedule.home.title'
         },
     canActivate: [UserRouteAccessService]
