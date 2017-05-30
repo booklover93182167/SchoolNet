@@ -1,3 +1,5 @@
+
+
 export class PupilMySuffix {
     constructor(
         public id?: number,
@@ -5,7 +7,9 @@ export class PupilMySuffix {
         public userId?: number,
         public attendancesId?: number,
         public formId?: number,
-        public parentId?: number,
+        public parentsId?: number[],
+        public lastName?: string,
+        public firstName?: string
     ) {
         this.enabled = false;
     }

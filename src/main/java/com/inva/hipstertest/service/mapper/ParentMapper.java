@@ -13,11 +13,13 @@ import java.util.List;
 public interface ParentMapper {
 
     @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "pupils", target = "pupils")
     ParentDTO parentToParentDTO(Parent parent);
 
     List<ParentDTO> parentsToParentDTOs(List<Parent> parents);
 
     @Mapping(source = "userId", target = "user")
+    @Mapping(source = "pupils", target = "pupils")
     Parent parentDTOToParent(ParentDTO parentDTO);
 
     List<Parent> parentDTOsToParents(List<ParentDTO> parentDTOs);
@@ -28,7 +30,7 @@ public interface ParentMapper {
      * @param id id of the entity
      * @return the entity instance
      */
-     
+
     default Parent parentFromId(Long id) {
         if (id == null) {
             return null;
@@ -37,6 +39,6 @@ public interface ParentMapper {
         parent.setId(id);
         return parent;
     }
-    
+
 
 }

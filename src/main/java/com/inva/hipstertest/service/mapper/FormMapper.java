@@ -14,6 +14,8 @@ public interface FormMapper {
 
     @Mapping(source = "school.id", target = "schoolId")
     @Mapping(source = "form.pupils", target = "pupilsId")
+   // @Mapping(source = "pupil.user.lastName", target = "pupilLastName")
+    //@Mapping(source = "pupil.user.firstName", target = "pupilFirstName")
     FormDTO formToFormDTO(Form form);
 
     List<FormDTO> formsToFormDTOs(List<Form> forms);

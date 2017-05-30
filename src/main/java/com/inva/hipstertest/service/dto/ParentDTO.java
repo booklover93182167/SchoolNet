@@ -1,6 +1,8 @@
 package com.inva.hipstertest.service.dto;
 
 
+import com.inva.hipstertest.domain.Pupil;
+
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -19,7 +21,7 @@ public class ParentDTO implements Serializable {
 
     private Long userId;
 
-    private Set<PupilDTO> pupils = new HashSet<>();
+    private Set<Pupil> pupils = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -44,11 +46,11 @@ public class ParentDTO implements Serializable {
         this.userId = userId;
     }
 
-    public Set<PupilDTO> getPupils() {
+    public Set<Pupil> getPupils() {
         return pupils;
     }
 
-    public void setPupils(Set<PupilDTO> pupils) {
+    public void setPupils(Set<Pupil> pupils) {
         this.pupils = pupils;
     }
 

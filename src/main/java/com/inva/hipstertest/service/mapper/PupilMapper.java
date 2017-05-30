@@ -9,11 +9,14 @@ import java.util.List;
 /**
  * Mapper for the entity Pupil and its DTO PupilDTO.
  */
-@Mapper(componentModel = "spring", uses = {UserMapper.class, FormMapper.class, })
+@Mapper(componentModel = "spring", uses = {UserMapper.class, FormMapper.class, ParentMapper.class, })
 public interface PupilMapper {
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "form.id", target = "formId")
+    @Mapping(source = "parents", target = "parentsId")
+    @Mapping(source = "user.lastName", target = "pupilLastName")
+    @Mapping(source = "user.firstName", target = "pupilFirstName")
     PupilDTO pupilToPupilDTO(Pupil pupil);
 
     List<PupilDTO> pupilsToPupilDTOs(List<Pupil> pupils);
@@ -21,7 +24,7 @@ public interface PupilMapper {
     @Mapping(source = "userId", target = "user")
     @Mapping(target = "attendances", ignore = true)
     @Mapping(source = "formId",target="form")
-    @Mapping(target = "parents", ignore = true)
+    @Mapping(source = "parentsId",target="parents")
     Pupil pupilDTOToPupil(PupilDTO pupilDTO);
 
     List<Pupil> pupilDTOsToPupils(List<PupilDTO> pupilDTOs);
