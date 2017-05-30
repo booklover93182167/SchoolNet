@@ -106,3 +106,8 @@ Myndyk Mykola: 29.05.2017
 2) 
 3) none
 ----------------------------------------
+Vasyl: 29.05.2017
+1) Pushed project to production on heroku.
+2) Need migrate DB in production from mySQL to PostgreSQL.
+3) Liquibase config.
+----------------------------------------

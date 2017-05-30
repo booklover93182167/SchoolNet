@@ -2,26 +2,26 @@
     "headTeacher": {
         "teacher-management" : {
             "home": {
-                "title": "Вчителі",
-                "createLabel": "Створити нового Вчителя",
-                "createOrEditLabel": "Створити або редагувати вчителя"
+                "title": "Учителя",
+                "createLabel": "Создать нового Учителя",
+                "createOrEditLabel": "Создать или отредактировать Учителя"
             },
-            "created": "Новий вчитель створений {{ param }}",
-            "updated": "Вчитель оновлений {{ param }}",
-            "deleted": "Вчитель видалений {{ param }}",
+            "created": "Новый Учитель создан с идентификатором {{ param }}",
+            "updated": "Учитель обновлен с идентификатором {{ param }}",
+            "deleted": "Учитель удален с идентификатором {{ param }}",
             "delete": {
-                "question": "Ви серйозно хочете видалити Вчителя {{ id }}?"
+                "question": "Вы уверены что хотите удалить Учителя {{ id }}?"
             },
             "detail": {
-                "title": "Вчитель"
+                "title": "Учитель"
             },
-            "name": "Імя",
-            "enabled": "Активний",
-            "classroom": "Кімната",
+            "name": "Имя",
+            "enabled": "Активный",
+            "classroom": "Комната",
             "form": "Клас",
-            "teacher": "Вчитель",
-            "firstName":"Ім'я",
-            "lastName":"Прізвище"
+            "teacher": "Учитель",
+            "firstName":"Имя",
+            "lastName":"Фамилия"
         }
     }
 }

@@ -11,7 +11,7 @@
 
     <groupId>com.inva.hipstertest</groupId>
     <artifactId>school-net</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <packaging>war</packaging>
     <name>School Net</name>
 
@@ -50,6 +50,7 @@
         <maven.version>3.0.0</maven.version>
         <metrics-spring.version>3.1.3</metrics-spring.version>
         <node.version>v6.10.0</node.version>
+        <postgresql.version>9.4.1212</postgresql.version>
         <!-- These remain empty unless the corresponding profile is active -->
         <profile.no-liquibase />
         <profile.swagger />
@@ -230,6 +231,10 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
