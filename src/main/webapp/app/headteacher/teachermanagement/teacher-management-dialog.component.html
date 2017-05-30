@@ -1,0 +1,73 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+    <div class="modal-header">
+        <h4 class="modal-title" id="myTeacherLabel" jhiTranslate="schoolNetApp.teacher.home.createOrEditLabel">Create or edit a Teacher</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">Close</button>
+    </div>
+
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="userManagement.firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" #firstNameInput="ngModel"
+                   [(ngModel)]="teacher.firstName" required maxlength="50">
+            <div *ngIf="firstNameInput.dirty && firstNameInput.invalid">
+                <small class="form-text text-danger"
+                       *ngIf="firstNameInput.errors.minlength" jhiTranslate="entity.validation.minlength">
+                    This field cannot be less than 3 characters.
+                </small>
+                <small class="form-text text-danger"
+                       *ngIf="firstNameInput.errors.maxlength" jhiTranslate="entity.validation.maxlength">
+                    This field cannot be longer than 50 characters.
+                </small>
+                <small class="form-text text-danger"
+                       *ngIf="teacherFirstNameInput.errors.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="userManagement.lastName">Last Name</label>
+            <input type="text" class="form-control" name="lastName" #lastNameInput="ngModel"
+                   [(ngModel)]="teacher.lastName" required minlength=3 maxlength=50>
+            <div *ngIf="lastNameInput.dirty && lastNameInput.invalid">
+                <small class="form-text text-danger"
+                       *ngIf="lastNameInput.errors.maxlength" jhiTranslate="entity.validation.maxlength">
+                    This field cannot be longer than 50 characters.
+                </small>
+                <small class="form-text text-danger"
+                       *ngIf="lastNameInput.errors.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+                <label class="form-control-label" jhiTranslate="userManagement.email">Email</label>
+                <input type="email" class="form-control" name="email" #emailInput="ngModel"
+                       [(ngModel)]="teacher.email" required minlength="10" maxlength="100">
+
+                <div *ngIf="emailInput.dirty && emailInput.invalid">
+                    <small class="form-text text-danger"
+                           *ngIf="emailInput.errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                    <small class="form-text text-danger"
+                           *ngIf="emailInput.errors.maxlength" jhiTranslate="entity.validation.maxlength"
+                           translate-value-max="100">
+                        This field cannot be longer than 100 characters.
+                    </small>
+                    <small class="form-text text-danger"s
+                           *ngIf="emailInput.errors.email" jhiTranslate="global.messages.validate.email.invalid">
+                        Your email is invalid.
+                    </small>
+                </div>
+            </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,6 +1,11 @@
 package com.inva.hipstertest.service;
 
+import com.inva.hipstertest.domain.Teacher;
+import com.inva.hipstertest.domain.User;
 import com.inva.hipstertest.service.dto.TeacherDTO;
+import com.inva.hipstertest.service.dto.UserDTO;
+
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -44,4 +49,14 @@ public interface TeacherService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     * Save a teacher.
+     *
+     * @param teacherDTO the entity to save
+     * we take this entity in UI level(some form).
+     * @return String information about login and password.
+     */
+    TeacherDTO saveTeacherWithUser(TeacherDTO teacherDTO);
+
 }
