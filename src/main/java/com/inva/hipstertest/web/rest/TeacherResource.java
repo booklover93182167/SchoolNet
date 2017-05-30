@@ -118,6 +118,19 @@ public class TeacherResource {
     }
 
     /**
+     * GET  /teachers/current : get current teacher.
+     *
+     * @return the ResponseEntity with status 200 (OK) and with body the current teacherDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/teachers/current")
+    @Timed
+    public ResponseEntity<TeacherDTO> getCurrentTeacher() {
+        log.debug("REST request to get current Teacher");
+        TeacherDTO teacherDTO = teacherService.findTeacherByCurrentUser();
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(teacherDTO));
+    }
+
+    /**
      * DELETE  /teachers/:id : delete the "id" teacher.
      *
      * @param id the id of the teacherDTO to delete
