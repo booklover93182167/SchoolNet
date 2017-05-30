@@ -5,10 +5,8 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 
-
 @Injectable()
 export class TeacherHomeService {
-
 
     private resourceUrlLesson = 'api/lessons/teacher';
     private resourceUrlForm = 'api/forms/teacher';
@@ -16,7 +14,6 @@ export class TeacherHomeService {
 
     constructor(private http: Http) {
     }
-
 
     queryLessons(teacherId: number): Observable<Response> {
         return this.http.get(`${this.resourceUrlLesson}/${teacherId}`);
@@ -27,19 +24,7 @@ export class TeacherHomeService {
     }
 
     getCurrentTeacher(): Observable<Response> {
-        return this.http.get(this.resourceUrlCurrentTeacher);
+        return this.http.get(`${this.resourceUrlCurrentTeacher}`);
     }
-
-    // find(id: number): Observable<TeacherMySuffix> {
-    //     return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-    //         return res.json();
-    //     });
-    // }
-
 }
-
-
-
-
-
 

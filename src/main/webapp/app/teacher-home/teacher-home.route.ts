@@ -4,14 +4,14 @@
 import { Route } from '@angular/router';
 
 import { UserRouteAccessService } from '../shared';
-import {TeacherHomeComponent} from "./teacher-home.component";
+import {TeacherHomeComponent} from './teacher-home.component';
 
 export const TeacherHomeRoute: Route = {
     path: 'teacher-home',
     component: TeacherHomeComponent,
     data:
         {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_TEACHER'],
         },
     canActivate: [UserRouteAccessService]
 };
