@@ -15,13 +15,8 @@ public interface TeacherMapper {
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "form.id", target = "formId")
     @Mapping(source = "school.id", target = "schoolId")
-<<<<<<< HEAD
     @Mapping(source = "user.lastName", target = "lastName")
     @Mapping(source = "user.firstName", target = "firstName")
-=======
-    @Mapping(source = "user.firstName", target = "firstName")
-    @Mapping(source = "user.lastName", target = "lastName")
->>>>>>> dev-pylyp
     @Mapping(source = "user.email", target = "email")
     TeacherDTO teacherToTeacherDTO(Teacher teacher);
 
