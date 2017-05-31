@@ -81,7 +81,6 @@ export class PupilHomeSchedulesComponent implements OnInit {
 
     // get an array of schedules fom pupilSchedules for selectedDate
     getSchedules(): PupilHomeSchedules[] {
-        console.log('entered getSchedules');
         return this.generateArray(this.pupilHomeService.getSchedulesForDate(this.selectedDate, this.pupilSchedules));
     }
 

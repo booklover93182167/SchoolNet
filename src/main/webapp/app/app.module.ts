@@ -26,6 +26,7 @@ import {
     ActiveMenuDirective,
     ErrorComponent
 } from './layouts';
+import {SchoolNetPupilHomeGradesModule} from "./pupil-grades/pupil-home-grades.module";
 
 @NgModule({
     imports: [
@@ -39,7 +40,8 @@ import {
         SchoolNetEntityModule,
         SchoolNetHeadTeacherModule,
         SchoolNetPupilHomeModule,
-        SchoolNetTeacherHomeModule
+        SchoolNetTeacherHomeModule,
+        SchoolNetPupilHomeGradesModule
     ],
     declarations: [
         JhiMainComponent,
