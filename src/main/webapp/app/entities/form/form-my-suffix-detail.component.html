@@ -12,6 +12,7 @@
         <dt><span jhiTranslate="schoolNetApp.form.school">School</span></dt>
         <dd>
             <div *ngIf="form.schoolId">
+
                 <a [routerLink]="['/school-my-suffix', form.schoolId]">{{form.schoolId}}</a>
             </div>
         </dd>
@@ -19,7 +20,7 @@
         <dd>
 
                 <div *ngFor="let i of form.pupilsId">
-            <a>{{i.id}}</a>
+            <a>{{i.user.lastName}} {{i.user.firstName}}</a>
                 </div>
         </dd>
     </dl>
