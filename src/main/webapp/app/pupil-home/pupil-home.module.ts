@@ -17,6 +17,7 @@ import { PupilHomeSchedulesSortPipe } from './pupil-home-schedules/pupil-home-sc
 
 import { PUPIL_HOME_ROUTE, PUPIL_HOME_SCHEDULES_ROUTE, PupilHomeComponent, PupilHomeSchedulesComponent } from './';
 
+
 @NgModule({
     imports: [
         CommonModule,
