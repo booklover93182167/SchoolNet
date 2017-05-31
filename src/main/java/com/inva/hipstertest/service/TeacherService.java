@@ -37,6 +37,13 @@ public interface TeacherService {
     TeacherDTO findOne(Long id);
 
     /**
+     *  Find teacher by current user
+     *
+     *  @return the entity
+     */
+    TeacherDTO findTeacherByCurrentUser();
+
+    /**
      *  Delete the "id" teacher.
      *
      *  @param id the id of the entity

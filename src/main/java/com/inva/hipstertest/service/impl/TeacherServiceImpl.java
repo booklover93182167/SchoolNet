@@ -99,6 +99,17 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
     }
 
     /**
+     *  Find teacher by current user.
+     *
+     *  @return the entity
+     */
+    @Override
+    public TeacherDTO findTeacherByCurrentUser() {
+        log.debug("Request to get Teacher by current user");
+        return teacherMapper.teacherToTeacherDTO(teacherRepository.findTeacherByCurrentUser());
+    }
+
+    /**
      *  Delete the  teacher by id.
      *
      *  @param id the id of the entity
