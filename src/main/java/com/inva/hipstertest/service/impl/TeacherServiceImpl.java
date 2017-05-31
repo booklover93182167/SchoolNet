@@ -129,20 +129,17 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
     @Override
     public TeacherDTO saveTeacherWithUser(TeacherDTO teacherDTO) {
         log.debug("Request to save Teacher : {}", teacherDTO);
-        Map<String, Object> information = super.saveUserWithRole(teacherDTO, ROLE_ENUM.HEAD_TEACHER);
+        Map<String, Object> information = super.saveUserWithRole(teacherDTO, ROLE_ENUM.TEACHER);
         User user = (User) information.get("userObject");
         String content = (String) information.get("content");
         teacherDTO.setEnabled(true);
         Teacher teacher = teacherMapper.teacherDTOToTeacher(teacherDTO);
-
-        //System.out.println(teacherRepository.findOneWithSchool().getSchool().toString());
-
+        /* NEED CREATE NEW EMAIL */
         mailService.sendSimpleEmail(teacherDTO.getEmail(), content);
-
         teacher.setSchool(teacherRepository.findOneWithSchool().getSchool());
         teacher.setUser(user);
-        TeacherDTO teacherDTOs = teacherMapper.teacherToTeacherDTO(teacherRepository.save(teacher));
-        return teacherDTOs;
+        teacherDTO = teacherMapper.teacherToTeacherDTO(teacherRepository.save(teacher));
+        return teacherDTO;
     }
 
 }
