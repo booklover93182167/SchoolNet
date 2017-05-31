@@ -27,35 +27,14 @@ public class FormDTO implements Serializable {
 
     private Long schoolId;
 
-    private Set<Pupil> pupilsId;
-
-    private String pupilFirstName;
-
-    private String pupilLastName;
-
-    public String getPupilFirstName() {
-        return pupilFirstName;
-    }
-
-    public void setPupilFirstName(String pupilFirstName) {
-        this.pupilFirstName = pupilFirstName;
-    }
-
-    public String getPupilLastName() {
-        return pupilLastName;
-    }
-
-    public void setPupilLastName(String pupilLastName) {
-        this.pupilLastName = pupilLastName;
-    }
+    private Set<PupilDTO> pupilsId;
 
 
-
-    public Set<Pupil> getPupilsId() {
+    public Set<PupilDTO> getPupilsId() {
         return pupilsId;
     }
 
-    public void setPupilsId(Set<Pupil> pupilsId) {
+    public void setPupilsId(Set<PupilDTO> pupilsId) {
         this.pupilsId = pupilsId;
     }
 

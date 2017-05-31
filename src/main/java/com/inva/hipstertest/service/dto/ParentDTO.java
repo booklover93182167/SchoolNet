@@ -20,8 +20,25 @@ public class ParentDTO implements Serializable {
     private Boolean enabled;
 
     private Long userId;
+    private String firstName;
 
-    private Set<Pupil> pupils = new HashSet<>();
+    private String lastName;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     public Long getId() {
         return id;
@@ -46,13 +63,7 @@ public class ParentDTO implements Serializable {
         this.userId = userId;
     }
 
-    public Set<Pupil> getPupils() {
-        return pupils;
-    }
 
-    public void setPupils(Set<Pupil> pupils) {
-        this.pupils = pupils;
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -23,34 +23,36 @@ public class PupilDTO implements Serializable {
 
     private Long formId;
 
-    private Set<Parent> parentsId;
+    private Set<ParentDTO> parents;
 
-    private String pupilFirstName;
+    private String firstName;
 
-    public String getPupilFirstName() {
-        return pupilFirstName;
+    private String lastName;
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setPupilFirstName(String pupilFirstName) {
-        this.pupilFirstName = pupilFirstName;
+    public void setFirstName(String pupilFirstName) {
+        this.firstName = pupilFirstName;
     }
 
-    private String pupilLastName;
 
-    public String getPupilLastName() {
-        return pupilLastName;
+
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setPupilLastName(String pupilLastName) {
-        this.pupilLastName = pupilLastName;
+    public void setLastName(String pupilLastName) {
+        this.lastName = pupilLastName;
     }
 
-    public Set<Parent> getParentsId() {
-        return parentsId;
+    public Set<ParentDTO> getParents() {
+        return parents;
     }
 
-    public void setParentsId(Set<Parent> parentsId) {
-        this.parentsId = parentsId;
+    public void setParents(Set<ParentDTO> parents) {
+        this.parents = parents;
     }
 
     public Long getId() {

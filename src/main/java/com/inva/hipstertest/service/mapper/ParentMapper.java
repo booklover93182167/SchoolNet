@@ -13,13 +13,13 @@ import java.util.List;
 public interface ParentMapper {
 
     @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "pupils", target = "pupils")
+    @Mapping(source = "user.lastName", target = "lastName")
+    @Mapping(source = "user.firstName", target = "firstName")
     ParentDTO parentToParentDTO(Parent parent);
 
     List<ParentDTO> parentsToParentDTOs(List<Parent> parents);
 
     @Mapping(source = "userId", target = "user")
-    @Mapping(source = "pupils", target = "pupils")
     Parent parentDTOToParent(ParentDTO parentDTO);
 
     List<Parent> parentDTOsToParents(List<ParentDTO> parentDTOs);

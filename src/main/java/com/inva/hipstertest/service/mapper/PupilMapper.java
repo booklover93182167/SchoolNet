@@ -14,9 +14,9 @@ public interface PupilMapper {
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "form.id", target = "formId")
-    @Mapping(source = "parents", target = "parentsId")
-    @Mapping(source = "user.lastName", target = "pupilLastName")
-    @Mapping(source = "user.firstName", target = "pupilFirstName")
+    @Mapping(source = "parents", target = "parents")
+    @Mapping(source = "user.lastName", target = "lastName")
+    @Mapping(source = "user.firstName", target = "firstName")
     PupilDTO pupilToPupilDTO(Pupil pupil);
 
     List<PupilDTO> pupilsToPupilDTOs(List<Pupil> pupils);
@@ -24,7 +24,7 @@ public interface PupilMapper {
     @Mapping(source = "userId", target = "user")
     @Mapping(target = "attendances", ignore = true)
     @Mapping(source = "formId",target="form")
-    @Mapping(source = "parentsId",target="parents")
+    @Mapping(source = "parents",target="parents")
     Pupil pupilDTOToPupil(PupilDTO pupilDTO);
 
     List<Pupil> pupilDTOsToPupils(List<PupilDTO> pupilDTOs);
