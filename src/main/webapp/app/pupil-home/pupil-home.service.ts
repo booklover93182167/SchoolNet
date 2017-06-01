@@ -26,6 +26,11 @@ export class PupilHomeService {
             this.convertResponse(res));
     }
 
+    findAllByPupilAndLessonId(pupilId: number, lessonId: number): Observable<Response> {
+        return this.http.get(`${this.resourceUrl}/${pupilId}/${lessonId}`).map((res: Response) =>
+            this.convertResponse(res));
+    }
+
     findByFormId(formId: number): Observable<Response> {
         return this.http.get(`${this.resourceUrl}/getschedules/${formId}`).map((res: Response) =>
             this.convertResponse(res));

@@ -7,6 +7,7 @@ import {PupilHomeSchedules} from './pupil-home-schedules.model';
 import {PupilHomeService} from '../pupil-home.service';
 import {ITEMS_PER_PAGE, Principal} from '../../shared';
 import {PupilMySuffix} from "../../entities/pupil/pupil-my-suffix.model";
+import {AttendancesMySuffix} from "../../entities/attendances/attendances-my-suffix.model";
 import {Lesson} from "./pupil-home-lesson.model";
 // service to retrieve schedules for pupil
 @Component({
@@ -15,6 +16,7 @@ import {Lesson} from "./pupil-home-lesson.model";
 })
 export class PupilHomeSchedulesComponent implements OnInit {
     @Input() currentPupil: PupilMySuffix;
+    attendances: AttendancesMySuffix[] = [];
     pupilSchedules: PupilHomeSchedules[] = [];
     pupilLessons: Lesson[] = [];
     account: any;
@@ -58,6 +60,7 @@ export class PupilHomeSchedulesComponent implements OnInit {
     ngOnInit() {
         this.loadByFormId();
         this.loadDistinctLessons(7);
+        this.findAllByPupilAndLessonId(6, 7);
     }
 
     //load all distinct lessons into pupilLessons
@@ -65,6 +68,15 @@ export class PupilHomeSchedulesComponent implements OnInit {
         this.pupilHomeService.getDistinctLessons(formId).subscribe(
             (res: Response) => {
                 this.pupilLessons = res.json();
+            },
+        );
+    }
+
+    //load all distinct lessons into pupilLessons
+    findAllByPupilAndLessonId(pupilId: number, lessonId: number){
+        this.pupilHomeService.findAllByPupilAndLessonId(pupilId, lessonId).subscribe(
+            (res: Response) => {
+                this.attendances = res.json();
             },
         );
     }
