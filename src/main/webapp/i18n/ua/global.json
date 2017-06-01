@@ -3,7 +3,9 @@
         "title": "SchoolNet",
         "browsehappy": "Ваш браузер <strong>застарів</strong>. Будь-ласка <a href=\"http://browsehappy.com/?locale=ru\">оновіть ваш браузер</a>.",
         "menu": {
-            "teacher-home": "Вчитель",
+            "teacher-menu": "Меню вчителя",
+            "teacher-home": "Головна",
+            "teacher-schedule": "Розклад занять",
             "user-home": "Користувач",
             "pupil-home": "Учень",
             "management":"Управління",
