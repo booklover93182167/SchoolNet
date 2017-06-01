@@ -31,15 +31,8 @@
             <column name="form_id" type="bigint">
                 <constraints nullable="false" />
             </column>
-            <column name="parents_id" type="bigint">
-                <constraints nullable="false" />
-            </column>
-            <column name="last_name" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="first_name" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
+
+
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
