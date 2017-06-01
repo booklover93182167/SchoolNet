@@ -7,18 +7,14 @@
         Added the constraints for entity Pupil.
     -->
     <changeSet id="20170514213822-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="pupil"
                                  constraintName="fk_pupil_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
-        <addForeignKeyConstraint baseColumnNames="form_id"
-                                 baseTableName="pupil"
-                                 constraintName="fk_pupil_form_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="form"/>
+
 
     </changeSet>
 </databaseChangeLog>
