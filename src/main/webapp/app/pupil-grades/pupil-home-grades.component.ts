@@ -7,6 +7,7 @@ import {Principal} from '../shared';
 import {EventManager, JhiLanguageService, AlertService} from 'ng-jhipster';
 import {AttendancesMySuffix} from '../entities/attendances/attendances-my-suffix.model';
 import {Subscription} from "rxjs/Rx";
+import {LessonMySuffix} from "../entities/lesson/lesson-my-suffix.model";
 
 @Component({
     selector: 'pupil-home-grades',
@@ -16,6 +17,7 @@ import {Subscription} from "rxjs/Rx";
 
 export class PupilHomeGradesComponent implements OnInit {
     pupilAttendances: AttendancesMySuffix[] = [];
+    pupilLessons: LessonMySuffix[] = [];
     account: any;
     eventSubscriber: Subscription;
 
