@@ -13,6 +13,7 @@
                 "forms":"Класи"
             },
             "home": "Головна",
+            "forms": "Класи",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Сутності",
