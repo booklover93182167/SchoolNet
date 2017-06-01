@@ -15,9 +15,9 @@ import { PupilHomeService } from './pupil-home.service';
 import { LengthPipe } from './pupil-home-schedules/pupil-home-schedules-lengthPipe';
 import { PupilHomeSchedulesSortPipe } from './pupil-home-schedules/pupil-home-schedules-sortpipe';
 
-import { PUPIL_HOME_ROUTE, PUPIL_HOME_SCHEDULES_ROUTE, PupilHomeComponent, PupilHomeSchedulesComponent } from './';
-import {PupilHomeGradesComponent} from "./pupil-home-grades/pupil-home-grades.component";
-
+import { PUPIL_HOME_ROUTE, PupilHomeComponent, PupilHomeSchedulesComponent } from './';
+import { PUPIL_HOME_GRADES_ROUTE } from "./pupil-home-grades/pupil-home-grades.route";
+import { PupilHomeGradesComponent } from "./pupil-home-grades/pupil-home-grades.component";
 
 @NgModule({
     imports: [
@@ -28,7 +28,7 @@ import {PupilHomeGradesComponent} from "./pupil-home-grades/pupil-home-grades.co
         CalendarModule.forRoot(),
         SchoolNetSharedModule,
         RouterModule.forRoot([ PUPIL_HOME_ROUTE ], { useHash: true }),
-        RouterModule.forRoot([ PUPIL_HOME_SCHEDULES_ROUTE ], { useHash: true })
+        RouterModule.forRoot([ PUPIL_HOME_GRADES_ROUTE ], { useHash: true })
     ],
     declarations: [
         LengthPipe,
