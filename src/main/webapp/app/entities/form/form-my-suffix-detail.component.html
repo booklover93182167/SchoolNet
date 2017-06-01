@@ -20,7 +20,7 @@
         <dd>
 
                 <div *ngFor="let i of form.pupilsId">
-            <a>{{i.lastName}} {{i.firstName}}</a>
+            <a>{{i.lastName}} {{i.firstName }}</a>
                     <div *ngFor="let k of i.parents">
                         <li>{{k.lastName}} {{k.firstName}}</li>
                     </div>

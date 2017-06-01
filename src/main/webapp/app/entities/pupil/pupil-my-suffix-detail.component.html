@@ -21,7 +21,11 @@
         <dt><span>Name</span></dt>
         <dd>
             <div *ngIf="pupil.formId">
-                <a >{{pupil.pupilLastName}}  {{pupil.pupilFirstName}} </a>
+                <a >{{pupil.lastName}}  {{pupil.firstName}} </a>
+                <div *ngFor="let i of pupil.parents">
+                    <a >{{i.user.login}} </a>
+                </div>
+
             </div>
         </dd>
 
