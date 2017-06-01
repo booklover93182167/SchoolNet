@@ -9,6 +9,8 @@ import {FormMySuffix} from '../entities/form/form-my-suffix.model';
 import {TeacherHomeService} from './teacher-home.service';
 import {Subscription} from 'rxjs/Subscription';
 import {ScheduleMySuffix} from '../entities/schedule/schedule-my-suffix.model';
+import {PupilHomeService} from "../pupil-home/pupil-home.service";
+import {ScheduleMySuffixService} from "../entities/schedule/schedule-my-suffix.service";
 
 @Component({
     selector: 'teacher-home',
@@ -21,14 +23,18 @@ export class TeacherHomeComponent implements OnInit {
     lessons: LessonMySuffix[];
     forms: FormMySuffix[];
     schedules: ScheduleMySuffix[];
+    currentSchedules: ScheduleMySuffix[];
     eventSubscriber: Subscription;
+    selectedDate: Date = new Date(Date.now());
     name: string;
 
     constructor(private principal: Principal,
                 private jhiLanguageService: JhiLanguageService,
                 private teacherHomeService: TeacherHomeService,
                 private alertService: AlertService,
-                private eventManager: EventManager) {
+                private eventManager: EventManager,
+                private pupilHomeService: PupilHomeService,
+                private scheduleMySuffixService: ScheduleMySuffixService) {
         this.jhiLanguageService.setLocations(['home']);
     }
 
@@ -45,6 +51,7 @@ export class TeacherHomeComponent implements OnInit {
             (res: Response) => {
                 this.currentTeacher = res.json();
                 this.loadLessons(this.currentTeacher.id);
+                console.log(this.currentTeacher.schoolId);
             },
             (res: Response) => this.onError(res.json())
         );
@@ -72,6 +79,8 @@ export class TeacherHomeComponent implements OnInit {
         this.teacherHomeService.querySchedule(teacherId).subscribe(
             (res: Response) => {
                 this.schedules = res.json();
+                this.currentSchedules = this.pupilHomeService.getSchedulesForDate(this.selectedDate, this.schedules);
+
             },
             (res: Response) => this.onError(res.json())
         );
@@ -83,5 +92,9 @@ export class TeacherHomeComponent implements OnInit {
 
     registerChangeInLessons() {
         this.eventSubscriber = this.eventManager.subscribe('lessonListModification', (response) => this.loadLessons(this.currentTeacher.id));
+    }
+
+    selectHomework(scheduleId: number){
+        console.log(scheduleId);
     }
 }
