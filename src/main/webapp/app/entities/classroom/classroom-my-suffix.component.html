@@ -27,7 +27,7 @@
                 <td>{{classroom.name}}</td>
                 <td>
                     <div *ngIf="classroom.schoolId">
-                        <a [routerLink]="['../school-my-suffix', classroom.schoolId  ]" >{{classroom.schoolId}}</a>
+                        <a [routerLink]="['../school-my-suffix', classroom.schoolId  ]" >{{classroom.schoolName}}</a>
                     </div>
                 </td>
                 <td>{{classroom.enabled}}</td>
