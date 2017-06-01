@@ -6,12 +6,13 @@ import {Subject, Observable} from 'rxjs';
 import { Http, Response, URLSearchParams, BaseRequestOptions } from '@angular/http';
 import { PupilHomeSchedules } from './pupil-home-schedules/pupil-home-schedules.model';
 import { DateUtils } from 'ng-jhipster';
+import {Lesson} from "./pupil-home-schedules/pupil-home-lesson.model";
 @Injectable()
 export class PupilHomeService {
 
     private resourceUrl = 'api/pupilhome';
+    private resourceLessonUrl = 'api/pupilhome/distinctform';
 
-    ///////////////////////////////////////////////////////////
     // Observable string sources
     private dateToSend = new Subject<Date>();
 
@@ -22,6 +23,13 @@ export class PupilHomeService {
 
     findByForm(): Observable<Response> {
         return this.http.get(`${this.resourceUrl}/getschedules`).map((res: Response) =>
+            this.convertResponse(res));
+    }
+
+    //get all distinct lessons for this form
+    getDistinctLessons(formId: number): Observable<Response> {
+        console.log("get all lessons");
+        return this.http.get(`${this.resourceLessonUrl}/${formId}`).map((res: Response) =>
             this.convertResponse(res));
     }
 
@@ -53,5 +61,5 @@ export class PupilHomeService {
         }
         return schedulesForDate;
     }
-    /////////////////////////////////////////////////////////////////
+
 }

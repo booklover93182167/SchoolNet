@@ -6,6 +6,7 @@ import {EventManager, JhiLanguageService, AlertService} from 'ng-jhipster';
 import {PupilHomeSchedules} from './pupil-home-schedules.model';
 import {PupilHomeService} from '../pupil-home.service';
 import {ITEMS_PER_PAGE, Principal} from '../../shared';
+import {Lesson} from "./pupil-home-lesson.model";
 // service to retrieve schedules for pupil
 @Component({
     selector: 'jhi-pupil-home-schedules',
@@ -13,7 +14,8 @@ import {ITEMS_PER_PAGE, Principal} from '../../shared';
 })
 export class PupilHomeSchedulesComponent implements OnInit {
     pupilSchedules: PupilHomeSchedules[] = [];
-    currentAccount: any;
+    pupilLessons: Lesson[] = [];
+    account: any;
     eventSubscriber: Subscription;
     currentSchedules: PupilHomeSchedules[] = [];
 
@@ -22,16 +24,6 @@ export class PupilHomeSchedulesComponent implements OnInit {
     //values to show selected homework
     selectedHomework: string = null;
     isSelectedHomework: boolean = false;
-
-    selectHomework(homework: string): void {
-        if(this.isSelectedHomework){
-            this.selectedHomework = null;
-            this.isSelectedHomework = false;
-        }else{
-            this.selectedHomework = homework;
-            this.isSelectedHomework = true;
-        }
-    }
 
     constructor(private jhiLanguageService: JhiLanguageService,
                 private pupilHomeService: PupilHomeService,
@@ -48,11 +40,20 @@ export class PupilHomeSchedulesComponent implements OnInit {
                 this.currentSchedules = this.getSchedules();
             });
         this.jhiLanguageService.setLocations(['home']);
-
     }
 
     ngOnInit() {
         this.loadByFormId();
+        this.loadDistinctLessons(7);
+    }
+
+    //load all distinct lessons into pupilLessons
+    loadDistinctLessons(formId: number){
+        this.pupilHomeService.getDistinctLessons(formId).subscribe(
+            (res: Response) => {
+                this.pupilLessons = res.json();
+            },
+        );
     }
 
     // function to load schedules for form for current user(if he is pupil)
@@ -65,7 +66,6 @@ export class PupilHomeSchedulesComponent implements OnInit {
             },
             (res: Response) => this.onError(res.json())
         );
-
     }
 
     trackId(index: number, item: PupilHomeSchedules) {
@@ -80,5 +80,15 @@ export class PupilHomeSchedulesComponent implements OnInit {
     getSchedules(): PupilHomeSchedules[] {
         console.log('entered getSchedules');
         return this.pupilHomeService.getSchedulesForDate(this.selectedDate, this.pupilSchedules);
+    }
+
+    selectHomework(homework: string): void {
+        if(this.isSelectedHomework){
+            this.selectedHomework = null;
+            this.isSelectedHomework = false;
+        }else{
+            this.selectedHomework = homework;
+            this.isSelectedHomework = true;
+        }
     }
 }
