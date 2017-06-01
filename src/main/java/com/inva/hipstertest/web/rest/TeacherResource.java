@@ -122,7 +122,7 @@ public class TeacherResource {
      *
      * @return the ResponseEntity with status 200 (OK) and with body the current teacherDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/teachers/current")
+    @GetMapping("/teacher-home/teachers/current")
     @Timed
     public ResponseEntity<TeacherDTO> getCurrentTeacher() {
         log.debug("REST request to get current Teacher");

@@ -9,10 +9,10 @@ import {DateUtils} from 'ng-jhipster';
 @Injectable()
 export class TeacherHomeService {
 
-    private resourceUrlLesson = 'api/lessons/teacher';
-    private resourceUrlForm = 'api/forms/teacher';
-    private resourceUrlCurrentTeacher = 'api/teachers/current';
-    private resourceUrlSchedule = 'api/schedules/teacher';
+    private resourceUrlLesson = 'api/teacher-home/lessons/teacher';
+    private resourceUrlForm = 'api/teacher-home/forms/teacher';
+    private resourceUrlCurrentTeacher = 'api/teacher-home/teachers/current';
+    private resourceUrlSchedule = 'api/teacher-home/schedules/teacher';
 
     constructor(private http: Http, private dateUtils: DateUtils) {
     }
@@ -31,8 +31,7 @@ export class TeacherHomeService {
 
     querySchedule(teacherId: number): Observable<Response> {
         return this.http.get(`${this.resourceUrlSchedule}/${teacherId}`)
-            .map((res: any) => this.convertResponse(res))
-            ;
+            .map((res: any) => this.convertResponse(res));
     }
 
     private convertResponse(res: any): any {
