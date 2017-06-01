@@ -8,13 +8,13 @@ import {PupilHomeService} from '../pupil-home.service';
 import {ITEMS_PER_PAGE, Principal} from '../../shared';
 import {PupilMySuffix} from "../../entities/pupil/pupil-my-suffix.model";
 import {Lesson} from "./pupil-home-lesson.model";
+import {PupilHomeComponent} from "../pupil-home.component";
 // service to retrieve schedules for pupil
 @Component({
     selector: 'jhi-pupil-home-schedules',
     templateUrl: './pupil-home-schedules.component.html',
 })
 export class PupilHomeSchedulesComponent implements OnInit {
-    @Input() currentPupil: PupilMySuffix;
     pupilSchedules: PupilHomeSchedules[] = [];
     pupilLessons: Lesson[] = [];
     account: any;
@@ -42,7 +42,8 @@ export class PupilHomeSchedulesComponent implements OnInit {
                 private pupilHomeService: PupilHomeService,
                 private alertService: AlertService,
                 private eventManager: EventManager,
-                private principal: Principal) {
+                private principal: Principal,
+                private pupilHomeComponent: PupilHomeComponent) {
 
         // subscribe on changes in calendar
         this.pupilHomeService.dateToSend$.subscribe(
@@ -57,7 +58,7 @@ export class PupilHomeSchedulesComponent implements OnInit {
 
     ngOnInit() {
         this.loadByFormId();
-        this.loadDistinctLessons(7);
+        // this.loadDistinctLessons(7);
     }
 
     //load all distinct lessons into pupilLessons
@@ -71,7 +72,7 @@ export class PupilHomeSchedulesComponent implements OnInit {
 
     // function to load schedules for form for current user(if he is pupil)
     loadByFormId() {
-        this.pupilHomeService.findByForm().subscribe(
+        this.pupilHomeService.findByFormId(this.pupilHomeComponent.currentPupil.formId).subscribe(
             (res: Response) => {
                 this.pupilSchedules = res.json();
                 // initialize schedules for today

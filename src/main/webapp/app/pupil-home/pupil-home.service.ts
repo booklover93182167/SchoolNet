@@ -21,11 +21,6 @@ export class PupilHomeService {
 
     constructor(private http: Http, private dateUtils: DateUtils) { }
 
-    findByForm(): Observable<Response> {
-        return this.http.get(`${this.resourceUrl}/getschedules`).map((res: Response) =>
-            this.convertResponse(res));
-    }
-
     findByFormId(formId: number): Observable<Response> {
         return this.http.get(`${this.resourceUrl}/getschedules/${formId}`).map((res: Response) =>
             this.convertResponse(res));

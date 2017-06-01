@@ -3,8 +3,8 @@
  */
 import { Route } from '@angular/router';
 
-import { UserRouteAccessService } from '../shared';
-import { PupilHomeGradesComponent } from './';
+import { PupilHomeGradesComponent } from '../.';
+import {UserRouteAccessService} from "../../shared/auth/user-route-access-service";
 
 export const PUPIL_HOME_GRADES_ROUTE: Route = {
     path: 'pupil-home-grades',

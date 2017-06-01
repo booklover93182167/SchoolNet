@@ -3,11 +3,14 @@
  */
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import { Response } from '@angular/http';
-import {Principal} from '../shared';
 import {EventManager, JhiLanguageService, AlertService} from 'ng-jhipster';
-import {AttendancesMySuffix} from '../entities/attendances/attendances-my-suffix.model';
+import {AttendancesMySuffix} from '../../entities/attendances/attendances-my-suffix.model';
 import {Subscription} from "rxjs/Rx";
-import {LessonMySuffix} from "../entities/lesson/lesson-my-suffix.model";
+import {LessonMySuffix} from "../../entities/lesson/lesson-my-suffix.model";
+import {PupilMySuffix} from "../../entities/pupil/pupil-my-suffix.model";
+import {PupilHomeService} from "../pupil-home.service";
+import {PupilHomeComponent} from "../pupil-home.component";
+import {Principal} from "../../shared/auth/principal.service";
 
 @Component({
     selector: 'pupil-home-grades',
@@ -20,12 +23,14 @@ export class PupilHomeGradesComponent implements OnInit {
     pupilLessons: LessonMySuffix[] = [];
     account: any;
     eventSubscriber: Subscription;
+    currentPupil: PupilMySuffix;
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
         private alertService: AlertService,
         private eventManager: EventManager,
-        private principal: Principal
+        private principal: Principal,
+        private pupilHomeService: PupilHomeService
     ) {
         this.jhiLanguageService.setLocations(['home']);
     }
@@ -34,6 +39,7 @@ export class PupilHomeGradesComponent implements OnInit {
         this.principal.identity().then((account) => {
             this.account = account;
         });
+        // this.currentPupil = this.pupilHomeComponent.currentPupil;
     }
 
     private onError(error) {
