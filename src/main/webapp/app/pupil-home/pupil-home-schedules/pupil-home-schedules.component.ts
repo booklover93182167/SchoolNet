@@ -16,10 +16,7 @@ import {PupilHomeComponent} from "../pupil-home.component";
     templateUrl: './pupil-home-schedules.component.html',
 })
 export class PupilHomeSchedulesComponent implements OnInit {
-    @Input() currentPupil: PupilMySuffix;
-    attendances: AttendancesMySuffix[] = [];
     pupilSchedules: PupilHomeSchedules[] = [];
-    pupilLessons: Lesson[] = [];
     account: any;
     eventSubscriber: Subscription;
     currentSchedules: PupilHomeSchedules[] = [];
@@ -61,26 +58,6 @@ export class PupilHomeSchedulesComponent implements OnInit {
 
     ngOnInit() {
         this.loadByFormId();
-        this.loadDistinctLessons(7);
-        this.findAllByPupilAndLessonId(6, 7);
-    }
-
-    //load all distinct lessons into pupilLessons
-    loadDistinctLessons(formId: number){
-        this.pupilHomeService.getDistinctLessons(formId).subscribe(
-            (res: Response) => {
-                this.pupilLessons = res.json();
-            },
-        );
-    }
-
-    //load all distinct lessons into pupilLessons
-    findAllByPupilAndLessonId(pupilId: number, lessonId: number){
-        this.pupilHomeService.findAllByPupilAndLessonId(pupilId, lessonId).subscribe(
-            (res: Response) => {
-                this.attendances = res.json();
-            },
-        );
     }
 
     // function to load schedules for form for current user(if he is pupil)

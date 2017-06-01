@@ -3,8 +3,7 @@ package com.inva.hipstertest.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -22,6 +21,8 @@ public class AttendancesDTO implements Serializable {
     private Long pupilId;
 
     private Long scheduleId;
+
+    private ZonedDateTime date;
 
     public Long getId() {
         return id;
@@ -59,6 +60,14 @@ public class AttendancesDTO implements Serializable {
 
     public void setScheduleId(Long scheduleId) {
         this.scheduleId = scheduleId;
+    }
+
+    public ZonedDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(ZonedDateTime date) {
+        this.date = date;
     }
 
     @Override
