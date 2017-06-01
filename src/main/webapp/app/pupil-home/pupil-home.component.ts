@@ -1,17 +1,19 @@
 /**
  * Created by Kolja on 22.05.2017.
  */
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, EventEmitter} from '@angular/core';
 import { Response } from '@angular/http';
 import {Principal} from '../shared';
 import {PupilHomeService} from './pupil-home.service';
 import {EventManager, JhiLanguageService, AlertService} from 'ng-jhipster';
 import {PupilMySuffix} from "../entities/pupil/pupil-my-suffix.model";
+import {PupilHomeGradesComponent} from "./pupil-home-grades/pupil-home-grades.component";
 
 @Component({
     selector: 'pupil-home',
     templateUrl: 'pupil-home.component.html',
     styleUrls: ['pupil-home.component.css'],
+
 })
 export class PupilHomeComponent implements OnInit {
     account: any;
@@ -30,10 +32,11 @@ export class PupilHomeComponent implements OnInit {
         this.loadCurrentPupil();
     }
 
-    loadCurrentPupil() {
+    loadCurrentPupil(){
         this.pupilHomeService.getCurrentPupil().subscribe(
             (res: Response) => {
                 this.currentPupil = res.json();
+                console.log(this.currentPupil.formId)
             },
             (res: Response) => this.onError(res.json())
         );

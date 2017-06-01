@@ -27,7 +27,6 @@ import {
     ErrorComponent
 } from './layouts';
 
-
 @NgModule({
     imports: [
         BrowserModule,
@@ -40,6 +39,7 @@ import {
         SchoolNetEntityModule,
         SchoolNetHeadTeacherModule,
         SchoolNetPupilHomeModule,
+        SchoolNetTeacherHomeModule,
     ],
     declarations: [
         JhiMainComponent,
