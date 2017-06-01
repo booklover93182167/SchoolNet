@@ -105,7 +105,6 @@ public class FormResource {
     public ResponseEntity<FormDTO> getForm(@PathVariable Long id) {
         log.debug("REST request to get Form : {}", id);
         FormDTO formDTO = formService.findOne(id);
-        List<Long> pupilsId=pupilService.findAllByFormId(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(formDTO));
     }
 

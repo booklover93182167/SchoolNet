@@ -89,12 +89,13 @@ public class PupilServiceImpl implements PupilService {
         pupilRepository.delete(id);
     }
 
+
     @Override
-    public List<Long> findAllByFormId(Long formId) {
+    public List<PupilDTO> findAllByFormId(Long formId) {
         log.debug("Request to find all pupils by formId : {}", formId);
-        List<Long> pupilsId = pupilRepository.findAllByFormId(formId);
-        //List<PupilDTO> pupilDTOs = pupilMapper.pupilsToPupilDTOs(pupils);
-        return pupilsId;
+        List<Pupil> pupils = pupilRepository.findAllByFormId(formId);
+        List<PupilDTO> pupilDTOs = pupilMapper.pupilsToPupilDTOs(pupils);
+        return pupilDTOs;
     }
 
     @Override
