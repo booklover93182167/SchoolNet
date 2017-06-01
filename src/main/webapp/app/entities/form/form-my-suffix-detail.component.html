@@ -19,10 +19,10 @@
         <dt><span jhiTranslate="schoolNetApp.form.pupils">Pupils</span></dt>
         <dd>
 
-                <div *ngFor="let i of form.pupilsId">
-            <a>{{i.lastName}} {{i.firstName }}</a>
-                    <div *ngFor="let k of i.parents">
-                        <li>{{k.lastName}} {{k.firstName}}</li>
+                <div *ngFor="let i of form.pupilsId | sortPipe">
+            <a>{{i.lastName }} {{i.firstName }}</a>
+                    <div *ngFor="let k of i.parents | sortPipe">
+                        <li>{{k.lastName }} {{k.firstName}}</li>
                     </div>
                 </div>
         </dd>
