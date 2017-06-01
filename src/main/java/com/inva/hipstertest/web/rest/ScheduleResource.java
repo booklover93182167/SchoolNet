@@ -97,16 +97,27 @@ public class ScheduleResource {
     }
 
     /**
-     * GET  /schedules : get all the schedules for certain form id and month.
+     * GET  /schedules : get all the schedules for certain form id by current user.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of schedules in body
      */
     @RequestMapping(value = "pupilhome/getschedules", method = RequestMethod.GET)
     @Timed
-    public List<ScheduleDTO> getSchedulesByFormIdAndMonth() {
+    public List<ScheduleDTO> getSchedulesByFormIdAndCurrentUser() {
         log.debug("REST request to get schedule by formId");
         PupilDTO pupilDTO = pupilService.findPupilByCurrentUser();
         return scheduleService.findAllByFormId(pupilDTO.getFormId());
+    }
+
+    /**
+     * GET  /schedules : get all the schedules for certain form id.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of schedules in body
+     */
+    @RequestMapping(value = "pupilhome/getschedules/{formId}", method = RequestMethod.GET)
+    @Timed
+    public List<ScheduleDTO> getSchedulesByFormId(@PathVariable Long formId) {
+        return scheduleService.findAllByFormId(formId);
     }
 
 

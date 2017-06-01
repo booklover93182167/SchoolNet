@@ -30,7 +30,7 @@ export class TeacherManagementDialogComponent implements OnInit {
         private userService: UserService,
         private eventManager: EventManager
     ) {
-        this.jhiLanguageService.setLocations(['teacher', 'user-management']);
+        this.jhiLanguageService.setLocations(['teacher', 'user-management','entity']);
     }
 
     ngOnInit() {

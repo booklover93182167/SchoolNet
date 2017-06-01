@@ -155,7 +155,6 @@ public class TeacherResource {
     public List<TeacherDTO> getAllTeachersForMe() {
         log.debug("REST request to get all Teachers");
         return teacherService.findAll();
-
         /*
         Optional<User> s = userRepository.findOneWithAuthoritiesByLogin(principal.getName());
         Set<Authority> set = s.get().getAuthorities();
@@ -185,6 +184,11 @@ public class TeacherResource {
     public ResponseEntity<TeacherDTO> createTeacherWithUser(@Valid @RequestBody TeacherDTO teacherDTO) throws URISyntaxException {
         log.debug("REST request to save Teacher : {}", teacherDTO);
         TeacherDTO result = teacherService.saveTeacherWithUser(teacherDTO);
+
+        if(!result.getEnabled()){
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME,
+                "idexists", "This email is already use, try another email")).body(null);
+        }
         return ResponseEntity.created(new URI("/api/headteacher-management/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);

@@ -47,7 +47,7 @@ public class Teacher implements Serializable {
     private Set<Lesson> lessons = new HashSet<>();
 
     @ManyToOne(optional = false)
-    //@NotNull
+    @NotNull
     private School school;
 
     @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
