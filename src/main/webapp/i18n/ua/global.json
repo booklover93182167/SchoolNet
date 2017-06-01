@@ -3,6 +3,13 @@
         "title": "SchoolNet",
         "browsehappy": "Ваш браузер <strong>застарів</strong>. Будь-ласка <a href=\"http://browsehappy.com/?locale=ru\">оновіть ваш браузер</a>.",
         "menu": {
+            "pupil-home": "Pupil Home",
+            "management":"Управління",
+            "teacher-management":{
+                "teachers":"Вчителі",
+                "schedules":"Розклад",
+                "forms":"Класи"
+            },
             "home": "Головна",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
@@ -20,7 +27,7 @@
             },
             "account": {
                 "main": "Профіль",
-                "settings": "Настройки",
+                "settings": "Налаштування",
                 "password": "Пароль",
                 "sessions": "Сесії",
                 "login": "Увійти",
@@ -33,7 +40,7 @@
                 "tracker": "Трекер корист.",
                 "metrics": "Метрики",
                 "health": "Стан",
-                "configuration": "Настройки",
+                "configuration": "Налаштування",
                 "logs": "Логи",
                 "audits": "Аудит",
                 "apidocs": "API",
@@ -50,7 +57,9 @@
             "confirmpassword": "Підтвердження нового пароля",
             "confirmpassword.placeholder": "Підтвердіть новий пароль",
             "email": "Email",
-            "email.placeholder": "Ваш email"
+            "email.placeholder": "Ваш email",
+            "imageUrl": "URL-адреса для фотографії користувача",
+            "imageUrl.placeholder": "Ваша URL-адреса для фотографії"
         },
         "messages": {
             "info": {

@@ -3,6 +3,13 @@
         "title": "SchoolNet",
         "browsehappy": "Ваш браузер <strong>устарел</strong>. Пожалуйста <a href=\"http://browsehappy.com/?locale=ru\">обновите ваш браузер</a>.",
         "menu": {
+            "pupil-home": "Pupil Home",
+            "management":"Управления",
+            "teacher-management":{
+                "teachers":"Учителя",
+                "schedules":"Расписания",
+                "forms":"Класи"
+            },
             "home": "Главная",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
@@ -50,7 +57,9 @@
             "confirmpassword": "Подтверждение нового пароля",
             "confirmpassword.placeholder": "Подтвердите новый пароль",
             "email": "Email",
-            "email.placeholder": "Ваш email"
+            "email.placeholder": "Ваш email",
+            "imageUrl": "URL-адрес для фотографии пользователя",
+            "imageUrl.placeholder": "Ваш URL-адрес для фотографии"
         },
         "messages": {
             "info": {

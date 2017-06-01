@@ -4,15 +4,15 @@
 
 import { Route } from '@angular/router';
 import { UserRouteAccessService } from '../../shared';
-import { UserHomeSchedulesComponent} from "./user-home-schedules.component";
+import { PupilHomeSchedulesComponent} from './pupil-home-schedules.component';
 
-export const USER_HOME_SCHEDULES_ROUTE: Route = {
-    path: 'user-home/:formid/:month',
+export const PUPIL_HOME_SCHEDULES_ROUTE: Route = {
+    path: 'pupil-home/getschedules',
         component:
-        UserHomeSchedulesComponent,
+        PupilHomeSchedulesComponent,
         data:
         {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_PUPIL'],
             pageTitle: 'schoolNetApp.schedule.home.title'
         },
     canActivate: [UserRouteAccessService]

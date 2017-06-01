@@ -9,7 +9,8 @@ import { SchoolNetHomeModule } from './home/home.module';
 import { SchoolNetAdminModule } from './admin/admin.module';
 import { SchoolNetAccountModule } from './account/account.module';
 import { SchoolNetEntityModule } from './entities/entity.module';
-import { SchoolNetUserHomeModule } from './user-home/user-home.module';
+import { SchoolNetHeadTeacherModule } from './headteacher/headteacher.module';
+import { SchoolNetPupilHomeModule } from './pupil-home/pupil-home.module';
 
 
 import { LayoutRoutingModule } from './layouts';
@@ -36,7 +37,8 @@ import {
         SchoolNetAdminModule,
         SchoolNetAccountModule,
         SchoolNetEntityModule,
-         SchoolNetUserHomeModule
+        SchoolNetHeadTeacherModule,
+        SchoolNetPupilHomeModule
     ],
     declarations: [
         JhiMainComponent,

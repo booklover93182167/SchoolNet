@@ -16,4 +16,6 @@ public interface PupilRepository extends JpaRepository<Pupil, Long> {
     @Query(value = "select pupil.id from Pupil pupil left join pupil.form form where form.id = :formId")
     List<Long> findAllByFormId(@Param("formId") Long formId);
 
+    @Query("select pupil from Pupil pupil where pupil.user.login = ?#{principal.username}")
+    Pupil findPupilByCurrentUser();
 }

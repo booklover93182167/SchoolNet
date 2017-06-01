@@ -2,8 +2,6 @@ package com.inva.hipstertest.service;
 
 import com.inva.hipstertest.domain.Parent;
 import com.inva.hipstertest.service.dto.ParentDTO;
-import org.springframework.data.repository.query.Param;
-
 import java.util.List;
 import java.util.Set;
 

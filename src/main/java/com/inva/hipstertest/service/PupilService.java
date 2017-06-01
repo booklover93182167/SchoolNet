@@ -44,5 +44,12 @@ public interface PupilService {
      *
      * @param formId the id of the Form entity
      */
-    List<Long> findAllByFormId(Long formId);
+
+    List<PupilDTO> findAllByFormId(Long formId);
+
+    /**
+     * Find pupil bu current user (via principal)
+     */
+    PupilDTO findPupilByCurrentUser();
+
 }

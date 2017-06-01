@@ -61,7 +61,6 @@ public class ParentServiceImpl implements ParentService{
         List<ParentDTO> result = parentRepository.findAllWithEagerRelationships().stream()
             .map(parentMapper::parentToParentDTO)
             .collect(Collectors.toCollection(LinkedList::new));
-
         return result;
     }
 
