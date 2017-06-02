@@ -100,7 +100,7 @@ public class FormResource {
      * @param teacherId the id of teacher
      * @return the ResponseEntity with status 200 (OK) and with body the list of formsDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/forms/teacher/{teacherId}")
+    @GetMapping("/teacher-home/forms/teacher/{teacherId}")
     @Timed
     public List<FormDTO> getAllByCurrentTeacher(@PathVariable("teacherId") Long teacherId) {
         log.debug("REST request to get all Forms by the current teacher : {}", teacherId);
