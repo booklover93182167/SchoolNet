@@ -12,6 +12,7 @@ import { SchoolNetEntityModule } from './entities/entity.module';
 import { SchoolNetHeadTeacherModule } from './headteacher/headteacher.module';
 import { SchoolNetPupilHomeModule } from './pupil-home/pupil-home.module';
 import { SchoolNetTeacherHomeModule } from './teacher-home/teacher-home.module';
+import { SchoolNetTeacherScheduleModule } from './teacher-schedule/teacher-schedule.module';
 
 import { LayoutRoutingModule } from './layouts';
 import { customHttpProvider } from './blocks/interceptor/http.provider';
@@ -40,6 +41,7 @@ import {
         SchoolNetHeadTeacherModule,
         SchoolNetPupilHomeModule,
         SchoolNetTeacherHomeModule,
+        SchoolNetTeacherScheduleModule,
     ],
     declarations: [
         JhiMainComponent,
@@ -47,7 +49,7 @@ import {
         ErrorComponent,
         PageRibbonComponent,
         ActiveMenuDirective,
-        FooterComponent
+        FooterComponent,
     ],
     providers: [
         ProfileService,

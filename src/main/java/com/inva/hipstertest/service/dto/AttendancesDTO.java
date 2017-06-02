@@ -1,6 +1,5 @@
 package com.inva.hipstertest.service.dto;
 
-
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;

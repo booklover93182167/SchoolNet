@@ -3,7 +3,9 @@
         "title": "SchoolNet",
         "browsehappy": "Ваш браузер <strong>застарів</strong>. Будь-ласка <a href=\"http://browsehappy.com/?locale=ru\">оновіть ваш браузер</a>.",
         "menu": {
-            "teacher-home": "Вчитель",
+            "teacher-menu": "Меню вчителя",
+            "teacher-home": "Головна",
+            "teacher-schedule": "Розклад занять",
             "user-home": "Користувач",
             "pupil-home": "Учень",
             "management":"Управління",
@@ -13,6 +15,7 @@
                 "forms":"Класи"
             },
             "home": "Головна",
+            "forms": "Класи",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Сутності",
