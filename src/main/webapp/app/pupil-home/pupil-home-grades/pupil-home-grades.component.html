@@ -21,7 +21,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let attendance of pupilAttendances">
-            <td>{{attendance.grade}}</td>
+            <td>{{attendance.grade | gradesPipe}}</td>
             <td>{{attendance.date | date:'shortDate'}}</td>
         </tr>
         </tbody>

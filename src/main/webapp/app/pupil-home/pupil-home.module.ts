@@ -18,6 +18,7 @@ import { PupilHomeSchedulesSortPipe } from './pupil-home-schedules/pupil-home-sc
 import { PUPIL_HOME_ROUTE, PupilHomeComponent, PupilHomeSchedulesComponent } from './';
 import { PUPIL_HOME_GRADES_ROUTE } from './pupil-home-grades/pupil-home-grades.route';
 import { PupilHomeGradesComponent } from './pupil-home-grades/pupil-home-grades.component';
+import { PupilHomeGradesPipe } from './pupil-home-grades/pupil-home-grades-pipe';
 
 @NgModule({
     imports: [
@@ -33,6 +34,7 @@ import { PupilHomeGradesComponent } from './pupil-home-grades/pupil-home-grades.
     declarations: [
         LengthPipe,
         PupilHomeSchedulesSortPipe,
+        PupilHomeGradesPipe,
         CalendarComponent,
         PupilHomeComponent,
         PupilHomeSchedulesComponent,
