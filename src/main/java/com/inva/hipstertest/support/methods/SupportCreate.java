@@ -71,15 +71,18 @@ abstract public class SupportCreate {
             authority.setName("ROLE_PUPIL");
             auto.add(authority);
             user.setActivated(false);
+            user.setActivationKey(RandomUtil.generateActivationKey());
         }else if(role.equals(ROLE_ENUM.PARENT)){
             authority.setName("ROLE_PARENT");
             auto.add(authority);
             user.setActivated(false);
+            user.setActivationKey(RandomUtil.generateActivationKey());
         }else{
             System.out.println("BAD PARAM(role) IN METHOD saveUserWithRole");
             authority.setName("ROLE_USER");
             auto.add(authority);
             user.setActivated(false);
+            user.setActivationKey(RandomUtil.generateActivationKey());
         }
         user.setAuthorities(auto);
         String noEncryptedPassword = RandomUtil.generatePassword();

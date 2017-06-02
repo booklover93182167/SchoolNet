@@ -187,10 +187,10 @@ public class TeacherResource {
 
         if(!result.getEnabled()){
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME,
-                "idexists", "This email is already use, try another email")).body(null);
+                "idexistsEmail", "Try another email, this already use!")).body(null);
         }
         return ResponseEntity.created(new URI("/api/headteacher-management/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getFirstName()))
             .body(result);
     }
 
