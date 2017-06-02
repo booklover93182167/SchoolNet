@@ -120,7 +120,6 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         teacherRepository.delete(id);
     }
 
-
     /**
      * Save a teacher.
      *
@@ -142,4 +141,20 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         return teacherDTO;
     }
 
+    /**
+     * Get all the teachers by school ID.
+     *
+     * @param schoolId the id of the school
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<TeacherDTO> findAllBySchoolId(Long schoolId) {
+        log.debug("Request to get all Teachers by schoolId : {}", schoolId);
+        List<TeacherDTO> result = teacherRepository.findAllBySchoolId(schoolId).stream()
+            .map(teacherMapper::teacherToTeacherDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
+
+        return result;
+    }
 }

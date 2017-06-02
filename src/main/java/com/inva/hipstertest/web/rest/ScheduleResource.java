@@ -155,7 +155,7 @@ public class ScheduleResource {
      */
     @RequestMapping(value = "teacherhome/{teacherId}", method = RequestMethod.GET)
     @Timed
-    public List<ScheduleDTO> getScheduleByTecherId(@PathVariable("teacherId") Long teacherId) {
+    public List<ScheduleDTO> getScheduleByTeacherId(@PathVariable("teacherId") Long teacherId) {
         log.debug("REST request to get schedule by teacherId");
         return scheduleService.findAllByTeacherId(teacherId);
     }
@@ -169,4 +169,16 @@ public class ScheduleResource {
         }
     }
 
+    /**
+     * GET  /schedules : get all the schedules by school id.
+     *
+     * @param schoolId the id of the scheduleDTO to delete
+     * @return the ResponseEntity with status 200 (OK) and the list of schedules in body
+     */
+    @GetMapping("/teacher-schedule/schedule/{schoolId}")
+    @Timed
+    public List<ScheduleDTO> getAllSchedulesBySchoolId(@PathVariable Long schoolId) {
+        log.debug("REST request to get all Schedules by school id : {}", schoolId);
+        return scheduleService.findAllBySchoolId(schoolId);
+    }
 }

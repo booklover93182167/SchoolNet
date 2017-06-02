@@ -10,7 +10,7 @@ export class TeacherHomeService {
 
     private resourceUrlLesson = 'api/lessons/teacher';
     private resourceUrlForm = 'api/forms/teacher';
-    private resourceUrlCurrentTeacher = 'api/teachers/current';
+    private resourceUrlCurrentTeacher = 'api/teacherhome/current';
 
     constructor(private http: Http) {
     }

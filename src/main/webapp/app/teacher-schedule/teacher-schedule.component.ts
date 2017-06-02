@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 import { JhiLanguageService, AlertService } from 'ng-jhipster';
 
-import { TeacherSchedule } from './teacher-schedule.model';
-import { TeacherScheduleService } from './teacher-schedule.service';
+import { ScheduleMySuffix } from './../entities/schedule/schedule-my-suffix.model';
 import { TeacherMySuffix } from '../entities/teacher/teacher-my-suffix.model';
-import { TeacherMySuffixService } from '../entities/teacher/teacher-my-suffix.service';
+
+import { TeacherScheduleService } from './teacher-schedule.service';
 
 import { Principal } from '../shared';
 
@@ -16,37 +16,56 @@ import { Principal } from '../shared';
 })
 export class TeacherScheduleComponent implements OnInit {
     currentAccount: any;
+    currentTeacher: TeacherMySuffix;
     teachers: TeacherMySuffix[];
-    teacherSchedules: TeacherSchedule[];
-    filteredSchedules: TeacherSchedule[];
+    allSchedule: ScheduleMySuffix[];
+    filteredSchedule: ScheduleMySuffix[];
     selectedID: string;
     selectedDate: string;
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
-        private teacherService: TeacherMySuffixService,
         private teacherScheduleService: TeacherScheduleService,
         private alertService: AlertService,
         private principal: Principal,
     ) {
         this.jhiLanguageService.setLocations([]);
-        this.filteredSchedules = [];
+        this.teachers = [];
+        this.allSchedule = [];
+        this.filteredSchedule = [];
         this.selectedID = '1';
         this.selectedDate = Date.now().toString();
     }
 
-    loadAll() {
-        this.teacherService.query().subscribe(
+    ngOnInit() {
+        this.principal.identity().then((account) => {
+            this.currentAccount = account;
+        });
+        this.loadCurrentTeacher();
+    }
+
+    loadCurrentTeacher(){
+        this.teacherScheduleService.getCurrentTeacher().subscribe(
+            (res: Response) => {
+                this.currentTeacher = res.json();
+                this.loadTeachers(this.currentTeacher.schoolId);
+                this.loadSchedule(this.currentTeacher.schoolId);
+            },
+            (res: Response) => this.onError(res.json())
+        );
+    }
+
+    loadTeachers(schoolId: number) {
+        this.teacherScheduleService.getTeachersBySchoolId(schoolId).subscribe(
             (res: Response) => {
                 this.teachers = res.json();
-            },
+            });
+    }
+
+    loadSchedule(schoolId: number) {
+        this.teacherScheduleService.getSchedulesBySchoolId(schoolId).subscribe(
             (res: Response) => {
-                this.onError(res.json());
-            }
-        );
-        this.teacherScheduleService.query().subscribe(
-            (res: Response) => {
-                this.teacherSchedules = res.json();
+                this.allSchedule = res.json();
                 this.onFormChange();
             },
             (res: Response) => {
@@ -55,20 +74,13 @@ export class TeacherScheduleComponent implements OnInit {
         );
     }
 
-    ngOnInit() {
-        this.loadAll();
-        this.principal.identity().then((account) => {
-            this.currentAccount = account;
-        });
+    onFormChange() {
+        console.log('onFormChange() with TeacherID ' + this.selectedID + ' and date: ' + new Date(this.selectedDate.toString()));
+        this.filteredSchedule = this.teacherScheduleService.filterSchedule(parseInt(this.selectedID, 10), new Date(this.selectedDate.toString()), this.allSchedule);
     }
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
 
-    onFormChange() {
-        console.log('onTeacherSelect() with TeacherID ' + this.selectedID);
-        console.log('onDateChange() ' + this.selectedDate);
-        this.filteredSchedules = this.teacherScheduleService.filterSchedule(parseInt(this.selectedID, 10), new Date(this.selectedDate.toString()), this.teacherSchedules);
-    }
 }
