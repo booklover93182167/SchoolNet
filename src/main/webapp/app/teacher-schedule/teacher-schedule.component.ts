@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 import { JhiLanguageService, AlertService } from 'ng-jhipster';
 
-import { ScheduleMySuffix } from './../entities/schedule/schedule-my-suffix.model';
+import { ScheduleMySuffix } from './../entities/schedule/';
 import { TeacherMySuffix } from '../entities/teacher/teacher-my-suffix.model';
 
 import { TeacherScheduleService } from './teacher-schedule.service';
@@ -18,8 +18,8 @@ export class TeacherScheduleComponent implements OnInit {
     currentAccount: any;
     currentTeacher: TeacherMySuffix;
     teachers: TeacherMySuffix[];
-    allSchedule: ScheduleMySuffix[];
-    filteredSchedule: ScheduleMySuffix[];
+    allSchedules: ScheduleMySuffix[];
+    filteredSchedules: ScheduleMySuffix[];
     selectedID: string;
     selectedDate: string;
 
@@ -31,8 +31,8 @@ export class TeacherScheduleComponent implements OnInit {
     ) {
         this.jhiLanguageService.setLocations([]);
         this.teachers = [];
-        this.allSchedule = [];
-        this.filteredSchedule = [];
+        this.allSchedules = [];
+        this.filteredSchedules = [];
         this.selectedID = '1';
         this.selectedDate = Date.now().toString();
     }
@@ -65,7 +65,7 @@ export class TeacherScheduleComponent implements OnInit {
     loadSchedule(schoolId: number) {
         this.teacherScheduleService.getSchedulesBySchoolId(schoolId).subscribe(
             (res: Response) => {
-                this.allSchedule = res.json();
+                this.allSchedules = res.json();
                 this.onFormChange();
             },
             (res: Response) => {
@@ -75,8 +75,7 @@ export class TeacherScheduleComponent implements OnInit {
     }
 
     onFormChange() {
-        console.log('onFormChange() with TeacherID ' + this.selectedID + ' and date: ' + new Date(this.selectedDate.toString()));
-        this.filteredSchedule = this.teacherScheduleService.filterSchedule(parseInt(this.selectedID, 10), new Date(this.selectedDate.toString()), this.allSchedule);
+        this.filteredSchedules = this.teacherScheduleService.filterSchedule(parseInt(this.selectedID, 10), new Date(this.selectedDate.toString()), this.allSchedules);
     }
 
     private onError(error) {
