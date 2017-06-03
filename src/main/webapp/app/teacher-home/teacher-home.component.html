@@ -1,4 +1,4 @@
-<h2 *ngIf="currentAccount">Welcome <b>{{currentAccount.login}}</b></h2>
+<h2 *ngIf="currentTeacher">Welcome <b>{{currentTeacher.firstName + ' ' + currentTeacher.lastName}}</b></h2>
 
 
 <!--<form class="container" #userForm="ngForm" (ngSubmit)="onSubmit(userForm.value)">-->
@@ -47,36 +47,36 @@
 <!--</div>-->
 
 
-<div class="col-md-8 offset-md-2">
-    <form #teacherSelectForm="ngForm">
-        <div class="form-group row">
-            <label for="date-select" class="col-2 col-form-label">Date</label>
-            <div class="col-10">
-                <input class="form-control" type="date" id="date-select" name="date-select" [(ngModel)]="selectedDate">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="lesson-select" class="col-2 col-form-label">Lesson</label>
-            <div class="col-10">
-                <select class="form-control" id="lesson-select" name="lesson-select" [(ngModel)]="selectedLessonId"
-                        (change)="onFormChange()">
-                    <option *ngFor="let lesson of lessons;" value="{{lesson.id}}">{{lesson.name}}</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="teacherForm-select" class="col-2 col-form-label">Form</label>
-            <div class="col-10">
-                <select class="form-control" id="teacherForm-select" name="teacherForm-select"
-                        [(ngModel)]="selectedFormId"
-                        (change)="onFormChange()">
-                    <option *ngFor="let form of forms;" value="{{form.id}}">{{form.name}}</option>
-                </select>
-            </div>
-        </div>
-        <input type="submit" value="submit">
-    </form>
-</div>
+<!--<div class="col-md-8 offset-md-2">-->
+    <!--<form #teacherSelectForm="ngForm">-->
+        <!--<div class="form-group row">-->
+            <!--<label for="date-select" class="col-2 col-form-label">Date</label>-->
+            <!--<div class="col-10">-->
+                <!--<input class="form-control" type="date" id="date-select" name="date-select" [(ngModel)]="selectedDate">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group row">-->
+            <!--<label for="lesson-select" class="col-2 col-form-label">Lesson</label>-->
+            <!--<div class="col-10">-->
+                <!--<select class="form-control" id="lesson-select" name="lesson-select" [(ngModel)]="selectedLessonId"-->
+                        <!--(change)="onFormChange()">-->
+                    <!--<option *ngFor="let lesson of lessons;" value="{{lesson.id}}">{{lesson.name}}</option>-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group row">-->
+            <!--<label for="teacherForm-select" class="col-2 col-form-label">Form</label>-->
+            <!--<div class="col-10">-->
+                <!--<select class="form-control" id="teacherForm-select" name="teacherForm-select"-->
+                        <!--[(ngModel)]="selectedFormId"-->
+                        <!--(change)="onFormChange()">-->
+                    <!--<option *ngFor="let form of forms;" value="{{form.id}}">{{form.name}}</option>-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<input type="submit" value="submit">-->
+    <!--</form>-->
+<!--</div>-->
 
 
 <div>
@@ -120,15 +120,17 @@
                 <div>
                     <td>
                         <span>{{schedule.homework }}</span>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'teacher-home-popup-homework/'+ schedule.id + '/edit'} }]"
-                                replaceUrl="true"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
                     </td>
                 </div>
+                <td>
+                    <button type="submit"
+                            [routerLink]="['/', { outlets: { popup: 'teacher-home-popup-homework/'+ schedule.id + '/edit'} }]"
+                            replaceUrl="true"
+                            class="btn btn-primary btn-sm">
+                        <span class="fa fa-pencil"></span>
+                        <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                    </button>
+                </td>
             </tr>
             </tbody>
         </table>

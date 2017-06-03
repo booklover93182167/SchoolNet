@@ -33,9 +33,8 @@ export class TeacherHomeComponent implements OnInit {
                 private teacherHomeService: TeacherHomeService,
                 private alertService: AlertService,
                 private eventManager: EventManager,
-                private pupilHomeService: PupilHomeService,
-                private scheduleMySuffixService: ScheduleMySuffixService) {
-        this.jhiLanguageService.setLocations(['home']);
+                private pupilHomeService: PupilHomeService) {
+        this.jhiLanguageService.setLocations(['teacher-home']);
     }
 
     ngOnInit() {
@@ -93,7 +92,6 @@ export class TeacherHomeComponent implements OnInit {
         this.eventSubscriber = this.eventManager.subscribe('lessonListModification', (response) => this.loadLessons(this.currentTeacher.id));
     }
 
-    selectHomework(scheduleId: number) {
-        console.log(scheduleId);
+    onFormChange() {
     }
 }

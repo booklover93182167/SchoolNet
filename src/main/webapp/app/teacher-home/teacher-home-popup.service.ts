@@ -27,8 +27,6 @@ export class TeacherHomePopupService {
                     .transform(schedule.date, 'yyyy-MM-ddThh:mm');
                 this.scheduleModalRef(component, schedule);
             });
-        } else {
-            return this.scheduleModalRef(component, new ScheduleMySuffix());
         }
     }
 
