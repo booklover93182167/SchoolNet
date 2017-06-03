@@ -85,28 +85,6 @@ public class ScheduleResource {
     }
 
     /**
-     * PUT  /schedules : Updates an existing schedule.
-     *
-     * @param scheduleDTO the scheduleDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated scheduleDTO,
-     * or with status 400 (Bad Request) if the scheduleDTO is not valid,
-     * or with status 500 (Internal Server Error) if the scheduleDTO couldnt be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PutMapping("/teacher-home/schedules/update")
-    @Timed
-    public ResponseEntity<ScheduleDTO> updateScheduleHomework(@Valid @RequestBody ScheduleDTO scheduleDTO) throws URISyntaxException {
-        log.debug("REST request to update Schedule : {}", scheduleDTO);
-        if (scheduleDTO.getId() == null) {
-            return createSchedule(scheduleDTO);
-        }
-        ScheduleDTO result = scheduleService.save(scheduleDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, scheduleDTO.getId().toString()))
-            .body(result);
-    }
-
-    /**
      * GET  /schedules : get all the schedules.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of schedules in body
@@ -149,7 +127,7 @@ public class ScheduleResource {
      * @param id the id of the scheduleDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the scheduleDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/schedules/{id}")
+    @GetMapping({"/schedules/{id}", "/teacher-home/schedules/find/{id}"})
     @Timed
     public ResponseEntity<ScheduleDTO> getSchedule(@PathVariable Long id) {
         log.debug("REST request to get Schedule : {}", id);

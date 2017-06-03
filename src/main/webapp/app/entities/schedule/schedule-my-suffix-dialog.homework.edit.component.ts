@@ -12,7 +12,8 @@ import {LessonMySuffix} from '../lesson';
 import {FormMySuffix} from '../form';
 import {ClassroomMySuffix} from '../classroom';
 import {TeacherMySuffix} from '../teacher';
-import {TeacherHomeService} from "../../teacher-home/teacher-home.service";
+import {TeacherHomeService} from '../../teacher-home/teacher-home.service';
+import {TeacherHomePopupService} from "../../teacher-home/teacher-home-popup.service";
 
 @Component({
     selector: 'jhi-schedule-my-suffix-dialog',
@@ -70,24 +71,7 @@ export class ScheduleHomeworkDialogComponent implements OnInit {
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
-
-    trackLessonById(index: number, item: LessonMySuffix) {
-        return item.id;
-    }
-
-    trackFormById(index: number, item: FormMySuffix) {
-        return item.id;
-    }
-
-    trackClassroomById(index: number, item: ClassroomMySuffix) {
-        return item.id;
-    }
-
-    trackTeacherById(index: number, item: TeacherMySuffix) {
-        return item.id;
-    }
 }
-
 
 @Component({
     selector: 'teacher-home-popup-homework',
@@ -99,17 +83,14 @@ export class ScheduleMySuffixPopupComponentHomework implements OnInit, OnDestroy
     routeSub: any;
 
     constructor(private route: ActivatedRoute,
-                private schedulePopupService: ScheduleMySuffixPopupService) {
+                private teacherPopupService: TeacherHomePopupService) {
     }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
             if (params['id']) {
-                this.modalRef = this.schedulePopupService
+                this.modalRef = this.teacherPopupService
                     .open(ScheduleHomeworkDialogComponent, params['id']);
-            } else {
-                this.modalRef = this.schedulePopupService
-                    .open(ScheduleHomeworkDialogComponent);
             }
         });
     }

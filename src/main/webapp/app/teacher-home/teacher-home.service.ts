@@ -15,6 +15,7 @@ export class TeacherHomeService {
     private resourceUrlCurrentTeacher = 'api/teacher-home/teachers/current';
     private resourceUrlSchedule = 'api/teacher-home/schedules/teacher';
     private resourceUrlForTeacherUpdateSchedule = 'api/teacher-home/schedules/update';
+    private resourceUrlForTeacherFindSchedule = 'api/teacher-home/schedules/find';
 
 
     constructor(private http: Http, private dateUtils: DateUtils) {
@@ -43,6 +44,15 @@ export class TeacherHomeService {
         copy.date = this.dateUtils.toDate(schedule.date);
         return this.http.put(this.resourceUrlForTeacherUpdateSchedule, copy).map((res: Response) => {
             return res.json();
+        });
+    }
+
+    findSchedule(id: number): Observable<ScheduleMySuffix> {
+        return this.http.get(`${this.resourceUrlForTeacherFindSchedule}/${id}`).map((res: Response) => {
+            const jsonResponse = res.json();
+            jsonResponse.date = this.dateUtils
+                .convertDateTimeFromServer(jsonResponse.date);
+            return jsonResponse;
         });
     }
 
