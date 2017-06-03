@@ -14,6 +14,10 @@ import {
     scheduleRoute,
     schedulePopupRoute,
 } from './';
+import {
+    ScheduleHomeworkDialogComponent,
+    ScheduleMySuffixPopupComponentHomework
+} from './schedule-my-suffix-dialog.homework.edit.component';
 
 const ENTITY_STATES = [
     ...scheduleRoute,
@@ -29,6 +33,8 @@ const ENTITY_STATES = [
         ScheduleMySuffixComponent,
         ScheduleMySuffixDetailComponent,
         ScheduleMySuffixDialogComponent,
+        ScheduleHomeworkDialogComponent,
+        ScheduleMySuffixPopupComponentHomework,
         ScheduleMySuffixDeleteDialogComponent,
         ScheduleMySuffixPopupComponent,
         ScheduleMySuffixDeletePopupComponent,
@@ -36,9 +42,11 @@ const ENTITY_STATES = [
     entryComponents: [
         ScheduleMySuffixComponent,
         ScheduleMySuffixDialogComponent,
+        ScheduleMySuffixPopupComponentHomework,
         ScheduleMySuffixPopupComponent,
         ScheduleMySuffixDeleteDialogComponent,
         ScheduleMySuffixDeletePopupComponent,
+        ScheduleHomeworkDialogComponent
     ],
     providers: [
         ScheduleMySuffixService,

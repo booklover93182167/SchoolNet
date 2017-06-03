@@ -71,9 +71,31 @@ public class ScheduleResource {
      * or with status 500 (Internal Server Error) if the scheduleDTO couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/schedules")
+    @PutMapping({"/schedules", "/teacher-home/schedules/update"})
     @Timed
     public ResponseEntity<ScheduleDTO> updateSchedule(@Valid @RequestBody ScheduleDTO scheduleDTO) throws URISyntaxException {
+        log.debug("REST request to update Schedule : {}", scheduleDTO);
+        if (scheduleDTO.getId() == null) {
+            return createSchedule(scheduleDTO);
+        }
+        ScheduleDTO result = scheduleService.save(scheduleDTO);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, scheduleDTO.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * PUT  /schedules : Updates an existing schedule.
+     *
+     * @param scheduleDTO the scheduleDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated scheduleDTO,
+     * or with status 400 (Bad Request) if the scheduleDTO is not valid,
+     * or with status 500 (Internal Server Error) if the scheduleDTO couldnt be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/teacher-home/schedules/update")
+    @Timed
+    public ResponseEntity<ScheduleDTO> updateScheduleHomework(@Valid @RequestBody ScheduleDTO scheduleDTO) throws URISyntaxException {
         log.debug("REST request to update Schedule : {}", scheduleDTO);
         if (scheduleDTO.getId() == null) {
             return createSchedule(scheduleDTO);

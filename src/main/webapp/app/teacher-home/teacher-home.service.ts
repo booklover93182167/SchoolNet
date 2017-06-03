@@ -5,6 +5,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {DateUtils} from 'ng-jhipster';
+import {ScheduleMySuffix} from "../entities/schedule/schedule-my-suffix.model";
 
 @Injectable()
 export class TeacherHomeService {
@@ -13,6 +14,8 @@ export class TeacherHomeService {
     private resourceUrlForm = 'api/teacher-home/forms/teacher';
     private resourceUrlCurrentTeacher = 'api/teacher-home/teachers/current';
     private resourceUrlSchedule = 'api/teacher-home/schedules/teacher';
+    private resourceUrlForTeacherUpdateSchedule = 'api/teacher-home/schedules/update';
+
 
     constructor(private http: Http, private dateUtils: DateUtils) {
     }
@@ -32,6 +35,15 @@ export class TeacherHomeService {
     querySchedule(teacherId: number): Observable<Response> {
         return this.http.get(`${this.resourceUrlSchedule}/${teacherId}`)
             .map((res: any) => this.convertResponse(res));
+    }
+
+    updateHomework(schedule: ScheduleMySuffix): Observable<ScheduleMySuffix> {
+        const copy: ScheduleMySuffix = Object.assign({}, schedule);
+
+        copy.date = this.dateUtils.toDate(schedule.date);
+        return this.http.put(this.resourceUrlForTeacherUpdateSchedule, copy).map((res: Response) => {
+            return res.json();
+        });
     }
 
     private convertResponse(res: any): any {

@@ -51,7 +51,6 @@ export class TeacherHomeComponent implements OnInit {
             (res: Response) => {
                 this.currentTeacher = res.json();
                 this.loadLessons(this.currentTeacher.id);
-                console.log(this.currentTeacher.schoolId);
             },
             (res: Response) => this.onError(res.json())
         );
@@ -94,7 +93,7 @@ export class TeacherHomeComponent implements OnInit {
         this.eventSubscriber = this.eventManager.subscribe('lessonListModification', (response) => this.loadLessons(this.currentTeacher.id));
     }
 
-    selectHomework(scheduleId: number){
+    selectHomework(scheduleId: number) {
         console.log(scheduleId);
     }
 }
