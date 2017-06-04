@@ -3,6 +3,7 @@
         "title": "SchoolNet",
         "browsehappy": "Ваш браузер <strong>застарів</strong>. Будь-ласка <a href=\"http://browsehappy.com/?locale=ru\">оновіть ваш браузер</a>.",
         "menu": {
+            "forms": "Класи",
             "teacher-menu": "Меню вчителя",
             "teacher-home": "Головна",
             "teacher-schedule": "Розклад занять",
@@ -15,7 +16,6 @@
                 "forms":"Класи"
             },
             "home": "Головна",
-            "forms": "Класи",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Сутності",
@@ -152,7 +152,8 @@
         "Size": "Поле {{fieldName}} не відповідає вимогам мін/макс. розміру!",
         "userexists": "Ім'я користувача вже використовується!",
         "emailexists": "Email вже використовується!",
-        "idexists": "Новий {{entityName}} не може мати даний ID"
+        "idexists": "Новий {{entityName}} не може мати даний ID",
+        "idexistsEmail": "Спробуйте інший email, цей вже використовується!"
     },
     "footer": "Створено групою Lv-236.Java :)"
 }

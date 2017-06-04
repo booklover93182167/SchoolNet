@@ -6,7 +6,6 @@ import { EventManager , JhiLanguageService  } from 'ng-jhipster';
 import { FormMySuffix } from './form-my-suffix.model';
 import { FormMySuffixService } from './form-my-suffix.service';
 import { PupilMySuffix } from '../pupil/pupil-my-suffix.model';
-import { PupilMySuffixService } from "../pupil/pupil-my-suffix.service";
 
 
 
@@ -24,7 +23,6 @@ pupils:PupilMySuffix[];
         private eventManager: EventManager,
         private jhiLanguageService: JhiLanguageService,
         private formService: FormMySuffixService,
-        private pupilService: PupilMySuffixService,
         private route: ActivatedRoute
     ) {
         this.jhiLanguageService.setLocations(['form']);
