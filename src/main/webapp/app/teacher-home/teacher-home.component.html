@@ -20,32 +20,6 @@
 <!--<option *ngFor="let form of forms" value="form">{{form.name}}</option>-->
 <!--</select>-->
 
-<!--</form>-->
-
-<!--<div>-->
-<!--<ng-form ng-hide="isDetail">-->
-<!--First Name:-->
-<!--<input type="text" ng-model="fName">-->
-<!--<br />-->
-<!--Last Name:-->
-<!--<input type="text" ng-model="lName">-->
-<!--<br />-->
-<!--User Name:-->
-<!--<input type="text" ng-model="uName">-->
-<!--<br />-->
-<!--Password:-->
-<!--<input type="password" ng-model="password">-->
-<!--<br />-->
-<!--</ng-form>-->
-<!--<input type="button" ng-click="isDetail=true" value="Submit" />-->
-<!--<div ng-show="isDetail">-->
-<!--First Name:<b>{{fName}}</b><br />-->
-<!--Last Name:<b>{{lName}}</b><br />-->
-<!--User Name:<b>{{uName}}</b><br />-->
-<!--Password:<b>{{password}}</b>-->
-<!--</div>-->
-<!--</div>-->
-
 
 <!--<div class="col-md-8 offset-md-2">-->
     <!--<form #teacherSelectForm="ngForm">-->
@@ -79,60 +53,4 @@
 <!--</div>-->
 
 
-<div>
-    <h2>{{selectedDate | date:'shortDate'}}</h2>
-    <h2>
-        <span>User Schedules</span>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <div class="row">
-    </div>
-    <br/>
-    <div class="table-responsive" *ngIf="schedules">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th><span>Lesson Position</span></th>
-                <th><span>Lesson</span></th>
-                <th><span>Classroom</span></th>
-                <th><span>Form</span></th>
-                <th><span>FormHomework</span></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let schedule of schedules">
-                <td>{{schedule.lessonPosition}}</td>
-                <td>
-                    <div *ngIf="schedule.lessonId">
-                        <span>{{schedule.lessonName}}</span>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="schedule.classroomId">
-                        <span>{{schedule.classroomName}}</span>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="schedule.formId">
-                        <span>{{schedule.formName}}</span>
-                    </div>
-                </td>
-                <div>
-                    <td>
-                        <span>{{schedule.homework }}</span>
-                    </td>
-                </div>
-                <td>
-                    <button type="submit"
-                            [routerLink]="['/', { outlets: { popup: 'teacher-home-popup-homework/'+ schedule.id + '/edit'} }]"
-                            replaceUrl="true"
-                            class="btn btn-primary btn-sm">
-                        <span class="fa fa-pencil"></span>
-                        <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+<teacher-home-schedule></teacher-home-schedule>

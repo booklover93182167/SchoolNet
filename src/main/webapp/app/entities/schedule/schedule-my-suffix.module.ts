@@ -18,7 +18,7 @@ import {
     ScheduleHomeworkDialogComponent,
     ScheduleMySuffixPopupComponentHomework
 } from './schedule-my-suffix-dialog.homework.edit.component';
-import {TeacherHomePopupService} from "../../teacher-home/teacher-home-popup.service";
+import {TeacherHomePopupService} from '../../teacher-home/teacher-home-popup.service';
 
 const ENTITY_STATES = [
     ...scheduleRoute,

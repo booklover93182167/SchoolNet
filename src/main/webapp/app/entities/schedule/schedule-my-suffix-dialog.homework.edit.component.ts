@@ -6,14 +6,8 @@ import {NgbActiveModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {AlertService, EventManager, JhiLanguageService} from 'ng-jhipster';
 
 import {ScheduleMySuffix} from './schedule-my-suffix.model';
-import {ScheduleMySuffixPopupService} from './schedule-my-suffix-popup.service';
-import {ScheduleMySuffixService} from './schedule-my-suffix.service';
-import {LessonMySuffix} from '../lesson';
-import {FormMySuffix} from '../form';
-import {ClassroomMySuffix} from '../classroom';
-import {TeacherMySuffix} from '../teacher';
 import {TeacherHomeService} from '../../teacher-home/teacher-home.service';
-import {TeacherHomePopupService} from "../../teacher-home/teacher-home-popup.service";
+import {TeacherHomePopupService} from '../../teacher-home/teacher-home-popup.service';
 
 @Component({
     selector: 'jhi-schedule-my-suffix-dialog',
@@ -28,7 +22,6 @@ export class ScheduleHomeworkDialogComponent implements OnInit {
     constructor(public activeModal: NgbActiveModal,
                 private jhiLanguageService: JhiLanguageService,
                 private alertService: AlertService,
-                private scheduleService: ScheduleMySuffixService,
                 private teacherHomeService: TeacherHomeService,
                 private eventManager: EventManager) {
         this.jhiLanguageService.setLocations(['schedule']);

@@ -16,6 +16,7 @@ import {TeacherHomeRoute} from "./teacher-home.route";
 import {TeacherHomeService} from "./teacher-home.service";
 import {LessonMySuffixComponent} from "../entities/lesson/lesson-my-suffix.component";
 import {FormMySuffixComponent} from "../entities/form/form-my-suffix.component";
+import {TeacherHomeScheduleComponent} from "./teacher-home.schedule.component";
 
 @NgModule({
     imports: [
@@ -26,10 +27,11 @@ import {FormMySuffixComponent} from "../entities/form/form-my-suffix.component";
         RouterModule.forRoot([ TeacherHomeRoute ], { useHash: true }),
     ],
     declarations: [
-        TeacherHomeComponent
+        TeacherHomeComponent,
+        TeacherHomeScheduleComponent
     ],
     entryComponents: [
-        TeacherHomeComponent
+        TeacherHomeComponent,
     ],
     providers: [
         TeacherHomeService

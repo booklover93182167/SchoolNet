@@ -1,0 +1,59 @@
+<div>
+    <!--<h2>{{selectedDate | date:'shortDate'}}</h2>-->
+    <h2>
+        <span>User Schedules</span>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="schedules">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><span>Date</span></th>
+                <th><span>Lesson Position</span></th>
+                <th><span>Lesson</span></th>
+                <th><span>Classroom</span></th>
+                <th><span>Form</span></th>
+                <th><span>FormHomework</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let schedule of schedules">
+                <td>{{schedule.date | date: "shortDate"}}</td>
+                <td>{{schedule.lessonPosition}}</td>
+                <td>
+                    <div *ngIf="schedule.lessonId">
+                        <span>{{schedule.lessonName}}</span>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="schedule.classroomId">
+                        <span>{{schedule.classroomName}}</span>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="schedule.formId">
+                        <span>{{schedule.formName}}</span>
+                    </div>
+                </td>
+                <div>
+                    <td>
+                        <span>{{schedule.homework }}</span>
+                    </td>
+                </div>
+                <td>
+                    <button type="submit"
+                            [routerLink]="['/', { outlets: { popup: 'teacher-home-popup-homework/'+ schedule.id + '/edit'} }]"
+                            replaceUrl="true"
+                            class="btn btn-primary btn-sm">
+                        <span class="fa fa-pencil"></span>
+                        <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
