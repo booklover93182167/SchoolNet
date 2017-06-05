@@ -13,7 +13,8 @@
             "teacher-management":{
                 "teachers":"Вчителі",
                 "schedules":"Розклад",
-                "forms":"Класи"
+                "forms":"Класи",
+                "classrooms":"Кімнати"
             },
             "home": "Головна",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
