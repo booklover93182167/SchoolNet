@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Http, Response, URLSearchParams, BaseRequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import {Http, Response, URLSearchParams, BaseRequestOptions} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 
-import { ClassroomManagement } from './classroom-management.model';
+import {ClassroomManagement} from './classroom-management.model';
 @Injectable()
 export class ClassroomManagementService {
 
     private resourceUrl = 'api/classrooms';
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+    }
 
     create(classroom: ClassroomManagement): Observable<ClassroomManagement> {
         const copy: ClassroomManagement = Object.assign({}, classroom);
@@ -33,12 +34,13 @@ export class ClassroomManagementService {
     query(req?: any): Observable<Response> {
         const options = this.createRequestOption(req);
         return this.http.get(this.resourceUrl, options)
-        ;
+            ;
     }
 
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
+
     private createRequestOption(req?: any): BaseRequestOptions {
         const options: BaseRequestOptions = new BaseRequestOptions();
         if (req) {

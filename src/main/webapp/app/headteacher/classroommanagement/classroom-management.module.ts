@@ -7,8 +7,11 @@ import {
     ClassroomManagementService,
     ClassroomManagementPopupService,
     ClassroomManagementComponent,
+    ClassroomManagementDetailComponent,
     ClassroomManagementDialogComponent,
     ClassroomManagementPopupComponent,
+    ClassroomManagementDeletePopupComponent,
+    ClassroomManagementDeleteDialogComponent,
     classroomRoute,
     classroomPopupRoute,
 } from './';
@@ -26,13 +29,18 @@ const ENTITY_STATES = [
     ],
     declarations: [
         ClassroomManagementComponent,
+        ClassroomManagementDetailComponent,
         ClassroomManagementDialogComponent,
+        ClassroomManagementDeleteDialogComponent,
         ClassroomManagementPopupComponent,
+        ClassroomManagementDeletePopupComponent,
     ],
     entryComponents: [
         ClassroomManagementComponent,
         ClassroomManagementDialogComponent,
         ClassroomManagementPopupComponent,
+        ClassroomManagementDeleteDialogComponent,
+        ClassroomManagementDeletePopupComponent,
     ],
     providers: [
         ClassroomManagementService,

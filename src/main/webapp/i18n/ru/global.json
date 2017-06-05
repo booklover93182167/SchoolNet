@@ -14,7 +14,7 @@
                 "teachers":"Учителя",
                 "schedules":"Расписание",
                 "forms":"Классы",
-                "classrooms":"Комнаты"
+                "classrooms":"Кабинеты"
             },
             "home": "Главная",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
