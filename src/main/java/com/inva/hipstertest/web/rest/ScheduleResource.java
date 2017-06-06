@@ -71,7 +71,7 @@ public class ScheduleResource {
      * or with status 500 (Internal Server Error) if the scheduleDTO couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/schedules")
+    @PutMapping({"/schedules", "/teacher-home/schedules/update"})
     @Timed
     public ResponseEntity<ScheduleDTO> updateSchedule(@Valid @RequestBody ScheduleDTO scheduleDTO) throws URISyntaxException {
         log.debug("REST request to update Schedule : {}", scheduleDTO);
@@ -127,7 +127,7 @@ public class ScheduleResource {
      * @param id the id of the scheduleDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the scheduleDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/schedules/{id}")
+    @GetMapping({"/schedules/{id}", "/teacher-home/schedules/find/{id}"})
     @Timed
     public ResponseEntity<ScheduleDTO> getSchedule(@PathVariable Long id) {
         log.debug("REST request to get Schedule : {}", id);

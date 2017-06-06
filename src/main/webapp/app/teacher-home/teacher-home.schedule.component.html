@@ -1,0 +1,85 @@
+<div class="col-md-8 offset-md-2">
+    <form #teacherSelectForm="ngForm">
+        <label>You can use the filter</label>
+        <div class="form-group row">
+            <label for="lesson-select" class="col-2 col-form-label">Lesson</label>
+            <div class="col-10">
+                <select class="form-control" id="lesson-select" name="lesson-select" [(ngModel)]="selectedLessonId">
+                    <option *ngFor="let lesson of lessons;" value="{{lesson.id}}">{{lesson.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="form-select" class="col-2 col-form-label">Form</label>
+            <div class="col-10">
+                <select class="form-control" id="form-select" name="form-select" [(ngModel)]="selectedFormId">
+                    <option *ngFor="let form of forms;" value="{{form.id}}">{{form.name}}</option>
+                </select>
+                <div class="form-group row">
+                    <div class="col-10">
+                        <button class="btn" (click)="onClick()">Apply.</button>
+                        <button class="btn" (click)="Clear()">Сlear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div>
+    <h2>
+        <span>Schedules</span>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="filteredSchedules">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><span>Date</span></th>
+                <th><span>Lesson Position</span></th>
+                <th><span>Lesson</span></th>
+                <th><span>Classroom</span></th>
+                <th><span>Form</span></th>
+                <th><span>FormHomework</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let schedule of filteredSchedules | sortByDate">
+                <td>{{schedule.date | date: "shortDate"}}</td>
+                <td>{{schedule.lessonPosition}}</td>
+                <td>
+                    <div *ngIf="schedule.lessonId">
+                        <span>{{schedule.lessonName}}</span>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="schedule.classroomId">
+                        <span>{{schedule.classroomName}}</span>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="schedule.formId">
+                        <span>{{schedule.formName}}</span>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <p>{{schedule.homework }}</p>
+                    </div>
+                </td>
+                <td>
+                    <button type="submit"
+                            [routerLink]="['/', { outlets: { popup: 'teacher-home-popup-homework/'+ schedule.id + '/edit'} }]"
+                            replaceUrl="true"
+                            class="btn btn-primary btn-sm">
+                        <span class="fa fa-pencil"></span>
+                        <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

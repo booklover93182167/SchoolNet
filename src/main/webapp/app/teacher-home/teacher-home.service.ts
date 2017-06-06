@@ -5,6 +5,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {DateUtils} from 'ng-jhipster';
+import {ScheduleMySuffix} from '../entities/schedule/schedule-my-suffix.model';
 
 @Injectable()
 export class TeacherHomeService {
@@ -12,7 +13,7 @@ export class TeacherHomeService {
     private resourceUrlLesson = 'api/teacher-home/lessons/teacher';
     private resourceUrlForm = 'api/teacher-home/forms/teacher';
     private resourceUrlCurrentTeacher = 'api/teacher-home/teachers/current';
-    private resourceUrlSchedule = 'api/teacher-home/schedules/teacher';
+    private resourceUrlSchedule = 'api/teacher-home/schedules';
 
     constructor(private http: Http, private dateUtils: DateUtils) {
     }
@@ -30,8 +31,25 @@ export class TeacherHomeService {
     }
 
     querySchedule(teacherId: number): Observable<Response> {
-        return this.http.get(`${this.resourceUrlSchedule}/${teacherId}`)
+        return this.http.get(`${this.resourceUrlSchedule}/teacher/${teacherId}`)
             .map((res: any) => this.convertResponse(res));
+    }
+
+    updateHomework(schedule: ScheduleMySuffix): Observable<ScheduleMySuffix> {
+        const copy: ScheduleMySuffix = Object.assign({}, schedule);
+        copy.date = this.dateUtils.toDate(schedule.date);
+        return this.http.put(`${this.resourceUrlSchedule}/update`, copy).map((res: Response) => {
+            return res.json();
+        });
+    }
+
+    findSchedule(id: number): Observable<ScheduleMySuffix> {
+        return this.http.get(`${this.resourceUrlSchedule}/find/${id}`).map((res: Response) => {
+            const jsonResponse = res.json();
+            jsonResponse.date = this.dateUtils
+                .convertDateTimeFromServer(jsonResponse.date);
+            return jsonResponse;
+        });
     }
 
     private convertResponse(res: any): any {
@@ -42,5 +60,29 @@ export class TeacherHomeService {
         }
         res._body = jsonResponse;
         return res;
+    }
+
+    filterSchedule(lessonId: number, formId: number, schedules: ScheduleMySuffix[]): ScheduleMySuffix[] {
+        let filteredSchedules: ScheduleMySuffix[] = [];
+        if (!isNaN(lessonId) && !isNaN(formId)) {
+            for (let schedule of schedules) {
+                if (schedule.lessonId === lessonId && schedule.formId === formId) {
+                    filteredSchedules.push(schedule);
+                }
+            }
+        } else if (isNaN(lessonId) && !isNaN(formId)) {
+            for (let schedule of schedules) {
+                if (schedule.formId === formId) {
+                    filteredSchedules.push(schedule);
+                }
+            }
+        } else if (!isNaN(lessonId) && isNaN(formId)) {
+            for (let schedule of schedules) {
+                if (schedule.lessonId === lessonId || schedule.formId === formId) {
+                    filteredSchedules.push(schedule);
+                }
+            }
+        }
+        return filteredSchedules;
     }
 }
