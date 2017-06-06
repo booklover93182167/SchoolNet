@@ -4,15 +4,15 @@
         <div class="form-group row">
             <label for="lesson-select" class="col-2 col-form-label">Lesson</label>
             <div class="col-10">
-                <select class="form-control" id="lesson-select" name="lesson-select"  [(ngModel)]="selectedLessonId">
-                    <option *ngFor="let lesson of lessons;" value="{{lesson.id}}" >{{lesson.name}}</option>
+                <select class="form-control" id="lesson-select" name="lesson-select" [(ngModel)]="selectedLessonId">
+                    <option *ngFor="let lesson of lessons;" value="{{lesson.id}}">{{lesson.name}}</option>
                 </select>
             </div>
         </div>
         <div class="form-group row">
             <label for="form-select" class="col-2 col-form-label">Form</label>
             <div class="col-10">
-                <select class="form-control" id="form-select" name="formSelect" placeholder="Select a dropdown Form" [(ngModel)]="selectedFormId">
+                <select class="form-control" id="form-select" name="form-select" [(ngModel)]="selectedFormId">
                     <option *ngFor="let form of forms;" value="{{form.id}}">{{form.name}}</option>
                 </select>
                 <div class="form-group row">
@@ -64,11 +64,11 @@
                         <span>{{schedule.formName}}</span>
                     </div>
                 </td>
-                <div>
-                    <td>
-                        <span>{{schedule.homework | lengthPipe:10}}</span>
-                    </td>
-                </div>
+                <td>
+                    <div>
+                        <p>{{schedule.homework }}</p>
+                    </div>
+                </td>
                 <td>
                     <button type="submit"
                             [routerLink]="['/', { outlets: { popup: 'teacher-home-popup-homework/'+ schedule.id + '/edit'} }]"
