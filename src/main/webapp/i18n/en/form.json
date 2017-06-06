@@ -20,7 +20,8 @@
             "pupil": "Pupil",
             "schedule": "Schedule",
             "school": "School",
-            "pupils":"Pupils"
+            "pupils":"Pupils",
+            "parents":"Parents"
         }
     }
 }

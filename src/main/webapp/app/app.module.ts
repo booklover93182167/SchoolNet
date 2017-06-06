@@ -11,7 +11,6 @@ import { SchoolNetAccountModule } from './account/account.module';
 import { SchoolNetEntityModule } from './entities/entity.module';
 import { SchoolNetHeadTeacherModule } from './headteacher/headteacher.module';
 import { SchoolNetPupilHomeModule } from './pupil-home/pupil-home.module';
-import { SchoolNetPupilHomeGradesModule } from "./pupil-grades/pupil-home-grades.module";
 import { SchoolNetTeacherHomeModule } from './teacher-home/teacher-home.module';
 import { SchoolNetTeacherScheduleModule } from './teacher-schedule/teacher-schedule.module';
 
@@ -41,7 +40,6 @@ import {
         SchoolNetEntityModule,
         SchoolNetHeadTeacherModule,
         SchoolNetPupilHomeModule,
-        SchoolNetPupilHomeGradesModule,
         SchoolNetTeacherHomeModule,
         SchoolNetTeacherScheduleModule,
     ],

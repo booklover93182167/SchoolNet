@@ -14,7 +14,10 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
-
-
+        <addForeignKeyConstraint baseColumnNames="form_id"
+                                 baseTableName="pupil"
+                                 constraintName="fk_pupil_form_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="form"/>
     </changeSet>
 </databaseChangeLog>
