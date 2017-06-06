@@ -61,4 +61,28 @@ export class TeacherHomeService {
         res._body = jsonResponse;
         return res;
     }
+
+    filterSchedule(lessonId: number, formId: number, schedules: ScheduleMySuffix[]): ScheduleMySuffix[] {
+        let filteredSchedules: ScheduleMySuffix[] = [];
+        if (!isNaN(lessonId) && !isNaN(formId)) {
+            for (let schedule of schedules) {
+                if (schedule.lessonId === lessonId && schedule.formId === formId) {
+                    filteredSchedules.push(schedule);
+                }
+            }
+        } else if (isNaN(lessonId) && !isNaN(formId)) {
+            for (let schedule of schedules) {
+                if (schedule.formId === formId) {
+                    filteredSchedules.push(schedule);
+                }
+            }
+        } else if (!isNaN(lessonId) && isNaN(formId)) {
+            for (let schedule of schedules) {
+                if (schedule.lessonId === lessonId || schedule.formId === formId) {
+                    filteredSchedules.push(schedule);
+                }
+            }
+        }
+        return filteredSchedules;
+    }
 }

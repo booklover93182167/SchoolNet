@@ -1,56 +1,8 @@
-<h2 *ngIf="currentTeacher">Welcome <b>{{currentTeacher.firstName + ' ' + currentTeacher.lastName}}</b></h2>
-
-
-<!--<form class="container" #userForm="ngForm" (ngSubmit)="onSubmit(userForm.value)">-->
-<!--<div>-->
-<!--<select name="languag" ngModel>-->
-<!--<option *ngFor="let lesson of Lessons" value={{lesson.id}}>{{lesson.name}}</option>-->
-<!--</select>-->
-<!--<select name="form" ngModel>-->
-<!--<option *ngFor="let form of forms" value={{form.id}}>{{form.name}}</option>-->
-<!--</select>-->
-<!--</div>-->
-<!--</form>-->
-
-<!--<form class="container"   #userForm = "ngForm"  (ngSubmit)="onSubmit(userForm.value)">-->
-<!--<select name="Lesson" ngModel>-->
-<!--<option *ngFor="let lesson of lessons" value="Lesson">{{lesson.name}}</option>-->
-<!--</select>-->
-<!--<select name="Form" ngModel>-->
-<!--<option *ngFor="let form of forms" value="form">{{form.name}}</option>-->
-<!--</select>-->
-
-
-<!--<div class="col-md-8 offset-md-2">-->
-    <!--<form #teacherSelectForm="ngForm">-->
-        <!--<div class="form-group row">-->
-            <!--<label for="date-select" class="col-2 col-form-label">Date</label>-->
-            <!--<div class="col-10">-->
-                <!--<input class="form-control" type="date" id="date-select" name="date-select" [(ngModel)]="selectedDate">-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group row">-->
-            <!--<label for="lesson-select" class="col-2 col-form-label">Lesson</label>-->
-            <!--<div class="col-10">-->
-                <!--<select class="form-control" id="lesson-select" name="lesson-select" [(ngModel)]="selectedLessonId"-->
-                        <!--(change)="onFormChange()">-->
-                    <!--<option *ngFor="let lesson of lessons;" value="{{lesson.id}}">{{lesson.name}}</option>-->
-                <!--</select>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group row">-->
-            <!--<label for="teacherForm-select" class="col-2 col-form-label">Form</label>-->
-            <!--<div class="col-10">-->
-                <!--<select class="form-control" id="teacherForm-select" name="teacherForm-select"-->
-                        <!--[(ngModel)]="selectedFormId"-->
-                        <!--(change)="onFormChange()">-->
-                    <!--<option *ngFor="let form of forms;" value="{{form.id}}">{{form.name}}</option>-->
-                <!--</select>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<input type="submit" value="submit">-->
-    <!--</form>-->
-<!--</div>-->
-
-
-<teacher-home-schedule></teacher-home-schedule>
+<div>
+    <div>
+        <h2 *ngIf="currentTeacher">Welcome <b>{{currentTeacher.firstName + ' ' + currentTeacher.lastName}}</b></h2>
+    </div>
+    <div>
+        <teacher-home-schedule></teacher-home-schedule>
+    </div>
+</div>

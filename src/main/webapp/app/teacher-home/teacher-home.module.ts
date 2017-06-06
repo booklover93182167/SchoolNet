@@ -6,17 +6,14 @@ import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CalendarModule } from 'angular-calendar';
 
 import { SchoolNetSharedModule } from '../shared';
 
-import {TeacherHomeComponent} from "./teacher-home.component";
-import {TeacherHomeRoute} from "./teacher-home.route";
-import {TeacherHomeService} from "./teacher-home.service";
-import {LessonMySuffixComponent} from "../entities/lesson/lesson-my-suffix.component";
-import {FormMySuffixComponent} from "../entities/form/form-my-suffix.component";
-import {TeacherHomeScheduleComponent} from "./teacher-home.schedule.component";
+import {TeacherHomeComponent} from './teacher-home.component';
+import {TeacherHomeRoute} from './teacher-home.route';
+import {TeacherHomeService} from './teacher-home.service';
+import {TeacherHomeScheduleComponent} from './teacher-home.schedule.component';
+import {LengthPipe, TeacherScheduleSortByDatePipe} from './teacher-home.PipeUtil';
 
 @NgModule({
     imports: [
@@ -27,6 +24,8 @@ import {TeacherHomeScheduleComponent} from "./teacher-home.schedule.component";
         RouterModule.forRoot([ TeacherHomeRoute ], { useHash: true }),
     ],
     declarations: [
+        TeacherScheduleSortByDatePipe,
+        LengthPipe,
         TeacherHomeComponent,
         TeacherHomeScheduleComponent
     ],
@@ -34,7 +33,8 @@ import {TeacherHomeScheduleComponent} from "./teacher-home.schedule.component";
         TeacherHomeComponent,
     ],
     providers: [
-        TeacherHomeService
+        TeacherHomeService,
+        TeacherHomeScheduleComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

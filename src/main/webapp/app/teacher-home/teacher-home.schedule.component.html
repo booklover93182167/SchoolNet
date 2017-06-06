@@ -1,13 +1,39 @@
+<div class="col-md-8 offset-md-2">
+    <form #teacherSelectForm="ngForm">
+        <label>You can use the filter</label>
+        <div class="form-group row">
+            <label for="lesson-select" class="col-2 col-form-label">Lesson</label>
+            <div class="col-10">
+                <select class="form-control" id="lesson-select" name="lesson-select"  [(ngModel)]="selectedLessonId">
+                    <option *ngFor="let lesson of lessons;" value="{{lesson.id}}" >{{lesson.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="form-select" class="col-2 col-form-label">Form</label>
+            <div class="col-10">
+                <select class="form-control" id="form-select" name="formSelect" placeholder="Select a dropdown Form" [(ngModel)]="selectedFormId">
+                    <option *ngFor="let form of forms;" value="{{form.id}}">{{form.name}}</option>
+                </select>
+                <div class="form-group row">
+                    <div class="col-10">
+                        <button class="btn" (click)="onClick()">Apply.</button>
+                        <button class="btn" (click)="Clear()">Сlear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 <div>
-    <!--<h2>{{selectedDate | date:'shortDate'}}</h2>-->
     <h2>
-        <span>User Schedules</span>
+        <span>Schedules</span>
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="schedules">
+    <div class="table-responsive" *ngIf="filteredSchedules">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -20,7 +46,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let schedule of schedules">
+            <tr *ngFor="let schedule of filteredSchedules | sortByDate">
                 <td>{{schedule.date | date: "shortDate"}}</td>
                 <td>{{schedule.lessonPosition}}</td>
                 <td>
@@ -40,7 +66,7 @@
                 </td>
                 <div>
                     <td>
-                        <span>{{schedule.homework }}</span>
+                        <span>{{schedule.homework | lengthPipe:10}}</span>
                     </td>
                 </div>
                 <td>
