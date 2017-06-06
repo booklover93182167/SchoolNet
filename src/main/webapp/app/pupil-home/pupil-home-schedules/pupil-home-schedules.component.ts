@@ -62,7 +62,7 @@ export class PupilHomeSchedulesComponent implements OnInit {
 
     // function to load schedules for form for current user(if he is pupil)
     loadByFormId() {
-        this.pupilHomeService.findByFormId(this.pupilHomeComponent.currentPupil.formId).subscribe(
+        this.pupilHomeService.findByFormId(this.pupilHomeService.getPupil().formId).subscribe(
             (res: Response) => {
                 this.pupilSchedules = res.json();
                 // initialize schedules for today
@@ -103,7 +103,7 @@ export class PupilHomeSchedulesComponent implements OnInit {
                 }
             }
             if (match === false) {
-                let blankSchedule = new PupilHomeSchedules(null, null, "n/a", i, true, null, null, null, null, null, "n/a", null, "n/a", "n/a", "n/a");
+                let blankSchedule = new PupilHomeSchedules(null, null, '', i, true, null, null, null, null, null, null, null, null, null, null);
                 this.schedulesWithBlanks.push(blankSchedule);
             }
         }

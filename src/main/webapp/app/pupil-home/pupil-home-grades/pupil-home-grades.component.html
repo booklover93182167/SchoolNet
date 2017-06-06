@@ -1,6 +1,6 @@
 <h2 *ngIf="account">Welcome <b>{{account.firstName}} {{account.lastName}}</b></h2>
 <jhi-alert></jhi-alert>
-
+<div *ngIf="currentPupil">
 <span class="lessonsButtons" *ngIf="pupilLessons">
         <span *ngFor="let lesson of pupilLessons">
                 <button type="submit" class="btn" (click)="findAllByPupilAndLessonId(currentPupil.id, lesson.id)">
@@ -26,4 +26,8 @@
         </tr>
         </tbody>
     </table>
+    <div>
+        Average grade: {{getAverageGrade() | number:'1.0-2'}}
+    </div>
+</div>
 </div>
