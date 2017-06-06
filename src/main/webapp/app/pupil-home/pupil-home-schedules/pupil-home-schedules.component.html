@@ -24,18 +24,18 @@
                     <td>{{schedule.lessonPosition}}</td>
                     <td>
                         <div *ngIf="schedule.lessonId">
-                            <a [routerLink]="['../lesson-my-suffix', schedule.lessonId  ]" >{{schedule.lessonName}}</a>
+                            {{schedule.lessonName}}
                         </div>
                     </td>
-                <a (click)="selectHomework(schedule.homework)"> <td>{{schedule.homework | lengthPipe : 10}}</td></a>
+                    <td><a (click)="selectHomework(schedule.homework)"> {{schedule.homework | lengthPipe : 10}}</a></td>
                     <td>
                         <div *ngIf="schedule.classroomId">
-                            <a [routerLink]="['../classroom-my-suffix', schedule.classroomId  ]" >{{schedule.classroomName}}</a>
+                            {{schedule.classroomName}}
                         </div>
                     </td>
                     <td>
                         <div *ngIf="schedule.teacherId">
-                            <a [routerLink]="['../teacher-my-suffix', schedule.teacherId  ]" >{{schedule.teacherFirstName + ' ' +schedule.teacherLastName}}</a>
+                            {{schedule.teacherFirstName + ' ' +schedule.teacherLastName}}
                         </div>
                     </td>
             </tr>
