@@ -26,4 +26,3 @@ public interface ScheduleRepository extends JpaRepository<Schedule,Long> {
     List<Schedule> findAllBySchoolId(@Param("schoolId") Long schoolId);
 
 }
-

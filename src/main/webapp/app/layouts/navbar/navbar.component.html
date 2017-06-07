@@ -33,6 +33,12 @@
                     </li>
                 </ul>
             </li>
+            <li *jhiHasAnyAuthority="'ROLE_TEACHER'"class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="form-my-suffix" (click)="collapseNavbar()">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    <span jhiTranslate="global.menu.forms">Forms</span>
+                </a>
+            </li>
             <li *jhiHasAnyAuthority="['ROLE_PUPIL']" ngbDropdown class="nav-item dropdown pointer">
                 <a class="nav-link dropdown-toggle" routerLinkActive="active" ngbDropdownToggle href="javascript:void(0);" id="pupil-menu">
                     <span>
@@ -88,6 +94,13 @@
                         <a class="dropdown-item" routerLink="headteacher-form" (click)="collapseNavbar()">
                             <i class="fa fa-building-o" aria-hidden="true"></i>
                             <span jhiTranslate="global.menu.teacher-management.forms">Forms</span>
+                        </a>
+                    </li>
+
+                    <li uiSrefActive="active">
+                        <a class="dropdown-item" routerLink="classroom-management" (click)="collapseNavbar()">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.teacher-management.classrooms">Classrooms</span>
                         </a>
                     </li>
 

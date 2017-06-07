@@ -20,7 +20,13 @@
                                  referencedColumnNames="id"
                                  referencedTableName="parent"/>
 
-        
+        <addForeignKeyConstraint baseColumnNames="pupils_id"
+                                 baseTableName="parent_pupil"
+                                 constraintName="fk_parent_pupil_pupils_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pupil"/>
+
+
 
     </changeSet>
 </databaseChangeLog>

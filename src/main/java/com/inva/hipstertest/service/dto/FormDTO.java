@@ -27,8 +27,17 @@ public class FormDTO implements Serializable {
 
     private Long schoolId;
 
+    private String schoolName;
+
     private Set<PupilDTO> pupilsId;
 
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
 
     public Set<PupilDTO> getPupilsId() {
         return pupilsId;

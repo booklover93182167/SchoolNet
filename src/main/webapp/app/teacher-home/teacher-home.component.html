@@ -1,16 +1,8 @@
-<h2 *ngIf="currentAccount">Welcome <b>{{currentAccount.login}}</b></h2>
-
-
-
-
-<form class="container" #userForm="ngForm" (ngSubmit)="onSubmit(userForm.value)">
+<div>
     <div>
-        <select name="languag" ngModel>
-            <option *ngFor="let lesson of Lessons" value={{lesson.id}}>{{lesson.name}}</option>
-        </select>
-        <select name="form" ngModel>
-            <option *ngFor="let form of forms" value={{form.id}}>{{form.name}}</option>
-        </select>
+        <h2 *ngIf="currentTeacher">Welcome <b>{{currentTeacher.firstName + ' ' + currentTeacher.lastName}}</b></h2>
     </div>
-</form>
-
+    <div>
+        <teacher-home-schedule></teacher-home-schedule>
+    </div>
+</div>

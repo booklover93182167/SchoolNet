@@ -20,7 +20,8 @@
             "pupil": "Учень",
             "schedule": "Розклад",
             "school": "Школа",
-            "pupils":"Учні"
+            "pupils":"Учні",
+            "parents":"Батьки"
         }
     }
 }
