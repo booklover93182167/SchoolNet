@@ -1,5 +1,4 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-
     <div class="modal-header">
         <h4 class="modal-title" id="myScheduleLabel" jhiTranslate="schoolNetApp.schedule.home.createOrEditLabel">Create or edit a Schedule</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
@@ -12,14 +11,11 @@
             <input type="text" class="form-control" id="id" name="id"
                    [(ngModel)]="schedule.id" readonly />
         </div>
-
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="schoolNetApp.schedule.homework" for="field_homework">Homework</label>
             <input type="text" class="form-control" name="homework" id="field_homework"
-                   [(ngModel)]="schedule.homework"
-            />
+                   [(ngModel)]="schedule.homework" maxlength="250"/>
         </div>
-
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">

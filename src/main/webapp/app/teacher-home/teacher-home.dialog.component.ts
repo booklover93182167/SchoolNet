@@ -11,7 +11,6 @@ import {ScheduleMySuffixService} from "../entities/schedule/schedule-my-suffix.s
 import {ScheduleMySuffix} from "../entities/schedule/schedule-my-suffix.model";
 import {ScheduleMySuffixPopupService} from "../entities/schedule/schedule-my-suffix-popup.service";
 
-
 @Component({
     selector: 'teacher-home-dialog',
     templateUrl: './teacher-home-dialog.component.html'
@@ -73,8 +72,6 @@ export class TeacherDialogComponent implements OnInit {
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
-
-
 }
 
 @Component({
