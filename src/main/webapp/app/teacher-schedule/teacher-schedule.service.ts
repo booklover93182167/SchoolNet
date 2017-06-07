@@ -28,8 +28,8 @@ export class TeacherScheduleService {
     }
 
     filterSchedule(teacherID: number, date: Date, teacherSchedule: ScheduleMySuffix[]): ScheduleMySuffix[] {
-        let schedulesForDate: ScheduleMySuffix[] = [];
-        for (let schedule of teacherSchedule) {
+        const schedulesForDate: ScheduleMySuffix[] = [];
+        for (const schedule of teacherSchedule) {
             if (date.getDate() === schedule.date.getDate() &&
                 date.getMonth() === schedule.date.getMonth() &&
                 date.getFullYear() === schedule.date.getFullYear() &&
@@ -48,4 +48,5 @@ export class TeacherScheduleService {
         res._body = jsonResponse;
         return res;
     }
+
 }

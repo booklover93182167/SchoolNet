@@ -7,33 +7,46 @@
             <div class="form-group row">
                 <label for="date-select" class="col-2 col-form-label">Date</label>
                 <div class="col-10">
-                    <input class="form-control" type="date" id="date-select" name="date-select" [(ngModel)]="selectedDate" (change)="onFormChange()">
+                    <input class="form-control" type="date" id="date-select" name="date-select" [(ngModel)]="selectedDate"  (click)="filterSchedule()">
+                    <!--<input class="form-control" type="date" id="date-select" name="date-select" [(ngModel)]="selectedDate" (change)="filterSchedule()">-->
                 </div>
             </div>
             <div class="form-group row">
                 <label for="teacher-select" class="col-2 col-form-label">Teacher</label>
                 <div class="col-10">
-                    <select class="form-control" id="teacher-select" name="teacher-select" [(ngModel)]="selectedID" (change)="onFormChange()">
+                    <select class="form-control" id="teacher-select" name="teacher-select" [(ngModel)]="selectedID" (change)="filterSchedule()">
                         <option *ngFor="let teacher of teachers;" value="{{teacher.id}}">{{teacher.firstName}} {{teacher.lastName}}</option>
                     </select>
                 </div>
             </div>
+            <div class="form-group row">
+                <label for="period-select" class="col-2 col-form-label">Period</label>
+                <div class="col-10">
+                    <select class="form-control" id="period-select" name="period-select" [(ngModel)]="selectedPeriod" (change)="filterSchedule()">
+                        <option value="1">Day</option>
+                        <option value="2">Week</option>
+                        <option value="3">Month</option>
+                    </select>
+                </div>
+            </div>
         </form>
+
         <table class="table">
             <thead class="thead-inverse">
             <tr>
-                <th>Date</th>
-                <th>Day of week</th>
-                <th>Position</th>
+                <th colspan="4">{{ selectedDate }}</th>
+            </tr>
+            <tr>
+                <!--<th>Date</th>-->
                 <th>Lesson</th>
+                <th>Position</th>
                 <th>Form</th>
                 <th>Classroom</th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let filteredSchedule of filteredSchedules;">
-                <td>{{filteredSchedule.date | date:'yyyy-MM-dd'}}</td>
-                <td>{{filteredSchedule.date | date:'EEEE'}}</td>
+            <tr *ngFor="let filteredSchedule of filteredSchedules | orderBy:'lessonPosition'">
+                <!--<td>{{filteredSchedule.date | date:'EEEE'}}, {{filteredSchedule.date | date:'yyyy-MM-dd'}}</td>-->
                 <td>{{filteredSchedule.lessonPosition}}</td>
                 <td>{{filteredSchedule.lessonName}}</td>
                 <td>{{filteredSchedule.formName}}</td>
