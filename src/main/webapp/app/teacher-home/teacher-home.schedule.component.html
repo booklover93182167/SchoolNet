@@ -2,6 +2,12 @@
     <form #teacherSelectForm="ngForm">
         <label>You can use the filter</label>
         <div class="form-group row">
+            <label for="date-select" class="col-2 col-form-label">Date</label>
+            <div class="col-10">
+                <input class="form-control" type="date" id="date-select" name="date-select" [(ngModel)]="selectedDate">
+            </div>
+        </div>
+        <div class="form-group row">
             <label for="lesson-select" class="col-2 col-form-label">Lesson</label>
             <div class="col-10">
                 <select class="form-control" id="lesson-select" name="lesson-select" [(ngModel)]="selectedLessonId">

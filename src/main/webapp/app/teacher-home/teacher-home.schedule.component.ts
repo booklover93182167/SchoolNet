@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Response} from '@angular/http';
-import {Principal} from '../shared/auth/principal.service';
 import {JhiLanguageService, AlertService, EventManager} from 'ng-jhipster';
 
 import {TeacherMySuffix} from './../entities/teacher/teacher-my-suffix.model';
@@ -10,7 +9,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {ScheduleMySuffix} from '../entities/schedule/schedule-my-suffix.model';
 import {LessonMySuffix} from '../entities/lesson/lesson-my-suffix.model';
 import {FormMySuffix} from '../entities/form/form-my-suffix.model';
-import {FormControl, FormGroup} from "@angular/forms";
+import {isUndefined} from 'util';
 
 @Component({
     selector: 'teacher-home-schedule',
@@ -27,6 +26,7 @@ export class TeacherHomeScheduleComponent implements OnInit {
     forms: FormMySuffix[];
     selectedLessonId: number;
     selectedFormId: number;
+    selectedDate: Date;
 
     constructor(private jhiLanguageService: JhiLanguageService,
                 private teacherHomeService: TeacherHomeService,
@@ -79,18 +79,23 @@ export class TeacherHomeScheduleComponent implements OnInit {
     }
 
     onClick() {
-        if (this.selectedLessonId === undefined && this.selectedFormId === undefined) {
+        if (isUndefined(this.selectedLessonId) && isUndefined(this.selectedFormId) && isUndefined(this.selectedDate)) {
             return;
         } else {
             this.filteredSchedules = this.teacherHomeService.filterSchedule(parseInt(String(this.selectedLessonId), 10),
-                parseInt(String(this.selectedFormId), 10), this.schedules);
+                parseInt(String(this.selectedFormId), 10), this.schedules,
+                isUndefined(this.selectedDate) ? this.selectedDate : new Date(this.selectedDate.toString()));
         }
+        this.selectedLessonId = undefined;
+        this.selectedFormId = undefined;
+        this.selectedDate = undefined;
     }
 
     Clear() {
         this.filteredSchedules = this.schedules;
         this.selectedLessonId = undefined;
         this.selectedFormId = undefined;
+        this.selectedDate = undefined;
     }
 
     private onError(error) {
