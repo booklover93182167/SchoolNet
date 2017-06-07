@@ -20,10 +20,10 @@ export class PupilHomeComponent implements OnInit {
     currentPupil: PupilMySuffix;
 
     constructor(private principal: Principal,
-                private alertService: AlertService,
                 private jhiLanguageService: JhiLanguageService,
+                private alertService: AlertService,
                 private pupilHomeService: PupilHomeService) {
-        this.jhiLanguageService.setLocations(['home']);
+        this.jhiLanguageService.setLocations(['pupil-home-calendar']);
     }
 
     ngOnInit() {

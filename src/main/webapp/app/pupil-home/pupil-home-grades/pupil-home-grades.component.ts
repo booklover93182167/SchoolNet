@@ -32,7 +32,7 @@ export class PupilHomeGradesComponent {
         private principal: Principal,
         private pupilHomeService: PupilHomeService
     ) {
-        this.jhiLanguageService.setLocations(['home']);
+        this.jhiLanguageService.setLocations(['pupil-home-calendar']);
     }
 
     ngOnInit() {

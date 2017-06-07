@@ -15,8 +15,8 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th><span>Grade</span></th>
-            <th><span>Date</span></th>
+            <th><span jhiTranslate="grades.grade">Grade</span></th>
+            <th><span jhiTranslate="grades.date">Date</span></th>
         </tr>
         </thead>
         <tbody>
@@ -27,7 +27,7 @@
         </tbody>
     </table>
     <div>
-        Average grade: {{getAverageGrade() | number:'1.0-2'}}
+        <h3><span jhiTranslate="grades.average">Average grade : </span> {{getAverageGrade() | number:'1.0-2'}}</h3>
     </div>
 </div>
 </div>

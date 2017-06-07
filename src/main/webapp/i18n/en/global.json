@@ -8,7 +8,11 @@
             "teacher-home": "Teacher Home",
             "teacher-schedule": "Teacher Schedule",
             "user-home": "User Home",
-            "pupil-home": "Pupil Home",
+            "pupil-home": {
+                "home": "Pupil Home",
+                "grades": "Pupil Grades",
+                "title": "Pupil"
+            },
             "management":"Management",
             "teacher-management":{
                 "teachers":"Teachers",
