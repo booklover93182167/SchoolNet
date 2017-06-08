@@ -6,7 +6,7 @@ import { TeacherManagement } from './teacher-management.model';
 @Injectable()
 export class TeacherManagementService {
 
-    private resourceUrl = 'api/headteacher-management';
+    private resourceUrl = 'api/headteacher/management';
 
     constructor(private http: Http) { }
 

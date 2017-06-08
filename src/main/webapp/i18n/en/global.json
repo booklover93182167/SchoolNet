@@ -60,6 +60,8 @@
             "username.placeholder": "Your username",
             "newpassword": "New password",
             "newpassword.placeholder": "New password",
+            "curpassword": "Current password",
+            "curpassword.placeholder": "Current password",
             "confirmpassword": "New password confirmation",
             "confirmpassword.placeholder": "Confirm the new password",
             "email": "Email",
@@ -80,7 +82,8 @@
                 }
             },
             "error": {
-                "dontmatch": "The password and its confirmation do not match!"
+                "dontmatch": "The password and its confirmation do not match!",
+                "badcurrent": "Oops! Current password is incorrect!"
             },
             "validate": {
                 "newpassword": {

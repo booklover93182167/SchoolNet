@@ -4,6 +4,7 @@ export class TeacherManagement {
         public enabled?: boolean,
         public userId?: number,
         public formId?: number,
+        public formName?: string,
         public schoolId?: number,
         public email?: string,
         public firstName?: string,

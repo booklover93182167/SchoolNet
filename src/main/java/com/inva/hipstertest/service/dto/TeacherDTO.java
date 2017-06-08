@@ -21,7 +21,11 @@ public class TeacherDTO implements Serializable {
 
     private Long formId;
 
+    private String formName;
+
     private Set<LessonDTO> lessons = new HashSet<>();
+
+    private Set<String> lessonsName = new HashSet<>();
 
     private Long schoolId;
 
@@ -30,6 +34,24 @@ public class TeacherDTO implements Serializable {
     private String firstName;
 
     private String email;
+
+    private String login;
+
+    public String getFormName() {
+        return formName;
+    }
+
+    public void setFormName(String formName) {
+        this.formName = formName;
+    }
+
+    public Set<String > getLessonsName() {
+        return lessonsName;
+    }
+
+    public void setLessonsName(Set<String> lessonsName) {
+        this.lessonsName = lessonsName;
+    }
 
     public Long getId() {
         return id;
@@ -100,6 +122,14 @@ public class TeacherDTO implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Override

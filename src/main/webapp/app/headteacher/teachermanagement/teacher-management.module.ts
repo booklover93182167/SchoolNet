@@ -5,8 +5,9 @@ import { SchoolNetSharedModule } from '../../shared';
 import {SchoolNetAdminModule} from "../../admin/admin.module";
 import {
     TeacherManagementService,
-    TeacherManagementDialogComponent,
     TeacherManagementPopupService,
+    TeacherManagementDialogComponent,
+    TeacherManagementDetailComponent,
     TeacherManagementComponent,
     TeacherManagementPopupComponent,
     TEACHER_ROUTE,
@@ -28,6 +29,7 @@ const ENTITY_STATES = [
     declarations: [
         TeacherManagementComponent,
         TeacherManagementDialogComponent,
+        TeacherManagementDetailComponent,
         TeacherManagementPopupComponent,
     ],
     entryComponents: [
