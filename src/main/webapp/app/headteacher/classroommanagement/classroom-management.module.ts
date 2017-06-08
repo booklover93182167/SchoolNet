@@ -1,7 +1,7 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {RouterModule} from '@angular/router';
 
-import { SchoolNetSharedModule } from '../../shared';
+import {SchoolNetSharedModule} from '../../shared';
 import {SchoolNetAdminModule} from "../../admin/admin.module";
 import {
     ClassroomManagementService,
@@ -25,7 +25,7 @@ const ENTITY_STATES = [
     imports: [
         SchoolNetSharedModule,
         SchoolNetAdminModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+        RouterModule.forRoot(ENTITY_STATES, {useHash: true})
     ],
     declarations: [
         ClassroomManagementComponent,
@@ -48,4 +48,5 @@ const ENTITY_STATES = [
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class SchoolNetClassroomManagementModule {}
+export class SchoolNetClassroomManagementModule {
+}

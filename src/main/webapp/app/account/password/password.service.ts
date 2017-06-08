@@ -10,7 +10,7 @@ export class Password {
     constructor(private http: Http) {}
 
     save(newPassword: string, currentPassword: string): Observable<any> {
-        return this.http.post(this.resourceUrl,{newPassword,currentPassword});
+        return this.http.post(this.resourceUrl, {newPassword, currentPassword});
     }
 
 }

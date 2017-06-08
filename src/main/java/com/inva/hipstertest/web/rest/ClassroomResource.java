@@ -28,7 +28,7 @@ public class ClassroomResource {
     private final Logger log = LoggerFactory.getLogger(ClassroomResource.class);
 
     private static final String ENTITY_NAME = "classroom";
-        
+
     private final ClassroomService classroomService;
 
     public ClassroomResource(ClassroomService classroomService) {
@@ -86,7 +86,7 @@ public class ClassroomResource {
     @Timed
     public List<ClassroomDTO> getAllClassrooms() {
         log.debug("REST request to get all Classrooms");
-        return classroomService.findAll();
+        return classroomService.findAllByCurrentSchool();
     }
 
     /**

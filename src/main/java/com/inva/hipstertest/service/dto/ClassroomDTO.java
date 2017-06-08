@@ -41,6 +41,7 @@ public class ClassroomDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
@@ -48,6 +49,7 @@ public class ClassroomDTO implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
     public Boolean getEnabled() {
         return enabled;
     }
@@ -83,7 +85,9 @@ public class ClassroomDTO implements Serializable {
 
         ClassroomDTO classroomDTO = (ClassroomDTO) o;
 
-        if ( ! Objects.equals(id, classroomDTO.id)) { return false; }
+        if (!Objects.equals(id, classroomDTO.id)) {
+            return false;
+        }
 
         return true;
     }
