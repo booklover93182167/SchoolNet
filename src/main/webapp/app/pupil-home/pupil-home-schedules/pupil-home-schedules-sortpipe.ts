@@ -6,11 +6,11 @@ import {PupilHomeSchedules} from './pupil-home-schedules.model';
 })
 
 export class PupilHomeSchedulesSortPipe implements PipeTransform {
-    transform(array: PupilHomeSchedules[]) : PupilHomeSchedules[] {
+    transform(array: PupilHomeSchedules[]): PupilHomeSchedules[] {
         array.sort((a: PupilHomeSchedules, b: PupilHomeSchedules) => {
-            if(a.lessonPosition < b.lessonPosition){
+            if (a.lessonPosition < b.lessonPosition) {
                 return -1;
-            } else if(a.lessonPosition > b.lessonPosition) {
+            } else if (a.lessonPosition > b.lessonPosition) {
                 return 1;
             } else {
                 return 0;

@@ -12,13 +12,14 @@ import { CalendarComponent } from './calendar-component/calendar.component';
 
 import { SchoolNetSharedModule } from '../shared';
 import { PupilHomeService } from './pupil-home.service';
-import { LengthPipe } from './pupil-home-schedules/pupil-home-schedules-lengthPipe';
+import { LengthPipe } from './pupil-home-schedules/pupil-home-schedules-lengthpipe';
 import { PupilHomeSchedulesSortPipe } from './pupil-home-schedules/pupil-home-schedules-sortpipe';
 
 import { PUPIL_HOME_ROUTE, PupilHomeComponent, PupilHomeSchedulesComponent } from './';
 import { PUPIL_HOME_GRADES_ROUTE } from './pupil-home-grades/pupil-home-grades.route';
 import { PupilHomeGradesComponent } from './pupil-home-grades/pupil-home-grades.component';
 import { PupilHomeGradesPipe } from './pupil-home-grades/pupil-home-grades-pipe';
+import {HomeworkModal} from "./pupil-home-schedules/homework-modal";
 
 @NgModule({
     imports: [
@@ -39,6 +40,7 @@ import { PupilHomeGradesPipe } from './pupil-home-grades/pupil-home-grades-pipe'
         PupilHomeComponent,
         PupilHomeSchedulesComponent,
         PupilHomeGradesComponent,
+        HomeworkModal
     ],
     entryComponents: [
         PupilHomeComponent,

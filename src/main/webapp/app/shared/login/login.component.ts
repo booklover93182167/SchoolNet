@@ -1,11 +1,11 @@
-import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
-import { JhiLanguageService, EventManager } from 'ng-jhipster';
+import {Component, OnInit, AfterViewInit, Renderer, ElementRef} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Router} from '@angular/router';
+import {JhiLanguageService, EventManager} from 'ng-jhipster';
 
-import { LoginService } from './login.service';
-import { StateStorageService } from '../auth/state-storage.service';
-import {Principal} from "../auth/principal.service";
+import {LoginService} from './login.service';
+import {StateStorageService} from '../auth/state-storage.service';
+import {Principal} from '../auth/principal.service';
 
 @Component({
     selector: 'jhi-login-modal',
@@ -18,17 +18,15 @@ export class JhiLoginModalComponent implements OnInit, AfterViewInit {
     username: string;
     credentials: any;
 
-    constructor(
-        private eventManager: EventManager,
-        private principal: Principal,
-        private languageService: JhiLanguageService,
-        private loginService: LoginService,
-        private stateStorageService: StateStorageService,
-        private elementRef: ElementRef,
-        private renderer: Renderer,
-        private router: Router,
-        public activeModal: NgbActiveModal
-    ) {
+    constructor(private eventManager: EventManager,
+                private principal: Principal,
+                private languageService: JhiLanguageService,
+                private loginService: LoginService,
+                private stateStorageService: StateStorageService,
+                private elementRef: ElementRef,
+                private renderer: Renderer,
+                private router: Router,
+                public activeModal: NgbActiveModal) {
         this.credentials = {};
     }
 
@@ -74,14 +72,14 @@ export class JhiLoginModalComponent implements OnInit, AfterViewInit {
             if (redirect) {
                 this.router.navigate([redirect]);
             }
-            if(this.principal.isAuthenticated()){
-                if(this.principal.hasAuthority('ROLE_PUPIL').then(
+            if (this.principal.isAuthenticated()) {
+                this.principal.hasAuthority('ROLE_PUPIL').then(
                     (hasAuth) => {
-                        if(hasAuth) {
+                        if (hasAuth) {
                             this.router.navigate(['/pupil-home']);
                         }
                     }
-                )){}
+                )
             }
         }).catch(() => {
             this.authenticationError = true;

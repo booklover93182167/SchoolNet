@@ -33,9 +33,9 @@ export class PupilHomeService {
             this.convertResponse(res));
     }
 
-    //get all distinct lessons for this form
+    // get all distinct lessons for this form
     getDistinctLessons(formId: number): Observable<Response> {
-        console.log("get all lessons");
+        console.log('get all lessons');
         return this.http.get(`${this.resourceLessonUrl}/${formId}`).map((res: Response) =>
             this.convertResponse(res));
     }
@@ -55,7 +55,7 @@ export class PupilHomeService {
     }
 
     currentPupilExist(): boolean {
-        if(this.currentPupil) {
+        if (this.currentPupil) {
             return true;
         } else {
             return false;
@@ -78,7 +78,7 @@ export class PupilHomeService {
     // get schedules array for specified date
     getSchedulesForDate(date: Date, pupilSchedules: PupilHomeSchedules[]): PupilHomeSchedules[] {
         let schedulesForDate: PupilHomeSchedules[] = [];
-        for(let schedule of pupilSchedules){
+        for (let schedule of pupilSchedules) {
             if (date.getDate() === schedule.date.getDate() &&
                 date.getFullYear() === schedule.date.getFullYear() &&
                 date.getMonth() === schedule.date.getMonth()) {

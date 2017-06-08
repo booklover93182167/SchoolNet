@@ -24,7 +24,7 @@ export class ScheduleHomeworkDialogComponent implements OnInit {
                 private alertService: AlertService,
                 private teacherHomeService: TeacherHomeService,
                 private eventManager: EventManager) {
-        this.jhiLanguageService.setLocations(['schedule']);
+        this.jhiLanguageService.setLocations(['teacher-home']);
     }
 
     ngOnInit() {
