@@ -28,7 +28,7 @@ spring:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://localhost:3306/schoolnet?useUnicode=true&characterEncoding=utf8&useSSL=false
         username: root
-        password: password
+        password: root
         hikari:
             data-source-properties:
                 cachePrepStmts: true
@@ -82,7 +82,7 @@ liquibase:
 #        keyAlias: SchoolNet
 # ===================================================================
 server:
-    port: 8081
+    port: 8080
 
 # ===================================================================
 # JHipster specific properties
