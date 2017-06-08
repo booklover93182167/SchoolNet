@@ -18,7 +18,7 @@ import { Principal } from '../../shared/auth/principal.service';
     styleUrls: ['pupil-home-grades.component.css'],
 })
 
-export class PupilHomeGradesComponent {
+export class PupilHomeGradesComponent implements OnInit {
     pupilAttendances: AttendancesMySuffix[] = [];
     pupilLessons: LessonMySuffix[] = [];
     account: any;
@@ -36,7 +36,7 @@ export class PupilHomeGradesComponent {
     }
 
     ngOnInit() {
-        if(!this.pupilHomeService.currentPupilExist()) {
+        if (!this.pupilHomeService.currentPupilExist()) {
             this.loadCurrentPupil();
         } else {
             this.currentPupil = this.pupilHomeService.getPupil();
@@ -44,7 +44,7 @@ export class PupilHomeGradesComponent {
         }
     }
 
-    //load all distinct lessons into pupilLessons
+    // load all distinct lessons into pupilLessons
     loadDistinctLessons(formId: number) {
         this.pupilHomeService.getDistinctLessons(formId).subscribe(
             (res: Response) => {
@@ -55,9 +55,9 @@ export class PupilHomeGradesComponent {
         return false;
     }
 
-    //load all distinct lessons into pupilLessons
-    findAllByPupilAndLessonId(pupilId: number, lessonId: number){
-        console.log('req to get all attendances for pupil '+pupilId + ' and lessonId '+lessonId);
+    // load all distinct lessons into pupilLessons
+    findAllByPupilAndLessonId(pupilId: number, lessonId: number) {
+        console.log('req to get all attendances for pupil ' + pupilId + ' and lessonId ' + lessonId);
         this.pupilHomeService.findAllByPupilAndLessonId(pupilId, lessonId).subscribe(
             (res: Response) => {
                 this.pupilAttendances = res.json();
@@ -84,11 +84,14 @@ export class PupilHomeGradesComponent {
         let averageGrade = 0;
         let sum = 0;
         let count = 0;
-        for(let i = 0; i < this.pupilAttendances.length; i++) {
-            if(this.pupilAttendances[i].grade && this.pupilAttendances[i].grade !== 0) {
+        for (let i = 0; i < this.pupilAttendances.length; i++) {
+            if (this.pupilAttendances[i].grade && this.pupilAttendances[i].grade !== 0) {
                 sum += this.pupilAttendances[i].grade;
                 count++;
             }
+        }
+        if (count === 0) {
+            return 0;
         }
         averageGrade = sum / count;
         return averageGrade;

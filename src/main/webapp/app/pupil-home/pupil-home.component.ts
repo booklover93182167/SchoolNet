@@ -30,7 +30,7 @@ export class PupilHomeComponent implements OnInit {
         this.principal.identity().then((account) => {
             this.account = account;
         });
-        if(!this.pupilHomeService.currentPupilExist()) {
+        if (!this.pupilHomeService.currentPupilExist()) {
             this.loadCurrentPupil();
         } else {
             this.currentPupil = this.pupilHomeService.getPupil();

@@ -7,15 +7,11 @@ import {PupilHomeSchedules} from './pupil-home-schedules.model';
 import {PupilHomeService} from '../pupil-home.service';
 import {ITEMS_PER_PAGE, Principal} from '../../shared';
 import {EventManager, JhiLanguageService, AlertService} from 'ng-jhipster';
-import {PupilHomeComponent} from "../pupil-home.component";
-
-
-
+import {PupilHomeComponent} from '../pupil-home.component';
 // service to retrieve schedules for pupil
 @Component({
     selector: 'jhi-pupil-home-schedules',
     templateUrl: './pupil-home-schedules.component.html',
-
 })
 export class PupilHomeSchedulesComponent implements OnInit {
     pupilSchedules: PupilHomeSchedules[] = [];
@@ -31,6 +27,7 @@ export class PupilHomeSchedulesComponent implements OnInit {
     // values to show selected homework
     selectedHomework: string = null;
 
+
     selectHomework(homework: string): void {
             this.selectedHomework = homework;
     }
@@ -40,7 +37,7 @@ export class PupilHomeSchedulesComponent implements OnInit {
                 private eventManager: EventManager,
                 private principal: Principal,
                 private pupilHomeComponent: PupilHomeComponent,
-                private jhiLanguageService: JhiLanguageService,) {
+                private jhiLanguageService: JhiLanguageService) {
         this.jhiLanguageService.setLocations(['pupil-home-calendar']);
         // subscribe on changes in calendar
         this.pupilHomeService.dateToSend$.subscribe(
@@ -85,14 +82,14 @@ export class PupilHomeSchedulesComponent implements OnInit {
         return Object.keys(obj).map((key) => obj[key] );
     }
 
-    //generate schedules table with blank fields(where there is no lesson at this position)
+    // generate schedules table with blank fields(where there is no lesson at this position)
     getSchedulesWithBlanks(): PupilHomeSchedules[] {
         this.schedulesWithBlanks = [];
         let currentSched = this.getSchedules();
-        for (var i = 1; i < 11; i++) {
+        for (let i = 1; i < 11; i++) {
             let match = false;
-            for (var j = 0; j < currentSched.length; j++) {
-                if(currentSched[j].lessonPosition === i) {
+            for (let j = 0; j < currentSched.length; j++) {
+                if (currentSched[j].lessonPosition === i) {
                     this.schedulesWithBlanks.push(currentSched[j]);
                     match = true;
                 }
