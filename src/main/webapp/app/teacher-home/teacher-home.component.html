@@ -1,6 +1,6 @@
 <div>
     <div>
-        <h2 *ngIf="currentTeacher">Welcome <b>{{currentTeacher.firstName + ' ' + currentTeacher.lastName}}</b></h2>
+        <h2 *ngIf="currentTeacher"><span jhiTranslate="schoolNetApp.teacher.welcome-message">Welcome </span><b>{{currentTeacher.firstName + ' ' + currentTeacher.lastName}}</b></h2>
     </div>
     <div>
         <teacher-home-schedule></teacher-home-schedule>
