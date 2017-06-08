@@ -47,9 +47,9 @@ public class ClassroomServiceImpl implements ClassroomService{
     @Override
     public ClassroomDTO save(ClassroomDTO classroomDTO) {
         log.debug("Request to save Classroom : {}", classroomDTO);
-        Classroom classroom = classroomMapper.classroomDTOToClassroom(classroomDTO);
         Teacher hteacher = teacherRepository.findOneWithSchool();
         classroomDTO.setSchoolId(hteacher.getSchool().getId());
+        Classroom classroom = classroomMapper.classroomDTOToClassroom(classroomDTO);
         classroom = classroomRepository.save(classroom);
         ClassroomDTO result = classroomMapper.classroomToClassroomDTO(classroom);
         return result;
