@@ -7,6 +7,8 @@ import { TeacherMySuffix } from '../entities/teacher/teacher-my-suffix.model';
 
 import { TeacherScheduleService } from './teacher-schedule.service';
 
+import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
+
 @Component({
     selector: 'jhi-teacher-schedule',
     templateUrl: './teacher-schedule.component.html',
@@ -18,8 +20,9 @@ export class TeacherScheduleComponent implements OnInit {
     allSchedules: ScheduleMySuffix[];
     filteredSchedules: ScheduleMySuffix[];
     selectedID: string;
-    selectedDate: string;
     selectedPeriod: string;
+    dateString: string;
+    dateObject: Object;
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
@@ -30,9 +33,36 @@ export class TeacherScheduleComponent implements OnInit {
         this.teachers = [];
         this.allSchedules = [];
         this.filteredSchedules = [];
+
+        this.selectedPeriod = 'day';
+        this.dateString = new Date(Date.now()).toString();
+    }
+
+    private datepickerOptions: INgxMyDpOptions = {
+        dateFormat: 'dd.mm.yyyy',
+    };
+
+    setDate(): void {
+        let d = new Date();
+        this.dateObject = {
+            date: {
+                year: d.getFullYear(),
+                month: d.getMonth() + 1,
+                day: d.getDate()}
+        };
+    }
+
+    onDateChanged(event: IMyDateModel): void {
+        this.dateString = new Date(event.jsdate).toString();
+        this.filterSchedule();
+    }
+
+    filterSchedule() {
+        this.filteredSchedules = this.teacherScheduleService.filterSchedule(parseInt(this.selectedID, 10), new Date(this.dateString), this.allSchedules);
     }
 
     ngOnInit() {
+        this.setDate();
         this.loadCurrentTeacher();
     }
 
@@ -43,9 +73,6 @@ export class TeacherScheduleComponent implements OnInit {
                 this.loadTeachers(this.currentTeacherAccount.schoolId);
                 this.loadSchedule(this.currentTeacherAccount.schoolId);
                 this.selectedID = String(this.currentTeacherAccount.id);
-                this.selectedDate = new Date(Date.now()).toISOString().substring(0, 10);
-                this.selectedPeriod = 'day';
-
                 this.selectedID = '1'; // delete
             },
             (res: Response) => this.onError(res.json())
@@ -69,10 +96,6 @@ export class TeacherScheduleComponent implements OnInit {
                 this.onError(res.json());
             }
         );
-    }
-
-    filterSchedule() {
-        this.filteredSchedules = this.teacherScheduleService.filterSchedule(parseInt(this.selectedID, 10), new Date(this.selectedDate.toString()), this.allSchedules);
     }
 
     private onError(error) {
