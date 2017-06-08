@@ -8,10 +8,14 @@ import {PupilHomeService} from '../pupil-home.service';
 import {ITEMS_PER_PAGE, Principal} from '../../shared';
 import {EventManager, JhiLanguageService, AlertService} from 'ng-jhipster';
 import {PupilHomeComponent} from "../pupil-home.component";
+
+
+
 // service to retrieve schedules for pupil
 @Component({
     selector: 'jhi-pupil-home-schedules',
     templateUrl: './pupil-home-schedules.component.html',
+
 })
 export class PupilHomeSchedulesComponent implements OnInit {
     pupilSchedules: PupilHomeSchedules[] = [];
@@ -20,20 +24,15 @@ export class PupilHomeSchedulesComponent implements OnInit {
     currentSchedules: PupilHomeSchedules[] = [];
     schedulesWithBlanks: PupilHomeSchedules[] = [];
 
+    showDialog = false;
+
     selectedDate: Date = new Date(Date.now());
 
     // values to show selected homework
     selectedHomework: string = null;
-    isSelectedHomework: boolean = false;
 
     selectHomework(homework: string): void {
-        if (this.isSelectedHomework) {
-            this.selectedHomework = null;
-            this.isSelectedHomework = false;
-        }else {
             this.selectedHomework = homework;
-            this.isSelectedHomework = true;
-        }
     }
 
     constructor(private pupilHomeService: PupilHomeService,

@@ -27,7 +27,8 @@
                             {{schedule.lessonName}}
                         </div>
                     </td>
-                    <td><a (click)="selectHomework(schedule.homework)"> {{schedule.homework | lengthPipe : 10}}</a></td>
+                    <td><a (click)="showDialog = !showDialog" (click)="selectHomework(schedule.homework)">
+                                            {{schedule.homework | lengthPipe : 10}}</a></td>
                     <td>
                         <div *ngIf="schedule.classroomId">
                             {{schedule.classroomName}}
@@ -41,7 +42,9 @@
             </tr>
             </tbody>
         </table>
-        <!--show selected homework-->
-        <h2>{{selectedHomework}}</h2>
     </div>
 </div>
+
+<homework-modal [(visible)]="showDialog">
+    {{selectedHomework}}
+</homework-modal>
