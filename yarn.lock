@@ -4636,6 +4636,10 @@ ng2-webstorage@1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/ng2-webstorage/-/ng2-webstorage-1.6.2.tgz#b363fedf56796a9ad8566cd79c2e5c7ad3473668"
 
+ngx-mydatepicker@^2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/ngx-mydatepicker/-/ngx-mydatepicker-2.0.10.tgz#d14e5225470736326514a03166a7d6390bf94d37"
+
 no-case@^2.2.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/no-case/-/no-case-2.3.1.tgz#7aeba1c73a52184265554b7dc03baf720df80081"
