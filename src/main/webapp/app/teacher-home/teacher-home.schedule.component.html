@@ -2,6 +2,12 @@
     <form #teacherSelectForm="ngForm">
         <label>You can use the filter</label>
         <div class="form-group row">
+            <label for="date-select" class="col-2 col-form-label">Date</label>
+            <div class="col-10">
+                <input class="form-control" type="date" id="date-select" name="date-select" [(ngModel)]="selectedDate">
+            </div>
+        </div>
+        <div class="form-group row">
             <label for="lesson-select" class="col-2 col-form-label">Lesson</label>
             <div class="col-10">
                 <select class="form-control" id="lesson-select" name="lesson-select" [(ngModel)]="selectedLessonId">
@@ -17,7 +23,7 @@
                 </select>
                 <div class="form-group row">
                     <div class="col-10">
-                        <button class="btn" (click)="onClick()">Apply.</button>
+                        <button class="btn" (click)="onClick()">Apply</button>
                         <button class="btn" (click)="Clear()">Сlear</button>
                     </div>
                 </div>
@@ -27,7 +33,7 @@
 </div>
 <div>
     <h2>
-        <span>Schedules</span>
+        <span>This is your personal schedules</span>
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
@@ -46,7 +52,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let schedule of filteredSchedules | sortByDate">
+            <tr *ngFor="let schedule of filteredSchedules | sortByDate ">
                 <td>{{schedule.date | date: "shortDate"}}</td>
                 <td>{{schedule.lessonPosition}}</td>
                 <td>
@@ -66,7 +72,7 @@
                 </td>
                 <td>
                     <div>
-                        <p>{{schedule.homework }}</p>
+                        <p>{{schedule.homework | lengthPipe: 20}}</p>
                     </div>
                 </td>
                 <td>
