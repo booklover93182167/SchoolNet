@@ -10,6 +10,7 @@ import { ScheduleMySuffixPopupComponent } from './schedule-my-suffix-dialog.comp
 import { ScheduleMySuffixDeletePopupComponent } from './schedule-my-suffix-delete-dialog.component';
 
 import { Principal } from '../../shared';
+import {ScheduleMySuffixPopupComponentHomework} from "./schedule-my-suffix-dialog.homework.edit.component";
 
 export const scheduleRoute: Routes = [
   {
@@ -42,6 +43,16 @@ export const schedulePopupRoute: Routes = [
     canActivate: [UserRouteAccessService],
     outlet: 'popup'
   },
+    {
+        path: 'teacher-home-popup-homework/:id/edit',
+        component: ScheduleMySuffixPopupComponentHomework,
+        data: {
+            authorities: ['ROLE_TEACHER'],
+            pageTitle: 'schoolNetApp.schedule.home.title'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
+    },
   {
     path: 'schedule-my-suffix/:id/edit',
     component: ScheduleMySuffixPopupComponent,

@@ -15,6 +15,7 @@ public interface ParentMapper {
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "user.lastName", target = "lastName")
     @Mapping(source = "user.firstName", target = "firstName")
+    @Mapping(source = "user.email", target = "email")
     ParentDTO parentToParentDTO(Parent parent);
 
     List<ParentDTO> parentsToParentDTOs(List<Parent> parents);
