@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy, Input, OnChanges, ChangeDetectionStrategy}
 import {Response} from '@angular/http';
 import {Subscription} from 'rxjs/Rx';
 
+
 import {PupilHomeSchedules} from './pupil-home-schedules.model';
 import {PupilHomeService} from '../pupil-home.service';
 import {ITEMS_PER_PAGE, Principal} from '../../shared';
@@ -19,20 +20,16 @@ export class PupilHomeSchedulesComponent implements OnInit {
     currentSchedules: PupilHomeSchedules[] = [];
     schedulesWithBlanks: PupilHomeSchedules[] = [];
 
+    showDialog = false;
+
     selectedDate: Date = new Date(Date.now());
 
     // values to show selected homework
     selectedHomework: string = null;
-    isSelectedHomework = false;
+
 
     selectHomework(homework: string): void {
-        if (this.isSelectedHomework) {
-            this.selectedHomework = null;
-            this.isSelectedHomework = false;
-        }else {
             this.selectedHomework = homework;
-            this.isSelectedHomework = true;
-        }
     }
 
     constructor(private pupilHomeService: PupilHomeService,
