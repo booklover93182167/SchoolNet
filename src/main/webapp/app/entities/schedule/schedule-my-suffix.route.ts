@@ -10,7 +10,7 @@ import { ScheduleMySuffixPopupComponent } from './schedule-my-suffix-dialog.comp
 import { ScheduleMySuffixDeletePopupComponent } from './schedule-my-suffix-delete-dialog.component';
 
 import { Principal } from '../../shared';
-import {ScheduleMySuffixPopupComponentHomework} from "./schedule-my-suffix-dialog.homework.edit.component";
+import {ScheduleMySuffixPopupComponentHomework} from './schedule-my-suffix-dialog.homework.edit.component';
 
 export const scheduleRoute: Routes = [
   {
