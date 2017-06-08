@@ -8,7 +8,11 @@
             "teacher-home": "Головна",
             "teacher-schedule": "Розклад занять",
             "user-home": "Користувач",
-            "pupil-home": "Учень",
+            "pupil-home": {
+                "home": "Розклад",
+                "grades": "Оцінки",
+                "title": "Учень"
+            },
             "management":"Управління",
             "teacher-management":{
                 "teachers":"Вчителі",

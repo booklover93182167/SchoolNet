@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { Http, Response, URLSearchParams, BaseRequestOptions } from '@angular/http';
 import { PupilHomeSchedules } from './pupil-home-schedules/pupil-home-schedules.model';
-import { DateUtils } from 'ng-jhipster';
+import { DateUtils, AlertService } from 'ng-jhipster';
 import { PupilMySuffix } from '../entities/pupil/pupil-my-suffix.model';
 
 @Injectable()
@@ -13,14 +13,15 @@ export class PupilHomeService {
 
     private resourceUrl = 'api/pupilhome';
     private resourceLessonUrl = 'api/pupilhome/distinctform';
-
+    currentPupil: PupilMySuffix;
     // Observable string sources
     private dateToSend = new Subject<Date>();
-    private currentPupil: PupilMySuffix;
+
     // Observable string streams
     dateToSend$ = this.dateToSend.asObservable();
 
-    constructor(private http: Http, private dateUtils: DateUtils) { }
+    constructor(private http: Http, private dateUtils: DateUtils,
+    private alertService: AlertService) { }
 
     findByFormId(formId: number): Observable<Response> {
         return this.http.get(`${this.resourceUrl}/getschedules/${formId}`).map((res: Response) =>
@@ -53,6 +54,14 @@ export class PupilHomeService {
         return this.http.get(`${this.resourceUrl}/getpupil`);
     }
 
+    currentPupilExist(): boolean {
+        if(this.currentPupil) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // Service message commands
     publishData(data: Date) {
         this.dateToSend.next(data);
@@ -77,6 +86,10 @@ export class PupilHomeService {
             }
         }
         return schedulesForDate;
+    }
+
+    private onError(error) {
+        this.alertService.error(error.message, null, null);
     }
 
 }

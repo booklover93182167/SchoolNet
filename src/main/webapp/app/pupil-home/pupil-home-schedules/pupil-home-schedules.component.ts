@@ -1,14 +1,12 @@
 import {Component, OnInit, OnDestroy, Input, OnChanges, ChangeDetectionStrategy} from '@angular/core';
 import {Response} from '@angular/http';
 import {Subscription} from 'rxjs/Rx';
-import {EventManager, JhiLanguageService, AlertService} from 'ng-jhipster';
+
 
 import {PupilHomeSchedules} from './pupil-home-schedules.model';
 import {PupilHomeService} from '../pupil-home.service';
 import {ITEMS_PER_PAGE, Principal} from '../../shared';
-import {PupilMySuffix} from "../../entities/pupil/pupil-my-suffix.model";
-import {AttendancesMySuffix} from "../../entities/attendances/attendances-my-suffix.model";
-import {Lesson} from "./pupil-home-lesson.model";
+import {EventManager, JhiLanguageService, AlertService} from 'ng-jhipster';
 import {PupilHomeComponent} from "../pupil-home.component";
 // service to retrieve schedules for pupil
 @Component({
@@ -38,22 +36,20 @@ export class PupilHomeSchedulesComponent implements OnInit {
         }
     }
 
-    constructor(private jhiLanguageService: JhiLanguageService,
-                private pupilHomeService: PupilHomeService,
+    constructor(private pupilHomeService: PupilHomeService,
                 private alertService: AlertService,
                 private eventManager: EventManager,
                 private principal: Principal,
-                private pupilHomeComponent: PupilHomeComponent) {
-
+                private pupilHomeComponent: PupilHomeComponent,
+                private jhiLanguageService: JhiLanguageService,) {
+        this.jhiLanguageService.setLocations(['pupil-home-calendar']);
         // subscribe on changes in calendar
         this.pupilHomeService.dateToSend$.subscribe(
             (data) => {
                 this.selectedDate = data;
-
                 // update schedules when new date is selected
                 this.schedulesWithBlanks = this.getSchedulesWithBlanks();
             });
-        this.jhiLanguageService.setLocations(['home']);
     }
 
     ngOnInit() {
@@ -62,7 +58,7 @@ export class PupilHomeSchedulesComponent implements OnInit {
 
     // function to load schedules for form for current user(if he is pupil)
     loadByFormId() {
-        this.pupilHomeService.findByFormId(this.pupilHomeComponent.currentPupil.formId).subscribe(
+        this.pupilHomeService.findByFormId(this.pupilHomeService.getPupil().formId).subscribe(
             (res: Response) => {
                 this.pupilSchedules = res.json();
                 // initialize schedules for today
@@ -103,7 +99,7 @@ export class PupilHomeSchedulesComponent implements OnInit {
                 }
             }
             if (match === false) {
-                let blankSchedule = new PupilHomeSchedules(null, null, "n/a", i, true, null, null, null, null, null, "n/a", null, "n/a", "n/a", "n/a");
+                let blankSchedule = new PupilHomeSchedules(null, null, '', i, true, null, null, null, null, null, null, null, null, null, null);
                 this.schedulesWithBlanks.push(blankSchedule);
             }
         }
