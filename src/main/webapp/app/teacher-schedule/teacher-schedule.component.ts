@@ -19,6 +19,7 @@ export class TeacherScheduleComponent implements OnInit {
     teachers: TeacherMySuffix[];
     allSchedules: ScheduleMySuffix[];
     filteredSchedules: ScheduleMySuffix[];
+    schedulesWithBlanks: ScheduleMySuffix[];
     selectedID: string;
     selectedPeriod: string;
     dateString: string;
@@ -33,13 +34,14 @@ export class TeacherScheduleComponent implements OnInit {
         this.teachers = [];
         this.allSchedules = [];
         this.filteredSchedules = [];
+        this.schedulesWithBlanks = [];
 
         this.selectedPeriod = 'day';
         this.dateString = new Date(Date.now()).toString();
     }
 
     private datepickerOptions: INgxMyDpOptions = {
-        dateFormat: 'dd.mm.yyyy',
+        dateFormat: 'dd.mm.yyyy'
     };
 
     setDate(): void {
@@ -59,6 +61,23 @@ export class TeacherScheduleComponent implements OnInit {
 
     filterSchedule() {
         this.filteredSchedules = this.teacherScheduleService.filterSchedule(parseInt(this.selectedID, 10), new Date(this.dateString), this.allSchedules);
+        this.makeScheduleWithBlanks();
+    }
+
+    makeScheduleWithBlanks() {
+        this.schedulesWithBlanks = [];
+
+        for(let i = 1; i <= 8; i++) {
+            let blankSchedule = new ScheduleMySuffix(null, null, '', i, true, null, null, null, null, null, '', null, '', '', '');
+            this.schedulesWithBlanks.push(blankSchedule);
+        }
+
+        for(let i = 0; i < this.filteredSchedules.length; i++) {
+            let lessonPosition = this.filteredSchedules[i].lessonPosition;
+            this.schedulesWithBlanks[lessonPosition-1] = this.filteredSchedules[i];
+        }
+
+        this.filteredSchedules = this.schedulesWithBlanks;
     }
 
     ngOnInit() {

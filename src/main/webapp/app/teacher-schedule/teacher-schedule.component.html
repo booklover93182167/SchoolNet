@@ -48,21 +48,21 @@
                     </tr>
                     <tr>
                         <!--<th>Date</th>-->
-                        <th>Lesson</th>
-                        <th>Position</th>
-                        <th>Form</th>
-                        <th>Classroom</th>
+                        <th style="width: 10%">#</th>
+                        <th style="width: 40%">Lesson</th>
+                        <th style="width: 30%">Form</th>
+                        <th style="width: 30%">Classroom</th>
                         <!--<th>Homework</th>-->
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let filteredSchedule of filteredSchedules | orderBy:'lessonPosition'">
-                        <!--<td>{{filteredSchedule.date | date:'EEEE'}}, {{filteredSchedule.date | date:'yyyy-MM-dd'}}</td>-->
-                        <td>{{filteredSchedule.lessonPosition}}</td>
-                        <td>{{filteredSchedule.lessonName}}</td>
-                        <td>{{filteredSchedule.formName}}</td>
-                        <td>{{filteredSchedule.classroomName}}</td>
-                        <!--<td>{{filteredSchedule.homework}}</td>-->
+                    <tr *ngFor="let schedule of schedulesWithBlanks | orderBy: 'lessonPosition'">
+                        <!--<td>{{schedule.date | date:'EEEE'}}, {{schedule.date | date:'yyyy-MM-dd'}}</td>-->
+                        <td>{{schedule.lessonPosition}}</td>
+                        <td>{{schedule.lessonName}}</td>
+                        <td>{{schedule.formName}}</td>
+                        <td>{{schedule.classroomName}}</td>
+                        <!--<td>{{schedule.homework}}</td>-->
                     </tr>
                     </tbody>
                 </table>
