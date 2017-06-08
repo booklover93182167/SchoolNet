@@ -108,8 +108,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
             .antMatchers("/api/attendances").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/attendances/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/classrooms").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/classrooms/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/classrooms").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
+            .antMatchers("/api/classrooms/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/forms").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER, AuthoritiesConstants.TEACHER)
             .antMatchers("/api/forms/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER, AuthoritiesConstants.TEACHER)
             .antMatchers("/api/lessons").hasAuthority(AuthoritiesConstants.ADMIN)
@@ -120,8 +120,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/pupils/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/schedules").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/schedules/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/schools").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/schools/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/schools").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
+            .antMatchers("/api/schools/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/teachers").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/teachers/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
 

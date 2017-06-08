@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
-import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { EventManager, JhiLanguageService } from 'ng-jhipster';
+import {NgbActiveModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {EventManager, JhiLanguageService} from 'ng-jhipster';
 
-import { ClassroomManagement } from './classroom-management.model';
-import { ClassroomManagementPopupService } from './classroom-management-popup.service';
-import { ClassroomManagementService } from './classroom-management.service';
+import {ClassroomManagement} from './classroom-management.model';
+import {ClassroomManagementPopupService} from './classroom-management-popup.service';
+import {ClassroomManagementService} from './classroom-management.service';
 
 @Component({
     selector: 'jhi-classroom-management-delete-dialog',
@@ -16,12 +16,10 @@ export class ClassroomManagementDeleteDialogComponent {
 
     classroom: ClassroomManagement;
 
-    constructor(
-        private jhiLanguageService: JhiLanguageService,
-        private classroomService: ClassroomManagementService,
-        public activeModal: NgbActiveModal,
-        private eventManager: EventManager
-    ) {
+    constructor(private jhiLanguageService: JhiLanguageService,
+                private classroomService: ClassroomManagementService,
+                public activeModal: NgbActiveModal,
+                private eventManager: EventManager) {
         this.jhiLanguageService.setLocations(['classroom']);
     }
 
@@ -49,10 +47,9 @@ export class ClassroomManagementDeletePopupComponent implements OnInit, OnDestro
     modalRef: NgbModalRef;
     routeSub: any;
 
-    constructor(
-        private route: ActivatedRoute,
-        private classroomPopupService: ClassroomManagementPopupService
-    ) {}
+    constructor(private route: ActivatedRoute,
+                private classroomPopupService: ClassroomManagementPopupService) {
+    }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
