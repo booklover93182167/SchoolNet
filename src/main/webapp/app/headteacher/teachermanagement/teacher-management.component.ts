@@ -9,10 +9,6 @@ import { TeacherManagement } from './teacher-management.model';
 import { TeacherManagementService } from './teacher-management.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
 
-
-
-
-
 @Component({
     selector: 'jhi-teacher-management',
     templateUrl: './teacher-management.component.html'
@@ -22,6 +18,8 @@ teachers: TeacherManagement[];
     currentAccount: any;
     eventSubscriber: Subscription;
     authorities: any[];
+    error: any;
+    success: any;
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
@@ -31,7 +29,7 @@ teachers: TeacherManagement[];
         private principal: Principal,
 
     ) {
-        this.jhiLanguageService.setLocations(['teacher','user-management']);
+        this.jhiLanguageService.setLocations(['teacher', 'user-management']);
     }
 
     loadAll() {
@@ -60,6 +58,23 @@ teachers: TeacherManagement[];
     registerChangeInTeachers() {
         this.eventSubscriber = this.eventManager.subscribe('teacherListModification', (response) => this.loadAll());
     }
+
+
+    setActive(teacher, isActivated) {
+        teacher.enabled = isActivated;
+        this.teacherService.update(teacher).subscribe(
+            (response: Response) => {
+                if (response.status === 200) {
+                    this.error = null;
+                    this.success = 'OK';
+                    this.loadAll();
+                } else {
+                    this.success = null;
+                    this.error = 'ERROR';
+                }
+            });
+    }
+
 
     private onError(error) {
         this.alertService.error(error.message, null, null);

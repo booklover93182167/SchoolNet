@@ -41,6 +41,7 @@ describe('Component Tests', () => {
             // GIVEN
             comp.password = 'password1';
             comp.confirmPassword = 'password2';
+            comp.currentPassword = 'password1';
             // WHEN
             comp.changePassword();
             // THEN
@@ -52,6 +53,7 @@ describe('Component Tests', () => {
         it('should call Auth.changePassword when passwords match', () => {
             // GIVEN
             spyOn(service, 'save').and.returnValue(Observable.of(true));
+            comp.currentPassword = 'myPassword';
             comp.password = comp.confirmPassword = 'myPassword';
 
             // WHEN
@@ -64,6 +66,7 @@ describe('Component Tests', () => {
         it('should set success to OK upon success', function() {
             // GIVEN
             spyOn(service, 'save').and.returnValue(Observable.of(true));
+            comp.currentPassword = 'myPassword';
             comp.password = comp.confirmPassword = 'myPassword';
 
             // WHEN
@@ -78,6 +81,7 @@ describe('Component Tests', () => {
         it('should notify of error if change password fails', function() {
             // GIVEN
             spyOn(service, 'save').and.returnValue(Observable.throw('ERROR'));
+            comp.currentPassword = 'myPassword';
             comp.password = comp.confirmPassword = 'myPassword';
 
             // WHEN
