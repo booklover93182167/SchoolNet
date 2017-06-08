@@ -4,14 +4,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
     <!--
-        Added the constraints for entity UserExtra.
+        Added the constraints for entity UserAddon.
     -->
-    <changeSet id="20170607212722-2" author="jhipster">
-
+    <changeSet id="20170608163605-2" author="jhipster">
+        
         <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="user_extra"
-                                 constraintName="fk_extra_id"
+                                 baseTableName="user_addon"
+                                 constraintName="fk_user_addon_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
+
     </changeSet>
 </databaseChangeLog>

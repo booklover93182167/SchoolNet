@@ -5,7 +5,9 @@
         "menu": {
             "forms":"Классы",
             "teacher-menu": "Меню учителя",
-            "teacher-home": "Главная",
+            "teacher-home": {
+                "title": "Главная учителя"
+            },
             "teacher-schedule": "Расписание занятий",
             "user-home": "Пользователь",
             "teacher-my-class": "Мой класс",
