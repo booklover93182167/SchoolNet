@@ -1,0 +1,31 @@
+{
+    "schoolNetApp": {
+        "teacher": {
+            "home": {
+                "title": "Учитель"
+            },
+            "welcome-message": "Здравствуйте, ",
+            "detail": {
+                "title": "Учитель"
+            },
+            "form": {
+                "label": "Фильтр по расписанию",
+                "date": "Дата",
+                "lesson": "Урок",
+                "form": "Класс",
+                "buttonApply": "Применить",
+                "buttonClear": "Отменить"
+            },
+            "table": {
+                "tableLabel": "Расписание уроков",
+                "date": "Дата",
+                "lessonPosition": "Номер урока",
+                "lesson": "Урок",
+                "classroom": "Кабинет",
+                "form": "Класс",
+                "homework": "Домашнее задание",
+                "editButton": "Редактировать"
+            }
+        }
+    }
+}

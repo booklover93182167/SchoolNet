@@ -1,0 +1,31 @@
+{
+    "schoolNetApp": {
+        "teacher": {
+            "home": {
+                "title": "Вчитель"
+            },
+            "welcome-message": "Вітаю, ",
+            "detail": {
+                "title": "Вчитель"
+            },
+            "form": {
+                "label": "Ви можете застосувати фільтр до розкладу",
+                "date": "Дата",
+                "lesson": "Урок",
+                "form": "Клас",
+                "buttonApply": "Застосувати",
+                "buttonClear": "Відмінити"
+            },
+            "table": {
+                "tableLabel": "Ваш розклад уроків",
+                "date": "Дата",
+                "lessonPosition": "Номер уроку",
+                "lesson": "Урок",
+                "classroom": "Кабінет",
+                "form": "Клас",
+                "homework": "Домашнє завдання",
+                "editButton": "Редагувати"
+            }
+        }
+    }
+}
