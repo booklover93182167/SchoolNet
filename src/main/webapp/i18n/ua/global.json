@@ -71,7 +71,9 @@
             "email": "Email",
             "email.placeholder": "Ваш email",
             "imageUrl": "URL-адреса для фотографії користувача",
-            "imageUrl.placeholder": "Ваша URL-адреса для фотографії"
+            "imageUrl.placeholder": "Ваша URL-адреса для фотографії",
+            "phone": "Номер телефону",
+            "phone.placeholder": "+380xxxxxxxxx"
         },
         "messages": {
             "info": {
