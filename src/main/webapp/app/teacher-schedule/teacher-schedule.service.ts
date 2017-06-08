@@ -8,9 +8,9 @@ import { ScheduleMySuffix } from './../entities/schedule/schedule-my-suffix.mode
 @Injectable()
 export class TeacherScheduleService {
 
-    private resourceUrlSchool = 'api/teacher-schedule/school';
     private resourceUrlSchedule = 'api/teacher-schedule/schedule';
-    private resourceUrlCurrentTeacher = 'api/teacherhome/current';
+    private resourceUrlAllTeachers = 'api/teacher-schedule/teachers/all/';
+    private resourceUrlCurrentTeacher = 'api/teacher-schedule/teachers/current';
 
     constructor(private http: Http, private dateUtils: DateUtils) { }
 
@@ -19,7 +19,7 @@ export class TeacherScheduleService {
     }
 
     getTeachersBySchoolId(schoolId: number): Observable<Response> {
-        return this.http.get(`${this.resourceUrlSchool}/${schoolId}`);
+        return this.http.get(`${this.resourceUrlAllTeachers}/${schoolId}`);
     }
 
     getSchedulesBySchoolId(schoolId: number): Observable<Response> {

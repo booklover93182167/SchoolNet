@@ -119,10 +119,11 @@ public class TeacherResource {
 
     /**
      * GET  /teacher-home/teachers/current : get current teacher.
+     * GET  /teacher-schedule/teachers/current : get current teacher.
      *
      * @return the ResponseEntity with status 200 (OK) and with body the current teacherDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/teacher-home/teachers/current")
+    @GetMapping({"/teacher-home/teachers/current", "/teacher-schedule/teachers/current"})
     @Timed
     public ResponseEntity<TeacherDTO> getCurrentTeacher() {
         log.debug("REST request to get current Teacher");
@@ -195,12 +196,12 @@ public class TeacherResource {
     }
 
     /**
-     * GET  /teachers : get all the teachers.
+     * GET  /teacher-schedule/teachers/all/{schoolId} : get all the teachers.
      *
      * @param schoolId the id of the school
      * @return the ResponseEntity with status 200 (OK) and the list of teachers in body
      */
-    @GetMapping("/teacher-schedule/school/{schoolId}")
+    @GetMapping("/teacher-schedule/teachers/all/{schoolId}")
     @Timed
     public List<TeacherDTO> getAllTeachersBySchoolId(@PathVariable Long schoolId) {
         log.debug("REST request to get all Teachers by schoolId : {}", schoolId);

@@ -44,7 +44,7 @@ export class TeacherScheduleComponent implements OnInit {
                 this.loadSchedule(this.currentTeacherAccount.schoolId);
                 this.selectedID = String(this.currentTeacherAccount.id);
                 this.selectedDate = new Date(Date.now()).toISOString().substring(0, 10);
-                this.selectedPeriod = '1';
+                this.selectedPeriod = 'day';
 
                 this.selectedID = '1'; // delete
             },
