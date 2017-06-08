@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-public class ClassroomServiceImpl implements ClassroomService{
+public class ClassroomServiceImpl implements ClassroomService {
 
     private final Logger log = LoggerFactory.getLogger(ClassroomServiceImpl.class);
 
@@ -56,9 +56,9 @@ public class ClassroomServiceImpl implements ClassroomService{
     }
 
     /**
-     *  Get all the classrooms.
+     * Get all the classrooms.
      *
-     *  @return the list of entities
+     * @return the list of entities
      */
     @Override
     @Transactional(readOnly = true)
@@ -72,10 +72,10 @@ public class ClassroomServiceImpl implements ClassroomService{
     }
 
     /**
-     *  Get one classroom by id.
+     * Get one classroom by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Override
     @Transactional(readOnly = true)
@@ -87,9 +87,9 @@ public class ClassroomServiceImpl implements ClassroomService{
     }
 
     /**
-     *  Delete the  classroom by id.
+     * Delete the  classroom by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     @Override
     public void delete(Long id) {

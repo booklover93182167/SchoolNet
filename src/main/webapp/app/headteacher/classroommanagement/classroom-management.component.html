@@ -1,9 +1,10 @@
 <div>
     <h2>
         <span jhiTranslate="schoolNetApp.classroom.home.title">Classrooms</span>
-        <button class="btn btn-primary float-right create-classroom-management" [routerLink]="['/', { outlets: { popup: ['classroom-management-popup'] } }]">
+        <button class="btn btn-primary float-right create-classroom-management"
+                [routerLink]="['/', { outlets: { popup: ['classroom-management-popup'] } }]">
             <span class="fa fa-plus"></span>
-            <span  jhiTranslate="schoolNetApp.classroom.home.createLabel">
+            <span jhiTranslate="schoolNetApp.classroom.home.createLabel">
             Create new Classroom
             </span>
         </button>
@@ -16,10 +17,10 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th><span jhiTranslate="schoolNetApp.classroom.name">Name</span></th>
-            <th><span jhiTranslate="schoolNetApp.classroom.school">School</span></th>
-            <th><span jhiTranslate="schoolNetApp.classroom.capacity">Capacity</span></th>
-            <th></th>
+                <th><span jhiTranslate="schoolNetApp.classroom.name">Name</span></th>
+                <th><span jhiTranslate="schoolNetApp.classroom.school">School</span></th>
+                <th><span jhiTranslate="schoolNetApp.classroom.capacity">Capacity</span></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -27,7 +28,7 @@
                 <td>{{classroom.name}}</td>
                 <td>
                     <div *ngIf="classroom.schoolId">
-                        <a [routerLink]="['../school-my-suffix', classroom.schoolId  ]" >{{classroom.schoolName}}</a>
+                        <a [routerLink]="['../school-my-suffix', classroom.schoolId  ]">{{classroom.schoolName}}</a>
                     </div>
                 </td>
                 <td>{{classroom.capacity}}</td>
