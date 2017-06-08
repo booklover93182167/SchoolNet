@@ -7,8 +7,8 @@ import { PaginationUtil } from 'ng-jhipster';
 import { TeacherManagementComponent } from './teacher-management.component';
 
 import { Principal } from '../../shared';
-import {TeacherManagementPopupComponent} from "./teacher-management-dialog.component";
-import {TeacherManagementDetailComponent} from "./teacher-management-detail.component";
+import {TeacherManagementPopupComponent} from './teacher-management-dialog.component';
+import {TeacherManagementDetailComponent} from './teacher-management-detail.component';
 
 export const TEACHER_ROUTE: Routes = [
   {
@@ -36,7 +36,7 @@ export const TEACHER_POPUP_ROUTE: Routes = [
         path: 'teacher-management-new',
         component: TeacherManagementPopupComponent,
         data: {
-            authorities: ['ROLE_ADMIN','ROLE_HEAD_TEACHER'],
+            authorities: ['ROLE_ADMIN', 'ROLE_HEAD_TEACHER'],
             pageTitle: 'schoolNetApp.teacher.home.title'
         },
         canActivate: [UserRouteAccessService],

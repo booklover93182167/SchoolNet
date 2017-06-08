@@ -208,4 +208,33 @@ public class TeacherResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(teacherDTO));
     }
 
+
+    /**
+     * PUT  /teachers : Updates an existing teacher.
+     *
+     * @param teacherDTO the teacherDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated teacherDTO,
+     * or with status 400 (Bad Request) if the teacherDTO is not valid,
+     * or with status 500 (Internal Server Error) if the teacherDTO couldnt be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/headteacher/management")
+    @Timed
+    public ResponseEntity<TeacherDTO> updateTeachers(@Valid @RequestBody TeacherDTO teacherDTO) throws URISyntaxException {
+        log.debug("REST request to update Teacher : {}", teacherDTO);
+        if (teacherDTO.getId() == null) {
+            return createTeacher(teacherDTO);
+        }
+
+        TeacherDTO result = teacherService.save(teacherDTO);
+
+        return ResponseUtil.wrapOrNotFound(Optional.of(result),
+            HeaderUtil.createAlert("userManagement.updated", result.getFirstName()));
+/*
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, teacherDTO.getId().toString()))
+            .body(result);
+        */
+    }
+
 }

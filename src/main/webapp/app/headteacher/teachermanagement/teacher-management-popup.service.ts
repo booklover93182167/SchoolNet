@@ -24,7 +24,7 @@ export class TeacherManagementPopupService {
                 this.teacherModalRef(component, teacher);
             });
         } else {
-            return this.teacherModalRef(component, new TeacherManagement());// can mistake
+            return this.teacherModalRef(component, new TeacherManagement());
         }
     }
 

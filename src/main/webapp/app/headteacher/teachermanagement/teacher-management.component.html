@@ -34,7 +34,10 @@
                     {{teacher.lastName}}
                 </td>
                 <td>
-                    {{teacher.enabled}}
+                    <span class="badge badge-danger hand" (click)="setActive(teacher, true)" *ngIf="!teacher.enabled"
+                          jhiTranslate="userManagement.deactivated">Deactivated</span>
+                    <span class="badge badge-success hand" (click)="setActive(teacher, false)" *ngIf="teacher.enabled"
+                          jhiTranslate="userManagement.activated">Activated</span>
                 </td>
                 <td>
                     {{teacher.formName}}
