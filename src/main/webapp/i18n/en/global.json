@@ -73,7 +73,9 @@
             "email": "Email",
             "email.placeholder": "Your email",
             "imageUrl": "URL for user photo",
-            "imageUrl.placeholder": "Your URL for photo"
+            "imageUrl.placeholder": "Your URL for photo",
+            "phone": "Phone number",
+            "phone.placeholder": "+380xxxxxxxxx"
         },
         "messages": {
             "info": {

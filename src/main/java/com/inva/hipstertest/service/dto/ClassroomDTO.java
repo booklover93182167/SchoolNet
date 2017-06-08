@@ -20,6 +20,8 @@ public class ClassroomDTO implements Serializable {
     @NotNull
     private Boolean enabled;
 
+    private String capacity;
+
     private Long schoolId;
 
     private String schoolName;
@@ -60,6 +62,14 @@ public class ClassroomDTO implements Serializable {
 
     public void setSchoolId(Long schoolId) {
         this.schoolId = schoolId;
+    }
+
+    public String getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
     }
 
     @Override

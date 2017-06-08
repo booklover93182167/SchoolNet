@@ -18,7 +18,8 @@
             "name": "Name",
             "enabled": "Enabled",
             "schedule": "Schedule",
-            "school": "School"
+            "school": "School",
+            "capacity": "Capacity"
         }
     }
 }

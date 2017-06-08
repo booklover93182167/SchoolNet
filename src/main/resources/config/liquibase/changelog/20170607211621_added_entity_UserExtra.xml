@@ -9,36 +9,21 @@
     <property name="now" value="now()" dbms="h2"/>
     <property name="now" value="now()" dbms="postgresql"/>
     <property name="now" value="now()" dbms="mysql"/>
-    <property name="autoIncrement" value="true"/>
 
     <property name="floatType" value="float4" dbms="postgresql, h2"/>
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity Classroom.
+        Added the entity UserExtra.
     -->
-    <changeSet id="20170514213824-1" author="jhipster">
-        <createTable tableName="classroom">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+    <changeSet id="20170607211621-1" author="jhipster">
+        <createTable tableName="user_extra">
+            <column name="user_id" type="bigint" autoIncrement="false">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="enabled" type="boolean" valueBoolean="false">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="school_id" type="bigint">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="capacity" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
+            <column name="phone" type="varchar(25)"/>
+            <column name="middle_name" type="varchar(50)"/>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-
     </changeSet>
 </databaseChangeLog>
