@@ -44,7 +44,7 @@
                 <table class="table">
                     <thead class="thead-inverse">
                     <tr>
-                        <th colspan="4">{{ dateString | date: 'dd-MM-yyyy'}}</th>
+                        <th class="text-center" colspan="4">{{ dateString | date: 'EEEE, dd MMMM yyyy'}}</th>
                     </tr>
                     <tr>
                         <!--<th>Date</th>-->
@@ -57,7 +57,7 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let schedule of schedulesWithBlanks | orderBy: 'lessonPosition'">
-                        <!--<td>{{schedule.date | date:'EEEE'}}, {{schedule.date | date:'yyyy-MM-dd'}}</td>-->
+                        <!--<td>{{schedule.date | date: 'EEEE'}}, {{schedule.date | date: 'yyyy-MM-dd'}}</td>-->
                         <td>{{schedule.lessonPosition}}</td>
                         <td>{{schedule.lessonName}}</td>
                         <td>{{schedule.formName}}</td>
