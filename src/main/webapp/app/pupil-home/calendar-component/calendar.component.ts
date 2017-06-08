@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import {PupilHomeService} from '../pupil-home.service';
-import {JhiLanguageService} from "ng-jhipster";
+import {JhiLanguageService} from 'ng-jhipster';
 
 @Component({
     selector: 'jhi-demo-component',

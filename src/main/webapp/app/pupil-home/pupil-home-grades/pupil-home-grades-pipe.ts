@@ -1,7 +1,7 @@
 /**
  * Created by inva on 02-Jun-17.
  */
-import { Pipe } from '@angular/core'
+import { Pipe } from '@angular/core';
 @Pipe({
     name: 'gradesPipe'
 })
