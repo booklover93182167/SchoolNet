@@ -27,6 +27,7 @@ export class TeacherHomeScheduleComponent implements OnInit {
     selectedLessonId: number;
     selectedFormId: number;
     selectedDate: Date;
+    isFilterOn: boolean;
 
     constructor(private jhiLanguageService: JhiLanguageService,
                 private teacherHomeService: TeacherHomeService,
@@ -72,7 +73,13 @@ export class TeacherHomeScheduleComponent implements OnInit {
         this.teacherHomeService.querySchedule(teacherId).subscribe(
             (res: Response) => {
                 this.schedules = res.json();
-                this.filteredSchedules = this.schedules;
+                if (!this.isFilterOn) {
+                    this.filteredSchedules = this.schedules;
+                } else {
+                    this.filteredSchedules = this.teacherHomeService.filterSchedule(parseInt(String(this.selectedLessonId), 10),
+                        parseInt(String(this.selectedFormId), 10), this.schedules,
+                        isUndefined(this.selectedDate) ? this.selectedDate : new Date(this.selectedDate.toString()));
+                }
             },
             (res: Response) => this.onError(res.json())
         );
@@ -82,17 +89,16 @@ export class TeacherHomeScheduleComponent implements OnInit {
         if (isUndefined(this.selectedLessonId) && isUndefined(this.selectedFormId) && isUndefined(this.selectedDate)) {
             return;
         } else {
+            this.isFilterOn = true;
             this.filteredSchedules = this.teacherHomeService.filterSchedule(parseInt(String(this.selectedLessonId), 10),
                 parseInt(String(this.selectedFormId), 10), this.schedules,
                 isUndefined(this.selectedDate) ? this.selectedDate : new Date(this.selectedDate.toString()));
         }
-        this.selectedLessonId = undefined;
-        this.selectedFormId = undefined;
-        this.selectedDate = undefined;
     }
 
     Clear() {
         this.filteredSchedules = this.schedules;
+        this.isFilterOn = false;
         this.selectedLessonId = undefined;
         this.selectedFormId = undefined;
         this.selectedDate = undefined;
