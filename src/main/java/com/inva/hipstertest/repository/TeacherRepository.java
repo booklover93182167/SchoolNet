@@ -25,4 +25,7 @@ public interface TeacherRepository extends JpaRepository<Teacher,Long> {
     @Query("select t from Teacher t left join fetch t.school s where t.user.login = ?#{principal.username}")
     Teacher findOneWithSchool();
 
+    @Query("select t from Teacher t where t.school.id =:id")
+    List<Teacher> findAllTeachersByCurrentSchool(@Param("id") long id);
+
 }

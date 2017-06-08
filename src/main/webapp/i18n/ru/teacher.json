@@ -2,9 +2,9 @@
     "schoolNetApp": {
         "teacher" : {
             "home": {
-                "title": "Teachers",
-                "createLabel": "Создать новый Teacher",
-                "createOrEditLabel": "Создать или отредактировать Teacher"
+                "title": "Учитель",
+                "createLabel": "Создать нового Учителя",
+                "createOrEditLabel": "Создать или отредактировать Учителя"
             },
             "created": "Новый Teacher создан с идентификатором {{ param }}",
             "updated": "Teacher обновлен с идентификатором {{ param }}",
@@ -13,13 +13,17 @@
                 "question": "Вы уверены что хотите удалить Teacher {{ id }}?"
             },
             "detail": {
-                "title": "Teacher"
+                "title": "Учитель"
             },
-            "enabled": "Enabled",
-            "user": "User",
-            "form": "Form",
-            "lesson": "Lesson",
-            "school": "School"
+            "enabled": "Активний",
+            "user": "Пользаватель",
+            "form": "Клас",
+            "lesson": "Предмети",
+            "school": "Школа",
+            "email": "Емейл",
+            "firstName": "Имя",
+            "lastName": "Фамилия",
+            "login" : "Логин"
         }
     }
 }

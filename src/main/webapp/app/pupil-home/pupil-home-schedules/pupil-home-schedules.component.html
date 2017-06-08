@@ -2,7 +2,7 @@
     <h2>{{selectedDate | date:'shortDate'}}</h2>
 
     <h2>
-        <span>User Schedules</span>
+        <span jhiTranslate="schedule.title">User Schedules</span>
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
@@ -12,11 +12,11 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                    <th><span>Lesson Position</span></th>
-                    <th><span>Lesson</span></th>
-                    <th><span>Homework</span></th>
-                    <th><span>Classroom</span></th>
-                    <th><span>Teacher</span></th>
+                    <th><span jhiTranslate="schedule.lesson-position">Lesson Position</span></th>
+                    <th><span jhiTranslate="schedule.lesson">Lesson</span></th>
+                    <th><span jhiTranslate="schedule.homework">Homework</span></th>
+                    <th><span jhiTranslate="schedule.classroom">Classroom</span></th>
+                    <th><span jhiTranslate="schedule.teacher">Teacher</span></th>
             </tr>
             </thead>
             <tbody>
@@ -24,18 +24,18 @@
                     <td>{{schedule.lessonPosition}}</td>
                     <td>
                         <div *ngIf="schedule.lessonId">
-                            <a [routerLink]="['../lesson-my-suffix', schedule.lessonId  ]" >{{schedule.lessonName}}</a>
+                            {{schedule.lessonName}}
                         </div>
                     </td>
-                <a (click)="selectHomework(schedule.homework)"> <td>{{schedule.homework | lengthPipe : 10}}</td></a>
+                    <td><a (click)="selectHomework(schedule.homework)"> {{schedule.homework | lengthPipe : 10}}</a></td>
                     <td>
                         <div *ngIf="schedule.classroomId">
-                            <a [routerLink]="['../classroom-my-suffix', schedule.classroomId  ]" >{{schedule.classroomName}}</a>
+                            {{schedule.classroomName}}
                         </div>
                     </td>
                     <td>
                         <div *ngIf="schedule.teacherId">
-                            <a [routerLink]="['../teacher-my-suffix', schedule.teacherId  ]" >{{schedule.teacherFirstName + ' ' +schedule.teacherLastName}}</a>
+                            {{schedule.teacherFirstName + ' ' +schedule.teacherLastName}}
                         </div>
                     </td>
             </tr>

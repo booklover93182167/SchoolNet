@@ -10,11 +10,13 @@ import { Password } from './password.service';
 })
 export class PasswordComponent implements OnInit {
     doNotMatch: string;
+    incorrectCurrent: string;
     error: string;
     success: string;
     account: any;
     password: string;
     confirmPassword: string;
+    currentPassword: string;
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
@@ -35,14 +37,17 @@ export class PasswordComponent implements OnInit {
             this.error = null;
             this.success = null;
             this.doNotMatch = 'ERROR';
+            this.incorrectCurrent = null;
         } else {
             this.doNotMatch = null;
-            this.passwordService.save(this.password).subscribe(() => {
+            this.passwordService.save(this.password, this.currentPassword).subscribe(() => {
                 this.error = null;
+                this.incorrectCurrent = null;
                 this.success = 'OK';
             }, () => {
                 this.success = null;
-                this.error = 'ERROR';
+                this.error = null;
+                this.incorrectCurrent = 'ERROR';
             });
         }
     }

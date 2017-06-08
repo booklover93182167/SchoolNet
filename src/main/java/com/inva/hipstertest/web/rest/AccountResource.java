@@ -12,6 +12,7 @@ import com.inva.hipstertest.web.rest.vm.KeyAndPasswordVM;
 import com.inva.hipstertest.web.rest.vm.ManagedUserVM;
 import com.inva.hipstertest.web.rest.util.HeaderUtil;
 
+import com.inva.hipstertest.web.rest.vm.PasswordChange;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.*;
 
 /**
@@ -144,20 +146,21 @@ public class AccountResource {
     /**
      * POST  /account/change_password : changes the current user's password
      *
-     * @param password the new password
+     * @param passwordChange the new  with old
      * @return the ResponseEntity with status 200 (OK), or status 400 (Bad Request) if the new password is not strong enough
      */
     @PostMapping(path = "/account/change_password",
         produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
-    public ResponseEntity changePassword(@RequestBody String password) {
-        if (!checkPasswordLength(password)) {
+    public ResponseEntity changePassword(@RequestBody PasswordChange passwordChange, Principal principal) {
+        if (!checkPasswordLength(passwordChange.getNewPassword())) {
+            return new ResponseEntity<>("Incorrect password", HttpStatus.BAD_REQUEST);
+        }else if(!userService.checkPassword(passwordChange.getCurrentPassword(), principal)){
             return new ResponseEntity<>("Incorrect password", HttpStatus.BAD_REQUEST);
         }
-        userService.changePassword(password);
+        userService.changePassword(passwordChange.getNewPassword());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
     /**
      * POST   /account/reset_password/init : Send an email to reset the password of the user
      *

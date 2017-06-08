@@ -124,12 +124,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/schools/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/teachers").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/teachers/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
-            .antMatchers("/api/users").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/users/**").hasAuthority(AuthoritiesConstants.ADMIN)
+
+            .antMatchers("/api/users").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
+            .antMatchers("/api/users/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/headteacher-management").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/headteacher-management/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/teacher-home").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
             .antMatchers("/api/teacher-home/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
+
 
             //.antMatchers("/api/*").authenticated()
             .antMatchers("/api/pupilhome/**").hasAuthority(AuthoritiesConstants.PUPIL)//

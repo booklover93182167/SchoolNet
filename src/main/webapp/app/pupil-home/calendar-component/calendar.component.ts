@@ -2,16 +2,18 @@
  * Created by Kolja on 24.05.2017.
  */
 import {
-    Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, Input } from '@angular/core';
+    Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, Input, TemplateRef
+} from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import {PupilHomeService} from '../pupil-home.service';
+import {JhiLanguageService} from "ng-jhipster";
 
 @Component({
     selector: 'jhi-demo-component',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: 'calendar.component.html',
     styleUrls: ['calendar.component.css'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
 export class CalendarComponent {
 
@@ -24,12 +26,15 @@ export class CalendarComponent {
 
     selectDay: (day: CalendarMonthViewDay) => void;
 
-    constructor(private pupilHomeService: PupilHomeService) {
+    constructor(private pupilHomeService: PupilHomeService,
+                private jhiLanguageService: JhiLanguageService
+    ) {
         this.selectDay = (day: CalendarMonthViewDay): void => {
             if (this.selectedDay && day.date.getTime() === this.selectedDay.date.getTime()) {
                 day.cssClass = 'cal-day-selected';
             }
         };
+        this.jhiLanguageService.setLocations(['pupil-home-calendar']);
 
     }
 
