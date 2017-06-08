@@ -13,7 +13,7 @@ import {TeacherHomeComponent} from './teacher-home.component';
 import {TeacherHomeRoute} from './teacher-home.route';
 import {TeacherHomeService} from './teacher-home.service';
 import {TeacherHomeScheduleComponent} from './teacher-home.schedule.component';
-import {LengthPipe, TeacherScheduleSortByDatePipe} from './teacher-home.PipeUtil';
+import {LengthPipe, TeacherScheduleSortByDatePipe} from './teacher-home.pipeUtil';
 
 @NgModule({
     imports: [
@@ -30,11 +30,10 @@ import {LengthPipe, TeacherScheduleSortByDatePipe} from './teacher-home.PipeUtil
         TeacherHomeScheduleComponent
     ],
     entryComponents: [
-        TeacherHomeComponent,
+        TeacherHomeComponent
     ],
     providers: [
-        TeacherHomeService,
-        TeacherHomeScheduleComponent
+        TeacherHomeService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

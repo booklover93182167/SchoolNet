@@ -89,17 +89,16 @@ export class TeacherScheduleComponent implements OnInit {
         this.teacherScheduleService.getCurrentTeacher().subscribe(
             (res: Response) => {
                 this.currentTeacherAccount = res.json();
-                this.loadTeachers(this.currentTeacherAccount.schoolId);
+                this.loadTeachers();
                 this.loadSchedule(this.currentTeacherAccount.schoolId);
                 this.selectedID = String(this.currentTeacherAccount.id);
-                this.selectedID = '1'; // delete
             },
             (res: Response) => this.onError(res.json())
         );
     }
 
-    loadTeachers(schoolId: number) {
-        this.teacherScheduleService.getTeachersBySchoolId(schoolId).subscribe(
+    loadTeachers() {
+        this.teacherScheduleService.getAllTeachersByCurrentTeacher().subscribe(
             (res: Response) => {
                 this.teachers = res.json();
             });

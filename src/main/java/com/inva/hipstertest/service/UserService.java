@@ -2,8 +2,10 @@ package com.inva.hipstertest.service;
 
 import com.inva.hipstertest.domain.Authority;
 import com.inva.hipstertest.domain.User;
+import com.inva.hipstertest.domain.UserExtra;
 import com.inva.hipstertest.repository.AuthorityRepository;
 import com.inva.hipstertest.config.Constants;
+import com.inva.hipstertest.repository.UserExtraRepository;
 import com.inva.hipstertest.repository.UserRepository;
 import com.inva.hipstertest.security.AuthoritiesConstants;
 import com.inva.hipstertest.security.SecurityUtils;
@@ -12,13 +14,19 @@ import com.inva.hipstertest.service.dto.UserDTO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -36,6 +44,12 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final AuthorityRepository authorityRepository;
+
+    @Autowired
+    private UserExtraRepository userExtraRepository;
+
+    @Autowired
+    private  AuthenticationManager authenticationManager;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
@@ -104,6 +118,40 @@ public class UserService {
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
+        return newUser;
+    }
+
+    public User createUser(String login, String password, String firstName, String lastName, String email,
+        String imageUrl, String langKey, String phone) {
+
+        User newUser = new User();
+        Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
+        Set<Authority> authorities = new HashSet<>();
+        String encryptedPassword = passwordEncoder.encode(password);
+        newUser.setLogin(login);
+        // new user gets initially a generated password
+        newUser.setPassword(encryptedPassword);
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        newUser.setEmail(email);
+        newUser.setImageUrl(imageUrl);
+        newUser.setLangKey(langKey);
+        // new user is not active
+        newUser.setActivated(false);
+        // new user gets registration key
+        newUser.setActivationKey(RandomUtil.generateActivationKey());
+        authorities.add(authority);
+        newUser.setAuthorities(authorities);
+        userRepository.save(newUser);
+        log.debug("Created Information for User: {}", newUser);
+
+        // Create and save the UserExtra entity
+        UserExtra newUserExtra = new UserExtra();
+        newUserExtra.setUser(newUser);
+        newUserExtra.setPhone(phone);
+        userExtraRepository.save(newUserExtra);
+        log.debug("Created Information for UserExtra: {}", newUserExtra);
+
         return newUser;
     }
 
@@ -193,10 +241,23 @@ public class UserService {
 
     public void changePassword(String password) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(user -> {
-            String encryptedPassword = passwordEncoder.encode(password);
-            user.setPassword(encryptedPassword);
-            log.debug("Changed password for User: {}", user);
+                String encryptedPassword = passwordEncoder.encode(password);
+                user.setPassword(encryptedPassword);
+                log.debug("Changed password for User: {}", user);
+
         });
+    }
+
+    public boolean checkPassword(String currentPassword, Principal principal){
+        UsernamePasswordAuthenticationToken authenticationToken =
+            new UsernamePasswordAuthenticationToken(principal.getName(), currentPassword);
+        try{
+            Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
+            return true;
+        }catch (AuthenticationException ae){
+            log.trace("Authentication exception trace: {}", ae);
+            return false;
+        }
     }
 
     @Transactional(readOnly = true)

@@ -1,15 +1,14 @@
 package com.inva.hipstertest.service.dto;
 
+import com.inva.hipstertest.service.dto.FormDTO;
+import com.inva.hipstertest.service.dto.LessonDTO;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
-/**
- * A DTO for the Teacher entity.
- */
 public class TeacherDTO implements Serializable {
 
     private Long id;
@@ -21,7 +20,12 @@ public class TeacherDTO implements Serializable {
 
     private Long formId;
 
+    private String formName;
+    private FormDTO form;
+
     private Set<LessonDTO> lessons = new HashSet<>();
+
+    private Set<String> lessonsName = new HashSet<>();
 
     private Long schoolId;
 
@@ -30,6 +34,32 @@ public class TeacherDTO implements Serializable {
     private String firstName;
 
     private String email;
+
+    private String login;
+
+    public FormDTO getForm() {
+        return form;
+    }
+
+    public void setForm(FormDTO form) {
+        this.form = form;
+    }
+
+    public Set<String > getLessonsName() {
+        return lessonsName;
+    }
+
+    public void setLessonsName(Set<String> lessonsName) {
+        this.lessonsName = lessonsName;
+    }
+
+    public String getFormName() {
+        return formName;
+    }
+
+    public void setFormName(String formName) {
+        this.formName = formName;
+    }
 
     public Long getId() {
         return id;
@@ -100,6 +130,14 @@ public class TeacherDTO implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Override

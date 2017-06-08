@@ -63,7 +63,11 @@ public final class RandomUtil {
         String s = some.toLowerCase();
         String returns = "";
         for (int i = 0; i < some.length(); i++) {
-            returns = returns + map.get(s.charAt(i));
+            if(map.get(s.charAt(i)) != null){
+                returns = returns + map.get(s.charAt(i));
+            }else{
+                returns = returns + s.charAt(i);
+            }
         }
         return returns;
     }

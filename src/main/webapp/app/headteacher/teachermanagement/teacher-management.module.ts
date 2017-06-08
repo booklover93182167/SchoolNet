@@ -1,18 +1,17 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { SchoolNetSharedModule } from '../../shared';
-import {SchoolNetAdminModule} from "../../admin/admin.module";
+import {SchoolNetAdminModule} from '../../admin/admin.module';
 import {
     TeacherManagementService,
-    TeacherManagementDialogComponent,
     TeacherManagementPopupService,
+    TeacherManagementDialogComponent,
+    TeacherManagementDetailComponent,
     TeacherManagementComponent,
     TeacherManagementPopupComponent,
     TEACHER_ROUTE,
     TEACHER_POPUP_ROUTE,
 } from './';
-
 
 const ENTITY_STATES = [
     ...TEACHER_ROUTE,
@@ -28,6 +27,7 @@ const ENTITY_STATES = [
     declarations: [
         TeacherManagementComponent,
         TeacherManagementDialogComponent,
+        TeacherManagementDetailComponent,
         TeacherManagementPopupComponent,
     ],
     entryComponents: [

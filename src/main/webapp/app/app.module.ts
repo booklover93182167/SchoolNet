@@ -13,6 +13,7 @@ import { SchoolNetHeadTeacherModule } from './headteacher/headteacher.module';
 import { SchoolNetPupilHomeModule } from './pupil-home/pupil-home.module';
 import { SchoolNetTeacherHomeModule } from './teacher-home/teacher-home.module';
 import { SchoolNetTeacherScheduleModule } from './teacher-schedule/teacher-schedule.module';
+import { SchoolNetTeacherClassModule } from './teacher-class/teacher-class.module';
 
 import { LayoutRoutingModule } from './layouts';
 import { customHttpProvider } from './blocks/interceptor/http.provider';
@@ -42,6 +43,7 @@ import {
         SchoolNetPupilHomeModule,
         SchoolNetTeacherHomeModule,
         SchoolNetTeacherScheduleModule,
+        SchoolNetTeacherClassModule,
     ],
     declarations: [
         JhiMainComponent,

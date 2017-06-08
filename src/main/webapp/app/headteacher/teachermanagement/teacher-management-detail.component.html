@@ -1,0 +1,46 @@
+
+<div *ngIf="teacher">
+    <h2>{{teacher.firstName}} {{teacher.lastName}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+<!--
+        <dt><span jhiTranslate="schoolNetApp.teacher.enabled">Enabled</span></dt>
+        <dd>
+            <span>{{teacher.enabled}}</span>
+        </dd> -->
+        <dt><span jhiTranslate="schoolNetApp.teacher.form">Form</span></dt>
+        <dd>
+            <div *ngIf="teacher.formName">
+                <span>{{teacher.formName}}</span>
+            </div>
+        </dd>
+
+        <dt><span jhiTranslate="schoolNetApp.teacher.email">Email</span></dt>
+        <dd>
+            <div *ngIf="teacher.email">
+                <span>{{teacher.email}}</span>
+            </div>
+        </dd>
+
+        <dt><span jhiTranslate="schoolNetApp.teacher.login">Login</span></dt>
+        <dd>
+            <div *ngIf="teacher.login">
+                <span>{{teacher.login}}</span>
+            </div>
+        </dd>
+
+        <dt><span jhiTranslate="schoolNetApp.teacher.lesson">Lessons</span></dt>
+        <dd>
+            <span *ngFor="let lesson of teacher.lessons; let last = last">
+                <span>{{lesson.name}}</span>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+</div>

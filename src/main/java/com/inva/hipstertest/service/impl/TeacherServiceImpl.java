@@ -7,6 +7,7 @@ import com.inva.hipstertest.service.SchoolService;
 import com.inva.hipstertest.service.TeacherService;
 import com.inva.hipstertest.repository.TeacherRepository;
 import com.inva.hipstertest.service.UserService;
+import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
 import com.inva.hipstertest.service.dto.UserDTO;
 import com.inva.hipstertest.service.mapper.TeacherMapper;
@@ -109,6 +110,8 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         return teacherMapper.teacherToTeacherDTO(teacherRepository.findTeacherByCurrentUser());
     }
 
+
+
     /**
      *  Delete the  teacher by id.
      *
@@ -120,10 +123,10 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         teacherRepository.delete(id);
     }
 
+
     /**
      * Save a teacher.
      *
-     * @param teacherDTO the entity to save         //NEED CORRECTION
      */
     @Override
     public TeacherDTO saveTeacherWithUser(TeacherDTO teacherDTO) {
@@ -149,19 +152,19 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
     }
 
     /**
-     * Get all the teachers by school ID.
+     *  Get all the teachers.
      *
-     * @param schoolId the id of the school
-     * @return the list of entities
+     *  @return the list of entities
      */
     @Override
     @Transactional(readOnly = true)
-    public List<TeacherDTO> findAllBySchoolId(Long schoolId) {
-        log.debug("Request to get all Teachers by schoolId : {}", schoolId);
-        List<TeacherDTO> result = teacherRepository.findAllBySchoolId(schoolId).stream()
+    public List<TeacherDTO> findAllByCurrentSchool() {
+        log.debug("Request to get all Teachers for current school");
+        long idSchool = teacherRepository.findOneWithSchool().getSchool().getId();
+        List<TeacherDTO> result = teacherRepository.findAllTeachersByCurrentSchool(idSchool).stream()
             .map(teacherMapper::teacherToTeacherDTO)
             .collect(Collectors.toCollection(LinkedList::new));
-
         return result;
     }
+
 }

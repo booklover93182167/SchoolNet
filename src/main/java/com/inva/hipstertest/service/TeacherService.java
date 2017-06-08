@@ -59,11 +59,6 @@ public interface TeacherService {
      */
     TeacherDTO saveTeacherWithUser(TeacherDTO teacherDTO);
 
-    /**
-     *  Get all the teachers by school ID.
-     *
-     *  @param schoolId the id of the school
-     *  @return the list of entities
-     */
-    List<TeacherDTO> findAllBySchoolId(Long schoolId);
+    List<TeacherDTO> findAllByCurrentSchool();
+
 }

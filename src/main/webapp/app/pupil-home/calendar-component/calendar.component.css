@@ -22,7 +22,7 @@
 
 .cal-month-view .cal-cell-row .cal-cell:hover,
 .cal-month-view .cal-cell.cal-has-events.cal-open {
-    background-color: #4250ed; }
+    background-color: #4250ed;  }
 
 .cal-month-view .cal-days {
     border: 1px solid #e1e1e1;
@@ -275,3 +275,20 @@
 .cal-day-view .cal-all-day-event {
     padding: 8px;
     border: solid 1px; }
+
+.cal-cell-row.cal-header {
+    height:0px;
+    width:0px;
+}
+
+.cal-custom-days {
+    position: relative;
+    display: inline;
+    width: 14%;
+}
+
+.cal-custom-days-ul {
+    padding: inherit;
+    text-align: center;
+    display: block;
+}

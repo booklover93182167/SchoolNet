@@ -3,18 +3,25 @@
         "title": "SchoolNet",
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
-            "forms":"Forms",
+            "forms": "Forms",
             "teacher-menu": "Teacher Menu",
-            "teacher-home": "Teacher Home",
+            "teacher-home": {
+                "title": "Teacher Home"
+            },
             "teacher-schedule": "Teacher Schedule",
             "user-home": "User Home",
-            "pupil-home": "Pupil Home",
-            "management":"Management",
-            "teacher-management":{
-                "teachers":"Teachers",
-                "schedules":"Schedules",
-                "forms":"Forms",
-                "classrooms":"Classrooms"
+            "teacher-my-class": "My form",
+            "pupil-home": {
+                "home": "Pupil Home",
+                "grades": "Pupil Grades",
+                "title": "Pupil"
+            },
+            "management": "Management",
+            "teacher-management": {
+                "teachers": "Teachers",
+                "schedules": "Schedules",
+                "forms": "Forms",
+                "classrooms": "Classrooms"
             },
             "home": "Home",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
@@ -60,12 +67,16 @@
             "username.placeholder": "Your username",
             "newpassword": "New password",
             "newpassword.placeholder": "New password",
+            "curpassword": "Current password",
+            "curpassword.placeholder": "Current password",
             "confirmpassword": "New password confirmation",
             "confirmpassword.placeholder": "Confirm the new password",
             "email": "Email",
             "email.placeholder": "Your email",
             "imageUrl": "URL for user photo",
-            "imageUrl.placeholder": "Your URL for photo"
+            "imageUrl.placeholder": "Your URL for photo",
+            "phone": "Phone number",
+            "phone.placeholder": "+380xxxxxxxxx"
         },
         "messages": {
             "info": {
@@ -80,7 +91,8 @@
                 }
             },
             "error": {
-                "dontmatch": "The password and its confirmation do not match!"
+                "dontmatch": "The password and its confirmation do not match!",
+                "badcurrent": "Oops! Current password is incorrect!"
             },
             "validate": {
                 "newpassword": {
@@ -106,7 +118,7 @@
             "id": "ID"
         },
         "ribbon": {
-            "dev":"Lv-236.Java"
+            "dev": "Lv-236.Java"
         }
     },
     "entity": {

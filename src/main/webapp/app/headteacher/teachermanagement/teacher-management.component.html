@@ -16,41 +16,45 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th><span jhiTranslate="global.field.id">ID</span></th>
+                <th><span jhiTranslate="schoolNetApp.teacher.firstName">Firs name</span></th>
+                <th><span jhiTranslate="schoolNetApp.teacher.lastName">Last name</span></th>
                 <th><span jhiTranslate="schoolNetApp.teacher.enabled">Enabled</span></th>
-                <th><span jhiTranslate="schoolNetApp.teacher.user">User</span></th>
                 <th><span jhiTranslate="schoolNetApp.teacher.form">Form</span></th>
-                <th><span jhiTranslate="schoolNetApp.teacher.lesson">Lesson</span></th>
-                <th><span jhiTranslate="schoolNetApp.teacher.school">School</span></th>
+                <th><span jhiTranslate="schoolNetApp.teacher.lesson">Lessons</span></th>
+                <th><span jhiTranslate="schoolNetApp.teacher.email">Email</span></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let teacher of teachers ;trackBy: trackId">
-                <td><a [routerLink]="['../teacher-my-suffix', teacher.id ]">{{teacher.id}}</a></td>
-                <td>{{teacher.enabled}}</td>
                 <td>
-                    {{teacher.userId}}
+                    {{teacher.firstName}}
                 </td>
                 <td>
-                    <div *ngIf="teacher.formId">
-                        <a [routerLink]="['../form-my-suffix', teacher.formId  ]" >{{teacher.formId}}</a>
-                    </div>
+                    {{teacher.lastName}}
                 </td>
+                <td>
+                    <span class="badge badge-danger hand" (click)="setActive(teacher, true)" *ngIf="!teacher.enabled"
+                          jhiTranslate="userManagement.deactivated">Deactivated</span>
+                    <span class="badge badge-success hand" (click)="setActive(teacher, false)" *ngIf="teacher.enabled"
+                          jhiTranslate="userManagement.activated">Activated</span>
+                </td>
+                <td>
+                    {{teacher.formName}}
+                </td>
+                <!-- NEED ADD IF MORE TWO SUBJECT, ONLY 2 SUBJECT IN LINE -->
                 <td>
                     <span *ngFor="let lesson of teacher.lessons; let last = last">
-                            <a class="form-control-static" [routerLink]="['../lesson-my-suffix', lesson?.id ]">{{lesson.id}}</a>{{last ? '' : ', '}}
-                        </span>
+                        {{lesson.name}} {{last ? '' : ', '}}
+                    </span>
                 </td>
                 <td>
-                    <div *ngIf="teacher.schoolId">
-                        <a [routerLink]="['../school-my-suffix', teacher.schoolId  ]" >{{teacher.schoolId}}</a>
-                    </div>
+                    {{teacher.email}}
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['../teacher-my-suffix', teacher.id ]"
+                                [routerLink]="['../management', teacher.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>

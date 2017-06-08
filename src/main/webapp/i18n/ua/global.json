@@ -5,10 +5,17 @@
         "menu": {
             "forms": "Класи",
             "teacher-menu": "Меню вчителя",
-            "teacher-home": "Головна",
+            "teacher-home": {
+                "title": "Головна"
+            },
             "teacher-schedule": "Розклад занять",
             "user-home": "Користувач",
-            "pupil-home": "Учень",
+            "teacher-my-class": "Мій клас",
+            "pupil-home": {
+                "home": "Розклад",
+                "grades": "Оцінки",
+                "title": "Учень"
+            },
             "management":"Управління",
             "teacher-management":{
                 "teachers":"Вчителі",
@@ -60,12 +67,16 @@
             "username.placeholder": "Ваш логін",
             "newpassword": "Новий пароль",
             "newpassword.placeholder": "Новий пароль",
+            "curpassword": "Старий пароль",
+            "curpassword.placeholder": "Старий пароль",
             "confirmpassword": "Підтвердження нового пароля",
             "confirmpassword.placeholder": "Підтвердіть новий пароль",
             "email": "Email",
             "email.placeholder": "Ваш email",
             "imageUrl": "URL-адреса для фотографії користувача",
-            "imageUrl.placeholder": "Ваша URL-адреса для фотографії"
+            "imageUrl.placeholder": "Ваша URL-адреса для фотографії",
+            "phone": "Номер телефону",
+            "phone.placeholder": "+380xxxxxxxxx"
         },
         "messages": {
             "info": {
@@ -80,7 +91,8 @@
                 }
             },
             "error": {
-                "dontmatch": "Пароль і його підтвердження не збігаються!"
+                "dontmatch": "Пароль і його підтвердження не збігаються!",
+                "badcurrent": "Упс! Старий пароль невірний!"
             },
             "validate": {
                 "newpassword": {
@@ -154,7 +166,8 @@
         "userexists": "Ім'я користувача вже використовується!",
         "emailexists": "Email вже використовується!",
         "idexists": "Новий {{entityName}} не може мати даний ID",
-        "idexistsEmail": "Спробуйте інший email, цей вже використовується!"
+        "idexistsEmail": "Спробуйте інший email. Цей вже використовується!"
+
     },
     "footer": "Створено групою Lv-236.Java :)"
 }

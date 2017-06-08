@@ -18,8 +18,8 @@ export class TeacherScheduleService {
         return this.http.get(`${this.resourceUrlCurrentTeacher}`);
     }
 
-    getTeachersBySchoolId(schoolId: number): Observable<Response> {
-        return this.http.get(`${this.resourceUrlAllTeachers}/${schoolId}`);
+    getAllTeachersByCurrentTeacher(): Observable<Response> {
+        return this.http.get(`${this.resourceUrlAllTeachers}`);
     }
 
     getSchedulesBySchoolId(schoolId: number): Observable<Response> {

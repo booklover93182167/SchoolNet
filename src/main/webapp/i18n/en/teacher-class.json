@@ -1,0 +1,12 @@
+{
+    "schoolNetApp": {
+        "teacher-class" : {
+            "myClass": "My form",
+            "welcome": "Welcome",
+            "noClass": "You have no form.",
+            "form": "Your form is"
+
+
+        }
+    }
+}

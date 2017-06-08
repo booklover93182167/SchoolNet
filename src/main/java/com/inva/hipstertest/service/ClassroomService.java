@@ -18,7 +18,7 @@ public interface ClassroomService {
 
     /**
      *  Get all the classrooms.
-     *  
+     *
      *  @return the list of entities
      */
     List<ClassroomDTO> findAll();
@@ -37,4 +37,6 @@ public interface ClassroomService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    List<ClassroomDTO> findAllByCurrentSchool();
 }

@@ -151,11 +151,11 @@ public class TeacherResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of teachers in body
      */
-    @GetMapping("/headteacher-management")
+    @GetMapping({"/headteacher/management", "/teacher-schedule/teachers/all/"})
     @Timed
     public List<TeacherDTO> getAllTeachersForMe() {
         log.debug("REST request to get all Teachers");
-        return teacherService.findAll();
+        return teacherService.findAllByCurrentSchool();
         /*
         Optional<User> s = userRepository.findOneWithAuthoritiesByLogin(principal.getName());
         Set<Authority> set = s.get().getAuthorities();
@@ -180,7 +180,7 @@ public class TeacherResource {
 
     }
 
-    @PostMapping("/headteacher-management")
+    @PostMapping("/headteacher/management")
     @Timed
     public ResponseEntity<TeacherDTO> createTeacherWithUser(@Valid @RequestBody TeacherDTO teacherDTO) throws URISyntaxException {
         log.debug("REST request to save Teacher : {}", teacherDTO);
@@ -190,21 +190,52 @@ public class TeacherResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME,
                 "idexistsEmail", "Try another email, this already use!")).body(null);
         }
-        return ResponseEntity.created(new URI("/api/headteacher-management/" + result.getId()))
+        return ResponseEntity.created(new URI("/api/headteacher/management/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getFirstName()))
             .body(result);
     }
 
     /**
-     * GET  /teacher-schedule/teachers/all/{schoolId} : get all the teachers.
+     * GET  /teachers/:id : get the "id" teacher.
      *
-     * @param schoolId the id of the school
-     * @return the ResponseEntity with status 200 (OK) and the list of teachers in body
+     * @param id the id of the teacherDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the teacherDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/teacher-schedule/teachers/all/{schoolId}")
+    @GetMapping("/headteacher/management/{id}")
     @Timed
-    public List<TeacherDTO> getAllTeachersBySchoolId(@PathVariable Long schoolId) {
-        log.debug("REST request to get all Teachers by schoolId : {}", schoolId);
-        return teacherService.findAllBySchoolId(schoolId);
+    public ResponseEntity<TeacherDTO> getOneTeacher(@PathVariable Long id) {
+        log.debug("REST request to get Teacher : {}", id);
+        TeacherDTO teacherDTO = teacherService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(teacherDTO));
     }
+
+
+    /**
+     * PUT  /teachers : Updates an existing teacher.
+     *
+     * @param teacherDTO the teacherDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated teacherDTO,
+     * or with status 400 (Bad Request) if the teacherDTO is not valid,
+     * or with status 500 (Internal Server Error) if the teacherDTO couldnt be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/headteacher/management")
+    @Timed
+    public ResponseEntity<TeacherDTO> updateTeachers(@Valid @RequestBody TeacherDTO teacherDTO) throws URISyntaxException {
+        log.debug("REST request to update Teacher : {}", teacherDTO);
+        if (teacherDTO.getId() == null) {
+            return createTeacher(teacherDTO);
+        }
+
+        TeacherDTO result = teacherService.save(teacherDTO);
+
+        return ResponseUtil.wrapOrNotFound(Optional.of(result),
+            HeaderUtil.createAlert("userManagement.updated", result.getFirstName()));
+/*
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, teacherDTO.getId().toString()))
+            .body(result);
+        */
+    }
+
 }

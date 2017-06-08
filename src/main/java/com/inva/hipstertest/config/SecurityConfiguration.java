@@ -108,8 +108,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
             .antMatchers("/api/attendances").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/attendances/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/classrooms").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/classrooms/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/classrooms").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
+            .antMatchers("/api/classrooms/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/forms").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER, AuthoritiesConstants.TEACHER)
             .antMatchers("/api/forms/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER, AuthoritiesConstants.TEACHER)
             .antMatchers("/api/lessons").hasAuthority(AuthoritiesConstants.ADMIN)
@@ -120,18 +120,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/pupils/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/schedules").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/schedules/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/schools").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/schools/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/schools").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER, AuthoritiesConstants.TEACHER)
+            .antMatchers("/api/schools/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER, AuthoritiesConstants.TEACHER)
             .antMatchers("/api/teachers").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/teachers/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
-            .antMatchers("/api/users").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/users/**").hasAuthority(AuthoritiesConstants.ADMIN)
+
+            .antMatchers("/api/users").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
+            .antMatchers("/api/users/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/headteacher-management").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/headteacher-management/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/teacher-home").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
             .antMatchers("/api/teacher-home/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
             .antMatchers("/api/teacher-schedule").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
             .antMatchers("/api/teacher-schedule/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
+
 
             //.antMatchers("/api/*").authenticated()
             .antMatchers("/api/pupilhome/**").hasAuthority(AuthoritiesConstants.PUPIL)//
