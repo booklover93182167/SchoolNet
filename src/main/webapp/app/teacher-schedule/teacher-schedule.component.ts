@@ -30,7 +30,7 @@ export class TeacherScheduleComponent implements OnInit {
         private teacherScheduleService: TeacherScheduleService,
         private alertService: AlertService,
     ) {
-        this.jhiLanguageService.setLocations([]);
+        this.jhiLanguageService.setLocations(['teacher-schedule']);
         this.teachers = [];
         this.allSchedules = [];
         this.filteredSchedules = [];

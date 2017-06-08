@@ -6,7 +6,9 @@
 
         <form #teacherSelectForm="ngForm">
             <div class="form-group row">
-                <label for="date-select" class="col-2 col-form-label">Date</label>
+                <label for="date-select" class="col-2 col-form-label">
+                    <span jhiTranslate="teacherSchedule.form.date">Date</span>
+                </label>
                 <div class="col-10">
                     <div class="input-group">
                         <input class="form-control" id="date-select" name="date-select" placeholder="Select a date" ngx-mydatepicker [(ngModel)]="dateObject" [options]="datepickerOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)"/>
@@ -19,7 +21,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="teacher-select" class="col-2 col-form-label">Teacher</label>
+                <label for="teacher-select" class="col-2 col-form-label">
+                    <span jhiTranslate="teacherSchedule.form.teacher">Teacher</span>
+                </label>
                 <div class="col-10">
                     <select class="form-control" id="teacher-select" name="teacher-select" [(ngModel)]="selectedID" (change)="filterSchedule()">
                         <option *ngFor="let teacher of teachers;" value="{{teacher.id}}">{{teacher.firstName}} {{teacher.lastName}}</option>
@@ -27,12 +31,14 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="period-select" class="col-2 col-form-label">Period</label>
+                <label for="period-select" class="col-2 col-form-label">
+                    <span jhiTranslate="teacherSchedule.form.period.title">Period</span>
+                </label>
                 <div class="col-10">
                     <select class="form-control" id="period-select" name="period-select" [(ngModel)]="selectedPeriod">
-                        <option value="day">Day</option>
-                        <option value="week">Week</option>
-                        <option value="month">Month</option>
+                        <option value="day"><span jhiTranslate="teacherSchedule.form.period.day">Day</span></option>
+                        <option value="week"><span jhiTranslate="teacherSchedule.form.period.week">Week</span></option>
+                        <option value="month"><span jhiTranslate="teacherSchedule.form.period.month">Month</span></option>
                     </select>
                 </div>
             </div>
@@ -48,10 +54,10 @@
                     </tr>
                     <tr>
                         <!--<th>Date</th>-->
-                        <th style="width: 10%">#</th>
-                        <th style="width: 40%">Lesson</th>
-                        <th style="width: 30%">Form</th>
-                        <th style="width: 30%">Classroom</th>
+                        <th style="width: 10%"><span jhiTranslate="teacherSchedule.schedule-table.subject-position">#</span></th>
+                        <th style="width: 40%"><span jhiTranslate="teacherSchedule.schedule-table.subject">Subject</span></th>
+                        <th style="width: 30%"><span jhiTranslate="teacherSchedule.schedule-table.form">Form</span></th>
+                        <th style="width: 30%"><span jhiTranslate="teacherSchedule.schedule-table.classroom">Classroomn</span></th>
                         <!--<th>Homework</th>-->
                     </tr>
                     </thead>

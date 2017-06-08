@@ -1,0 +1,20 @@
+{
+    "teacherSchedule": {
+        "form": {
+            "date": "Date",
+            "teacher": "Teacher",
+            "period": {
+                "title": "Period",
+                "day": "Day",
+                "week": "Week",
+                "month": "Month"
+            }
+        },
+        "schedule-table": {
+            "subject-position": "#",
+            "subject": "Subject",
+            "form": "Form",
+            "classroom": "Classroom"
+        }
+    }
+}
