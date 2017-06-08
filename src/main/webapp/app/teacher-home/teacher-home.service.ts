@@ -6,6 +6,7 @@ import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {DateUtils} from 'ng-jhipster';
 import {ScheduleMySuffix} from '../entities/schedule/schedule-my-suffix.model';
+import {isUndefined} from 'util';
 
 @Injectable()
 export class TeacherHomeService {
@@ -62,27 +63,67 @@ export class TeacherHomeService {
         return res;
     }
 
-    filterSchedule(lessonId: number, formId: number, schedules: ScheduleMySuffix[]): ScheduleMySuffix[] {
-        let filteredSchedules: ScheduleMySuffix[] = [];
-        if (!isNaN(lessonId) && !isNaN(formId)) {
-            for (let schedule of schedules) {
+    filterSchedule(lessonId: number, formId: number, schedules: ScheduleMySuffix[], date: Date): ScheduleMySuffix[] {
+        const filteredSchedules: ScheduleMySuffix[] = [];
+        if (!isNaN(lessonId) && !isNaN(formId) && !isUndefined(date)) {
+            for (const schedule of schedules) {
                 if (schedule.lessonId === lessonId && schedule.formId === formId) {
+                    if (this.compareDateWithScheduleDate(date, schedule)) {
+                        filteredSchedules.push(schedule);
+                    }
+                }
+            }
+        } else if (isNaN(lessonId) && isNaN(formId) && !isUndefined(date)) {
+            for (const schedule of schedules) {
+                if (this.compareDateWithScheduleDate(date, schedule)) {
                     filteredSchedules.push(schedule);
                 }
             }
-        } else if (isNaN(lessonId) && !isNaN(formId)) {
-            for (let schedule of schedules) {
+        } else if (isNaN(lessonId) && !isNaN(formId) && isUndefined(date)) {
+            for (const schedule of schedules) {
                 if (schedule.formId === formId) {
                     filteredSchedules.push(schedule);
                 }
             }
-        } else if (!isNaN(lessonId) && isNaN(formId)) {
-            for (let schedule of schedules) {
-                if (schedule.lessonId === lessonId || schedule.formId === formId) {
+        } else if (!isNaN(lessonId) && isNaN(formId) && isUndefined(date)) {
+            for (const schedule of schedules) {
+                if (schedule.lessonId === lessonId) {
+                    filteredSchedules.push(schedule);
+                }
+            }
+        } else if (isNaN(lessonId) && !isNaN(formId) && !isUndefined(date)) {
+            for (const schedule of schedules) {
+                if (schedule.formId === formId) {
+                    if (this.compareDateWithScheduleDate(date, schedule)) {
+                        filteredSchedules.push(schedule);
+                    }
+                }
+            }
+        } else if (!isNaN(lessonId) && isNaN(formId) && !isUndefined(date)) {
+            for (const schedule of schedules) {
+                if (schedule.lessonId === lessonId) {
+                    if (this.compareDateWithScheduleDate(date, schedule)) {
+                        filteredSchedules.push(schedule);
+                    }
+                }
+            }
+        } else if (!isNaN(lessonId) && !isNaN(formId) && isUndefined(date)) {
+            for (const schedule of schedules) {
+                if (schedule.lessonId === lessonId && schedule.formId === formId) {
                     filteredSchedules.push(schedule);
                 }
             }
         }
         return filteredSchedules;
+    }
+
+    private compareDateWithScheduleDate(selecteDate: Date, schedule: ScheduleMySuffix): boolean {
+        if (selecteDate.getDate() === schedule.date.getDate() &&
+            selecteDate.getFullYear() === schedule.date.getFullYear() &&
+            selecteDate.getMonth() === schedule.date.getMonth()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
