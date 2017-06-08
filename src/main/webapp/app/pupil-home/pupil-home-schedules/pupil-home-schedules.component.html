@@ -1,9 +1,6 @@
 <div>
-    <h2>{{selectedDate | date:'shortDate'}}</h2>
+    <h2><span jhiTranslate="schedule.title">User Schedules</span>  {{selectedDate | date:'shortDate'}}</h2>
 
-    <h2>
-        <span jhiTranslate="schedule.title">User Schedules</span>
-    </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
     </div>
@@ -27,7 +24,8 @@
                             {{schedule.lessonName}}
                         </div>
                     </td>
-                    <td><a (click)="selectHomework(schedule.homework)"> {{schedule.homework | lengthPipe : 10}}</a></td>
+                    <td><a (click)="showDialog = !showDialog" (click)="selectHomework(schedule.homework)">
+                                            {{schedule.homework | lengthPipe : 10}}</a></td>
                     <td>
                         <div *ngIf="schedule.classroomId">
                             {{schedule.classroomName}}
@@ -41,7 +39,9 @@
             </tr>
             </tbody>
         </table>
-        <!--show selected homework-->
-        <h2>{{selectedHomework}}</h2>
     </div>
 </div>
+
+<homework-modal [(visible)]="showDialog">
+    {{selectedHomework}}
+</homework-modal>

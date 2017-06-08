@@ -19,6 +19,7 @@ import { PUPIL_HOME_ROUTE, PupilHomeComponent, PupilHomeSchedulesComponent } fro
 import { PUPIL_HOME_GRADES_ROUTE } from './pupil-home-grades/pupil-home-grades.route';
 import { PupilHomeGradesComponent } from './pupil-home-grades/pupil-home-grades.component';
 import { PupilHomeGradesPipe } from './pupil-home-grades/pupil-home-grades-pipe';
+import {HomeworkModal} from "./pupil-home-schedules/homework-modal";
 
 @NgModule({
     imports: [
@@ -39,6 +40,7 @@ import { PupilHomeGradesPipe } from './pupil-home-grades/pupil-home-grades-pipe'
         PupilHomeComponent,
         PupilHomeSchedulesComponent,
         PupilHomeGradesComponent,
+        HomeworkModal
     ],
     entryComponents: [
         PupilHomeComponent,
