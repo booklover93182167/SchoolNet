@@ -63,75 +63,67 @@ export class TeacherHomeService {
         return res;
     }
 
-    // private compareDateWithScheduleDate(selecteDate: Date, schedule: ScheduleMySuffix[]): boolean {
-    //     if (selecteDate.getDate() === schedule.date.getDate() &&
-    //         selecteDate.getFullYear() === schedule.date.getFullYear() &&
-    //         selecteDate.getMonth() === schedule.date.getMonth()) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
     filterSchedule(lessonId: number, formId: number, schedules: ScheduleMySuffix[], date: Date): ScheduleMySuffix[] {
-        let filteredSchedules: ScheduleMySuffix[] = [];
+        const filteredSchedules: ScheduleMySuffix[] = [];
         if (!isNaN(lessonId) && !isNaN(formId) && !isUndefined(date)) {
-            for (let schedule of schedules) {
+            for (const schedule of schedules) {
                 if (schedule.lessonId === lessonId && schedule.formId === formId) {
-                    if (date.getDate() === schedule.date.getDate() &&
-                        date.getFullYear() === schedule.date.getFullYear() &&
-                        date.getMonth() === schedule.date.getMonth()) {
+                    if (this.compareDateWithScheduleDate(date, schedule)) {
                         filteredSchedules.push(schedule);
                     }
                 }
             }
         } else if (isNaN(lessonId) && isNaN(formId) && !isUndefined(date)) {
-            for (let schedule of schedules) {
-                if (date.getDate() === schedule.date.getDate() &&
-                    date.getFullYear() === schedule.date.getFullYear() &&
-                    date.getMonth() === schedule.date.getMonth()) {
+            for (const schedule of schedules) {
+                if (this.compareDateWithScheduleDate(date, schedule)) {
                     filteredSchedules.push(schedule);
                 }
             }
         } else if (isNaN(lessonId) && !isNaN(formId) && isUndefined(date)) {
-            for (let schedule of schedules) {
+            for (const schedule of schedules) {
                 if (schedule.formId === formId) {
                     filteredSchedules.push(schedule);
                 }
             }
         } else if (!isNaN(lessonId) && isNaN(formId) && isUndefined(date)) {
-            for (let schedule of schedules) {
+            for (const schedule of schedules) {
                 if (schedule.lessonId === lessonId) {
                     filteredSchedules.push(schedule);
                 }
             }
         } else if (isNaN(lessonId) && !isNaN(formId) && !isUndefined(date)) {
-            for (let schedule of schedules) {
+            for (const schedule of schedules) {
                 if (schedule.formId === formId) {
-                    if (date.getDate() === schedule.date.getDate() &&
-                        date.getFullYear() === schedule.date.getFullYear() &&
-                        date.getMonth() === schedule.date.getMonth()) {
+                    if (this.compareDateWithScheduleDate(date, schedule)) {
                         filteredSchedules.push(schedule);
                     }
                 }
             }
         } else if (!isNaN(lessonId) && isNaN(formId) && !isUndefined(date)) {
-            for (let schedule of schedules) {
+            for (const schedule of schedules) {
                 if (schedule.lessonId === lessonId) {
-                    if (date.getDate() === schedule.date.getDate() &&
-                        date.getFullYear() === schedule.date.getFullYear() &&
-                        date.getMonth() === schedule.date.getMonth()) {
+                    if (this.compareDateWithScheduleDate(date, schedule)) {
                         filteredSchedules.push(schedule);
                     }
                 }
             }
         } else if (!isNaN(lessonId) && !isNaN(formId) && isUndefined(date)) {
-            for (let schedule of schedules) {
+            for (const schedule of schedules) {
                 if (schedule.lessonId === lessonId && schedule.formId === formId) {
                     filteredSchedules.push(schedule);
                 }
             }
         }
         return filteredSchedules;
+    }
+
+    private compareDateWithScheduleDate(selecteDate: Date, schedule: ScheduleMySuffix): boolean {
+        if (selecteDate.getDate() === schedule.date.getDate() &&
+            selecteDate.getFullYear() === schedule.date.getFullYear() &&
+            selecteDate.getMonth() === schedule.date.getMonth()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
