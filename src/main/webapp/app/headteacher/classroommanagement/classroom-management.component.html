@@ -18,7 +18,6 @@
             <thead>
             <tr>
                 <th><span jhiTranslate="schoolNetApp.classroom.name">Name</span></th>
-                <th><span jhiTranslate="schoolNetApp.classroom.school">School</span></th>
                 <th><span jhiTranslate="schoolNetApp.classroom.capacity">Capacity</span></th>
                 <th></th>
             </tr>
@@ -26,11 +25,6 @@
             <tbody>
             <tr *ngFor="let classroom of classrooms ;trackBy: trackId">
                 <td>{{classroom.name}}</td>
-                <td>
-                    <div *ngIf="classroom.schoolId">
-                        <a [routerLink]="['../school-my-suffix', classroom.schoolId  ]">{{classroom.schoolName}}</a>
-                    </div>
-                </td>
                 <td>{{classroom.capacity}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
