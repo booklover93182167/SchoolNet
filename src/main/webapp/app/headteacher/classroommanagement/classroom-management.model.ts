@@ -5,6 +5,7 @@ export class ClassroomManagement {
         public enabled?: boolean,
         public scheduleId?: number,
         public schoolId?: number,
+        public capacity?: string,
     ) {
         this.enabled = false;
     }
