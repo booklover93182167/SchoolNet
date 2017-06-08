@@ -42,9 +42,9 @@
             <input type="text" class="form-control" name="capacity" id="field_capacity"
                    [(ngModel)]="classroom.capacity"
                    required />
-            <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+            <div [hidden]="!(editForm.controls.capacity?.dirty && editForm.controls.capacity?.invalid)">
                 <small class="form-text text-danger"
-                       [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                       [hidden]="!editForm.controls.capacity?.errors?.required" jhiTranslate="entity.validation.required">
                     This field is required.
                 </small>
             </div>
