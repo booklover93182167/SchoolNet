@@ -13,12 +13,14 @@ import java.util.List;
 public interface ClassroomMapper {
 
     @Mapping(source = "school.id", target = "schoolId")
+    @Mapping(source = "classroom.capacity", target = "classroomCapacity")
     @Mapping(source = "school.name", target = "schoolName")
     ClassroomDTO classroomToClassroomDTO(Classroom classroom);
 
     List<ClassroomDTO> classroomsToClassroomDTOs(List<Classroom> classrooms);
 
     @Mapping(target = "schedules", ignore = true)
+    @Mapping(source = "classroom.capacity", target = "classroomCapacity")
     @Mapping(source = "schoolId", target = "school")
     Classroom classroomDTOToClassroom(ClassroomDTO classroomDTO);
 
