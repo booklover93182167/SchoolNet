@@ -25,6 +25,10 @@
                 "form": "Form",
                 "homework": "Homework",
                 "editButton": "Edit"
+            },
+            "modal": {
+                "label": "Create or edit homework",
+                "homework": "Homework"
             }
         }
     }
