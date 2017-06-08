@@ -12,7 +12,7 @@ import { CalendarComponent } from './calendar-component/calendar.component';
 
 import { SchoolNetSharedModule } from '../shared';
 import { PupilHomeService } from './pupil-home.service';
-import { LengthPipe } from './pupil-home-schedules/pupil-home-schedules-lengthPipe';
+import { LengthPipe } from './pupil-home-schedules/pupil-home-schedules-lengthpipe';
 import { PupilHomeSchedulesSortPipe } from './pupil-home-schedules/pupil-home-schedules-sortpipe';
 
 import { PUPIL_HOME_ROUTE, PupilHomeComponent, PupilHomeSchedulesComponent } from './';
