@@ -1,8 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { SchoolNetSharedModule } from '../../shared';
-import {SchoolNetAdminModule} from "../../admin/admin.module";
+import {SchoolNetAdminModule} from '../../admin/admin.module';
 import {
     TeacherManagementService,
     TeacherManagementPopupService,
@@ -13,7 +12,6 @@ import {
     TEACHER_ROUTE,
     TEACHER_POPUP_ROUTE,
 } from './';
-
 
 const ENTITY_STATES = [
     ...TEACHER_ROUTE,
