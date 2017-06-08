@@ -18,8 +18,12 @@
             "enabled": "Enabled",
             "user": "User",
             "form": "Form",
-            "lesson": "Lesson",
-            "school": "School"
+            "lesson": "Lessons",
+            "school": "School",
+            "email": "Email",
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "login" : "Login"
         }
     }
 }

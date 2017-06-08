@@ -8,17 +8,27 @@ import { TeacherManagementComponent } from './teacher-management.component';
 
 import { Principal } from '../../shared';
 import {TeacherManagementPopupComponent} from "./teacher-management-dialog.component";
+import {TeacherManagementDetailComponent} from "./teacher-management-detail.component";
 
 export const TEACHER_ROUTE: Routes = [
   {
-    path: 'headteacher-management',
+    path: 'headteacher/management',
     component: TeacherManagementComponent,
     data: {
         authorities: ['ROLE_HEAD_TEACHER', 'ROLE_ADMIN'],
-        pageTitle: 'schoolNetApp.school.home.title'
+        pageTitle: 'schoolNetApp.teacher.home.title'
     },
     canActivate: [UserRouteAccessService]
-  }
+  },
+    {
+    path: 'headteacher/management/:id',
+    component: TeacherManagementDetailComponent,
+    data: {
+        authorities: ['ROLE_HEAD_TEACHER'],
+        pageTitle: 'schoolNetApp.teacher.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+    }
 ];
 
 export const TEACHER_POPUP_ROUTE: Routes = [

@@ -124,7 +124,6 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
     /**
      * Save a teacher.
      *
-     * @param teacherDTO the entity to save         //NEED CORRECTION
      */
     @Override
     public TeacherDTO saveTeacherWithUser(TeacherDTO teacherDTO) {
@@ -147,6 +146,22 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         teacher.setSchool(hteacher.getSchool());
         teacher.setUser(user);
         return teacherMapper.teacherToTeacherDTO(teacherRepository.save(teacher));
+    }
+
+    /**
+     *  Get all the teachers.
+     *
+     *  @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<TeacherDTO> findAllByCurrentSchool() {
+        log.debug("Request to get all Teachers for current school");
+        long idSchool = teacherRepository.findOneWithSchool().getSchool().getId();
+        List<TeacherDTO> result = teacherRepository.findAllTeachersByCurrentSchool(idSchool).stream()
+            .map(teacherMapper::teacherToTeacherDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
+        return result;
     }
 
 }

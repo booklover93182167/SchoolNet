@@ -58,6 +58,8 @@
             "username.placeholder": "Ваш логін",
             "newpassword": "Новий пароль",
             "newpassword.placeholder": "Новий пароль",
+            "curpassword": "Старий пароль",
+            "curpassword.placeholder": "Старий пароль",
             "confirmpassword": "Підтвердження нового пароля",
             "confirmpassword.placeholder": "Підтвердіть новий пароль",
             "email": "Email",
@@ -78,7 +80,8 @@
                 }
             },
             "error": {
-                "dontmatch": "Пароль і його підтвердження не збігаються!"
+                "dontmatch": "Пароль і його підтвердження не збігаються!",
+                "badcurrent": "Упс! Старий пароль невірний!"
             },
             "validate": {
                 "newpassword": {
@@ -151,7 +154,8 @@
         "Size": "Поле {{fieldName}} не відповідає вимогам мін/макс. розміру!",
         "userexists": "Ім'я користувача вже використовується!",
         "emailexists": "Email вже використовується!",
-        "idexists": "Новий {{entityName}} не може мати даний ID"
+        "idexists": "Новий {{entityName}} не може мати даний ID",
+        "idexistsEmail": "Спробуйте інший пароль. Цей вже використовується!"
     },
     "footer": "Створено групою Lv-236.Java :)"
 }

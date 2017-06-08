@@ -150,11 +150,11 @@ public class TeacherResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of teachers in body
      */
-    @GetMapping("/headteacher-management")
+    @GetMapping("/headteacher/management")
     @Timed
     public List<TeacherDTO> getAllTeachersForMe() {
         log.debug("REST request to get all Teachers");
-        return teacherService.findAll();
+        return teacherService.findAllByCurrentSchool();
         /*
         Optional<User> s = userRepository.findOneWithAuthoritiesByLogin(principal.getName());
         Set<Authority> set = s.get().getAuthorities();
@@ -179,7 +179,7 @@ public class TeacherResource {
 
     }
 
-    @PostMapping("/headteacher-management")
+    @PostMapping("/headteacher/management")
     @Timed
     public ResponseEntity<TeacherDTO> createTeacherWithUser(@Valid @RequestBody TeacherDTO teacherDTO) throws URISyntaxException {
         log.debug("REST request to save Teacher : {}", teacherDTO);
@@ -189,10 +189,23 @@ public class TeacherResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME,
                 "idexistsEmail", "Try another email, this already use!")).body(null);
         }
-        return ResponseEntity.created(new URI("/api/headteacher-management/" + result.getId()))
+        return ResponseEntity.created(new URI("/api/headteacher/management/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getFirstName()))
             .body(result);
     }
 
+    /**
+     * GET  /teachers/:id : get the "id" teacher.
+     *
+     * @param id the id of the teacherDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the teacherDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/headteacher/management/{id}")
+    @Timed
+    public ResponseEntity<TeacherDTO> getOneTeacher(@PathVariable Long id) {
+        log.debug("REST request to get Teacher : {}", id);
+        TeacherDTO teacherDTO = teacherService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(teacherDTO));
+    }
 
 }
