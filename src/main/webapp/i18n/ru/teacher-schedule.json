@@ -1,5 +1,6 @@
 {
     "teacherSchedule": {
+        "title": "Расписание занятий учителей",
         "form": {
             "date": "Дата",
             "teacher": "Учитель",

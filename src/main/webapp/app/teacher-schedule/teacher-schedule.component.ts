@@ -8,6 +8,7 @@ import { TeacherMySuffix } from '../entities/teacher/teacher-my-suffix.model';
 import { TeacherScheduleService } from './teacher-schedule.service';
 
 import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
+import {teacherScheduleRoute} from "./teacher-schedule.route";
 
 @Component({
     selector: 'jhi-teacher-schedule',
@@ -24,6 +25,7 @@ export class TeacherScheduleComponent implements OnInit {
     selectedPeriod: string;
     dateString: string;
     dateObject: Object;
+    weekSchedule = [];
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
@@ -36,7 +38,7 @@ export class TeacherScheduleComponent implements OnInit {
         this.filteredSchedules = [];
         this.schedulesWithBlanks = [];
 
-        this.selectedPeriod = 'day';
+        this.selectedPeriod = 'week';
         this.dateString = new Date(Date.now()).toString();
     }
 
@@ -55,19 +57,60 @@ export class TeacherScheduleComponent implements OnInit {
     }
 
     onDateChanged(event: IMyDateModel): void {
-        this.dateString = new Date(event.jsdate).toString();
+        this.dateString = event.jsdate.toString();
         this.filterSchedule();
     }
 
+
     filterSchedule() {
-        this.filteredSchedules = this.teacherScheduleService.filterSchedule(parseInt(this.selectedID, 10), new Date(this.dateString), this.allSchedules);
-        this.makeScheduleWithBlanks();
+        if (this.selectedPeriod == 'day') {
+            this.filteredSchedules = this.teacherScheduleService.filterSchedule(parseInt(this.selectedID, 10), new Date(this.dateString), this.allSchedules);
+            this.makeScheduleWithBlanks();
+        }
+        if (this.selectedPeriod == 'week') {
+            this.filteredSchedules = this.teacherScheduleService.filterWeekSchedule(parseInt(this.selectedID, 10), new Date(this.dateString), this.allSchedules);
+            this.groupSchedulesByDate();
+        }
+    }
+
+    groupSchedulesByDate() {
+        this.weekSchedule = [];
+
+        // console.log(JSON.stringify(this.filteredSchedules, null, 2));
+
+        let tempDate = this.teacherScheduleService.getMonday(new Date(this.dateString));
+        for (let i = 1; i <= 7; i++) {
+            let item = {};
+            item["day"] = tempDate;
+            item["schedule"] = [];
+
+            for(let i = 1; i <= 10; i++) {
+                let blankSchedule = new ScheduleMySuffix(null, null, '', i, true, null, null, null, null, null, '', null, '', '', '');
+                item["schedule"].push(blankSchedule);
+            }
+
+            this.weekSchedule.push(item);
+            tempDate = this.teacherScheduleService.addDays(tempDate, 1);
+        }
+
+        for (let i = 0; i < this.filteredSchedules.length; i++) {
+            // console.log('id: ' + this.filteredSchedules[i].id);
+            // console.log('date: ' + this.filteredSchedules[i].date.toISOString().substring(0, 10));
+
+            let day = this.filteredSchedules[i].date.getDay() - 1;
+            let schedule = this.filteredSchedules[i];
+            // let date = this.filteredSchedules[i].date.toISOString().substring(0, 10);
+            let lessonPosition = this.filteredSchedules[i].lessonPosition;
+
+            this.weekSchedule[day].schedule[lessonPosition-1] = schedule;
+        }
+        // console.log(JSON.stringify(this.weekSchedule, null, 4));
     }
 
     makeScheduleWithBlanks() {
         this.schedulesWithBlanks = [];
 
-        for(let i = 1; i <= 8; i++) {
+        for(let i = 1; i <= 10; i++) {
             let blankSchedule = new ScheduleMySuffix(null, null, '', i, true, null, null, null, null, null, '', null, '', '', '');
             this.schedulesWithBlanks.push(blankSchedule);
         }

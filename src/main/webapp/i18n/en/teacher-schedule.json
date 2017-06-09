@@ -1,5 +1,6 @@
 {
     "teacherSchedule": {
+        "title": "Teacher schedule",
         "form": {
             "date": "Date",
             "teacher": "Teacher",

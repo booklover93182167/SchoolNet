@@ -40,6 +40,32 @@ export class TeacherScheduleService {
         return schedulesForDate;
     }
 
+    filterWeekSchedule(teacherID: number, date: Date, teacherSchedule: ScheduleMySuffix[]): ScheduleMySuffix[] {
+        let firstDayOfWeek = this.getMonday(date);
+        let lastDayOfWeek = this.addDays(firstDayOfWeek, 6);
+
+        const schedulesForDate: ScheduleMySuffix[] = [];
+        for (const schedule of teacherSchedule) {
+            if (firstDayOfWeek < schedule.date && schedule.date < lastDayOfWeek &&
+                teacherID === schedule.teacherId) {
+                schedulesForDate.push(schedule);
+            }
+        }
+        return schedulesForDate;
+    }
+
+    getMonday(date: Date): Date {
+        let day = date.getDay();
+        let diff = date.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        return new Date(date.setDate(diff));
+    }
+
+    addDays(date: Date, days: number): Date {
+        let result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
+
     private convertResponse(res: any): any {
         const jsonResponse = res.json();
         for (let i = 0; i < jsonResponse.length; i++) {
