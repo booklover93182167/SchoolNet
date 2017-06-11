@@ -1,17 +1,16 @@
-import { Injectable, Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ClassroomManagement } from './classroom-management.model';
-import { ClassroomManagementService } from './classroom-management.service';
+import {Injectable, Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {ClassroomManagement} from './classroom-management.model';
+import {ClassroomManagementService} from './classroom-management.service';
 @Injectable()
 export class ClassroomManagementPopupService {
     private isOpen = false;
-    constructor(
-        private modalService: NgbModal,
-        private router: Router,
-        private classroomService: ClassroomManagementService
 
-    ) {}
+    constructor(private modalService: NgbModal,
+                private router: Router,
+                private classroomService: ClassroomManagementService) {
+    }
 
     open(component: Component, id?: number | any): NgbModalRef {
         if (this.isOpen) {
@@ -29,13 +28,13 @@ export class ClassroomManagementPopupService {
     }
 
     classroomModalRef(component: Component, classroom: ClassroomManagement): NgbModalRef {
-        const modalRef = this.modalService.open(component, { size: 'lg', backdrop: 'static'});
+        const modalRef = this.modalService.open(component, {size: 'lg', backdrop: 'static'});
         modalRef.componentInstance.classroom = classroom;
         modalRef.result.then((result) => {
-            this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true });
+            this.router.navigate([{outlets: {popup: null}}], {replaceUrl: true});
             this.isOpen = false;
         }, (reason) => {
-            this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true });
+            this.router.navigate([{outlets: {popup: null}}], {replaceUrl: true});
             this.isOpen = false;
         });
         return modalRef;

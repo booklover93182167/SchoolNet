@@ -1,0 +1,12 @@
+{
+    "schoolNetApp": {
+        "teacher-class" : {
+            "myClass": "Мій клас",
+            "welcome": "Вітаю",
+            "noClass":"Ви не є класним керівником.",
+            "form": " Ваш клас"
+
+
+        }
+    }
+}

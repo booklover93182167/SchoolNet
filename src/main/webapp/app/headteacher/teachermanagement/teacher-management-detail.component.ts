@@ -20,7 +20,7 @@ export class TeacherManagementDetailComponent implements OnInit, OnDestroy {
         private eventManager: EventManager,
         private jhiLanguageService: JhiLanguageService,
         private teacherService: TeacherManagementService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
     ) {
         this.jhiLanguageService.setLocations(['teacher']);
     }

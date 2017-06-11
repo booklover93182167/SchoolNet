@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { EventManager , JhiLanguageService  } from 'ng-jhipster';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs/Rx';
+import {EventManager, JhiLanguageService} from 'ng-jhipster';
 
-import { ClassroomManagement } from './classroom-management.model';
-import { ClassroomManagementService } from './classroom-management.service';
+import {ClassroomManagement} from './classroom-management.model';
+import {ClassroomManagementService} from './classroom-management.service';
 
 @Component({
     selector: 'jhi-classroom-management-detail',
@@ -16,12 +16,10 @@ export class ClassroomManagementDetailComponent implements OnInit, OnDestroy {
     private subscription: any;
     private eventSubscriber: Subscription;
 
-    constructor(
-        private eventManager: EventManager,
-        private jhiLanguageService: JhiLanguageService,
-        private classroomService: ClassroomManagementService,
-        private route: ActivatedRoute
-    ) {
+    constructor(private eventManager: EventManager,
+                private jhiLanguageService: JhiLanguageService,
+                private classroomService: ClassroomManagementService,
+                private route: ActivatedRoute) {
         this.jhiLanguageService.setLocations(['classroom']);
     }
 
@@ -37,6 +35,7 @@ export class ClassroomManagementDetailComponent implements OnInit, OnDestroy {
             this.classroom = classroom;
         });
     }
+
     previousState() {
         window.history.back();
     }

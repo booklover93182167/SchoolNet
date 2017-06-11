@@ -4,7 +4,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
 
 import { ProfileService } from '../profiles/profile.service'; // FIXME barrel doesn't work here
-import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from '../../shared';
+import { Account, JhiLanguageHelper, Principal, LoginModalService, LoginService } from '../../shared';
 
 import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
 
@@ -17,6 +17,7 @@ import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
 })
 export class NavbarComponent implements OnInit {
 
+    account: Account;
     inProduction: boolean;
     isNavbarCollapsed: boolean;
     languages: any[];
@@ -39,6 +40,8 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.account = null;
+
         this.languageHelper.getAll().then((languages) => {
             this.languages = languages;
         });
@@ -61,11 +64,26 @@ export class NavbarComponent implements OnInit {
         return this.principal.isAuthenticated();
     }
 
+    isAccount() {
+        if (this.principal.isAuthenticated() && this.account == null) {
+            this.principal.identity().then((account) => {
+                this.account = account;
+            });
+        }
+
+        if (this.account) {
+            return true;
+        }
+
+        return false;
+    }
+
     login() {
         this.modalRef = this.loginModalService.open();
     }
 
     logout() {
+        this.account = null;
         this.collapseNavbar();
         this.loginService.logout();
         this.router.navigate(['']);

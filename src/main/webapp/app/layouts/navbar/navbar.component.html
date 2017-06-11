@@ -10,6 +10,9 @@
     </div>
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
         <ul class="navbar-nav ml-auto">
+
+
+
             <li *jhiHasAnyAuthority="['ROLE_TEACHER']" ngbDropdown class="nav-item dropdown pointer">
                 <a class="nav-link dropdown-toggle" routerLinkActive="active" ngbDropdownToggle href="javascript:void(0);" id="teacher-menu">
                     <span>
@@ -33,12 +36,42 @@
                     </li>
                 </ul>
             </li>
-            <li *jhiHasAnyAuthority="'ROLE_TEACHER'"class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" routerLink="form-my-suffix" (click)="collapseNavbar()">
-                    <i class="fa fa-home" aria-hidden="true"></i>
-                    <span jhiTranslate="global.menu.forms">Forms</span>
+
+
+
+
+
+            <li *jhiHasAnyAuthority="['ROLE_TEACHER']" ngbDropdown class="nav-item dropdown pointer">
+                <a class="nav-link dropdown-toggle" routerLinkActive="active" ngbDropdownToggle href="javascript:void(0);" >
+                    <span>
+                        <i class="fa fa-th-list" aria-hidden="true"></i>
+                        <span jhiTranslate="global.menu.forms">Forms</span>
+                        <b class="caret"></b>
+                    </span>
                 </a>
+                <ul class="dropdown-menu" ngbDropdownMenu>
+                    <li uiSrefActive="active">
+                        <a class="dropdown-item" routerLink="form-my-suffix" (click)="collapseNavbar()">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.forms">Forms</span>
+                        </a>
+                    </li>
+                    <li uiSrefActive="active" >
+                        <a class="dropdown-item" routerLink="teacher-class" (click)="collapseNavbar()">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.teacher-my-class">My form</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
+
+
+
+
+
+
+
+
             <li *jhiHasAnyAuthority="['ROLE_PUPIL']" ngbDropdown class="nav-item dropdown pointer">
                 <a class="nav-link dropdown-toggle" routerLinkActive="active" ngbDropdownToggle href="javascript:void(0);" id="pupil-menu">
                     <span>
@@ -253,8 +286,11 @@
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
                   <span *ngIf="!getImageUrl()">
                     <i class="fa fa-user" aria-hidden="true"></i>
-                    <span jhiTranslate="global.menu.account.main">
+                    <span *ngIf="!isAuthenticated()" jhiTranslate="global.menu.account.main">
                       Account
+                    </span>
+                    <span *ngIf="isAccount()">
+                        {{account.login}}
                     </span>
                     <b class="caret"></b>
                   </span>

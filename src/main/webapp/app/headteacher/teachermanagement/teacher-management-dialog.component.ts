@@ -30,7 +30,7 @@ export class TeacherManagementDialogComponent implements OnInit {
         private userService: UserService,
         private eventManager: EventManager
     ) {
-        this.jhiLanguageService.setLocations(['teacher', 'user-management','global']);
+        this.jhiLanguageService.setLocations(['teacher', 'user-management', 'global']);
     }
 
     ngOnInit() {
@@ -73,7 +73,6 @@ export class TeacherManagementDialogComponent implements OnInit {
     trackUserById(index: number, item: User) {
         return item.id;
     }
-
 
     getSelected(selectedVals: Array<any>, option: any) {
         if (selectedVals) {

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 import { JhiLanguageService, AlertService } from 'ng-jhipster';
 
-import { TeacherSchedule } from './teacher-schedule.model';
-import { TeacherScheduleService } from './teacher-schedule.service';
+import { ScheduleMySuffix } from './../entities/schedule/';
 import { TeacherMySuffix } from '../entities/teacher/teacher-my-suffix.model';
-import { TeacherMySuffixService } from '../entities/teacher/teacher-my-suffix.service';
 
-import { Principal } from '../shared';
+import { TeacherScheduleService } from './teacher-schedule.service';
+
+import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
 
 @Component({
     selector: 'jhi-teacher-schedule',
@@ -15,60 +15,109 @@ import { Principal } from '../shared';
     styleUrls: ['./teacher-schedule.component.css']
 })
 export class TeacherScheduleComponent implements OnInit {
-    currentAccount: any;
+    currentTeacherAccount: TeacherMySuffix;
     teachers: TeacherMySuffix[];
-    teacherSchedules: TeacherSchedule[];
-    filteredSchedules: TeacherSchedule[];
+    allSchedules: ScheduleMySuffix[];
+    filteredSchedules: ScheduleMySuffix[];
+    schedulesWithBlanks: ScheduleMySuffix[];
     selectedID: string;
-    selectedDate: string;
+    selectedPeriod: string;
+    dateString: string;
+    dateObject: Object;
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
-        private teacherService: TeacherMySuffixService,
         private teacherScheduleService: TeacherScheduleService,
         private alertService: AlertService,
-        private principal: Principal,
     ) {
-        this.jhiLanguageService.setLocations([]);
+        this.jhiLanguageService.setLocations(['teacher-schedule']);
+        this.teachers = [];
+        this.allSchedules = [];
         this.filteredSchedules = [];
-        this.selectedID = '1';
-        this.selectedDate = Date.now().toString();
+        this.schedulesWithBlanks = [];
+
+        this.selectedPeriod = 'day';
+        this.dateString = new Date(Date.now()).toString();
     }
 
-    loadAll() {
-        this.teacherService.query().subscribe(
-            (res: Response) => {
-                this.teachers = res.json();
-            },
-            (res: Response) => {
-                this.onError(res.json());
-            }
-        );
-        this.teacherScheduleService.query().subscribe(
-            (res: Response) => {
-                this.teacherSchedules = res.json();
-                this.onFormChange();
-            },
-            (res: Response) => {
-                this.onError(res.json());
-            }
-        );
+    private datepickerOptions: INgxMyDpOptions = {
+        dateFormat: 'dd.mm.yyyy'
+    };
+
+    setDate(): void {
+        let d = new Date();
+        this.dateObject = {
+            date: {
+                year: d.getFullYear(),
+                month: d.getMonth() + 1,
+                day: d.getDate()}
+        };
+    }
+
+    onDateChanged(event: IMyDateModel): void {
+        this.dateString = new Date(event.jsdate).toString();
+        this.filterSchedule();
+    }
+
+    filterSchedule() {
+        this.filteredSchedules = this.teacherScheduleService.filterSchedule(parseInt(this.selectedID, 10), new Date(this.dateString), this.allSchedules);
+        this.makeScheduleWithBlanks();
+    }
+
+    makeScheduleWithBlanks() {
+        this.schedulesWithBlanks = [];
+
+        for(let i = 1; i <= 8; i++) {
+            let blankSchedule = new ScheduleMySuffix(null, null, '', i, true, null, null, null, null, null, '', null, '', '', '');
+            this.schedulesWithBlanks.push(blankSchedule);
+        }
+
+        for(let i = 0; i < this.filteredSchedules.length; i++) {
+            let lessonPosition = this.filteredSchedules[i].lessonPosition;
+            this.schedulesWithBlanks[lessonPosition-1] = this.filteredSchedules[i];
+        }
+
+        this.filteredSchedules = this.schedulesWithBlanks;
     }
 
     ngOnInit() {
-        this.loadAll();
-        this.principal.identity().then((account) => {
-            this.currentAccount = account;
-        });
+        this.setDate();
+        this.loadCurrentTeacher();
+    }
+
+    loadCurrentTeacher() {
+        this.teacherScheduleService.getCurrentTeacher().subscribe(
+            (res: Response) => {
+                this.currentTeacherAccount = res.json();
+                this.loadTeachers();
+                this.loadSchedule(this.currentTeacherAccount.schoolId);
+                this.selectedID = String(this.currentTeacherAccount.id);
+            },
+            (res: Response) => this.onError(res.json())
+        );
+    }
+
+    loadTeachers() {
+        this.teacherScheduleService.getAllTeachersByCurrentTeacher().subscribe(
+            (res: Response) => {
+                this.teachers = res.json();
+            });
+    }
+
+    loadSchedule(schoolId: number) {
+        this.teacherScheduleService.getSchedulesBySchoolId(schoolId).subscribe(
+            (res: Response) => {
+                this.allSchedules = res.json();
+                this.filterSchedule();
+            },
+            (res: Response) => {
+                this.onError(res.json());
+            }
+        );
     }
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
 
-    onFormChange() {
-        console.log('onTeacherSelect() with TeacherID ' + this.selectedID);
-        console.log('onDateChange() ' + this.selectedDate);
-        this.filteredSchedules = this.teacherScheduleService.filterSchedule(parseInt(this.selectedID, 10), new Date(this.selectedDate.toString()), this.teacherSchedules);
-    }
 }

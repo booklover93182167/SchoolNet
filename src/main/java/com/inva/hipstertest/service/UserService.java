@@ -2,10 +2,10 @@ package com.inva.hipstertest.service;
 
 import com.inva.hipstertest.domain.Authority;
 import com.inva.hipstertest.domain.User;
-import com.inva.hipstertest.domain.UserExtra;
+import com.inva.hipstertest.domain.UserAddon;
 import com.inva.hipstertest.repository.AuthorityRepository;
 import com.inva.hipstertest.config.Constants;
-import com.inva.hipstertest.repository.UserExtraRepository;
+import com.inva.hipstertest.repository.UserAddonRepository;
 import com.inva.hipstertest.repository.UserRepository;
 import com.inva.hipstertest.security.AuthoritiesConstants;
 import com.inva.hipstertest.security.SecurityUtils;
@@ -46,7 +46,7 @@ public class UserService {
     private final AuthorityRepository authorityRepository;
 
     @Autowired
-    private UserExtraRepository userExtraRepository;
+    private UserAddonRepository userAddonRepository;
 
     @Autowired
     private  AuthenticationManager authenticationManager;
@@ -146,11 +146,11 @@ public class UserService {
         log.debug("Created Information for User: {}", newUser);
 
         // Create and save the UserExtra entity
-        UserExtra newUserExtra = new UserExtra();
-        newUserExtra.setUser(newUser);
-        newUserExtra.setPhone(phone);
-        userExtraRepository.save(newUserExtra);
-        log.debug("Created Information for UserExtra: {}", newUserExtra);
+        UserAddon newUserAddon = new UserAddon();
+        newUserAddon.setUser(newUser);
+        newUserAddon.setPhone(phone);
+        userAddonRepository.save(newUserAddon);
+        log.debug("Created Information for UserAddon: {}", newUserAddon);
 
         return newUser;
     }

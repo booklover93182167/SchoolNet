@@ -10,6 +10,7 @@
             },
             "teacher-schedule": "Teacher Schedule",
             "user-home": "User Home",
+            "teacher-my-class": "My form",
             "pupil-home": {
                 "home": "Pupil Home",
                 "grades": "Pupil Grades",
@@ -166,6 +167,7 @@
         "emailexists": "Email is already in use!",
         "idexists": "A new {{ entityName }} cannot already have an ID",
         "idexistsEmail": "Try another email, this already use!"
+
     },
     "footer": "Created by Lv-236.Java group :)"
 }

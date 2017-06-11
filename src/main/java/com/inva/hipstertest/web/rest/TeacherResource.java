@@ -118,11 +118,12 @@ public class TeacherResource {
     }
 
     /**
-     * GET  /teachers/current : get current teacher.
+     * GET  /teacher-home/teachers/current : get current teacher.
+     * GET  /teacher-schedule/teachers/current : get current teacher.
      *
      * @return the ResponseEntity with status 200 (OK) and with body the current teacherDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/teacher-home/teachers/current")
+    @GetMapping({"/teacher-home/teachers/current", "/teacher-schedule/teachers/current"})
     @Timed
     public ResponseEntity<TeacherDTO> getCurrentTeacher() {
         log.debug("REST request to get current Teacher");
@@ -150,7 +151,7 @@ public class TeacherResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of teachers in body
      */
-    @GetMapping("/headteacher/management")
+    @GetMapping({"/headteacher/management", "/teacher-schedule/teachers/all/"})
     @Timed
     public List<TeacherDTO> getAllTeachersForMe() {
         log.debug("REST request to get all Teachers");
@@ -206,6 +207,35 @@ public class TeacherResource {
         log.debug("REST request to get Teacher : {}", id);
         TeacherDTO teacherDTO = teacherService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(teacherDTO));
+    }
+
+
+    /**
+     * PUT  /teachers : Updates an existing teacher.
+     *
+     * @param teacherDTO the teacherDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated teacherDTO,
+     * or with status 400 (Bad Request) if the teacherDTO is not valid,
+     * or with status 500 (Internal Server Error) if the teacherDTO couldnt be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/headteacher/management")
+    @Timed
+    public ResponseEntity<TeacherDTO> updateTeachers(@Valid @RequestBody TeacherDTO teacherDTO) throws URISyntaxException {
+        log.debug("REST request to update Teacher : {}", teacherDTO);
+        if (teacherDTO.getId() == null) {
+            return createTeacher(teacherDTO);
+        }
+
+        TeacherDTO result = teacherService.save(teacherDTO);
+
+        return ResponseUtil.wrapOrNotFound(Optional.of(result),
+            HeaderUtil.createAlert("userManagement.updated", result.getFirstName()));
+/*
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, teacherDTO.getId().toString()))
+            .body(result);
+        */
     }
 
 }
