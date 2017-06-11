@@ -6,22 +6,16 @@ import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {DateUtils} from 'ng-jhipster';
 import {ScheduleMySuffix} from '../entities/schedule/schedule-my-suffix.model';
-import {isUndefined} from 'util';
-import {LessonMySuffix} from "../entities/lesson/lesson-my-suffix.model";
 
 @Injectable()
 export class TeacherHomeService {
 
-    private resourceUrlLesson = 'api/teacher-home/lessons/teacher';
+    // private resourceUrlLesson = 'api/teacher-home/lessons/teacher';
     private resourceUrlForm = 'api/teacher-home/forms/teacher';
     private resourceUrlCurrentTeacher = 'api/teacher-home/teachers/current';
     private resourceUrlSchedule = 'api/teacher-home/schedules';
 
     constructor(private http: Http, private dateUtils: DateUtils) {
-    }
-
-    queryLessons(teacherId: number): Observable<Response> {
-        return this.http.get(`${this.resourceUrlLesson}/${teacherId}`);
     }
 
     queryForm(teacherId: number): Observable<Response> {
@@ -69,8 +63,9 @@ export class TeacherHomeService {
         for (const schedule of schedules) {
             if (date.getDate() === schedule.date.getDate() &&
                 date.getFullYear() === schedule.date.getFullYear() &&
-                date.getMonth() === schedule.date.getMonth())
+                date.getMonth() === schedule.date.getMonth()) {
                 filteredSchedules.push(schedule);
+            }
         }
         return filteredSchedules;
     }

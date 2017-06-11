@@ -9,8 +9,6 @@ import {Subscription} from 'rxjs/Subscription';
 import {ScheduleMySuffix} from '../entities/schedule/schedule-my-suffix.model';
 import {LessonMySuffix} from '../entities/lesson/lesson-my-suffix.model';
 import {FormMySuffix} from '../entities/form/form-my-suffix.model';
-import {isUndefined} from 'util';
-import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
     selector: 'teacher-home-schedule',
@@ -24,7 +22,7 @@ export class TeacherHomeScheduleComponent implements OnInit {
     schedules: ScheduleMySuffix[];
     filteredSchedules: ScheduleMySuffix[] = [];
     eventSubscriber: Subscription;
-    lessons: LessonMySuffix[];
+    lessons: LessonMySuffix[] = [];
     forms: FormMySuffix[];
     isFilterOn: boolean;
 
@@ -45,25 +43,20 @@ export class TeacherHomeScheduleComponent implements OnInit {
         this.teacherHomeService.getCurrentTeacher().subscribe(
             (res: Response) => {
                 this.currentTeacher = res.json();
-                this.loadLessons(this.currentTeacher.id);
+                this.loadForms(this.currentTeacher.id);
+                this.loadSchedule(this.currentTeacher.id);
+                res.json().lessons.forEach((lesson) => {
+                    this.lessons.push(lesson);
+                });
             },
             (res: Response) => this.onError(res.json())
         );
-    }
-
-    loadLessons(teacherId: number) {
-        this.teacherHomeService.queryLessons(teacherId).subscribe(
-            (res: Response) => {
-                this.lessons = res.json();
-                this.loadForms(this.currentTeacher.id);
-            });
     }
 
     loadForms(teacherId: number) {
         this.teacherHomeService.queryForm(teacherId).subscribe(
             (res: Response) => {
                 this.forms = res.json();
-                this.loadSchedule(this.currentTeacher.id);
             },
             (res: Response) => this.onError(res.json())
         );
