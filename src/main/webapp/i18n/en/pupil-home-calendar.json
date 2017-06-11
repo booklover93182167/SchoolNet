@@ -1,4 +1,8 @@
 {
+    "home":{
+        "title": "Pupil Home",
+        "gradesTitle": "Pupil Grades"
+    },
     "days": {
         "monday": "Monday",
         "tuesday": "Tuesday",
@@ -39,7 +43,9 @@
     "grades": {
         "grade": "Grade",
         "date": "Date",
-        "average": "Average grade"
+        "average": "Average grade",
+        "load": "Load",
+        "grades": "Grades"
     }
 
 }
