@@ -91,7 +91,7 @@ public class FormResource {
     @Timed
     public List<FormDTO> getAllForms() {
         log.debug("REST request to get all Forms");
-        return formService.findAll();
+        return formService.findAllFormsByCurrentSchool();
     }
 
     /**

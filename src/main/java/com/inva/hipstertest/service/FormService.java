@@ -44,4 +44,7 @@ public interface FormService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+
+    List<FormDTO> findAllFormsByCurrentSchool();
 }
