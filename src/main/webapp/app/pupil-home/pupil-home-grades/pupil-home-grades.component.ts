@@ -24,6 +24,7 @@ export class PupilHomeGradesComponent implements OnInit {
     account: any;
     eventSubscriber: Subscription;
     currentPupil: PupilMySuffix;
+    selectedLessonId: number;
 
     constructor(
         private jhiLanguageService: JhiLanguageService,
