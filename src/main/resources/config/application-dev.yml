@@ -28,7 +28,7 @@ spring:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://localhost:3306/schoolnet?useUnicode=true&characterEncoding=utf8&useSSL=false
         username: root
-        password: 3599123
+        password: root
         hikari:
             data-source-properties:
                 cachePrepStmts: true
@@ -60,7 +60,12 @@ spring:
         cache-seconds: 1
     thymeleaf:
         cache: false
-
+    freemarker:
+                exposeSpringMacroHelpers: true
+                exposeRequestAttributes: true
+                exposeSessionAttributes: true
+                requestContextAttribute: request
+                contentType: text/html
 liquibase:
     contexts: dev
 
