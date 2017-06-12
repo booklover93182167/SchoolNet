@@ -79,6 +79,13 @@ export class JhiLoginModalComponent implements OnInit, AfterViewInit {
                             this.router.navigate(['/pupil-home']);
                         }
                     }
+                );
+                this.principal.hasAuthority('ROLE_TEACHER').then(
+                    (hasAuth) => {
+                        if (hasAuth) {
+                            this.router.navigate(['/teacher-home']);
+                        }
+                    }
                 )
             }
         }).catch(() => {

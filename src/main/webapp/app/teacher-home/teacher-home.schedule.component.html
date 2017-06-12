@@ -1,3 +1,7 @@
+<div>
+    <h2 *ngIf="currentTeacher"><span jhiTranslate="schoolNetApp.teacher.welcome-message">Welcome </span><b>{{currentTeacher.firstName + ' ' + currentTeacher.lastName}}</b></h2>
+</div>
+
 <div class="col-md-8 offset-md-2">
     <form #teacherSelectForm="ngForm">
         <label><span jhiTranslate="schoolNetApp.teacher.form.label">You can use the filter</span></label>
@@ -11,7 +15,7 @@
             <label for="lesson-select" class="col-2 col-form-label"><span jhiTranslate="schoolNetApp.teacher.form.lesson">Lesson</span></label>
             <div class="col-10">
                 <select class="form-control" id="lesson-select"  name="lessonSelect" [ngModel]="selectedLessonId" (ngModelChange)="onChangeLesson($event)">
-                    <option *ngFor="let lesson of lessons" [value]="lesson.id">{{lesson.name}}</option>
+                    <option *ngFor="let lesson of lessons"  [value]="lesson.id">{{lesson.name}}</option>
                 </select>
             </div>
         </div>
