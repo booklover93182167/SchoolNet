@@ -15,4 +15,7 @@ public interface FormRepository extends JpaRepository<Form, Long> {
 
     @Query("select distinct forms from Form forms join forms.schedules schedules where schedules.teacher.id =:teacherId")
     List<Form> findAllByTeacherId(@Param("teacherId") Long teacherId);
+
+    @Query("select t from Form t where t.school.id =:id")
+    List<Form> findAllFormsByCurrentSchool(@Param("id") long id);
 }
