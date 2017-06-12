@@ -31,7 +31,6 @@ before_install:
   - export PATH=$HOME/.yarn/bin:$PATH
 install:
   - yarn install
-  - yarn add phantomjs-prebuilt --force
 script:
   - chmod +x mvnw
   - ./mvnw clean test
