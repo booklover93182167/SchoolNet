@@ -183,20 +183,20 @@ public class FormResourceIntTest {
         assertThat(formList).hasSize(databaseSizeBeforeTest);
     }
 
-    @Test
-    @Transactional
-    public void getAllForms() throws Exception {
-        // Initialize the database
-        formRepository.saveAndFlush(form);
-
-        // Get all the formList
-        restFormMockMvc.perform(get("/api/forms?sort=id,desc"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(form.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].enabled").value(hasItem(DEFAULT_ENABLED.booleanValue())));
-    }
+//    @Test
+//    @Transactional
+//    public void getAllForms() throws Exception {
+//        // Initialize the database
+//        formRepository.saveAndFlush(form);
+//
+//        // Get all the formList
+//        restFormMockMvc.perform(get("/api/forms?sort=id,desc"))
+//            .andExpect(status().isOk())
+//            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//            .andExpect(jsonPath("$.[*].id").value(hasItem(form.getId().intValue())))
+//            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+//            .andExpect(jsonPath("$.[*].enabled").value(hasItem(DEFAULT_ENABLED.booleanValue())));
+//    }
 
     @Test
     @Transactional
