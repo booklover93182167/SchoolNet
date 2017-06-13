@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class ClassroomServiceImpl implements ClassroomService{
 
     private final Logger log = LoggerFactory.getLogger(ClassroomServiceImpl.class);
-    
+
     private final ClassroomRepository classroomRepository;
 
     private final ClassroomMapper classroomMapper;
@@ -49,7 +49,7 @@ public class ClassroomServiceImpl implements ClassroomService{
 
     /**
      *  Get all the classrooms.
-     *  
+     *
      *  @return the list of entities
      */
     @Override
