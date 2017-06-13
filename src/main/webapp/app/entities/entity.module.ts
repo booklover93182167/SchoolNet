@@ -9,6 +9,7 @@ import { SchoolNetLessonMySuffixModule } from './lesson/lesson-my-suffix.module'
 import { SchoolNetScheduleMySuffixModule } from './schedule/schedule-my-suffix.module';
 import { SchoolNetAttendancesMySuffixModule } from './attendances/attendances-my-suffix.module';
 import { SchoolNetParentMySuffixModule } from './parent/parent-my-suffix.module';
+import { SchoolNetUserAddonModule } from './user-addon/user-addon.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -22,6 +23,7 @@ import { SchoolNetParentMySuffixModule } from './parent/parent-my-suffix.module'
         SchoolNetScheduleMySuffixModule,
         SchoolNetAttendancesMySuffixModule,
         SchoolNetParentMySuffixModule,
+        SchoolNetUserAddonModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

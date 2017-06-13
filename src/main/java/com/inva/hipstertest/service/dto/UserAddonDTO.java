@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 import javax.persistence.Lob;
+import javax.validation.constraints.Size;
 
 /**
  * A DTO for the UserAddon entity.
@@ -14,8 +15,10 @@ public class UserAddonDTO implements Serializable {
 
     private Long id;
 
+    @Size(max = 25)
     private String phone;
 
+    @Size(max = 50)
     private String middleName;
 
     @Lob
