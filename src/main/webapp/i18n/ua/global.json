@@ -5,10 +5,17 @@
         "menu": {
             "forms": "Класи",
             "teacher-menu": "Меню вчителя",
-            "teacher-home": "Головна",
+            "teacher-home": {
+                "title": "Головна вчителя"
+            },
             "teacher-schedule": "Розклад занять",
             "user-home": "Користувач",
-            "pupil-home": "Учень",
+            "teacher-my-class": "Мій клас",
+            "pupil-home": {
+                "home": "Розклад",
+                "grades": "Оцінки",
+                "title": "Учень"
+            },
             "management":"Управління",
             "teacher-management":{
                 "teachers":"Вчителі",
@@ -29,6 +36,7 @@
                 "scheduleMySuffix": "Schedule",
                 "attendancesMySuffix": "Attendances",
                 "parentMySuffix": "Parent",
+                "userAddon": "User Addon",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -67,7 +75,9 @@
             "email": "Email",
             "email.placeholder": "Ваш email",
             "imageUrl": "URL-адреса для фотографії користувача",
-            "imageUrl.placeholder": "Ваша URL-адреса для фотографії"
+            "imageUrl.placeholder": "Ваша URL-адреса для фотографії",
+            "phone": "Номер телефону",
+            "phone.placeholder": "+380xxxxxxxxx"
         },
         "messages": {
             "info": {
@@ -151,7 +161,8 @@
     "error": {
         "internalServerError": "Internal server error",
         "server.not.reachable": "Сервер не доступний",
-        "url.not.found": "Not found",
+        "url.not.found": "Сторінку не знайдено!",
+        "url.access.denied": "У доступі відмовлено!",
         "NotNull": "Поле {{fieldName}} не може бути порожнім!",
         "Size": "Поле {{fieldName}} не відповідає вимогам мін/макс. розміру!",
         "userexists": "Ім'я користувача вже використовується!",

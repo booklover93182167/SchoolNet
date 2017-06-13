@@ -1,0 +1,35 @@
+{
+    "schoolNetApp": {
+        "teacher": {
+            "home": {
+                "title": "Teacher"
+            },
+            "welcome-message": "Welcome ",
+            "detail": {
+                "title": "Teacher"
+            },
+            "form": {
+                "label": "You can use the filter",
+                "date": "Date",
+                "lesson": "Lesson",
+                "form": "Form",
+                "buttonApply": "Apply",
+                "buttonClear": "Clear"
+            },
+            "table": {
+                "tableLabel": "This is your personal schedules",
+                "date": "Date",
+                "lessonPosition": "Lesson Position",
+                "lesson": "Lesson",
+                "classroom": "Classroom",
+                "form": "Form",
+                "homework": "Homework",
+                "editButton": "Edit"
+            },
+            "modal": {
+                "label": "Create or edit homework",
+                "homework": "Homework"
+            }
+        }
+    }
+}

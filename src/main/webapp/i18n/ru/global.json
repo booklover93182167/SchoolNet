@@ -5,10 +5,17 @@
         "menu": {
             "forms":"Классы",
             "teacher-menu": "Меню учителя",
-            "teacher-home": "Главная",
+            "teacher-home": {
+                "title": "Главная учителя"
+            },
             "teacher-schedule": "Расписание занятий",
             "user-home": "Пользователь",
-            "pupil-home": "Ученик",
+            "teacher-my-class": "Мой класс",
+            "pupil-home": {
+                "home": "Расписание",
+                "grades": "Оценки",
+                "title": "Ученик"
+            },
             "management":"Управление",
             "teacher-management":{
                 "teachers":"Учителя",
@@ -29,6 +36,7 @@
                 "scheduleMySuffix": "Schedule",
                 "attendancesMySuffix": "Attendances",
                 "parentMySuffix": "Parent",
+                "userAddon": "User Addon",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -67,7 +75,9 @@
             "email": "Email",
             "email.placeholder": "Ваш email",
             "imageUrl": "URL-адрес для фотографии пользователя",
-            "imageUrl.placeholder": "Ваш URL-адрес для фотографии"
+            "imageUrl.placeholder": "Ваш URL-адрес для фотографии",
+            "phone": "Номер телефона",
+            "phone.placeholder": "+380xxxxxxxxx"
         },
         "messages": {
             "info": {
@@ -151,7 +161,8 @@
     "error": {
         "internalServerError": "Internal server error",
         "server.not.reachable": "Сервер не доступен",
-        "url.not.found": "Not found",
+        "url.not.found": "Страницу не найдено",
+        "url.access.denied": "В доступе отказано!",
         "NotNull": "Поле {{fieldName}} не может быть пустым!",
         "Size": "Поле {{fieldName}} не отвечает требованиям мин/макс.го размера!",
         "userexists": "Имя пользователя уже используется!",

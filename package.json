@@ -26,6 +26,7 @@
     "jquery": "3.2.1",
     "ng-jhipster": "0.1.12",
     "ng2-webstorage": "1.6.2",
+    "ngx-mydatepicker": "^2.0.10",
     "reflect-metadata": "0.1.10",
     "rxjs": "5.3.0",
     "swagger-ui": "2.2.10",
@@ -106,6 +107,6 @@
     "webpack:prod": "yarn run ngc && yarn run test && webpack -p --config webpack/webpack.vendor.js && webpack -p --config webpack/webpack.prod.js",
     "test": "yarn run lint && karma start src/test/javascript/karma.conf.js",
     "test:watch": "karma start --watch",
-    "postinstall": "yarn run webpack:build"
+    "postinstall": "yarn run webpack:build && node node_modules/phantomjs-prebuilt/install.js"
   }
 }

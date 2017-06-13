@@ -20,6 +20,8 @@ public class ClassroomDTO implements Serializable {
     @NotNull
     private Boolean enabled;
 
+    private String capacity;
+
     private Long schoolId;
 
     private String schoolName;
@@ -39,6 +41,7 @@ public class ClassroomDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
@@ -46,6 +49,7 @@ public class ClassroomDTO implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
     public Boolean getEnabled() {
         return enabled;
     }
@@ -62,6 +66,14 @@ public class ClassroomDTO implements Serializable {
         this.schoolId = schoolId;
     }
 
+    public String getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -73,7 +85,9 @@ public class ClassroomDTO implements Serializable {
 
         ClassroomDTO classroomDTO = (ClassroomDTO) o;
 
-        if ( ! Objects.equals(id, classroomDTO.id)) { return false; }
+        if (!Objects.equals(id, classroomDTO.id)) {
+            return false;
+        }
 
         return true;
     }

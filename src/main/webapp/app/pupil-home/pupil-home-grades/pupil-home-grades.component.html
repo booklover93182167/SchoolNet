@@ -1,22 +1,32 @@
 <h2 *ngIf="account">Welcome <b>{{account.firstName}} {{account.lastName}}</b></h2>
 <jhi-alert></jhi-alert>
-
-<span class="lessonsButtons" *ngIf="pupilLessons">
-        <span *ngFor="let lesson of pupilLessons">
-                <button type="submit" class="btn" (click)="findAllByPupilAndLessonId(currentPupil.id, lesson.id)">
-                    <span class="hidden-md-down">{{lesson.name}}</span>
-                </button>
-        </span>
-</span>
-<!--<div *ngFor="let lesson of pupilLessons">-->
-    <!--{{lesson.id}} {{lesson.name}}-->
-<!--</div>-->
+<div *ngIf="currentPupil">
+    <div class="col-md-8 offset-md-2">
+        <form #lessonSelectForm="ngForm">
+            <div class="form-group row">
+                <label for="lesson-select" class="col-2 col-form-label"><span jhiTranslate="schedule.lesson">Lesson</span></label>
+                <div class="col-10">
+                    <select class="form-control" id="lesson-select" name="lesson-select" [(ngModel)]="selectedLessonId">
+                        <option *ngFor="let lesson of pupilLessons;" value="{{lesson.id}}">{{lesson.name}}</option>
+                    </select>
+                    <div class="form-group row">
+                        <div class="col-10">
+                            <button class="btn" (click)="findAllByPupilAndLessonId(currentPupil.id, selectedLessonId)"><span jhiTranslate="grades.load">Load</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 <div class="table-responsive2" *ngIf="pupilAttendances">
     <table class="table table-striped">
         <thead>
         <tr>
-            <th><span>Grade</span></th>
-            <th><span>Date</span></th>
+            <th class="text-center" colspan="3"><span jhiTranslate="grades.grades">Grades</span></th>
+        </tr>
+        <tr>
+            <th style="width: 50%"><span jhiTranslate="grades.grade">Grade</span></th>
+            <th style="width: 50%"><span jhiTranslate="grades.date">Date</span></th>
         </tr>
         </thead>
         <tbody>
@@ -26,4 +36,8 @@
         </tr>
         </tbody>
     </table>
+    <div>
+        <h3><span jhiTranslate="grades.average">Average grade : </span> {{getAverageGrade() | number:'1.0-2'}}</h3>
+    </div>
+</div>
 </div>

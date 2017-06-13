@@ -1,0 +1,44 @@
+<div *ngIf="currentTeacher" >
+    <h2 jhiTranslate="schoolNetApp.teacher-class.welcome">Welcome</h2><h2> <b>{{currentTeacher.firstName}} {{currentTeacher.lastName}}</b></h2>
+    <br>
+    <br>
+    <div *ngIf="currentTeacher.formId; else elseBlock">
+    <h3 jhiTranslate="schoolNetApp.teacher-class.form">Form</h3><h3> <b> {{currentTeacher.formName}} </b></h3>
+
+        <div *ngIf="currentTeacher.formId">
+
+        <jhi-alert-error></jhi-alert-error>
+        <dl class="row-md jh-entity-details">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th><span ></span></th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let i of currentTeacher.form.pupilsId | sortPipe">
+                        <td>{{i.lastName }} {{i.firstName }}</td>
+
+
+
+
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </dl>
+    </div>
+    <ng-template #elseBlock ><h4 jhiTranslate="schoolNetApp.teacher.noClass">You have no class yet.</h4></ng-template>
+
+        <button type="submit"
+                (click)="previousState()"
+                class="btn btn-info">
+            <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+        </button>
+</div>
+
+
+

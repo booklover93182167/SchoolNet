@@ -1,16 +1,13 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.*;
-import com.inva.hipstertest.repository.SchoolRepository;
 import com.inva.hipstertest.service.MailService;
 import com.inva.hipstertest.service.SchoolService;
 import com.inva.hipstertest.service.TeacherService;
 import com.inva.hipstertest.repository.TeacherRepository;
 import com.inva.hipstertest.service.UserService;
 import com.inva.hipstertest.service.dto.TeacherDTO;
-import com.inva.hipstertest.service.dto.UserDTO;
 import com.inva.hipstertest.service.mapper.TeacherMapper;
-import com.inva.hipstertest.service.util.RandomUtil;
 import com.inva.hipstertest.support.methods.ROLE_ENUM;
 import com.inva.hipstertest.support.methods.SupportCreate;
 import org.slf4j.Logger;
@@ -19,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
-import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -109,6 +104,8 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         return teacherMapper.teacherToTeacherDTO(teacherRepository.findTeacherByCurrentUser());
     }
 
+
+
     /**
      *  Delete the  teacher by id.
      *
@@ -163,5 +160,12 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
             .collect(Collectors.toCollection(LinkedList::new));
         return result;
     }
+
+    @Override
+    public List<TeacherDTO> getAllBySchoolId(Long id) {
+        List<TeacherDTO> dtoList = teacherMapper.teachersToTeacherDTOs(teacherRepository.getAllBySchoolId(id));
+        return dtoList;
+    }
+
 
 }

@@ -2,8 +2,10 @@ package com.inva.hipstertest.service;
 
 import com.inva.hipstertest.domain.Authority;
 import com.inva.hipstertest.domain.User;
+import com.inva.hipstertest.domain.UserAddon;
 import com.inva.hipstertest.repository.AuthorityRepository;
 import com.inva.hipstertest.config.Constants;
+import com.inva.hipstertest.repository.UserAddonRepository;
 import com.inva.hipstertest.repository.UserRepository;
 import com.inva.hipstertest.security.AuthoritiesConstants;
 import com.inva.hipstertest.security.SecurityUtils;
@@ -42,6 +44,9 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final AuthorityRepository authorityRepository;
+
+    @Autowired
+    private UserAddonRepository userAddonRepository;
 
     @Autowired
     private  AuthenticationManager authenticationManager;
@@ -113,6 +118,40 @@ public class UserService {
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
+        return newUser;
+    }
+
+    public User createUser(String login, String password, String firstName, String lastName, String email,
+        String imageUrl, String langKey, String phone) {
+
+        User newUser = new User();
+        Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
+        Set<Authority> authorities = new HashSet<>();
+        String encryptedPassword = passwordEncoder.encode(password);
+        newUser.setLogin(login);
+        // new user gets initially a generated password
+        newUser.setPassword(encryptedPassword);
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        newUser.setEmail(email);
+        newUser.setImageUrl(imageUrl);
+        newUser.setLangKey(langKey);
+        // new user is not active
+        newUser.setActivated(false);
+        // new user gets registration key
+        newUser.setActivationKey(RandomUtil.generateActivationKey());
+        authorities.add(authority);
+        newUser.setAuthorities(authorities);
+        userRepository.save(newUser);
+        log.debug("Created Information for User: {}", newUser);
+
+        // Create and save the UserExtra entity
+        UserAddon newUserAddon = new UserAddon();
+        newUserAddon.setUser(newUser);
+        newUserAddon.setPhone(phone);
+        userAddonRepository.save(newUserAddon);
+        log.debug("Created Information for UserAddon: {}", newUserAddon);
+
         return newUser;
     }
 

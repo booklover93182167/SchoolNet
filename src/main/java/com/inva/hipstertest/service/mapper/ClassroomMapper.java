@@ -4,12 +4,13 @@ import com.inva.hipstertest.domain.*;
 import com.inva.hipstertest.service.dto.ClassroomDTO;
 
 import org.mapstruct.*;
+
 import java.util.List;
 
 /**
  * Mapper for the entity Classroom and its DTO ClassroomDTO.
  */
-@Mapper(componentModel = "spring", uses = {SchoolMapper.class, })
+@Mapper(componentModel = "spring", uses = {SchoolMapper.class,})
 public interface ClassroomMapper {
 
     @Mapping(source = "school.id", target = "schoolId")
@@ -23,6 +24,7 @@ public interface ClassroomMapper {
     Classroom classroomDTOToClassroom(ClassroomDTO classroomDTO);
 
     List<Classroom> classroomDTOsToClassrooms(List<ClassroomDTO> classroomDTOs);
+
     /**
      * generating the fromId for all mappers if the databaseType is sql, as the class has relationship to it might need it, instead of
      * creating a new attribute to know if the entity has any relationship from some other entity

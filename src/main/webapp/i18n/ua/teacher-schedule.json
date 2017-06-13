@@ -1,0 +1,20 @@
+{
+    "teacherSchedule": {
+        "form": {
+            "date": "Дата",
+            "teacher": "Вчитель",
+            "period": {
+                "title": "Період",
+                "day": "День",
+                "week": "Тиждень",
+                "month": "Місяць"
+            }
+        },
+        "schedule-table": {
+            "subject-position": "#",
+            "subject": "Предмет",
+            "form": "Клас",
+            "classroom": "Кабінет"
+        }
+    }
+}

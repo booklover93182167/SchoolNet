@@ -49,4 +49,13 @@ public interface ScheduleService {
     List<ScheduleDTO> findAllByTeacherId(Long teacherId);
 
     void updateHomeworkById(String homework, Long scheduleId);
+
+
+    /**
+     *  Get all the schedules by school id.
+     *
+     *  @param schoolId the id of the school
+     *  @return the list of entities
+     */
+    List<ScheduleDTO> findAllBySchoolId(Long schoolId);
 }

@@ -33,6 +33,9 @@ public class Classroom implements Serializable {
     @Column(name = "enabled", nullable = false)
     private Boolean enabled;
 
+    @Column(name = "capacity", nullable = true)
+    private String capacity;
+
     @OneToMany(mappedBy = "classroom")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -70,6 +73,14 @@ public class Classroom implements Serializable {
     public Classroom enabled(Boolean enabled) {
         this.enabled = enabled;
         return this;
+    }
+
+    public String getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
     }
 
     public void setEnabled(Boolean enabled) {

@@ -12,6 +12,7 @@ export const TeacherHomeRoute: Route = {
     data:
         {
             authorities: ['ROLE_TEACHER'],
+            pageTitle: 'schoolNetApp.teacher.home.title'
         },
     canActivate: [UserRouteAccessService]
 };

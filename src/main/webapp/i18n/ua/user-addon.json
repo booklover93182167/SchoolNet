@@ -1,0 +1,24 @@
+{
+    "schoolNetApp": {
+        "userAddon" : {
+            "home": {
+                "title": "User Addons",
+                "createLabel": "Створити новий User Addon",
+                "createOrEditLabel": "Створити або редагувати User Addon"
+            },
+            "created": "Новий User Addon створений з ідентифікатором {{ param }}",
+            "updated": "User Addon оновлений з ідентифікатором {{ param }}",
+            "deleted": "User Addon видалений з ідентифікатором {{ param }}",
+            "delete": {
+                "question": "Ви впевнені що хочете видалити User Addon {{ id }}?"
+            },
+            "detail": {
+                "title": "User Addon"
+            },
+            "phone": "Phone",
+            "middleName": "Middle Name",
+            "image": "Image",
+            "user": "User"
+        }
+    }
+}

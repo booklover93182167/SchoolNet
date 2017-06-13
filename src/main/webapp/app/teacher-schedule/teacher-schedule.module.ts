@@ -14,8 +14,11 @@ const ENTITY_STATES = [
 
 import { TeacherScheduleService } from './teacher-schedule.service';
 
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
+
 @NgModule({
     imports: [
+        NgxMyDatePickerModule,
         SchoolNetSharedModule,
         SchoolNetAdminModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })

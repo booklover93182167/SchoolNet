@@ -19,13 +19,14 @@ pupils:PupilMySuffix[];
     private subscription: any;
     private eventSubscriber: Subscription;
 
+
     constructor(
         private eventManager: EventManager,
         private jhiLanguageService: JhiLanguageService,
         private formService: FormMySuffixService,
         private route: ActivatedRoute
     ) {
-        this.jhiLanguageService.setLocations(['form']);
+        this.jhiLanguageService.setLocations(['form', 'error']);
     }
 
     ngOnInit() {
@@ -36,6 +37,7 @@ pupils:PupilMySuffix[];
     }
 
     load(id) {
+
         this.formService.find(id).subscribe((form) => {
             this.form = form;
         });

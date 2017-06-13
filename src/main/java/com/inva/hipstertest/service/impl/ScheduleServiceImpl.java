@@ -111,4 +111,23 @@ public class ScheduleServiceImpl implements ScheduleService{
         log.debug("Request to set homework for schedule {}", homework, scheduleId);
         scheduleRepository.updateHomeworkById(homework, scheduleId);
     }
+
+    /**
+     *  Get all the schedules by school id.
+     *
+     *  @param schoolId the id of the school
+     *  @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<ScheduleDTO> findAllBySchoolId(Long schoolId) {
+        log.debug("Request to get all Schedules by school id : {}", schoolId);
+        //log.debug(scheduleRepository.findAllByFormId(1L).toString());
+        List<ScheduleDTO> result = scheduleRepository.findAllBySchoolId(schoolId).stream()
+            .map(scheduleMapper::scheduleToScheduleDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
+
+        return result;
+    }
+
 }
