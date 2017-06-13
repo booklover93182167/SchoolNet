@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { DateUtils } from 'ng-jhipster';
-
-import { ScheduleMySuffix } from './../entities/schedule/schedule-my-suffix.model';
+import { ScheduleMySuffix } from './../entities/schedule/';
 
 @Injectable()
 export class TeacherScheduleService {
@@ -27,7 +26,7 @@ export class TeacherScheduleService {
             .map((res: any) => this.convertResponse(res));
     }
 
-    filterSchedule(teacherID: number, date: Date, teacherSchedule: ScheduleMySuffix[]): ScheduleMySuffix[] {
+    filterDaySchedule(teacherID: number, date: Date, teacherSchedule: ScheduleMySuffix[]): ScheduleMySuffix[] {
         const schedulesForDate: ScheduleMySuffix[] = [];
         for (const schedule of teacherSchedule) {
             if (date.getDate() === schedule.date.getDate() &&

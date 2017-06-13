@@ -1,10 +1,9 @@
 .week-schedule {
-    width: 290px;
-    display: inline-block;
+    width: 300px;
+    float: left;
 }
 .week-schedule table {
     width: 100%;
-    table-layout: fixed;
 }
 .week-schedule table tr td,
 .week-schedule table tr th {
@@ -12,4 +11,9 @@
     white-space: nowrap;
     padding: 3px 3px;
     width: auto;
+    text-align: center;
+}
+.overflow-hidden {
+    width: 144px;
+    overflow: hidden;
 }

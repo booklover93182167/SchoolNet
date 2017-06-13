@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
-
 import { UserRouteAccessService } from '../shared';
-import { TeacherScheduleComponent } from './teacher-schedule.component';
+import { TeacherScheduleComponent } from './';
 
 export const teacherScheduleRoute: Routes = [
     {

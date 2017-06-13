@@ -7,8 +7,7 @@
             "period": {
                 "title": "Period",
                 "day": "Day",
-                "week": "Week",
-                "month": "Month"
+                "week": "Week"
             }
         },
         "schedule-table": {
