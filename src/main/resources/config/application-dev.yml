@@ -60,7 +60,12 @@ spring:
         cache-seconds: 1
     thymeleaf:
         cache: false
-
+    freemarker:
+                exposeSpringMacroHelpers: true
+                exposeRequestAttributes: true
+                exposeSessionAttributes: true
+                requestContextAttribute: request
+                contentType: text/html
 liquibase:
     contexts: dev
 

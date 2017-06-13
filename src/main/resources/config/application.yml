@@ -45,6 +45,12 @@ spring:
             enabled: false
     thymeleaf:
         mode: XHTML
+    freemarker:
+            exposeSpringMacroHelpers: true
+            exposeRequestAttributes: true
+            exposeSessionAttributes: true
+            requestContextAttribute: request
+            contentType: text/html
 
 security:
     basic:

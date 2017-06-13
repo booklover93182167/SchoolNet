@@ -161,7 +161,8 @@
     "error": {
         "internalServerError": "Internal server error",
         "server.not.reachable": "Сервер не доступен",
-        "url.not.found": "Not found",
+        "url.not.found": "Страницу не найдено",
+        "url.access.denied": "В доступе отказано!",
         "NotNull": "Поле {{fieldName}} не может быть пустым!",
         "Size": "Поле {{fieldName}} не отвечает требованиям мин/макс.го размера!",
         "userexists": "Имя пользователя уже используется!",
