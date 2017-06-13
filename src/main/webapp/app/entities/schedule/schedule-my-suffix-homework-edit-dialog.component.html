@@ -6,11 +6,6 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" [hidden]="!schedule.id">
-            <label for="id" jhiTranslate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="schedule.id" readonly />
-        </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="schoolNetApp.teacher.modal.homework" for="field_homework">Homework</label>
             <input type="text" class="form-control" name="homework" id="field_homework"

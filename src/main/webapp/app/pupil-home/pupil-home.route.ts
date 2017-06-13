@@ -13,6 +13,7 @@ export const PUPIL_HOME_ROUTE: Route = {
     data:
     {
         authorities: ['ROLE_PUPIL'],
+        pageTitle: 'home.title'
     },
     canActivate: [UserRouteAccessService]
 };

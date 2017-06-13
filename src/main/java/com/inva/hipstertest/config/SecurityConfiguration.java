@@ -97,6 +97,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
             .authorizeRequests()
+            .antMatchers("freemarker/freemarkertest/").permitAll()
+            .antMatchers("freemarker/freemarkeradd/").permitAll()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/authenticate").permitAll()
@@ -105,6 +107,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/profile-info").permitAll()
             .antMatchers("/api/account").authenticated()
             .antMatchers("/api/account/change_password").authenticated()
+            .antMatchers("/api/user-addons").authenticated()
+            .antMatchers("/api/user-addons/**").authenticated()
 
             .antMatchers("/api/attendances").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/attendances/**").hasAuthority(AuthoritiesConstants.ADMIN)

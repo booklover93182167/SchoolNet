@@ -9,7 +9,6 @@ import {Subscription} from 'rxjs/Subscription';
 import {ScheduleMySuffix} from '../entities/schedule/schedule-my-suffix.model';
 import {LessonMySuffix} from '../entities/lesson/lesson-my-suffix.model';
 import {FormMySuffix} from '../entities/form/form-my-suffix.model';
-import {isUndefined} from 'util';
 
 @Component({
     selector: 'teacher-home-schedule',
@@ -17,16 +16,14 @@ import {isUndefined} from 'util';
     styles: []
 })
 export class TeacherHomeScheduleComponent implements OnInit {
+    form;
     currentAccount: any;
     currentTeacher: TeacherMySuffix;
     schedules: ScheduleMySuffix[];
     filteredSchedules: ScheduleMySuffix[] = [];
     eventSubscriber: Subscription;
-    lessons: LessonMySuffix[];
+    lessons: LessonMySuffix[] = [];
     forms: FormMySuffix[];
-    selectedLessonId: number;
-    selectedFormId: number;
-    selectedDate: Date;
     isFilterOn: boolean;
 
     constructor(private jhiLanguageService: JhiLanguageService,
@@ -39,31 +36,27 @@ export class TeacherHomeScheduleComponent implements OnInit {
     ngOnInit() {
         this.loadCurrentTeacher();
         this.registerChangeInSchedules();
+
     }
 
     loadCurrentTeacher() {
         this.teacherHomeService.getCurrentTeacher().subscribe(
             (res: Response) => {
                 this.currentTeacher = res.json();
-                this.loadLessons(this.currentTeacher.id);
+                this.loadForms(this.currentTeacher.id);
+                this.loadSchedule(this.currentTeacher.id);
+                res.json().lessons.forEach((lesson) => {
+                    this.lessons.push(lesson);
+                });
             },
             (res: Response) => this.onError(res.json())
         );
-    }
-
-    loadLessons(teacherId: number) {
-        this.teacherHomeService.queryLessons(teacherId).subscribe(
-            (res: Response) => {
-                this.lessons = res.json();
-                this.loadForms(this.currentTeacher.id);
-            });
     }
 
     loadForms(teacherId: number) {
         this.teacherHomeService.queryForm(teacherId).subscribe(
             (res: Response) => {
                 this.forms = res.json();
-                this.loadSchedule(this.currentTeacher.id);
             },
             (res: Response) => this.onError(res.json())
         );
@@ -73,35 +66,40 @@ export class TeacherHomeScheduleComponent implements OnInit {
         this.teacherHomeService.querySchedule(teacherId).subscribe(
             (res: Response) => {
                 this.schedules = res.json();
-                if (!this.isFilterOn) {
-                    this.filteredSchedules = this.schedules;
-                } else {
-                    this.filteredSchedules = this.teacherHomeService.filterSchedule(parseInt(String(this.selectedLessonId), 10),
-                        parseInt(String(this.selectedFormId), 10), this.schedules,
-                        isUndefined(this.selectedDate) ? this.selectedDate : new Date(this.selectedDate.toString()));
-                }
+                this.filteredSchedules = (this.isFilterOn) ?
+                    this.teacherHomeService.loadByLastFilter(this.filteredSchedules, this.schedules) : this.schedules;
             },
             (res: Response) => this.onError(res.json())
         );
     }
 
-    onClick() {
-        if (isUndefined(this.selectedLessonId) && isUndefined(this.selectedFormId) && isUndefined(this.selectedDate)) {
-            return;
-        } else {
+    onChangeDate(value) {
+        this.filteredSchedules = this.teacherHomeService.filterByDate(new Date(value.toString()),
+            (this.isFilterOn) ? this.filteredSchedules : this.schedules);
+        if (!this.isFilterOn) {
             this.isFilterOn = true;
-            this.filteredSchedules = this.teacherHomeService.filterSchedule(parseInt(String(this.selectedLessonId), 10),
-                parseInt(String(this.selectedFormId), 10), this.schedules,
-                isUndefined(this.selectedDate) ? this.selectedDate : new Date(this.selectedDate.toString()));
         }
     }
 
-    Clear() {
+    onChangeLesson(value) {
+        this.filteredSchedules = this.teacherHomeService.filterByLesson(parseInt(value, 10),
+            (this.isFilterOn) ? this.filteredSchedules : this.schedules);
+        if (!this.isFilterOn) {
+            this.isFilterOn = true;
+        }
+    }
+
+    onChangeForm(value) {
+        this.filteredSchedules = this.teacherHomeService.filterByForm(parseInt(value, 10),
+            (this.isFilterOn) ? this.filteredSchedules : this.schedules);
+        if (!this.isFilterOn) {
+            this.isFilterOn = true;
+        }
+    }
+
+    clear() {
         this.filteredSchedules = this.schedules;
         this.isFilterOn = false;
-        this.selectedLessonId = undefined;
-        this.selectedFormId = undefined;
-        this.selectedDate = undefined;
     }
 
     private onError(error) {
