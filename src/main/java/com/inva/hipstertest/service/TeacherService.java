@@ -1,11 +1,7 @@
 package com.inva.hipstertest.service;
 
-import com.inva.hipstertest.domain.Teacher;
-import com.inva.hipstertest.domain.User;
 import com.inva.hipstertest.service.dto.TeacherDTO;
-import com.inva.hipstertest.service.dto.UserDTO;
 
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -60,5 +56,7 @@ public interface TeacherService {
     TeacherDTO saveTeacherWithUser(TeacherDTO teacherDTO);
 
     List<TeacherDTO> findAllByCurrentSchool();
+
+    List<TeacherDTO> getAllBySchoolId (Long id);
 
 }
