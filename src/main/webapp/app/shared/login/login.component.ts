@@ -86,7 +86,7 @@ export class JhiLoginModalComponent implements OnInit, AfterViewInit {
                             this.router.navigate(['/teacher-home']);
                         }
                     }
-                )
+                );
             }
         }).catch(() => {
             this.authenticationError = true;
