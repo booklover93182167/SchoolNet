@@ -211,6 +211,12 @@
                             <span jhiTranslate="global.menu.entities.parentMySuffix">Parent My Suffix</span>
                         </a>
                     </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="user-addon" routerLinkActive="active" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.entities.userAddon">User Addon</span>
+                        </a>
+                    </li>
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                 </ul>
             </li>
@@ -289,14 +295,14 @@
                     <span *ngIf="!isAuthenticated()" jhiTranslate="global.menu.account.main">
                       Account
                     </span>
-                    <span *ngIf="isAccount()">
-                        {{account.login}}
-                    </span>
                     <b class="caret"></b>
                   </span>
                   <span *ngIf="getImageUrl()">
                       <img [src]="getImageUrl()" class="profile-image img-circle" alt="Avatar">
                   </span>
+                    <span *ngIf="isAccount()">
+                        {{account.login}}
+                    </span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
                     <li *ngSwitchCase="true">

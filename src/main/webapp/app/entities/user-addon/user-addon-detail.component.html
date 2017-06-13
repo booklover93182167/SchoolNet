@@ -1,0 +1,42 @@
+
+<div *ngIf="userAddon">
+    <h2><span jhiTranslate="schoolNetApp.userAddon.detail.title">User Addon</span> {{userAddon.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="schoolNetApp.userAddon.phone">Phone</span></dt>
+        <dd>
+            <span>{{userAddon.phone}}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolNetApp.userAddon.middleName">Middle Name</span></dt>
+        <dd>
+            <span>{{userAddon.middleName}}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolNetApp.userAddon.image">Image</span></dt>
+        <dd>
+            <div *ngIf="userAddon.image">
+                <a (click)="openFile(userAddon.imageContentType, userAddon.image)">
+                    <img [src]="'data:' + userAddon.imageContentType + ';base64,' + userAddon.image" style="max-width: 100%;" alt="userAddon image"/>
+                </a>
+                {{userAddon.imageContentType}}, {{byteSize(userAddon.image)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="schoolNetApp.userAddon.user">User</span></dt>
+        <dd>
+            {{userAddon.userLogin}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'user-addon/'+ userAddon.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
