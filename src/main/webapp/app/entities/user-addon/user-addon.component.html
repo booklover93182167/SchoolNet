@@ -1,0 +1,69 @@
+<div>
+    <h2>
+        <span jhiTranslate="schoolNetApp.userAddon.home.title">User Addons</span>
+        <button class="btn btn-primary float-right create-user-addon" [routerLink]="['/', { outlets: { popup: ['user-addon-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="schoolNetApp.userAddon.home.createLabel">
+            Create new User Addon
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="userAddons">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="schoolNetApp.userAddon.phone">Phone</span></th>
+            <th><span jhiTranslate="schoolNetApp.userAddon.middleName">Middle Name</span></th>
+            <th><span jhiTranslate="schoolNetApp.userAddon.image">Image</span></th>
+            <th><span jhiTranslate="schoolNetApp.userAddon.user">User</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let userAddon of userAddons ;trackBy: trackId">
+                <td><a [routerLink]="['../user-addon', userAddon.id ]">{{userAddon.id}}</a></td>
+                <td>{{userAddon.phone}}</td>
+                <td>{{userAddon.middleName}}</td>
+                <td>
+                    <a *ngIf="userAddon.image" (click)="openFile(userAddon.imageContentType, userAddon.image)">
+                        <img [src]="'data:' + userAddon.imageContentType + ';base64,' + userAddon.image" style="max-height: 30px;" alt="userAddon image"/>
+                    </a>
+                    <span *ngIf="userAddon.image">{{userAddon.imageContentType}}, {{byteSize(userAddon.image)}}</span>
+                </td>
+                <td>
+                    {{userAddon.userLogin}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../user-addon', userAddon.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'user-addon/'+ userAddon.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'user-addon/'+ userAddon.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
