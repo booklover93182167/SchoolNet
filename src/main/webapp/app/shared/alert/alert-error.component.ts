@@ -68,6 +68,9 @@ export class JhiAlertErrorComponent implements OnDestroy {
                 case 404:
                     this.addErrorAlert('Not found', 'error.url.not.found');
                     break;
+                case 403:
+                    this.addErrorAlert('Access denied', 'error.url.access.denied');
+                    break;
 
                 default:
                     if (httpResponse.text() !== '' && httpResponse.json() && httpResponse.json().message) {

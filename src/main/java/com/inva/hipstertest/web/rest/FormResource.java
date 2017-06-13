@@ -4,12 +4,16 @@ import com.codahale.metrics.annotation.Timed;
 import com.inva.hipstertest.service.FormService;
 import com.inva.hipstertest.service.PupilService;
 import com.inva.hipstertest.service.dto.PupilDTO;
+import com.inva.hipstertest.web.rest.errors.ErrorConstants;
+import com.inva.hipstertest.web.rest.errors.ErrorVM;
+import com.inva.hipstertest.web.rest.errors.ExceptionTranslator;
 import com.inva.hipstertest.web.rest.util.HeaderUtil;
 import com.inva.hipstertest.service.dto.FormDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -117,10 +121,19 @@ public class FormResource {
     @Timed
     public ResponseEntity<FormDTO> getForm(@PathVariable Long id) {
         log.debug("REST request to get Form : {}", id);
-        FormDTO formDTO = formService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(formDTO));
-    }
+        for (FormDTO f : formService.findAllFormsByCurrentSchool()) {
+            if (f.getId().equals(id)) {
+                FormDTO formDTO = formService.findOne(id);
 
+                return ResponseUtil.wrapOrNotFound(Optional.ofNullable(formDTO));
+
+
+            }
+
+
+        }
+        return new ResponseEntity<FormDTO>(HttpStatus.FORBIDDEN);
+    }
 
 
     /**
