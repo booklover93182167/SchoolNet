@@ -36,6 +36,7 @@
                 "scheduleMySuffix": "Schedule",
                 "attendancesMySuffix": "Attendances",
                 "parentMySuffix": "Parent",
+                "userAddon": "User Addon",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -161,6 +162,7 @@
         "internalServerError": "Internal server error",
         "server.not.reachable": "Server not reachable",
         "url.not.found": "Not found",
+        "url.access.denied": "Access denied",
         "NotNull": "Field {{ fieldName }} cannot be empty!",
         "Size": "Field {{ fieldName }} does not meet min/max size requirements!",
         "userexists": "Login name already used!",

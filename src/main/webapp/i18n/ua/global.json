@@ -36,6 +36,7 @@
                 "scheduleMySuffix": "Schedule",
                 "attendancesMySuffix": "Attendances",
                 "parentMySuffix": "Parent",
+                "userAddon": "User Addon",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -160,7 +161,8 @@
     "error": {
         "internalServerError": "Internal server error",
         "server.not.reachable": "Сервер не доступний",
-        "url.not.found": "Not found",
+        "url.not.found": "Сторінку не знайдено!",
+        "url.access.denied": "У доступі відмовлено!",
         "NotNull": "Поле {{fieldName}} не може бути порожнім!",
         "Size": "Поле {{fieldName}} не відповідає вимогам мін/макс. розміру!",
         "userexists": "Ім'я користувача вже використовується!",
