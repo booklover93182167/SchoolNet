@@ -51,13 +51,13 @@
                 <table class="table table-striped ">
                     <thead>
                     <tr>
-                        <th class="text-center" colspan="4">{{ dateString | date: 'dd/MM/yyyy'}}</th>
+                        <th class="text-center" colspan="4">{{ dateString | date: 'dd.MM.yyyy'}}</th>
                     </tr>
                     <tr>
-                        <th style="width: 10%"><span jhiTranslate="teacherSchedule.schedule-table.subject-position">#</span></th>
-                        <th style="width: 40%"><span jhiTranslate="teacherSchedule.schedule-table.subject">Subject</span></th>
-                        <th style="width: 30%"><span jhiTranslate="teacherSchedule.schedule-table.form">Form</span></th>
-                        <th style="width: 30%"><span jhiTranslate="teacherSchedule.schedule-table.classroom">Classroomn</span></th>
+                        <th style="width: 1%"><span jhiTranslate="teacherSchedule.schedule-table.subject-position">#</span></th>
+                        <th style="width: 49%"><span jhiTranslate="teacherSchedule.schedule-table.subject">Subject</span></th>
+                        <th style="width: 25%"><span jhiTranslate="teacherSchedule.schedule-table.form">Form</span></th>
+                        <th style="width: 25%"><span jhiTranslate="teacherSchedule.schedule-table.classroom">Classroomn</span></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -78,7 +78,7 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th class="text-center" colspan="4"><span jhiTranslate="teacherSchedule.day-of-week.day{{i + 1}}"></span>, {{weekSchedule.day | date: 'dd/MM/yyyy'}}</th>
+                                    <th class="text-center" colspan="4"><span jhiTranslate="teacherSchedule.day-of-week.day{{i + 1}}"></span>, {{weekSchedule.day | date: 'dd.MM.yyyy'}}</th>
                                 </tr>
                                 <tr>
                                     <th style="width: 5%"><span jhiTranslate="teacherSchedule.schedule-table.subject-position">#</span></th>

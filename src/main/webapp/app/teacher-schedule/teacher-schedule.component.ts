@@ -30,12 +30,32 @@ export class TeacherScheduleComponent implements OnInit {
         this.jhiLanguageService.setLocations(['teacher-schedule']);
     }
 
-    private datepickerOptions: INgxMyDpOptions = {
-        dateFormat: 'dd.mm.yyyy'
-    };
+    private datepickerOptions: INgxMyDpOptions;
+
+    setOptions() {
+        let date = new Date(Date.now());
+        let minYear, maxYear;
+
+        if (date.getMonth() + 1 >= 9) {
+            minYear = date.getFullYear();
+            maxYear = minYear - 1;
+        } else {
+            maxYear = date.getFullYear();
+            minYear = maxYear - 1;
+        }
+
+        this.datepickerOptions = {
+            dateFormat: 'dd.mm.yyyy',
+            yearSelector: false,
+            disableUntil: {year: minYear, month: 8, day: 31},
+            disableSince: {year: maxYear, month: 9, day: 1},
+            closeSelectorOnDateSelect: false
+        };
+    }
 
     setDate(): void {
         let date = new Date(Date.now());
+
         this.dateObject = {
             date: {
                 year: date.getFullYear(),
@@ -52,6 +72,7 @@ export class TeacherScheduleComponent implements OnInit {
     ngOnInit() {
         this.setDate();
         this.loadCurrentTeacher();
+        this.setOptions();
     }
 
     loadCurrentTeacher() {
