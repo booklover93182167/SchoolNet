@@ -1,5 +1,6 @@
 package com.inva.hipstertest.service.impl;
 
+import com.inva.hipstertest.repository.TeacherRepository;
 import com.inva.hipstertest.service.FormService;
 import com.inva.hipstertest.domain.Form;
 import com.inva.hipstertest.repository.FormRepository;
@@ -7,6 +8,7 @@ import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.mapper.FormMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,8 @@ public class FormServiceImpl implements FormService{
     private final Logger log = LoggerFactory.getLogger(FormServiceImpl.class);
 
     private final FormRepository formRepository;
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     private final FormMapper formMapper;
 
@@ -102,5 +106,17 @@ public class FormServiceImpl implements FormService{
     public void delete(Long id) {
         log.debug("Request to delete Form : {}", id);
         formRepository.delete(id);
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<FormDTO> findAllFormsByCurrentSchool() {
+        log.debug("Request to get all Forms for current school");
+        long idSchool = teacherRepository.findOneWithSchool().getSchool().getId();
+
+        return formRepository.findAllFormsByCurrentSchool(idSchool).stream()
+            .map(formMapper::formToFormDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 }

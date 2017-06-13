@@ -2,6 +2,8 @@ package com.inva.hipstertest.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -38,6 +40,7 @@ public class UserAddon implements Serializable {
     private String imageContentType;
 
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @MapsId
     private User user;
 
