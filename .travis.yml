@@ -41,3 +41,5 @@ script:
 - "./mvnw clean test"
 - yarn test
 - "./mvnw package -Pprod -DskipTests"
+notifications:
+  email: false
