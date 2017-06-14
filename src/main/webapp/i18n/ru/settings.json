@@ -6,6 +6,9 @@
             "firstname.placeholder": "Ваше имя",
             "lastname": "Фамилия",
             "lastname.placeholder": "Ваша фамилия",
+            "middlename": "Отчество",
+            "middlename.placeholder": "Ваше отчество",
+            "image": "Аватарка",
             "language": "Язык",
             "button": "Сохранить"
         },
