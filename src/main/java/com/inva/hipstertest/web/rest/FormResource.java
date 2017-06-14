@@ -124,13 +124,8 @@ public class FormResource {
         for (FormDTO f : formService.findAllFormsByCurrentSchool()) {
             if (f.getId().equals(id)) {
                 FormDTO formDTO = formService.findOne(id);
-
                 return ResponseUtil.wrapOrNotFound(Optional.ofNullable(formDTO));
-
-
             }
-
-
         }
         return new ResponseEntity<FormDTO>(HttpStatus.FORBIDDEN);
     }
