@@ -1,13 +1,18 @@
 package com.inva.hipstertest.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.inva.hipstertest.domain.User;
+import com.inva.hipstertest.domain.UserAddon;
 import com.inva.hipstertest.service.UserAddonService;
+import com.inva.hipstertest.service.UserService;
 import com.inva.hipstertest.web.rest.util.HeaderUtil;
 import com.inva.hipstertest.service.dto.UserAddonDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -29,6 +34,9 @@ public class UserAddonResource {
     private static final String ENTITY_NAME = "userAddon";
 
     private final UserAddonService userAddonService;
+
+    @Autowired
+    private UserService userService;
 
     public UserAddonResource(UserAddonService userAddonService) {
         this.userAddonService = userAddonService;
@@ -86,6 +94,38 @@ public class UserAddonResource {
     public List<UserAddonDTO> getAllUserAddons() {
         log.debug("REST request to get all UserAddons");
         return userAddonService.findAll();
+    }
+
+    @Transactional
+    @GetMapping("/user-my")
+    @Timed
+    public ResponseEntity<UserAddonDTO> getUserMy() {
+        User user = userService.getUserWithAuthorities();
+        log.debug("My profile: " + user);
+        UserAddonDTO userAddonDTO = null;
+        if (user != null) {
+            userAddonDTO = userAddonService.findOne(user.getId());
+            if (userAddonDTO == null) {
+                UserAddon newUserAddon = new UserAddon();
+                newUserAddon.setUser(user);
+                newUserAddon = userAddonService.save(newUserAddon);
+                userAddonDTO = userAddonService.findOne(user.getId());
+            }
+        }
+        log.debug("My addon DTO profile: " + userAddonDTO);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userAddonDTO));
+    }
+
+    @PostMapping("/user-my")
+    @Timed
+    public ResponseEntity<UserAddonDTO> setUserMy(@RequestBody UserAddonDTO userAddonDTO) throws URISyntaxException {
+        log.debug("My recieve: " + userAddonDTO);
+        UserAddonDTO result = userAddonService.save(userAddonDTO);
+        log.debug("My save: " + result);
+//        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userAddonDTO.getId().toString()))
+            .body(result);
     }
 
     /**

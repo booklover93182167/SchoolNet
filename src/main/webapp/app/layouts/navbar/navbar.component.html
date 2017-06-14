@@ -298,7 +298,7 @@
                     <b class="caret"></b>
                   </span>
                   <span *ngIf="getImageUrl()">
-                      <img [src]="getImageUrl()" class="profile-image img-circle" alt="Avatar">
+                      <img [src]="'data:' + userAddon.imageContentType + ';base64,' + userAddon.image" class="profile-image img-circle" alt="Avatar">
                   </span>
                     <span *ngIf="isAccount()">
                         {{account.login}}

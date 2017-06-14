@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 import { JhiLanguageService, AlertService } from 'ng-jhipster';
-
 import { ScheduleMySuffix } from './../entities/schedule/';
 import { TeacherMySuffix } from '../entities/teacher/teacher-my-suffix.model';
-
 import { TeacherScheduleService } from './teacher-schedule.service';
-
 import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
 
 @Component({
@@ -15,14 +12,14 @@ import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
     styleUrls: ['./teacher-schedule.component.css']
 })
 export class TeacherScheduleComponent implements OnInit {
+
     currentTeacherAccount: TeacherMySuffix;
-    teachers: TeacherMySuffix[];
-    allSchedules: ScheduleMySuffix[];
-    filteredSchedules: ScheduleMySuffix[];
-    schedulesWithBlanks: ScheduleMySuffix[];
+    teachers: TeacherMySuffix[] = [];
+    allSchedules: ScheduleMySuffix[] = [];
+    resultSchedule = [];
     selectedID: string;
-    selectedPeriod: string;
-    dateString: string;
+    selectedPeriod: string = 'week';
+    dateString: string = new Date(Date.now()).toString();
     dateObject: Object;
 
     constructor(
@@ -31,67 +28,60 @@ export class TeacherScheduleComponent implements OnInit {
         private alertService: AlertService,
     ) {
         this.jhiLanguageService.setLocations(['teacher-schedule']);
-        this.teachers = [];
-        this.allSchedules = [];
-        this.filteredSchedules = [];
-        this.schedulesWithBlanks = [];
-
-        this.selectedPeriod = 'day';
-        this.dateString = new Date(Date.now()).toString();
     }
 
-    private datepickerOptions: INgxMyDpOptions = {
-        dateFormat: 'dd.mm.yyyy'
-    };
+    private datepickerOptions: INgxMyDpOptions;
+
+    setOptions() {
+        let date = new Date(Date.now());
+        let minYear, maxYear;
+
+        if (date.getMonth() + 1 >= 9) {
+            minYear = date.getFullYear();
+            maxYear = minYear - 1;
+        } else {
+            maxYear = date.getFullYear();
+            minYear = maxYear - 1;
+        }
+
+        this.datepickerOptions = {
+            dateFormat: 'dd.mm.yyyy',
+            yearSelector: false,
+            disableUntil: {year: minYear, month: 8, day: 31},
+            disableSince: {year: maxYear, month: 9, day: 1},
+            closeSelectorOnDateSelect: false
+        };
+    }
 
     setDate(): void {
-        let d = new Date();
+        let date = new Date(Date.now());
+
         this.dateObject = {
             date: {
-                year: d.getFullYear(),
-                month: d.getMonth() + 1,
-                day: d.getDate()}
+                year: date.getFullYear(),
+                month: date.getMonth() + 1,
+                day: date.getDate()}
         };
     }
 
     onDateChanged(event: IMyDateModel): void {
-        this.dateString = new Date(event.jsdate).toString();
+        this.dateString = event.jsdate.toString();
         this.filterSchedule();
-    }
-
-    filterSchedule() {
-        this.filteredSchedules = this.teacherScheduleService.filterSchedule(parseInt(this.selectedID, 10), new Date(this.dateString), this.allSchedules);
-        this.makeScheduleWithBlanks();
-    }
-
-    makeScheduleWithBlanks() {
-        this.schedulesWithBlanks = [];
-
-        for(let i = 1; i <= 8; i++) {
-            let blankSchedule = new ScheduleMySuffix(null, null, '', i, true, null, null, null, null, null, '', null, '', '', '');
-            this.schedulesWithBlanks.push(blankSchedule);
-        }
-
-        for(let i = 0; i < this.filteredSchedules.length; i++) {
-            let lessonPosition = this.filteredSchedules[i].lessonPosition;
-            this.schedulesWithBlanks[lessonPosition-1] = this.filteredSchedules[i];
-        }
-
-        this.filteredSchedules = this.schedulesWithBlanks;
     }
 
     ngOnInit() {
         this.setDate();
         this.loadCurrentTeacher();
+        this.setOptions();
     }
 
     loadCurrentTeacher() {
         this.teacherScheduleService.getCurrentTeacher().subscribe(
             (res: Response) => {
                 this.currentTeacherAccount = res.json();
+                this.selectedID = String(this.currentTeacherAccount.id);
                 this.loadTeachers();
                 this.loadSchedule(this.currentTeacherAccount.schoolId);
-                this.selectedID = String(this.currentTeacherAccount.id);
             },
             (res: Response) => this.onError(res.json())
         );
@@ -114,6 +104,64 @@ export class TeacherScheduleComponent implements OnInit {
                 this.onError(res.json());
             }
         );
+    }
+
+    filterSchedule() {
+        if (this.selectedPeriod == 'day') {
+            this.makeDaySchedule();
+        }
+        if (this.selectedPeriod == 'week') {
+            this.makeWeekSchedule();
+        }
+    }
+
+    makeDaySchedule() {
+        let filteredSchedule = this.teacherScheduleService.filterDaySchedule(parseInt(this.selectedID, 10), new Date(this.dateString), this.allSchedules);
+        let daySchedule: ScheduleMySuffix[] = [];
+
+        for(let i = 1; i <= 10; i++) {
+            let blankSchedule = new ScheduleMySuffix(null, null, '', i, true, null, null, null, null, null, '', null, '', '', '');
+            daySchedule.push(blankSchedule);
+        }
+
+        for(let i = 0; i < filteredSchedule.length; i++) {
+            let lessonPosition = filteredSchedule[i].lessonPosition;
+            daySchedule[lessonPosition-1] = filteredSchedule[i];
+        }
+
+        this.resultSchedule = daySchedule;
+    }
+
+    makeWeekSchedule() {
+        let filteredSchedule = this.teacherScheduleService.filterWeekSchedule(parseInt(this.selectedID, 10), new Date(this.dateString), this.allSchedules);
+        let weekSchedule = [];
+        let daysInWeek = 7;
+        let tempDate = this.teacherScheduleService.getMonday(new Date(this.dateString));
+
+        for (let i = 1; i <= daysInWeek; i++) {
+            let item = {};
+
+            item["day"] = tempDate;
+            item["schedule"] = [];
+
+            for(let i = 1; i <= 10; i++) {
+                let blankSchedule = new ScheduleMySuffix(null, null, '', i, true, null, null, null, null, null, '', null, '', '', '');
+                item["schedule"].push(blankSchedule);
+            }
+
+            weekSchedule.push(item);
+            tempDate = this.teacherScheduleService.addDays(tempDate, 1);
+        }
+
+        for (let i = 0; i < filteredSchedule.length; i++) {
+            let day = (filteredSchedule[i].date.getDay() - 1 + daysInWeek) % daysInWeek;
+            let schedule = filteredSchedule[i];
+            let lessonPosition = filteredSchedule[i].lessonPosition - 1;
+
+            weekSchedule[day].schedule[lessonPosition] = schedule;
+        }
+
+        this.resultSchedule = weekSchedule;
     }
 
     private onError(error) {

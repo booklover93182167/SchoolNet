@@ -1,9 +1,10 @@
 <div class="row">
     <div class="col-md-8 offset-md-2">
-        <h1 jhiTranslate="global.menu.teacher-schedule">Teacher Schedule</h1>
+        <h1 jhiTranslate="teacherSchedule.title">Teacher Schedule</h1>
     </div>
-    <div class="col-md-8 offset-md-2">
 
+    <div class="col-md-8 offset-md-2">
+        <br>
         <form #teacherSelectForm="ngForm">
             <div class="form-group row">
                 <label for="date-select" class="col-2 col-form-label">
@@ -35,47 +36,70 @@
                     <span jhiTranslate="teacherSchedule.form.period.title">Period</span>
                 </label>
                 <div class="col-10">
-                    <select class="form-control" id="period-select" name="period-select" [(ngModel)]="selectedPeriod">
+                    <select class="form-control" id="period-select" name="period-select" [(ngModel)]="selectedPeriod" (change)="filterSchedule()">
                         <option value="day"><span jhiTranslate="teacherSchedule.form.period.day">Day</span></option>
                         <option value="week"><span jhiTranslate="teacherSchedule.form.period.week">Week</span></option>
-                        <option value="month"><span jhiTranslate="teacherSchedule.form.period.month">Month</span></option>
                     </select>
                 </div>
             </div>
         </form>
 
+        <br>
         <div [ngSwitch]="selectedPeriod">
-            <div *ngSwitchCase="'day'">
+            <div *ngSwitchCase="'day'" class="day-schedule">
 
-                <table class="table">
-                    <thead class="thead-inverse">
+                <table class="table table-striped ">
+                    <thead>
                     <tr>
-                        <th class="text-center" colspan="4">{{ dateString | date: 'EEEE, dd MMMM yyyy'}}</th>
+                        <th class="text-center" colspan="4">{{ dateString | date: 'dd.MM.yyyy'}}</th>
                     </tr>
                     <tr>
-                        <!--<th>Date</th>-->
-                        <th style="width: 10%"><span jhiTranslate="teacherSchedule.schedule-table.subject-position">#</span></th>
-                        <th style="width: 40%"><span jhiTranslate="teacherSchedule.schedule-table.subject">Subject</span></th>
-                        <th style="width: 30%"><span jhiTranslate="teacherSchedule.schedule-table.form">Form</span></th>
-                        <th style="width: 30%"><span jhiTranslate="teacherSchedule.schedule-table.classroom">Classroomn</span></th>
-                        <!--<th>Homework</th>-->
+                        <th style="width: 1%"><span jhiTranslate="teacherSchedule.schedule-table.subject-position">#</span></th>
+                        <th style="width: 49%"><span jhiTranslate="teacherSchedule.schedule-table.subject">Subject</span></th>
+                        <th style="width: 25%"><span jhiTranslate="teacherSchedule.schedule-table.form">Form</span></th>
+                        <th style="width: 25%"><span jhiTranslate="teacherSchedule.schedule-table.classroom">Classroomn</span></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let schedule of schedulesWithBlanks | orderBy: 'lessonPosition'">
-                        <!--<td>{{schedule.date | date: 'EEEE'}}, {{schedule.date | date: 'yyyy-MM-dd'}}</td>-->
-                        <td>{{schedule.lessonPosition}}</td>
-                        <td>{{schedule.lessonName}}</td>
-                        <td>{{schedule.formName}}</td>
-                        <td>{{schedule.classroomName}}</td>
-                        <!--<td>{{schedule.homework}}</td>-->
+                    <tr *ngFor="let daySchedule of resultSchedule | orderBy: 'lessonPosition'">
+                        <td>{{daySchedule.lessonPosition}}</td>
+                        <td>{{daySchedule.lessonName}}</td>
+                        <td>{{daySchedule.formName}}</td>
+                        <td>{{daySchedule.classroomName}}</td>
                     </tr>
                     </tbody>
                 </table>
 
             </div>
-            <div *ngSwitchCase="'week'">WIP. Schedule by week table</div>
-            <div *ngSwitchCase="'month'">WIP. Schedule by month table</div>
+            <div *ngSwitchCase="'week'">
+
+                <ng-template let-weekSchedule ngFor [ngForOf]="resultSchedule" let-i="index">
+                    <div class="week-schedule">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" colspan="4"><span jhiTranslate="teacherSchedule.day-of-week.day{{i + 1}}"></span>, {{weekSchedule.day | date: 'dd.MM.yyyy'}}</th>
+                                </tr>
+                                <tr>
+                                    <th style="width: 5%"><span jhiTranslate="teacherSchedule.schedule-table.subject-position">#</span></th>
+                                    <th style="width: 85%"><span jhiTranslate="teacherSchedule.schedule-table.subject">Subject</span></th>
+                                    <th style="width: 5%"><span jhiTranslate="teacherSchedule.schedule-table.form">Form</span></th>
+                                    <th style="width: 5%"><span jhiTranslate="teacherSchedule.schedule-table.classroom">Classroomn</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let daySchedule of weekSchedule.schedule">
+                                    <td>{{daySchedule.lessonPosition}}</td>
+                                    <td><div class="overflow-hidden">{{daySchedule.lessonName}}</div></td>
+                                    <td>{{daySchedule.formName}}</td>
+                                    <td>{{daySchedule.classroomName}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-template>
+
+            </div>
         </div>
 
     </div>

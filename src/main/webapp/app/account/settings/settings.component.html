@@ -9,7 +9,7 @@
 
             <jhi-alert-error></jhi-alert-error>
 
-            <form name="form" role="form" (ngSubmit)="save()" #settingsForm="ngForm" *ngIf="settingsAccount" novalidate>
+            <form name="form" role="form" (ngSubmit)="save()" #settingsForm="ngForm" *ngIf="settingsAccount && userAddon" novalidate>
 
                 <div class="form-group">
                     <label class="form-control-label" for="firstName" jhiTranslate="settings.form.firstname">First Name</label>
@@ -30,6 +30,13 @@
                         </small>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="settings.form.middlename" for="middleName">Middle Name</label>
+                    <input type="text" class="form-control" name="middleName" id="middleName" placeholder="{{'settings.form.middlename.placeholder' | translate}}"
+                           [(ngModel)]="userAddon.middleName" minlength=0 maxlength=50/>
+                </div>
+
                 <div class="form-group">
                     <label class="form-control-label" for="lastName" jhiTranslate="settings.form.lastname">Last Name</label>
                     <input type="text" class="form-control" id="lastName" name="lastName" placeholder="{{'settings.form.lastname.placeholder' | translate}}"
@@ -49,6 +56,7 @@
                         </small>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" for="email" jhiTranslate="global.form.email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="{{'global.form.email.placeholder' | translate}}"
@@ -73,10 +81,16 @@
                     </div>
                 </div>
 
+                <!--<div class="form-group">-->
+                    <!--<label class="form-control-label" for="imageUrl" jhiTranslate="global.form.imageUrl">URL for user photo</label>-->
+                    <!--<input type="url" class="form-control" id="imageUrl" name="imageUrl" placeholder="{{'global.form.imageUrl.placeholder' | translate}}"-->
+                           <!--[(ngModel)]="settingsAccount.imageUrl" minlength=0 maxlength=255 #imageUrlInput="ngModel">-->
+                <!--</div>-->
+
                 <div class="form-group">
-                    <label class="form-control-label" for="imageUrl" jhiTranslate="global.form.imageUrl">URL for user photo</label>
-                    <input type="url" class="form-control" id="imageUrl" name="imageUrl" placeholder="{{'global.form.imageUrl.placeholder' | translate}}"
-                           [(ngModel)]="settingsAccount.imageUrl" minlength=0 maxlength=255 #imageUrlInput="ngModel">
+                    <label class="form-control-label" for="phone" jhiTranslate="global.form.phone">Phone</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" #phone="ngModel" placeholder="{{'global.form.phone.placeholder' | translate}}"
+                           [(ngModel)]="userAddon.phone" minlength=0 maxlength=25>
                 </div>
 
                 <div class="form-group" *ngIf="languages && languages.length > 0">
@@ -85,6 +99,27 @@
                         <option *ngFor="let language of languages" [value]="language">{{language | findLanguageFromKey}}</option>
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="settings.form.image" for="image">Image</label>
+                    <div>
+                        <img [src]="'data:' + userAddon.imageContentType + ';base64,' + userAddon.image" style="max-height: 200px;" *ngIf="userAddon.image" alt="userAddon image"/>
+                        <div *ngIf="userAddon.image" class="form-text text-danger clearfix">
+                            <span class="pull-left">{{userAddon.imageContentType}}, {{byteSize(userAddon.image)}}</span>
+                            <button type="button" (click)="userAddon.image=null;userAddon.imageContentType=null;"
+                                    class="btn btn-default btn-xs pull-right">
+                                <span class="fa fa-times"></span>
+                            </button>
+                        </div>
+                        <input type="file" (change)="setFileData($event, userAddon, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="image" id="image"
+                           [(ngModel)]="userAddon.image"
+                    />
+                    <input type="hidden" class="form-control" name="imageContentType" id="imageContentType"
+                           [(ngModel)]="userAddon.imageContentType" />
+                </div>
+
                 <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary" jhiTranslate="settings.form.button">Save</button>
             </form>
         </div>

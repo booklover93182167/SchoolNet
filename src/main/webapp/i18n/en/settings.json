@@ -6,6 +6,9 @@
             "firstname.placeholder": "Your first name",
             "lastname": "Last Name",
             "lastname.placeholder": "Your last name",
+            "middlename": "Middle Name",
+            "middlename.placeholder": "Your middle name",
+            "image": "Avatar",
             "language": "Language",
             "button": "Save"
         },

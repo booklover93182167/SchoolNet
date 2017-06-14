@@ -8,6 +8,7 @@ import { UserAddon } from './user-addon.model';
 export class UserAddonService {
 
     private resourceUrl = 'api/user-addons';
+    private resourceMy = 'api/user-my';
 
     constructor(private http: Http) { }
 
@@ -25,8 +26,21 @@ export class UserAddonService {
         });
     }
 
+    saveMy(userAddon: UserAddon): Observable<UserAddon> {
+        const copy: UserAddon = Object.assign({}, userAddon);
+        return this.http.post(this.resourceMy, copy).map((res: Response) => {
+            return res.json();
+        });
+    }
+
     find(id: number): Observable<UserAddon> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+            return res.json();
+        });
+    }
+
+    findMy(): Observable<UserAddon> {
+        return this.http.get(`${this.resourceMy}`).map((res: Response) => {
             return res.json();
         });
     }

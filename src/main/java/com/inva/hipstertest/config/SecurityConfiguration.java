@@ -40,7 +40,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService,
             TokenProvider tokenProvider, CorsFilter corsFilter) {
-
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.userDetailsService = userDetailsService;
         this.tokenProvider = tokenProvider;
@@ -97,8 +96,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
             .authorizeRequests()
-            .antMatchers("freemarker/freemarkertest/").permitAll()
-            .antMatchers("freemarker/freemarkeradd/").permitAll()
+            .antMatchers("/freemarker/login/").permitAll()// Freemarker configuration
+            .antMatchers("/freemarker/freemarkertest").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/freemarker/freemarkertest/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/authenticate").permitAll()
@@ -107,8 +107,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/profile-info").permitAll()
             .antMatchers("/api/account").authenticated()
             .antMatchers("/api/account/change_password").authenticated()
-            .antMatchers("/api/user-addons").authenticated()
-            .antMatchers("/api/user-addons/**").authenticated()
+            .antMatchers("/api/user-addons").permitAll() // change
+            .antMatchers("/api/user-addons/**").permitAll() // change
+            .antMatchers("/api/user-my").permitAll() // change
 
             .antMatchers("/api/attendances").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/attendances/**").hasAuthority(AuthoritiesConstants.ADMIN)
@@ -137,7 +138,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/teacher-home/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
             .antMatchers("/api/teacher-schedule").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
             .antMatchers("/api/teacher-schedule/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
-
 
             //.antMatchers("/api/*").authenticated()
             .antMatchers("/api/pupilhome/**").hasAuthority(AuthoritiesConstants.PUPIL)//
