@@ -3,14 +3,18 @@
 <head>
     <title>Teachers list</title>
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type='text/javascript' src="test.js"></script>
+    <#--<script type="text/javascript" src="./resources/test.js"></script>-->
+    <#--<script type="text/javascript" src="<@s.url includeParams='{schoolId}' value='/templates/test.js' />></script>-->
+
+    <#--<script src="{themeUrl('/test.js')}"></script>-->
+    <#--<script type="text/javascript" src="${javascript_folder}/test.js"></script>-->
+    <#--<@include_page path="test.js"/>-->
 
     <script>
         function myFunction() {
             document.getElementById("demo").innerHTML = "Paragraph changed.";
         }
     </script>
-
 </head>
 <body>
 
