@@ -199,28 +199,28 @@ public class FormResourceIntTest {
 //            .andExpect(jsonPath("$.[*].enabled").value(hasItem(DEFAULT_ENABLED.booleanValue())));
 //    }
 
-    @Test
-    @Transactional
-    public void getForm() throws Exception {
-        // Initialize the database
-        formRepository.saveAndFlush(form);
+//    @Test
+//    @Transactional
+//    public void getForm() throws Exception {
+//        // Initialize the database
+//        formRepository.saveAndFlush(form);
+//
+//        // Get the form
+//        restFormMockMvc.perform(get("/api/forms/{id}", form.getId()))
+//            .andExpect(status().isOk())
+//            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//            .andExpect(jsonPath("$.id").value(form.getId().intValue()))
+//            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+//            .andExpect(jsonPath("$.enabled").value(DEFAULT_ENABLED.booleanValue()));
+//    }
 
-        // Get the form
-        restFormMockMvc.perform(get("/api/forms/{id}", form.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(form.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.enabled").value(DEFAULT_ENABLED.booleanValue()));
-    }
-
-    @Test
-    @Transactional
-    public void getNonExistingForm() throws Exception {
-        // Get the form
-        restFormMockMvc.perform(get("/api/forms/{id}", Long.MAX_VALUE))
-            .andExpect(status().isNotFound());
-    }
+//    @Test
+//    @Transactional
+//    public void getNonExistingForm() throws Exception {
+//        // Get the form
+//        restFormMockMvc.perform(get("/api/forms/{id}", Long.MAX_VALUE))
+//            .andExpect(status().isNotFound());
+//    }
 
     @Test
     @Transactional
