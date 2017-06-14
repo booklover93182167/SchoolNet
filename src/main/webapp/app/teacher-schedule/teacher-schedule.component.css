@@ -1,0 +1,19 @@
+.week-schedule {
+    width: 300px;
+    float: left;
+}
+.week-schedule table {
+    width: 100%;
+}
+.day-schedule table tr td,
+.day-schedule table tr th,
+.week-schedule table tr td,
+.week-schedule table tr th {
+    white-space: nowrap;
+    padding: 3px 3px;
+    text-align: center;
+}
+.overflow-hidden {
+    width: 144px;
+    overflow: hidden;
+}
