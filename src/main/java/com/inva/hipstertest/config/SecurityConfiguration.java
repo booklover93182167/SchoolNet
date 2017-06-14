@@ -107,8 +107,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/profile-info").permitAll()
             .antMatchers("/api/account").authenticated()
             .antMatchers("/api/account/change_password").authenticated()
-            .antMatchers("/api/user-addons").authenticated()
-            .antMatchers("/api/user-addons/**").authenticated()
+            .antMatchers("/api/user-addons").permitAll() // change
+            .antMatchers("/api/user-addons/**").permitAll() // change
+            .antMatchers("/api/user-my").permitAll() // change
 
             .antMatchers("/api/attendances").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/attendances/**").hasAuthority(AuthoritiesConstants.ADMIN)

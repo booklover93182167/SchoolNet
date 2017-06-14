@@ -5,6 +5,8 @@ import { JhiLanguageService } from 'ng-jhipster';
 
 import { ProfileService } from '../profiles/profile.service'; // FIXME barrel doesn't work here
 import { Account, JhiLanguageHelper, Principal, LoginModalService, LoginService } from '../../shared';
+import { UserAddon } from '../../entities/user-addon/user-addon.model';
+import { UserAddonService } from '../../entities/user-addon/user-addon.service';
 
 import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
 
@@ -24,6 +26,7 @@ export class NavbarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    userAddon: UserAddon;
 
     constructor(
         private loginService: LoginService,
@@ -32,7 +35,8 @@ export class NavbarComponent implements OnInit {
         private principal: Principal,
         private loginModalService: LoginModalService,
         private profileService: ProfileService,
-        private router: Router
+        private router: Router,
+        private userAddonService: UserAddonService
     ) {
         this.version = DEBUG_INFO_ENABLED ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -41,6 +45,7 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit() {
         this.account = null;
+        this.userAddon = null;
 
         this.languageHelper.getAll().then((languages) => {
             this.languages = languages;
@@ -71,6 +76,12 @@ export class NavbarComponent implements OnInit {
             });
         }
 
+        if (this.account && this.userAddon == null) {
+            this.userAddonService.findMy().subscribe((userAddon) => {
+                this.userAddon = userAddon;
+            });
+        }
+
         if (this.account) {
             return true;
         }
@@ -84,6 +95,7 @@ export class NavbarComponent implements OnInit {
 
     logout() {
         this.account = null;
+        this.userAddon = null;
         this.collapseNavbar();
         this.loginService.logout();
         this.router.navigate(['']);
@@ -94,6 +106,6 @@ export class NavbarComponent implements OnInit {
     }
 
     getImageUrl() {
-        return this.isAuthenticated() ? this.principal.getImageUrl() : null;
+        return (this.isAuthenticated() && this.userAddon) ? this.userAddon.image : null;
     }
 }

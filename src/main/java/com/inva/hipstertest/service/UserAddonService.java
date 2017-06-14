@@ -1,5 +1,6 @@
 package com.inva.hipstertest.service;
 
+import com.inva.hipstertest.domain.UserAddon;
 import com.inva.hipstertest.service.dto.UserAddonDTO;
 import java.util.List;
 
@@ -16,9 +17,11 @@ public interface UserAddonService {
      */
     UserAddonDTO save(UserAddonDTO userAddonDTO);
 
+    UserAddon save(UserAddon userAddon);
+
     /**
      *  Get all the userAddons.
-     *  
+     *
      *  @return the list of entities
      */
     List<UserAddonDTO> findAll();
