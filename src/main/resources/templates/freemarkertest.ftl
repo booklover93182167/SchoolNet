@@ -9,6 +9,7 @@
 </div>
 
 <div id="content">
+    <script type="text/javascript" src="/temlates/test.js"></script>
 
     <fieldset>
         <legend>Add School</legend>

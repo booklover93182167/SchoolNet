@@ -1,29 +1,39 @@
+<div>
+    <h2 *ngIf="currentTeacher"><span jhiTranslate="schoolNetApp.teacher.welcome-message">Welcome </span><b>{{currentTeacher.firstName
+        + ' ' + currentTeacher.lastName}}</b></h2>
+</div>
+
 <div class="col-md-8 offset-md-2">
-    <form #teacherSelectForm="ngForm">
+    <form #selectForm="ngForm">
         <label><span jhiTranslate="schoolNetApp.teacher.form.label">You can use the filter</span></label>
         <div class="form-group row">
             <label for="date-select" class="col-2 col-form-label"><span jhiTranslate="schoolNetApp.teacher.form.date">Date</span></label>
             <div class="col-10">
-                <input class="form-control" type="date" id="date-select" name="dateSelect" [ngModel]="selectedDate" (ngModelChange)="onChangeDate($event)">
+                <input class="form-control" type="date" id="date-select" name="dateSelect" [(ngModel)]="selectedDate"
+                       (ngModelChange)="onChangeDate($event)">
             </div>
         </div>
         <div class="form-group row">
-            <label for="lesson-select" class="col-2 col-form-label"><span jhiTranslate="schoolNetApp.teacher.form.lesson">Lesson</span></label>
+            <label for="lesson-select" class="col-2 col-form-label"><span
+                jhiTranslate="schoolNetApp.teacher.form.lesson">Lesson</span></label>
             <div class="col-10">
-                <select class="form-control" id="lesson-select"  name="lessonSelect" [ngModel]="selectedLessonId" (ngModelChange)="onChangeLesson($event)">
-                    <option *ngFor="let lesson of lessons" [value]="lesson.id">{{lesson.name}}</option>
+                <select class="form-control" id="lesson-select" name="lessonSelect" [(ngModel)]="selectedLessonId"
+                        (ngModelChange)="onChangeLesson($event)">
+                    <option *ngFor="let lesson of lessons" [value]="lesson.id" placeholder = "Select topics">{{lesson.name}}</option>
                 </select>
             </div>
         </div>
         <div class="form-group row">
             <label for="form-select" class="col-2 col-form-label"><span jhiTranslate="schoolNetApp.teacher.form.form">Form</span></label>
             <div class="col-10">
-                <select class="form-control" id="form-select" name="formSelect" [ngModel]="" (ngModelChange)="onChangeForm($event)">
+                <select class="form-control" id="form-select"  name="formSelect" [(ngModel)]="selectedForm"
+                        (ngModelChange)="onChangeForm($event)">
                     <option *ngFor="let form of forms;" [value]="form.id">{{form.name}}</option>
                 </select>
                 <div class="form-group row">
                     <div class="col-10">
-                        <button class="btn" (click)="clear()"><span jhiTranslate="schoolNetApp.teacher.form.buttonClear">Clear fields</span></button>
+                        <button class="btn" (click)="clear()"><span
+                            jhiTranslate="schoolNetApp.teacher.form.buttonClear">Clear fields</span></button>
                     </div>
                 </div>
             </div>
