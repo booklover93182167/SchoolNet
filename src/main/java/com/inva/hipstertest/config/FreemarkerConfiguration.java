@@ -17,7 +17,7 @@ public class FreemarkerConfiguration extends WebMvcConfigurerAdapter{
     @Bean
     public ViewResolver viewResolver() {
         FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
-        resolver.setCache(true);
+        resolver.setCache(false);
         resolver.setPrefix("/freemarker/");
         resolver.setSuffix(".ftl");
         resolver.setContentType("text/html; charset=UTF-8");

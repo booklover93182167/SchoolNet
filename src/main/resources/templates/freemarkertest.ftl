@@ -22,6 +22,7 @@
         </form>
     </fieldset>
     <br/>
+    <a href="logout">Logout</a>
     <table>
         <tr>
             <th colspan="2">Schools List</th>
