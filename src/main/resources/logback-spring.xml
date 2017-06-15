@@ -15,6 +15,18 @@
             <Pattern>%d %-5level [%thread] %logger{0}: %msg%n</Pattern>
         </encoder>
     </appender>
+
+    <appender name="security" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>Security.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>360</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>utf-8</charset>
+            <Pattern>%d %-5level [%thread] %logger{0}: %msg%n</Pattern>
+        </encoder>
+    </appender>
+
     <!--
         <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
             <queueSize>512</queueSize>
@@ -22,7 +34,19 @@
         </appender>
     -->
 
-    <logger name="com.inva.hipstertest" level="#logback.loglevel#"/>
+    <logger name="com.inva.hipstertest.security" level="DEBUG">
+        <appender-ref ref = "security"/>
+    </logger>
+    <logger name="com.inva.hipstertest.config" level="DEBUG">
+        <appender-ref ref = "security"/>
+    </logger>
+
+    <logger name="com.inva.hipstertest.web.rest.UserJWTController" level="DEBUG">
+        <appender-ref ref = "security"/>
+    </logger>
+
+    <logger name="com.inva.hipstertest" level="#logback.loglevel#">
+    </logger>
 
     <logger name="io.github.jhipster" level="DEBUG"/>
 
@@ -63,4 +87,5 @@
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </root>
+
 </configuration>

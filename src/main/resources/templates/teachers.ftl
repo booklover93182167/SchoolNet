@@ -4,7 +4,6 @@
     <title>Teachers list</title>
 <body>
 
-
 <div id="content">
 
     <br/>
@@ -23,5 +22,4 @@
         </#list>
     </table>
 </div>
-</body>
-</html>
+<#include "/templates/viewFTL/footer.ftl">

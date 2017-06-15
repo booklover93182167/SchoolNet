@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><title>FreeMarker Spring MVC Hello World</title>
-<body>
-<div id="header">
-    <h2>
-        FreeMarker Spring MVC Hello World
-    </h2>
-</div>
+<#import "header.ftl" as h>
+<@h.header>
 
-<div id="content">
+</@h.header>
 
+    <div id="content">
     <fieldset>
         <legend>Add School</legend>
         <form name="schoolDTO" action="/freemarker/freemarkertest/add" method="post">
@@ -38,5 +32,7 @@
     </#list>
     </table>
 </div>
-</body>
-</html>
+<script src=""></script>
+<@h.footer>
+
+</@h.footer>
