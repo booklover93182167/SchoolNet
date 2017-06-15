@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Teachers list</title>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
 <body>
 
 <div id="content">
@@ -13,7 +15,7 @@
             <th colspan="3">Teachers list by school id # ${schoolId}</th>
         </tr>
         <tr>
-            <th>First Name</th>  <th>Last Name</th> <th>E-mail</th>
+            <th id="demo">First Name</th>  <th>Last Name</th> <th>E-mail</th>
         </tr>
         <#list model["teachersList"] as teacher>
             <tr>
@@ -21,5 +23,14 @@
             </tr>
         </#list>
     </table>
+    <br/>
+
+
+    <script type="text/javascript" src="/scripts/test.js"></script>
+
+
+    <input type="button" value="external function" id="externalJs" onclick="myFunction()">
+
+
 </div>
 <#include "/templates/viewFTL/footer.ftl">

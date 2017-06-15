@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class UserAddonServiceImpl implements UserAddonService{
 
     private final Logger log = LoggerFactory.getLogger(UserAddonServiceImpl.class);
-    
+
     private final UserAddonRepository userAddonRepository;
 
     private final UserAddonMapper userAddonMapper;
@@ -47,9 +47,14 @@ public class UserAddonServiceImpl implements UserAddonService{
         return result;
     }
 
+    @Override
+    public UserAddon save(UserAddon userAddon) {
+        return userAddonRepository.save(userAddon);
+    }
+
     /**
      *  Get all the userAddons.
-     *  
+     *
      *  @return the list of entities
      */
     @Override

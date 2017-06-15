@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { DateUtils } from 'ng-jhipster';
-
-import { ScheduleMySuffix } from './../entities/schedule/schedule-my-suffix.model';
+import { ScheduleMySuffix } from './../entities/schedule/';
 
 @Injectable()
 export class TeacherScheduleService {
@@ -27,7 +26,7 @@ export class TeacherScheduleService {
             .map((res: any) => this.convertResponse(res));
     }
 
-    filterSchedule(teacherID: number, date: Date, teacherSchedule: ScheduleMySuffix[]): ScheduleMySuffix[] {
+    filterDaySchedule(teacherID: number, date: Date, teacherSchedule: ScheduleMySuffix[]): ScheduleMySuffix[] {
         const schedulesForDate: ScheduleMySuffix[] = [];
         for (const schedule of teacherSchedule) {
             if (date.getDate() === schedule.date.getDate() &&
@@ -38,6 +37,32 @@ export class TeacherScheduleService {
             }
         }
         return schedulesForDate;
+    }
+
+    filterWeekSchedule(teacherID: number, date: Date, teacherSchedule: ScheduleMySuffix[]): ScheduleMySuffix[] {
+        let firstDayOfWeek = this.getMonday(date);
+        let lastDayOfWeek = this.addDays(firstDayOfWeek, 6);
+
+        const schedulesForDate: ScheduleMySuffix[] = [];
+        for (const schedule of teacherSchedule) {
+            if (firstDayOfWeek < schedule.date && schedule.date < lastDayOfWeek &&
+                teacherID === schedule.teacherId) {
+                schedulesForDate.push(schedule);
+            }
+        }
+        return schedulesForDate;
+    }
+
+    getMonday(date: Date): Date {
+        let day = date.getDay();
+        let diff = date.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        return new Date(date.setDate(diff));
+    }
+
+    addDays(date: Date, days: number): Date {
+        let result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
     }
 
     private convertResponse(res: any): any {

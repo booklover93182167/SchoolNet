@@ -4,6 +4,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
 import {ScheduleMySuffix} from '../entities/schedule/schedule-my-suffix.model';
 import {TeacherHomeService} from './teacher-home.service';
+import {TeacherHomeScheduleComponent} from "./teacher-home.schedule.component";
 
 @Injectable()
 export class TeacherHomePopupService {
@@ -27,6 +28,7 @@ export class TeacherHomePopupService {
                     .transform(schedule.date, 'yyyy-MM-ddThh:mm');
                 this.scheduleModalRef(component, schedule);
             });
+            // this.scheduleModalRef(component, this.teacherHomeScheduleComponent.filteredSchedules);
         }
     }
 

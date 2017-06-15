@@ -3,7 +3,6 @@ import {Response} from '@angular/http';
 import {JhiLanguageService, AlertService, EventManager} from 'ng-jhipster';
 
 import {TeacherMySuffix} from './../entities/teacher/teacher-my-suffix.model';
-
 import {TeacherHomeService} from './teacher-home.service';
 import {Subscription} from 'rxjs/Subscription';
 import {ScheduleMySuffix} from '../entities/schedule/schedule-my-suffix.model';
@@ -25,6 +24,9 @@ export class TeacherHomeScheduleComponent implements OnInit {
     lessons: LessonMySuffix[] = [];
     forms: FormMySuffix[];
     isFilterOn: boolean;
+    selectedDate: string;
+    selectedLessonId: string;
+    selectedForm: string;
 
     constructor(private jhiLanguageService: JhiLanguageService,
                 private teacherHomeService: TeacherHomeService,
@@ -36,7 +38,6 @@ export class TeacherHomeScheduleComponent implements OnInit {
     ngOnInit() {
         this.loadCurrentTeacher();
         this.registerChangeInSchedules();
-
     }
 
     loadCurrentTeacher() {
@@ -100,6 +101,9 @@ export class TeacherHomeScheduleComponent implements OnInit {
     clear() {
         this.filteredSchedules = this.schedules;
         this.isFilterOn = false;
+        this.selectedDate = '';
+        this.selectedLessonId = '';
+        this.selectedForm = '';
     }
 
     private onError(error) {

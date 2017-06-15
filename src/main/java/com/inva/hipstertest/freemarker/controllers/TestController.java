@@ -53,7 +53,7 @@ public class TestController {
      */
     @RequestMapping(value = "freemarker/freemarkertest/add", method = RequestMethod.POST)
     public String add(@ModelAttribute("schoolDTO") SchoolDTO schoolDTO) {
-        if(schoolDTO.getName() != null && !schoolDTO.getName().isEmpty() &&
+        if (schoolDTO.getName() != null && !schoolDTO.getName().isEmpty() &&
             schoolDTO.getEnabled() != null) {
             schoolService.save(schoolDTO);
             return "redirect:";
@@ -75,7 +75,7 @@ public class TestController {
         List<TeacherDTO> teachers = teacherService.getAllBySchoolId(schoolId);
         model.addAttribute("teachersList", teachers);
         model.addAttribute("schoolId", schoolId);
-    return "teachers";
+        return "teachers";
     }
 
 }
