@@ -38,12 +38,9 @@ public class FreemarkerConfiguration extends WebMvcConfigurerAdapter {
         factory.setTemplateLoaderPaths("classpath:org/springframework/web/servlet/view/freemarker", "classpath:templates");
         factory.setDefaultEncoding("UTF-8");
         FreeMarkerConfigurer result = new FreeMarkerConfigurer();
-
-//        Properties properties = new Properties();
-//        properties.setProperty("auto_import", "/spring.ftl as locale");
-//        result.setFreemarkerSettings(properties);
-
-        result.setConfiguration(factory.createConfiguration());
+        freemarker.template.Configuration configuration = factory.createConfiguration();
+        configuration.addAutoImport("locale", "spring.ftl");
+        result.setConfiguration(configuration);
         return result;
     }
 

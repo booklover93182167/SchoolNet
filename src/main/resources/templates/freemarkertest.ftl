@@ -1,5 +1,3 @@
-<#import "/spring.ftl" as locale/>
-
 <!DOCTYPE html>
 <html>
 <head>
