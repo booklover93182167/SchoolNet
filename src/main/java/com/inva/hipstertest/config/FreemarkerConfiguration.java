@@ -40,7 +40,7 @@ public class FreemarkerConfiguration extends WebMvcConfigurerAdapter {
         FreeMarkerConfigurer result = new FreeMarkerConfigurer();
 
 //        Properties properties = new Properties();
-//        properties.setProperty("auto_import", "/spring.ftl as spring");
+//        properties.setProperty("auto_import", "/spring.ftl as locale");
 //        result.setFreemarkerSettings(properties);
 
         result.setConfiguration(factory.createConfiguration());

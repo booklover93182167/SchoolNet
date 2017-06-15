@@ -1,4 +1,4 @@
-<#import "/spring.ftl" as spring/>
+<#import "/spring.ftl" as locale/>
 
 <!DOCTYPE html>
 <html>
@@ -22,39 +22,39 @@
 
 <div style="float: right">
     <select id="locales">
-        <option value=""><@spring.message "lang.select"/></option>
-        <option value="en"><@spring.message "lang.en"/></option>
-        <option value="ru"><@spring.message "lang.ru"/></option>
-        <option value="ua"><@spring.message "lang.ua"/></option>
+        <option value=""><@locale.message "lang.select"/></option>
+        <option value="en"><@locale.message "lang.en"/></option>
+        <option value="ru"><@locale.message "lang.ru"/></option>
+        <option value="ua"><@locale.message "lang.ua"/></option>
     </select>
 </div>
 
 <div id="header">
-    <h2><@spring.message "greeting"/></h2>
+    <h2><@locale.message "greeting"/></h2>
 </div>
 <div id="content">
 <#--<script type="text/javascript" src="/temlates/test.js"></script>-->
     <fieldset>
-        <legend><@spring.message "school.add"/></legend>
+        <legend><@locale.message "school.add"/></legend>
         <form name="schoolDTO" action="/freemarker/freemarkertest/add" method="post">
-            <@spring.message "school.name"/>: <input type="text" name="name"/>
-            <br/><@spring.message "school.enabled"/>:
+            <@locale.message "school.name"/>: <input type="text" name="name"/>
+            <br/><@locale.message "school.enabled"/>:
                 <select name="enabled">
-                <option value="true"><@spring.message "true"/></option>
-                <option value="false"><@spring.message "false"/></option>
+                <option value="true"><@locale.message "true"/></option>
+                <option value="false"><@locale.message "false"/></option>
             </select>
-            <br/><input type="submit" value="<@spring.message "save"/>"/>
+            <br/><input type="submit" value="<@locale.message "save"/>"/>
         </form>
     </fieldset>
     <br/>
-    <a href="logout"><@spring.message "logout"/></a>
+    <a href="logout"><@locale.message "logout"/></a>
     <table>
         <tr>
-            <th colspan="2"><@spring.message "school.list"/></th>
+            <th colspan="2"><@locale.message "school.list"/></th>
         </tr>
         <tr>
-            <th><@spring.message "school.name"/></th>
-            <th><@spring.message "school.id"/></th>
+            <th><@locale.message "school.name"/></th>
+            <th><@locale.message "school.id"/></th>
         </tr>
         <#list model["schoolList"] as school>
             <tr>
