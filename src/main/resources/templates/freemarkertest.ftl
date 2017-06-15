@@ -5,18 +5,8 @@
 <head>
     <meta charset="utf-8">
     <title>FreeMarker Spring MVC Hello World</title>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#locales").change(function () {
-                var selectedOption = $('#locales').val();
-                if (selectedOption != ''){
-                    window.location.replace(window.location.pathname + '?lang=' + selectedOption);
-                }
-            });
-        });
-    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="/scripts/languageChanger.js"></script>
 </head>
 <body>
 
