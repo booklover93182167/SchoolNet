@@ -33,8 +33,7 @@
     <h2><@spring.message "greeting"/></h2>
 </div>
 <div id="content">
-    <script type="text/javascript" src="/temlates/test.js"></script>
-
+<#--<script type="text/javascript" src="/temlates/test.js"></script>-->
     <fieldset>
         <legend><@spring.message "school.add"/></legend>
         <form name="schoolDTO" action="/freemarker/freemarkertest/add" method="post">

@@ -49,8 +49,8 @@ public class FreemarkerConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**")
-            .addResourceLocations("/resources/");
+        registry.addResourceHandler("/scripts/**")
+            .addResourceLocations("/scripts/");
     }
 
     @Bean
