@@ -34,7 +34,6 @@
         </#list>
     </table>
 </div>
-<script src=""></script>
 <@h.footer>
 
 </@h.footer>

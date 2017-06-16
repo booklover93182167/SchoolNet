@@ -60,6 +60,30 @@
                 </li>
                 </@security.authorize>
 
+                <@security.authorize  access="hasRole('ROLE_PUPIL') or hasRole('ROLE_ADMIN')">
+                <li class="nav-item dropdown pointer">
+                    <a class="nav-link dropdown-toggle" href="/freemarker/pupil-home" id="pupil-menu" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                        <span>
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                                <span>
+                                    Home
+                                </span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="head-teacher-menu">
+                        <a class="dropdown-item" (click)="collapseNavbar()" href="/freemarker/pupil-home">
+                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                            <span>Schedule</span>
+                        </a>
+                        <a class="dropdown-item" (click)="collapseNavbar()" href="#">
+                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                            <span>Attendances</span>
+                        </a>
+                    </div>
+                </li>
+                </@security.authorize>
+
                 <li class="nav-item dropdown pointer">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="languagesnavBarDropdown" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                         <span>
@@ -79,7 +103,7 @@
                         </a>
                         <a class="dropdown-item" onclick="change('ru')" href="#">
                             <i class="fa fa-rub" aria-hidden="true"></i>
-                            <span>Російська</span>
+                            <span><@locale.message "lang.ru"/></span>
                         </a>
                     </div>
                 </li>
@@ -87,7 +111,7 @@
                 <li class="nav-item dropdown pointer">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="account-menu" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                         <span>
-                            <i class="fa-id-card-o" aria-hidden="true"></i>
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
                             <span>Account</span>
                             <b class="caret"></b>
                         </span>
