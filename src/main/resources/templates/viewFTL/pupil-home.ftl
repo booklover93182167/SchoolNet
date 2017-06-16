@@ -1,21 +1,8 @@
-<html>
-<!DOCTYPE html>
-<head>
-    <meta charset="utf-8">
-    <title>Pupil home</title>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="/scripts/languageChanger.js"></script>
-</head>
-<body>
+<#import "viewFTL/header.ftl" as h>
+<@h.header>
 
-<div style="float: right">
-    <select id="locales">
-        <option value=""><@locale.message "lang.select"/></option>
-        <option value="en"><@locale.message "lang.en"/></option>
-        <option value="ru"><@locale.message "lang.ru"/></option>
-        <option value="ua"><@locale.message "lang.ua"/></option>
-    </select>
-</div>
+</@h.header>
+
 
 <div id="header">
     <h2></h2>
@@ -43,5 +30,7 @@
     </#list>
     </table>
 </div>
-</body>
-</html>
+<@h.footer>
+
+</@h.footer>
+

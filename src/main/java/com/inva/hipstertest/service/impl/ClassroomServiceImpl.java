@@ -56,9 +56,9 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     /**
-     * Get all the classrooms.
+     *  Get all the classrooms.
      *
-     * @return the list of entities
+     *  @return the list of entities
      */
     @Override
     @Transactional(readOnly = true)
