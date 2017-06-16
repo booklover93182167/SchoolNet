@@ -1,27 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>FreeMarker Spring MVC Hello World</title>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="/scripts/languageChanger.js"></script>
-</head>
-<body>
+<#import "header.ftl" as h>
+<@h.header>
 
-<div style="float: right">
-    <select id="locales">
-        <option value=""><@locale.message "lang.select"/></option>
-        <option value="en"><@locale.message "lang.en"/></option>
-        <option value="ru"><@locale.message "lang.ru"/></option>
-        <option value="ua"><@locale.message "lang.ua"/></option>
-    </select>
-</div>
+</@h.header>
 
-<div id="header">
-    <h2><@locale.message "greeting"/></h2>
-</div>
 <div id="content">
-<#--<script type="text/javascript" src="/temlates/test.js"></script>-->
     <fieldset>
         <legend><@locale.message "school.add"/></legend>
         <form name="schoolDTO" action="/freemarker/freemarkertest/add" method="post">
@@ -52,5 +34,7 @@
         </#list>
     </table>
 </div>
-</body>
-</html>
+<script src=""></script>
+<@h.footer>
+
+</@h.footer>

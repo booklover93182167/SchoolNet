@@ -6,7 +6,6 @@
 </head>
 <body>
 
-
 <div id="content">
 
     <br/>
@@ -34,5 +33,4 @@
 
 
 </div>
-</body>
-</html>
+<#include "/templates/viewFTL/footer.ftl">
