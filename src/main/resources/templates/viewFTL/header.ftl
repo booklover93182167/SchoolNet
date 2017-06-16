@@ -79,7 +79,7 @@
                         </a>
                         <a class="dropdown-item" onclick="change('ru')" href="#">
                             <i class="fa fa-rub" aria-hidden="true"></i>
-                            <span>Російська</span>
+                            <span><@locale.message "lang.ru"/></span>
                         </a>
                     </div>
                 </li>

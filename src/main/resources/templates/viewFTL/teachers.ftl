@@ -33,4 +33,3 @@
 
 
 </div>
-<#include "/templates/viewFTL/footer.ftl">

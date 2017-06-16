@@ -1,4 +1,4 @@
-<#import "viewFTL/header.ftl" as h>
+<#import "header.ftl" as h>
 <@h.header>
 
 </@h.header>
@@ -8,7 +8,7 @@
     <h2></h2>
 </div>
 <div id="content">
-    <table>
+    <table class="table table-striped">
         <tr>
             <th colspan="5">My schedule</th>
         </tr>
@@ -30,6 +30,10 @@
     </#list>
     </table>
 </div>
+
+
+
+
 <@h.footer>
 
 </@h.footer>
