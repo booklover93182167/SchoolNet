@@ -58,8 +58,9 @@ public class FreemarkerConfiguration extends WebMvcConfigurerAdapter {
     @PostConstruct
     public void loadClassPathTlds() {
         freeMarkerConfigurer.getTaglibFactory().setClasspathTlds(Arrays.asList("/META-INF/security.tld"));
+        }
     }
-    }
+
     @Bean
     @ConditionalOnMissingBean(ClassPathTldsLoader.class)
     public ClassPathTldsLoader classPathTldsLoader(){
