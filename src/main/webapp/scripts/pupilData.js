@@ -8,3 +8,6 @@ function getTeacherData(id) {
 function readHomework(homework) {
     alert("homework")
 } //TODO: show full homework
+
+
+// $short_string = (strlen($string) > 30) ? substr($string,0,300).'...' : $string;

@@ -6,10 +6,10 @@
 
 
 <div id="header">
-    <h2></h2>
+    <h1>Welcome </h1>
 </div>
-<div>
-    <div id="content">
+<div class="row">
+    <div class="col-md-6">
         <table class="table table-striped">
             <tr>
                 <th colspan="5">My schedule</th>
@@ -26,14 +26,14 @@
                 <td>${schedule.lessonPosition}</td>
                 <td>${schedule.lessonName}</td>
                 <td>${schedule.homework}</td>
-                <td>${schedule.classroomName}</td>
+                <td class="text"><span>${schedule.classroomName}</span></td>
                 <td>${schedule.teacherFirstName} ${schedule.teacherLastName}</td>
             </tr>
         </#list>
         </table>
     </div>
-    <div>
-        <@calendar.calendar></@calendar.calendar>
+    <div class="col-md-6">
+    <@calendar.calendar></@calendar.calendar>
     </div>
 </div>
 
