@@ -11,13 +11,15 @@
 <div id="content">
     <fieldset>
         <legend>Login</legend>
-        <form name="loginVM" action="/freemarker/authenticate" method="post">
-            Login: <input type="text" name="username"/> <br/>
-            Password: <input type="password" name="password"/> <br/>
-            Remember Me: <select name="rememberMe">
-            <option value="true">True</option>
-            <option value="false">False</option>
-        </select>
+        <form name="login" action="/freemarker/authenticate" method="post">
+            Login:
+            <@spring.formInput "loginVM.username" />
+            <@spring.showErrors "loginVM.username","error" />
+            <br>
+            Password:
+            <@spring.formInput "loginVM.password" />
+            <@spring.showErrors "loginVM.username","error" />
+            <br>
             <input type="submit" value="Submit"/>
         </form>
     </fieldset>

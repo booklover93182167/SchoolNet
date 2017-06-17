@@ -45,7 +45,7 @@ public class FreemarkerConfiguration extends WebMvcConfigurerAdapter {
         factory.setDefaultEncoding("UTF-8");
         FreeMarkerConfigurer result = new FreeMarkerConfigurer();
         freemarker.template.Configuration configuration = factory.createConfiguration();
-        configuration.addAutoImport("locale", "spring.ftl");
+        configuration.addAutoImport("spring", "spring.ftl");
         result.setConfiguration(configuration);
         return result;
     }
