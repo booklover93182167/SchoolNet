@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { JhiLanguageService, DataUtils } from 'ng-jhipster';
+// import { JhiLanguageService, DataUtils } from 'ng-jhipster';
+import { JhiLanguageService } from 'ng-jhipster';
 
 import { Principal, AccountService, JhiLanguageHelper } from '../../shared';
 
@@ -20,7 +21,7 @@ export class SettingsComponent implements OnInit {
     constructor(
         private account: AccountService,
         private principal: Principal,
-        private dataUtils: DataUtils,
+        // private dataUtils: DataUtils,
         private languageService: JhiLanguageService,
         private languageHelper: JhiLanguageHelper,
         private userAddonService: UserAddonService
@@ -62,22 +63,22 @@ export class SettingsComponent implements OnInit {
         });
     }
 
-    byteSize(field) {
-        return this.dataUtils.byteSize(field);
-    }
-
-    setFileData(event, userAddon, field, isImage) {
-        if (event.target.files && event.target.files[0]) {
-            const file = event.target.files[0];
-            if (isImage && !/^image\//.test(file.type)) {
-                return;
-            }
-            this.dataUtils.toBase64(file, (base64Data) => {
-                userAddon[field] = base64Data;
-                userAddon[`${field}ContentType`] = file.type;
-            });
-        }
-    }
+    // byteSize(field) {
+    //     return this.dataUtils.byteSize(field);
+    // }
+    //
+    // setFileData(event, userAddon, field, isImage) {
+    //     if (event.target.files && event.target.files[0]) {
+    //         const file = event.target.files[0];
+    //         if (isImage && !/^image\//.test(file.type)) {
+    //             return;
+    //         }
+    //         this.dataUtils.toBase64(file, (base64Data) => {
+    //             userAddon[field] = base64Data;
+    //             userAddon[`${field}ContentType`] = file.type;
+    //         });
+    //     }
+    // }
 
     copyAccount(account) {
         return {
