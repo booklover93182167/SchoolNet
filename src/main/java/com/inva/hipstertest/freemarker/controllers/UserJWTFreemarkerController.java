@@ -60,7 +60,9 @@ public class UserJWTFreemarkerController {
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             if (authorities.contains(new SimpleGrantedAuthority("ROLE_PUPIL"))) {
                 return "redirect:pupil-home";
-            } else {
+            } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+                return "redirect:admin-home";
+            }else{
                 return "redirect:freemarkertest";
             }
         } catch (AuthenticationException ae) {
