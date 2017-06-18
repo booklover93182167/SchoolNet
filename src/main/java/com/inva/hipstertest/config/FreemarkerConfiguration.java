@@ -45,7 +45,7 @@ public class FreemarkerConfiguration extends WebMvcConfigurerAdapter {
         factory.setDefaultEncoding("UTF-8");
         FreeMarkerConfigurer result = new FreeMarkerConfigurer();
         freemarker.template.Configuration configuration = factory.createConfiguration();
-        configuration.addAutoImport("locale", "spring.ftl");
+        configuration.addAutoImport("spring", "spring.ftl");
         result.setConfiguration(configuration);
         return result;
     }
@@ -58,8 +58,9 @@ public class FreemarkerConfiguration extends WebMvcConfigurerAdapter {
     @PostConstruct
     public void loadClassPathTlds() {
         freeMarkerConfigurer.getTaglibFactory().setClasspathTlds(Arrays.asList("/META-INF/security.tld"));
+        }
     }
-    }
+
     @Bean
     @ConditionalOnMissingBean(ClassPathTldsLoader.class)
     public ClassPathTldsLoader classPathTldsLoader(){
@@ -70,7 +71,7 @@ public class FreemarkerConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/scripts/**")
+        registry.addResourceHandler("classpath:scripts")
             .addResourceLocations("/scripts/");
     }
 

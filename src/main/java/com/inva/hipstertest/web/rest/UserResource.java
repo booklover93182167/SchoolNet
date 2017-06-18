@@ -69,7 +69,6 @@ public class UserResource {
 
     public UserResource(UserRepository userRepository, MailService mailService,
             UserService userService) {
-
         this.userRepository = userRepository;
         this.mailService = mailService;
         this.userService = userService;
