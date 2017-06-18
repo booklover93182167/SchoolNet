@@ -6,7 +6,6 @@
 </head>
 <body>
 
-
 <div id="content">
 
     <br/>
@@ -27,12 +26,10 @@
     <br/>
 
 
-    <script type="text/javascript" src="/scripts/test.js"></script>
+    <script src="/scripts/test.js"></script>
 
 
     <input type="button" value="external function" id="externalJs" onclick="myFunction()">
 
 
 </div>
-</body>
-</html>

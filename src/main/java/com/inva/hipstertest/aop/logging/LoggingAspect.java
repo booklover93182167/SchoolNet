@@ -33,7 +33,8 @@ public class LoggingAspect {
     /**
      * Pointcut that matches all repositories, services and Web REST endpoints.
      */
-    @Pointcut("within(com.inva.hipstertest.repository..*) || within(com.inva.hipstertest.service..*) || within(com.inva.hipstertest.web.rest..*)")
+    @Pointcut("within(com.inva.hipstertest.repository..*) || within(com.inva.hipstertest.service..*)" +
+        " || within(com.inva.hipstertest.web.rest..*) || within(com.inva.hipstertest.support.methods.*)")
     public void loggingPointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }
@@ -44,7 +45,7 @@ public class LoggingAspect {
      * @param joinPoint join point for advice
      * @param e exception
      */
-    @AfterThrowing(pointcut = "loggingPointcut()", throwing = "e")
+    @AfterThrowing(pointcut = "loggingPointcut() && loggingPointcutSecurity()", throwing = "e") // maybe don't work after &
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
         if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
             log.error("Exception in {}.{}() with cause = \'{}\' and exception = \'{}\'", joinPoint.getSignature().getDeclaringTypeName(),
@@ -83,4 +84,36 @@ public class LoggingAspect {
             throw e;
         }
     }
+
+    /**
+     * Pointcut that matches for security.
+     */
+    @Pointcut("within(com.inva.hipstertest.web.rest.UserJWTController) || within(com.inva.hipstertest.security.*)")
+    public void loggingPointcutSecurity() {
+        // Method is empty as this is just a Pointcut, the implementations are in the advices.
+    }
+
+    @Around("loggingPointcutSecurity()")
+    public Object logAroundSecurity(ProceedingJoinPoint joinPoint) throws Throwable {
+        if (log.isDebugEnabled()) {
+            log.debug("EnterSecurity: {}.{}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
+                joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
+        }
+        try {
+            Object result = joinPoint.proceed();
+            if (log.isDebugEnabled()) {
+                log.debug("ExitSecurity: {}.{}() with result = {}", joinPoint.getSignature().getDeclaringTypeName(),
+                    joinPoint.getSignature().getName(), result);
+            }
+            return result;
+        } catch (IllegalArgumentException e) {
+            log.error("Illegal argument in Security: {} in {}.{}()", Arrays.toString(joinPoint.getArgs()),
+                joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
+
+            throw e;
+        }
+    }
+
+
+
 }

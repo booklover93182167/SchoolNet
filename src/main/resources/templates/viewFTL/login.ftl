@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><title>Login to SchoolNet</title>
-</head>
-<body>
-<div id="header">
+<#import "header.ftl" as h>
+<@h.header>
+
+</@h.header>
+<div>
     <h2>
         Login to SchoolNet
     </h2>
@@ -23,5 +22,6 @@
         </form>
     </fieldset>
 </div>
-</body>
-</html>
+<@h.footer>
+
+</@h.footer>
