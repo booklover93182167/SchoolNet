@@ -98,6 +98,12 @@ public class ScheduleServiceImpl implements ScheduleService{
         return schedules;
     }
 
+    /**
+     * Get all the schedules by teacher id.
+     *
+     * @param id
+     * @return the list of entities ordered by date
+     */
     @Override
     public List<ScheduleDTO> findAllByTeacherIdOrderByDate(Long id) {
         log.debug("Request to get schedules for teacher {}", id);

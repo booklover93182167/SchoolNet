@@ -139,7 +139,7 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         teacherDTO.setEnabled(true);
         Teacher teacher = teacherMapper.teacherDTOToTeacher(teacherDTO);
         /* NEED CREATE NEW EMAIL */
-        mailService.sendSimpleEmailTry(user, content); //sendSimpleEmail(teacherDTO.getEmail(), content);
+        mailService.sendSimpleEmailTry(user, content); // sendSimpleEmail(teacherDTO.getEmail(), content);
         teacher.setSchool(hteacher.getSchool());
         teacher.setUser(user);
         return teacherMapper.teacherToTeacherDTO(teacherRepository.save(teacher));
