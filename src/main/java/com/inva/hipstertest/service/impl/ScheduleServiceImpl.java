@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
+import java.util.Date;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +22,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-public class ScheduleServiceImpl implements ScheduleService{
+public class ScheduleServiceImpl implements ScheduleService {
 
     private final Logger log = LoggerFactory.getLogger(ScheduleServiceImpl.class);
 
@@ -48,9 +51,9 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     /**
-     *  Get all the schedules.
+     * Get all the schedules.
      *
-     *  @return the list of entities
+     * @return the list of entities
      */
     @Override
     @Transactional(readOnly = true)
@@ -65,10 +68,10 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     /**
-     *  Get one schedule by id.
+     * Get one schedule by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Override
     @Transactional(readOnly = true)
@@ -80,9 +83,9 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     /**
-     *  Delete the  schedule by id.
+     * Delete the  schedule by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     @Override
     public void delete(Long id) {
@@ -101,7 +104,7 @@ public class ScheduleServiceImpl implements ScheduleService{
     /**
      * Get all the schedules by teacher id.
      *
-     * @param id
+     * @param id the teacher id
      * @return the list of entities ordered by date
      */
     @Override
@@ -113,10 +116,32 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     /**
-     *  Get all the schedules by school id.
+     * Get all the schedules by requested date, teacher id.
      *
-     *  @param schoolId the id of the school
-     *  @return the list of entities
+     * @param date   requested date
+     * @param formId the form id
+     * @return the list of entities ordered by lesson position
+     */
+    public List<ScheduleDTO> findByFormIdAndDate(ZonedDateTime date, Long formId) {
+        log.debug("Request to get schedules for form and date {}", date, formId);
+        List<Schedule> schedules = scheduleRepository.findByFormId(formId);
+        List<Schedule> scheduleByDate = new ArrayList<>();
+        for (Schedule schedule :
+            schedules) {
+            if (schedule.getDate().getYear() == date.getYear()
+                && schedule.getDate().getDayOfYear() == date.getDayOfYear()) {
+                scheduleByDate.add(schedule);
+            }
+        }
+        List<ScheduleDTO> scheduleDTOS = scheduleMapper.schedulesToScheduleDTOs(scheduleByDate);
+        return scheduleDTOS;
+    }
+
+    /**
+     * Get all the schedules by school id.
+     *
+     * @param schoolId the id of the school
+     * @return the list of entities
      */
     @Override
     @Transactional(readOnly = true)

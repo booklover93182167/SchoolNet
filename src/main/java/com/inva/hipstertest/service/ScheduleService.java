@@ -3,6 +3,8 @@ package com.inva.hipstertest.service;
 import com.inva.hipstertest.domain.Schedule;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
 
+import java.sql.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -42,11 +44,18 @@ public interface ScheduleService {
     /**
      * Find all Schedules by form ID
      * @param id form Id of Pupil
-     * @return
+     * @return the list of entities
      */
     List<ScheduleDTO> findAllByFormId(Long id);
 
+    /**
+     * Find all Schedules by teacher ID ordered by Date
+     * @param teacherId teacher id
+     * @return the list of entities
+     */
     List<ScheduleDTO> findAllByTeacherIdOrderByDate(Long teacherId);
+
+    List<ScheduleDTO> findByFormIdAndDate(ZonedDateTime date, Long formId);
 
 
     /**
