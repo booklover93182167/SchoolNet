@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-public class ParentServiceImpl implements ParentService{
+public class ParentServiceImpl implements ParentService {
 
     private final Logger log = LoggerFactory.getLogger(ParentServiceImpl.class);
 
@@ -89,8 +89,9 @@ public class ParentServiceImpl implements ParentService{
         log.debug("Request to delete Parent : {}", id);
         parentRepository.delete(id);
     }
+
     /**
-     *  Finds the  parents of pupil by id.
+     *  Finds the parents of pupil by id.
      *
      *  @param id the id of the pupil
      */
@@ -98,9 +99,14 @@ public class ParentServiceImpl implements ParentService{
     public List<ParentDTO> findParentOfPupil(Long id) {
         log.debug("Request to get Parents of pupil : {}", id);
         List<Parent> parents = parentRepository.findParentOfPupil(id);
-        List<ParentDTO> parentsDTO=parentMapper.parentsToParentDTOs(parents);
-
+        List<ParentDTO> parentsDTO = parentMapper.parentsToParentDTOs(parents);
 
         return parentsDTO;
+    }
+
+    @Override
+    public ParentDTO findParentByCurrentUser() {
+        log.debug("Request to find parent by current user");
+        return parentMapper.parentToParentDTO(parentRepository.findParentByCurrentUser());
     }
 }
