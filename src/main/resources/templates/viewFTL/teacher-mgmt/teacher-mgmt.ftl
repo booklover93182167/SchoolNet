@@ -7,7 +7,8 @@
 <div id="header">
     <h2>
         <span>Hello, ${model.currentTeacher.firstName} ${model.currentTeacher.lastName}</span>
-        <button id="create" class="btn btn-primary float-right create-teacher-management">
+        <button id="create" class="btn btn-primary float-right create-teacher-management"
+                onclick="window.location.href='/freemarker/teacher-mgmt/teacher-mgmt-create/'">
             <span class="fa fa-plus"></span>
             <span>
             Create a new Teacher
@@ -64,7 +65,6 @@
 </div>
 
 <script src="/scripts/teachermgmt.js"></script>
-
 
 <@h.footer>
 

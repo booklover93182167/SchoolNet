@@ -8,7 +8,7 @@
     <dt><span>Form</span></dt>
     <dd>
         <div>
-            <span>${teacher.formName}</span>
+            <span>${teacher.formName!""}</span>
         </div>
     </dd>
 

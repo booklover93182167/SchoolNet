@@ -9,70 +9,27 @@
         <span>Create a new Teacher</span>
     </h2>
 </div>
+<form name="create" action="/freemarker/teacher-mgmt/teacher-mgmt-create" method="post">
 <div class="modal-body">
     <div class="form-group">
-        <label class="form-control-label" for="firstName">First Name</label>
-        <input type="text" class="form-control" id="firstName" name="firstName"
-               minlength=3 maxlength=50 required>
-        <#--<div *ngIf="firstName.dirty && firstName.invalid">
-            <small class="form-text text-danger"
-                   *ngIf="firstName.errors.required" jhiTranslate="entity.validation.required">
-                This field is required.
-            </small>
-            <small class="form-text text-danger"
-                   *ngIf="firstName.errors.minlength" jhiTranslate="entity.validation.minlengthL">
-                This field cannot be less than 3 characters.
-            </small>
-            <small class="form-text text-danger"
-                   *ngIf="firstName.errors.maxlength" jhiTranslate="entity.validation.maxlengthL">
-                This field cannot be longer than 50 characters.
-            </small>
-        </div>-->
+        <label class="form-control-label">First Name</label>
+        <@spring.formInput "teacherDTO.firstName" />
+        <@spring.showErrors "teacherDTO.firstName","error" />
     </div>
     <div class="form-group">
         <label class="form-control-label">Last Name</label>
-        <input type="text" class="form-control" name="lastName"
-               minlength=3 maxlength=50 required>
-        <#--<div *ngIf="lastName.dirty && lastName.invalid">
-            <small class="form-text text-danger"
-                   *ngIf="lastName.errors.required" jhiTranslate="entity.validation.required">
-                This field is required.
-            </small>
-            <small class="form-text text-danger"
-                   *ngIf="lastName.errors.maxlength" jhiTranslate="entity.validation.maxlengthL">
-                This field cannot be longer than 50 characters.
-            </small>
-            <small class="form-text text-danger"
-                   *ngIf="lastName.errors.minlength" jhiTranslate="entity.validation.minlengthL">
-                This field cannot be less than 3 characters.
-            </small>
-        </div>-->
+        <@spring.formInput "teacherDTO.lastName" />
+        <@spring.showErrors "teacherDTO.lastName","error" />
     </div>
     <div class="form-group">
-        <label class="form-control-label" for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email"
-               required minlength="7" maxlength="100">
-        <#--<div *ngIf="email.dirty && email.invalid">
-            <small class="form-text text-danger"
-                   *ngIf="email.errors.required" jhiTranslate="entity.validation.required">
-                This field is required.
-            </small>
-            <small class="form-text text-danger"
-                   *ngIf="email.errors.email" jhiTranslate="global.messages.validate.email.invalid">
-                Your email is invalid.
-            </small>
-            <small class="form-text text-danger"
-                   *ngIf="email.errors.minlength" jhiTranslate="entity.validation.minlengthE"
-                   translate-value-min="7">
-                This field cannot be less than 7 characters.
-            </small>
-            <small class="form-text text-danger"
-                   *ngIf="email.errors.maxlength" jhiTranslate="entity.validation.maxlengthE"
-                   translate-value-max="100">
-                This field cannot be longer than 100 characters.
-            </small>
-        </div>-->
+        <label class="form-control-label">Email</label>
+        <@spring.formInput "teacherDTO.email" />
+        <@spring.showErrors "teacherDTO.email","error" />
+        <#if emailFail??>
+            <span style="color:red">${emailFail}</span>
+        </#if>
     </div>
+
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -82,9 +39,7 @@
         <span class="fa fa-save"></span>&nbsp;<span>Save</span>
     </button>
 </div>
-
-<script src="/scripts/teachermgmt.js"></script>
-
+</form>
 
 <@h.footer>
 

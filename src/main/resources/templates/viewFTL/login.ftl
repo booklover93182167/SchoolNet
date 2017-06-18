@@ -17,7 +17,7 @@
             <@spring.showErrors "loginVM.username","error" />
             <br>
             Password:
-            <@spring.formInput "loginVM.password" />
+            <@spring.formPasswordInput "loginVM.password" />
             <@spring.showErrors "loginVM.username","error" />
             <br>
             <input type="submit" value="Submit"/>
