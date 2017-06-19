@@ -1,7 +1,15 @@
 <#import "header.ftl" as h>
 
-<@h.header>
-
+<@h.header
+    cssFiles=[
+    "/scripts/bootstrap-datepicker/css/bootstrap-datepicker3.min.css"
+    ]
+    jsFiles=[
+    "/scripts/bootstrap-datepicker/js/bootstrap-datepicker.min.js",
+    "/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.en.min.js",
+    "/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js",
+    "/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.ua.min.js"
+    ]>
 </@h.header>
 
 <div class="container-fluid text-center">
@@ -34,6 +42,29 @@
                     <a class="nav-link" data-toggle="tab" href="#attendance" role="tab"><@spring.message "attendance.title"/></a>
                 </li>
             </ul>
+
+
+
+            <div class="input-group mydatepicker" id="mydatepicker">
+                <input type="text" class="form-control" placeholder="Select a date" id="dateinput"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </button>
+                </span>
+            </div>
+
+            <#-- jQuery not working. Do something -->
+            <script>
+                $('#mydatepicker button').datepicker({
+                    language: "uk"
+                });
+                $('#mydatepicker').on('changeDate', function() {
+                    $('#dateinput').val(
+                        $('#mydatepicker button').datepicker('getFormattedDate')
+                    );
+                });
+            </script>
 
             <br>
             <div class="tab-content">
