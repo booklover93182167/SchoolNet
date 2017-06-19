@@ -9,20 +9,40 @@
         <div class="col-sm-2 sidenav"></div>
         <div class="col-sm-8 text-left">
             <h1><@spring.message "parent.page.title"/></h1>
-            <p>
-                <@spring.message "pupil.list"/>
-                <ul class="nav nav-pills" id="myTab" role="tablist">
+            <@spring.message "parent.selectpupil"/>
+
+            <br>
+            <br>
+            <ul class="nav nav-pills" id="myTab" role="tablist">
+                <#assign i=0>
+                <#list model["pupilList"] as pupil>
+                    <li class="nav-item">
+                        <a class="nav-link <#if i==0>active</#if>" data-toggle="tab" href="#pupil${pupil.id}" role="tab" aria-controls="pupil${pupil.id}">${pupil.firstName} ${pupil.lastName} [${pupil.formName}]</a>
+                    </li>
+                    <#assign i++>
+                <#else>
+                    <@spring.message "parent.havenotpupils"/>
+                </#list>
+            </ul>
+
+            <br>
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#schedule" role="tab"><@spring.message "schedule.title"/></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#attendance" role="tab"><@spring.message "attendance.title"/></a>
+                </li>
+            </ul>
+
+            <br>
+            <div class="tab-content">
+                <div class="tab-pane active" id="schedule" role="tabpanel">
+
+                    <div class="tab-content">
+                    <#assign i=0>
                     <#list model["pupilList"] as pupil>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#pupil${pupil.id}" role="tab" aria-controls="pupil${pupil.id}">${pupil.firstName} ${pupil.lastName} [${pupil.formName}]</a>
-                        </li>
-                    <#else>
-                        You haven't children
-                    </#list>
-                </ul>
-                <div class="tab-content">
-                    <#list model["pupilList"] as pupil>
-                        <div class="tab-pane" id="pupil${pupil.id}" role="tabpanel">
+                        <div class="tab-pane <#if i==0>active</#if>" id="pupil${pupil.id}" role="tabpanel">
                             <table class="table table-striped">
                                 <tr>
                                     <th><@spring.message "schedule.date"/></th>
@@ -32,27 +52,35 @@
                                     <th><@spring.message "schedule.teacher"/></th>
                                     <th><@spring.message "schedule.homework"/></th>
                                 </tr>
-                                <#--<#assign modelname="schedule" + ${pupil.id}>-->
-                                <#list model["schedule"+pupil.id] as schedule>
-                                <tr>
-                                    <td>${schedule.date}</td>
-                                    <td>${schedule.lessonPosition}</td>
-                                    <td>${schedule.lessonName}</td>
-                                    <td>${schedule.classroomName}</td>
-                                    <td>${schedule.teacherFirstName} ${schedule.teacherLastName}</td>
-                                    <td>${schedule.homework}</td>
-                                </tr>
+                                <#list model["schedule" + pupil.id] as schedule>
+                                    <tr>
+                                        <td>${schedule.date}</td>
+                                        <td>${schedule.lessonPosition}</td>
+                                        <td>${schedule.lessonName}</td>
+                                        <td>${schedule.classroomName}</td>
+                                        <td>${schedule.teacherFirstName} ${schedule.teacherLastName}</td>
+                                        <td>${schedule.homework}</td>
+                                    </tr>
                                 </#list>
                             </table>
                         </div>
+                        <#assign i++>
                     </#list>
+                    </div>
+
                 </div>
-                <script>
-                    $(function () {
-                        $('#myTab a:first').tab('show')
-                    })
-                </script>
-            </p>
+                <div class="tab-pane" id="attendance" role="tabpanel">
+
+                    Soon will be implemented
+
+                </div>
+            </div>
+
+            <#--<script>-->
+                <#--$(function () {-->
+                    <#--$('#myTab a:first').tab('show')-->
+                <#--})-->
+            <#--</script>-->
         </div>
         <div class="col-sm-2 sidenav"></div>
     </div>

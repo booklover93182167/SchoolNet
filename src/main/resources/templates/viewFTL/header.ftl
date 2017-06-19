@@ -158,7 +158,7 @@
 </#macro>
 
 <#macro footer>
-<div>FOOTER</div>
+<div><@spring.message "footer.text"/></div>
 </body>
 </html>
 </#macro>
