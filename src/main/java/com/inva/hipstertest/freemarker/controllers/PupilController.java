@@ -7,7 +7,10 @@ import com.inva.hipstertest.service.dto.PupilDTO;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -26,7 +29,6 @@ public class PupilController {
     }
 
     /**
-     *
      * @param model
      * @return
      */
@@ -40,14 +42,13 @@ public class PupilController {
     }
 
     /**
-     *
-     * @param formId
      * @return
      */
-    @RequestMapping("pupil-home/myShedule/{formId}")
-    public @ResponseBody List<ScheduleDTO> getListSchedulesByDate(@PathVariable Long formId) {
+    @RequestMapping("pupil-home/mySchedule/")
+    public @ResponseBody
+    List<ScheduleDTO> getListSchedulesByDate() {
         ZonedDateTime zonedDateTime = ZonedDateTime.now();
-        List<ScheduleDTO> scheduleDTO = scheduleService.findByFormIdAndDate(zonedDateTime, formId);
+        List<ScheduleDTO> scheduleDTO = scheduleService.findByFormIdAndDate(zonedDateTime);
         return scheduleDTO;
     }
 

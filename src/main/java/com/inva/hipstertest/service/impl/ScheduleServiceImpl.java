@@ -1,5 +1,7 @@
 package com.inva.hipstertest.service.impl;
 
+import com.inva.hipstertest.domain.Pupil;
+import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.service.ScheduleService;
 import com.inva.hipstertest.domain.Schedule;
 import com.inva.hipstertest.repository.ScheduleRepository;
@@ -11,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,10 +29,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
+    private final PupilRepository pupilRepository;
+
     private final ScheduleMapper scheduleMapper;
 
-    public ScheduleServiceImpl(ScheduleRepository scheduleRepository, ScheduleMapper scheduleMapper) {
+    public ScheduleServiceImpl(ScheduleRepository scheduleRepository, PupilRepository pupilRepository, ScheduleMapper scheduleMapper) {
         this.scheduleRepository = scheduleRepository;
+        this.pupilRepository = pupilRepository;
         this.scheduleMapper = scheduleMapper;
     }
 
@@ -102,7 +106,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     /**
-     * Get all the schedules by teacher id.
+     * Get all schedules by teacher id.
      *
      * @param id the teacher id
      * @return the list of entities ordered by date
@@ -116,15 +120,15 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     /**
-     * Get all the schedules by requested date, teacher id.
+     * Get all schedules by requested date and current user form id.
      *
      * @param date   requested date
-     * @param formId the form id
      * @return the list of entities ordered by lesson position
      */
-    public List<ScheduleDTO> findByFormIdAndDate(ZonedDateTime date, Long formId) {
-        log.debug("Request to get schedules for form and date {}", date, formId);
-        List<Schedule> schedules = scheduleRepository.findByFormId(formId);
+    public List<ScheduleDTO> findByFormIdAndDate(ZonedDateTime date) {
+        log.debug("Request to get schedules for form and date {}", date);
+        Pupil currentPupil = pupilRepository.findPupilByCurrentUser();
+        List<Schedule> schedules = scheduleRepository.findByFormId(currentPupil.getForm().getId());
         List<Schedule> scheduleByDate = new ArrayList<>();
         for (Schedule schedule :
             schedules) {
