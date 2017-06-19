@@ -101,6 +101,7 @@ public class MailService {
     public void sendSimpleEmailTry(User user, String cont) {
         log.debug("Sending start email to '{}'", user.getEmail());
         Locale locale = Locale.forLanguageTag(user.getLangKey());
+        log.debug("User locale key is '{}'", user.getLangKey());
         Context context = new Context(locale);
         context.setVariable(USER, user);
         context.setVariable("content", cont);

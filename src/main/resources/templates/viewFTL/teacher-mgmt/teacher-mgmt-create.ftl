@@ -13,7 +13,7 @@
 <div class="modal-body">
     <div class="form-group">
         <label class="form-control-label">First Name</label>
-        <@spring.formInput "teacherDTO.firstName" />
+        <@spring.formInput "teacherDTO.firstName"/>
         <@spring.showErrors "teacherDTO.firstName","error" />
     </div>
     <div class="form-group">
