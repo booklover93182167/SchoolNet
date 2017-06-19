@@ -1,15 +1,9 @@
 package com.inva.hipstertest.freemarker.controllers;
 
-import com.inva.hipstertest.domain.Schedule;
-import com.inva.hipstertest.domain.School;
-import com.inva.hipstertest.service.ParentService;
-import com.inva.hipstertest.service.PupilService;
 import com.inva.hipstertest.service.SchoolService;
 import com.inva.hipstertest.service.TeacherService;
-import com.inva.hipstertest.service.dto.PupilDTO;
 import com.inva.hipstertest.service.dto.SchoolDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
-import org.aspectj.weaver.ast.Test;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 @Controller
@@ -26,14 +19,10 @@ public class TestController {
 
     private final SchoolService schoolService;
     private final TeacherService teacherService;
-    private final PupilService pupilService;
-    private final ParentService parentService;
 
-    public TestController(SchoolService schoolService, TeacherService teacherService, PupilService pupilService, ParentService parentService) {
+    public TestController(SchoolService schoolService, TeacherService teacherService) {
         this.schoolService = schoolService;
         this.teacherService = teacherService;
-        this.pupilService = pupilService;
-        this.parentService = parentService;
     }
 
     /**
@@ -82,22 +71,6 @@ public class TestController {
         model.addAttribute("teachersList", teachers);
         model.addAttribute("schoolId", schoolId);
         return "teachers";
-    }
-
-    /**
-     * Get list of children of current parent.
-     *
-     * @param model
-     * @return The index view (FTL)
-     */
-    @RequestMapping(value = "freemarker/parent", method = RequestMethod.GET)
-    public String parent(@ModelAttribute("model") ModelMap model) {
-//        Long parentId = parentService.findParentByCurrentUser().getId(); // edit, when logging by roles will be implemented
-        Long parentId = (long)1;
-        List<PupilDTO> pupilList = pupilService.findAllByParentId(parentId);
-        model.addAttribute("pupilList", pupilList);
-        model.addAttribute("parentId", parentId);
-        return "parent";
     }
 
 }

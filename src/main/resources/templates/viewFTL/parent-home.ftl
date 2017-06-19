@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title><@locale.message "parent.page.title"/></title>
+    <title><@spring.message "parent.page.title"/></title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="/scripts/languageChanger.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -58,12 +58,12 @@
             <ul class="nav navbar-nav">
                 <li><a href="/freemarker/freemarkertest">FreeMarkerTest</a></li>
                 <li><a href="/freemarker/teachers/1">Teacher</a></li>
-                <li class="active"><a href="/freemarker/parent">Parent</a></li>
+                <li class="active"><a href="/freemarker/parent-home">Parent</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> <@locale.message "my.account"/></a></li>
-                <li><a href="/freemarker/login"><span class="glyphicon glyphicon-log-in"></span> <@locale.message "login"/></a></li>
-                <li><a href="/freemarker/logout"><span class="glyphicon glyphicon-log-out"></span> <@locale.message "logout"/></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> <@spring.message "my.account"/></a></li>
+                <li><a href="/freemarker/login"><span class="glyphicon glyphicon-log-in"></span> <@spring.message "login"/></a></li>
+                <li><a href="/freemarker/logout"><span class="glyphicon glyphicon-log-out"></span> <@spring.message "logout"/></a></li>
             </ul>
         </div>
     </div>
@@ -75,14 +75,16 @@
 
         </div>
         <div class="col-sm-8 text-left">
-            <h1><@locale.message "parent.page.title"/></h1>
+            <h1><@spring.message "parent.page.title"/></h1>
             <p>
-                <@locale.message "pupil.list"/>
+                <@spring.message "pupil.list"/>
                 <ul class="nav nav-pills" id="myTab" role="tablist">
                     <#list model["pupilList"] as pupil>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#pupil${pupil.id}" role="tab" aria-controls="pupil${pupil.id}">${pupil.firstName} ${pupil.lastName}, ${pupil.formName}</a>
                         </li>
+                    <#else>
+                        You haven't children
                     </#list>
                 </ul>
                 <div class="tab-content">
@@ -100,10 +102,10 @@
         <div class="col-sm-2 sidenav">
 
             <select class="form-control" id="locales">
-                <option value=""><@locale.message "lang.select"/></option>
-                <option value="en"><@locale.message "lang.en"/></option>
-                <option value="ru"><@locale.message "lang.ru"/></option>
-                <option value="ua"><@locale.message "lang.ua"/></option>
+                <option value=""><@spring.message "lang.select"/></option>
+                <option value="en"><@spring.message "lang.en"/></option>
+                <option value="ru"><@spring.message "lang.ru"/></option>
+                <option value="ua"><@spring.message "lang.ua"/></option>
             </select>
 
             <#--<div class="well">-->
@@ -117,7 +119,7 @@
 </div>
 
 <footer class="container-fluid text-center">
-    <p><@locale.message "footer.text"/></p>
+    <p><@spring.message "footer.text"/></p>
 </footer>
 
 </body>
