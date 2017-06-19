@@ -1,10 +1,10 @@
 <#import "header.ftl" as h>
 
 <@h.header
-    cssFiles=[
+    cssSources=[
     "/scripts/bootstrap-datepicker/css/bootstrap-datepicker3.min.css"
     ]
-    jsFiles=[
+    jsSources=[
     "/scripts/bootstrap-datepicker/js/bootstrap-datepicker.min.js",
     "/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.en.min.js",
     "/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js",
