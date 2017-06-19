@@ -84,6 +84,15 @@
                 </li>
                 </@security.authorize>
 
+                <@security.authorize  access="hasRole('ROLE_PARENT') or hasRole('ROLE_ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/freemarker/parent-home">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                </@security.authorize>
+
                 <li class="nav-item dropdown pointer">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="languagesnavBarDropdown" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                         <span>
