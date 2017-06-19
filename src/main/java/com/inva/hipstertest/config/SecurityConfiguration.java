@@ -97,6 +97,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
             .authorizeRequests()
             .antMatchers("/freemarker/login/").permitAll()// Freemarker configuration
+            .antMatchers("/freemarker/pupil/attendances").permitAll()// Freemarker configuration
+            .antMatchers("/freemarker/pupil/**").permitAll()// Freemarker configuration
             .antMatchers("/freemarker/freemarkertest").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/freemarker/freemarkertest/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/register").permitAll()
