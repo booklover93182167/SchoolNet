@@ -22,7 +22,29 @@
                 </ul>
                 <div class="tab-content">
                     <#list model["pupilList"] as pupil>
-                        <div class="tab-pane" id="pupil${pupil.id}" role="tabpanel">Info about pupil ${pupil.id}</div>
+                        <div class="tab-pane" id="pupil${pupil.id}" role="tabpanel">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th><@spring.message "schedule.date"/></th>
+                                    <th><@spring.message "schedule.lesson.position"/></th>
+                                    <th><@spring.message "schedule.subject"/></th>
+                                    <th><@spring.message "schedule.classroom"/></th>
+                                    <th><@spring.message "schedule.teacher"/></th>
+                                    <th><@spring.message "schedule.homework"/></th>
+                                </tr>
+                                <#--<#assign modelname="schedule" + ${pupil.id}>-->
+                                <#list model["schedule"+pupil.id] as schedule>
+                                <tr>
+                                    <td>${schedule.date}</td>
+                                    <td>${schedule.lessonPosition}</td>
+                                    <td>${schedule.lessonName}</td>
+                                    <td>${schedule.classroomName}</td>
+                                    <td>${schedule.teacherFirstName} ${schedule.teacherLastName}</td>
+                                    <td>${schedule.homework}</td>
+                                </tr>
+                                </#list>
+                            </table>
+                        </div>
                     </#list>
                 </div>
                 <script>
