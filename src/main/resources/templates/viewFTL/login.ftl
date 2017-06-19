@@ -14,12 +14,15 @@
         <form name="login" action="/freemarker/authenticate" method="post">
             Login:
             <@spring.formInput "loginVM.username" />
-            <@spring.showErrors "loginVM.username","error" />
+            <span style="color:red"><@spring.showErrors "loginVM.username","error" /></span>
             <br>
             Password:
             <@spring.formPasswordInput "loginVM.password" />
-            <@spring.showErrors "loginVM.username","error" />
+            <span style="color:red"><@spring.showErrors "loginVM.password","error" /></span>
             <br>
+            <#if loginFail??>
+                <span style="color:red">${loginFail}<br></span>
+            </#if>
             <input type="submit" value="Submit"/>
         </form>
     </fieldset>
