@@ -5,26 +5,26 @@
 
 <div id="content">
     <fieldset>
-        <legend><@locale.message "school.add"/></legend>
+        <legend><@spring.message "school.add"/></legend>
         <form name="schoolDTO" action="/freemarker/freemarkertest/add" method="post">
-            <@locale.message "school.name"/>: <input type="text" name="name"/>
-            <br/><@locale.message "school.enabled"/>:
+            <@spring.message "school.name"/>: <input type="text" name="name"/>
+            <br/><@spring.message "school.enabled"/>:
                 <select name="enabled">
-                <option value="true"><@locale.message "true"/></option>
-                <option value="false"><@locale.message "false"/></option>
+                <option value="true"><@spring.message "true"/></option>
+                <option value="false"><@spring.message "false"/></option>
             </select>
-            <br/><input type="submit" value="<@locale.message "save"/>"/>
+            <br/><input type="submit" value="<@spring.message "save"/>"/>
         </form>
     </fieldset>
     <br/>
-    <a href="logout"><@locale.message "logout"/></a>
+    <a href="logout"><@spring.message "logout"/></a>
     <table>
         <tr>
-            <th colspan="2"><@locale.message "school.list"/></th>
+            <th colspan="2"><@spring.message "school.list"/></th>
         </tr>
         <tr>
-            <th><@locale.message "school.name"/></th>
-            <th><@locale.message "school.id"/></th>
+            <th><@spring.message "school.name"/></th>
+            <th><@spring.message "school.id"/></th>
         </tr>
         <#list model["schoolList"] as school>
             <tr>
