@@ -6,8 +6,10 @@
 
 
 <div id="header">
-    <h1>Welcome </h1>
+    <h1>Welcome ${model.currentPupil.firstName} ${model.currentPupil.lastName}</h1>
+    <br>
 </div>
+
 <div class="row">
     <div class="col-md-6">
         <table class="table table-striped">
