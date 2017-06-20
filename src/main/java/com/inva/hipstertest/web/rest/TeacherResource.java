@@ -231,7 +231,7 @@ public class TeacherResource {
 
         return ResponseUtil.wrapOrNotFound(Optional.of(result),
             HeaderUtil.createAlert("userManagement.updated", result.getFirstName()));
-/*
+        /*
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, teacherDTO.getId().toString()))
             .body(result);

@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="/scripts/navbar.css">
-    <title>SOME</title>
+    <title>SchoolNet</title>
 </head>
 <body>
 <div>
@@ -26,7 +26,7 @@
         <div class="navbar-collapse collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
 
-                <@security.authorize  access="hasRole('ROLE_TEACHER') or hasRole('ROLE_ADMIN')">
+                <@security.authorize  access="hasRole('ROLE_HEAD_TEACHER') or hasRole('ROLE_ADMIN')">
                 <li class="nav-item">
                     <a class="nav-link"  (click)="collapseNavbar()" href="/freemarker/freemarkertest">
                         <i class="fa fa-home" aria-hidden="true"></i>
@@ -44,7 +44,7 @@
                         </span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="head-teacher-menu">
-                        <a class="dropdown-item" (click)="collapseNavbar()" href="javascript:void(0);">
+                        <a class="dropdown-item" (click)="collapseNavbar()" href="/freemarker/teacher-mgmt/teacher-mgmt">
                             <i class="fa fa-user" aria-hidden="true"></i>
                             <span>Teachers</span>
                         </a>
@@ -88,22 +88,22 @@
                     <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="languagesnavBarDropdown" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                         <span>
                             <i class="fa fa-language" aria-hidden="true"></i>
-                            <span><@locale.message "lang.select"/></span>
+                            <span><@spring.message "lang.select"/></span>
                             <b class="caret"></b>
                         </span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="languagesnavBarDropdown" id="locales">
                         <a class="dropdown-item" onclick="change('en')" href="#">
                             <i class="fa fa-usd" aria-hidden="true"></i>
-                            <span><@locale.message "lang.en"/></span>
+                            <span><@spring.message "lang.en"/></span>
                         </a>
                         <a class="dropdown-item" onclick="change('ua')" href="#">
                             <i class="fa fa-eur" aria-hidden="true"></i>
-                            <span><@locale.message "lang.ua"/></span>
+                            <span><@spring.message "lang.ua"/></span>
                         </a>
                         <a class="dropdown-item" onclick="change('ru')" href="#">
                             <i class="fa fa-rub" aria-hidden="true"></i>
-                            <span><@locale.message "lang.ru"/></span>
+                            <span><@spring.message "lang.ru"/></span>
                         </a>
                     </div>
                 </li>

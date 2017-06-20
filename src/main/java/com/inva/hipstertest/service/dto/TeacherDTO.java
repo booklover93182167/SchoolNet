@@ -21,11 +21,11 @@ public class TeacherDTO implements Serializable {
     private Long formId;
 
     private String formName;
-    private FormDTO form;
+    private FormDTO form;   // what
 
-    private Set<LessonDTO> lessons = new HashSet<>();
+    private Set<LessonDTO> lessons = new HashSet<>(); // the hell
 
-    private Set<String> lessonsName = new HashSet<>();
+    private Set<String> lessonsName = new HashSet<>(); // is this?
 
     private Long schoolId;
 

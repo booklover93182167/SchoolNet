@@ -35,7 +35,7 @@ public class Teacher implements Serializable {
     private User user;
 
 
-    @OneToOne(optional = false)
+    @OneToOne
     @JoinColumn(unique = true)
     private Form form;
 

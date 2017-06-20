@@ -99,6 +99,7 @@ export class NavbarComponent implements OnInit {
         this.collapseNavbar();
         this.loginService.logout();
         this.router.navigate(['']);
+        document.cookie = `JWT-TOKEN=null; expires=0`;
     }
 
     toggleNavbar() {

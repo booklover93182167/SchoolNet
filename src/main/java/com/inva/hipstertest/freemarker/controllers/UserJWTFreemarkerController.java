@@ -18,10 +18,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.Collection;
 
 @Controller
@@ -42,13 +45,17 @@ public class UserJWTFreemarkerController {
     }
 
     @RequestMapping(value = "/freemarker/login", method = RequestMethod.GET)
-    public String loginPage(@ModelAttribute("model") ModelMap model) {
-        return "login";
+    public ModelAndView loginPage() {
+        LoginVM loginVM = new LoginVM();
+        return new ModelAndView("login", "loginVM", loginVM);
     }
 
     @PostMapping("/freemarker/authenticate")
     @Timed
-    public String authenticate(HttpServletResponse httpServletResponse, @ModelAttribute LoginVM loginVM) {
+    public String authenticate(HttpServletResponse httpServletResponse, @Valid LoginVM loginVM, BindingResult result) {
+        if (result.hasErrors()) {
+            return "login";
+        }
         UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
         try {
@@ -62,11 +69,14 @@ public class UserJWTFreemarkerController {
                 return "redirect:pupil-home";
             } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
                 return "redirect:admin-home";
-            }else{
+            }else if (authorities.contains(new SimpleGrantedAuthority("ROLE_HEAD_TEACHER"))) {
+                return "redirect:teacher-mgmt/teacher-mgmt";
+            } else {
                 return "redirect:freemarkertest";
             }
         } catch (AuthenticationException ae) {
-            return "redirect:";
+            log.trace("Authentication exception trace: {}", ae);
+            return "login";
         }
     }
 
