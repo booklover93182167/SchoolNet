@@ -47,9 +47,9 @@
             </ul>
 
 
-
+            <br>
             <div class="input-group">
-                <input type="text" class="form-control" id="datepicker" placeholder="Select a date"></p>
+                <input type="text" class="form-control" id="datepicker" placeholder="<@spring.message 'date.select'/>"></p>
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-secondary">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -59,10 +59,23 @@
 
             <script>
                 $(function() {
+                    var today = new Date();
+                    var minYear = today.getFullYear();
+                    var maxYear = today.getFullYear();
+                    if (today.getMonth() < 9 - 1) {
+                        minYear -= 1;
+                    } else {
+                        maxYear += 1;
+                    }
                     $.datepicker.setDefaults($.datepicker.regional["en"]);
                     $("#datepicker").datepicker({
-                        dateFormat: "dd.mm.yy"
+                        // defaultDate: new Date(),
+                        dateFormat: "dd.mm.yy",
+                        minDate: new Date(minYear, 9 - 1, 1),
+                        maxDate: new Date(maxYear, 8 - 1, 31),
+                        showButtonPanel: true
                     });
+                    $("#datepicker").datepicker("setDate", new Date());
                 });
             </script>
 
