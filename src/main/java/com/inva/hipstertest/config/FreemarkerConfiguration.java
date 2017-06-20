@@ -41,7 +41,6 @@ public class FreemarkerConfiguration extends WebMvcConfigurerAdapter {
         FreeMarkerConfigurationFactory factory = new FreeMarkerConfigurationFactory();
         //factory.setTemplateLoaderPath("/templates/viewFTL");
         factory.setTemplateLoaderPaths("classpath:org/springframework/web/servlet/view/freemarker", "/templates/viewFTL");
-
         factory.setDefaultEncoding("UTF-8");
         FreeMarkerConfigurer result = new FreeMarkerConfigurer();
         freemarker.template.Configuration configuration = factory.createConfiguration();
@@ -71,8 +70,8 @@ public class FreemarkerConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("classpath:scripts")
-            .addResourceLocations("/scripts/");
+        registry.addResourceHandler("/scripts/**")
+            .addResourceLocations("classpath:/scripts/");
     }
 
     @Bean

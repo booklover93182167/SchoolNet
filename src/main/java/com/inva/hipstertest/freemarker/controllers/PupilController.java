@@ -79,7 +79,7 @@ public class PupilController {
      * @param model
      * @return The attendances view (FTL)
      */
-    @RequestMapping(value = "freemarker/pupil/attendances", method = RequestMethod.GET)
+    @RequestMapping(value = "pupil/attendances", method = RequestMethod.GET)
     public String getCurrentPupilAttendances(Model model){
         log.debug("Request to get Attendances for current pupil");
         PupilDTO pupilDTO = pupilService.findPupilByCurrentUser();
@@ -95,7 +95,7 @@ public class PupilController {
      * @param lessonDTO with set id.
      * @return The List<AttendancesDTO> with attendance by choose id.lessons.
      */
-    @RequestMapping(value = "freemarker/pupil/att", method = RequestMethod.POST)
+    @RequestMapping(value = "pupil/att", method = RequestMethod.POST)
     public @ResponseBody List<AttendancesDTO> requestSome(@RequestBody LessonDTO lessonDTO){
         log.debug("Create Ajax request for attendance by id lesson");
         PupilDTO pupilDTO = pupilService.findPupilByCurrentUser();
