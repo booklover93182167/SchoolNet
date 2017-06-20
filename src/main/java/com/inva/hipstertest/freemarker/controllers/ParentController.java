@@ -39,12 +39,12 @@ public class ParentController {
         Long parentId = parentService.findParentByCurrentUser().getId();
         List<PupilDTO> pupilList = pupilService.findAllByParentId(parentId);
         model.addAttribute("pupilList", pupilList);
-        model.addAttribute("parentId", parentId);
-        for ( PupilDTO pupil : pupilList ) {
-            List<ScheduleDTO> schedule = scheduleService.findAllByFormId(pupil.getFormId());
-            Collections.sort(schedule, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
-            model.addAttribute("schedule" + pupil.getId(), schedule);
-        }
+//        model.addAttribute("parentId", parentId);
+//        for ( PupilDTO pupil : pupilList ) {
+//            List<ScheduleDTO> schedule = scheduleService.findAllByFormId(pupil.getFormId());
+//            Collections.sort(schedule, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+//            model.addAttribute("schedule" + pupil.getId(), schedule);
+//        }
         return "parent-home";
     }
 
@@ -53,7 +53,7 @@ public class ParentController {
     List<ScheduleDTO> requestSome(@RequestBody ScheduleSearchParams scheduleSearchParams){
         log.debug("Create ajax request for pupil schedule by pupil id and date: " + scheduleSearchParams.getDate());
         List<ScheduleDTO> scheduleDTOs = scheduleService.findAllByFormId(scheduleSearchParams.getPupilFormId());
-        Collections.sort(scheduleDTOs, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+//        Collections.sort(scheduleDTOs, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
 
         long currentDayOfWeek = scheduleSearchParams.getDate().getDayOfWeek().getValue() % 7;
         ZonedDateTime prevSunday = scheduleSearchParams.getDate().minusDays(currentDayOfWeek);
