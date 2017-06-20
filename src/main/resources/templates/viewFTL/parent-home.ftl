@@ -1,14 +1,17 @@
 <#import "header.ftl" as h>
 
+<#assign pagetitle><@spring.message "parent.page.title"/></#assign>
+
 <@h.header
-    cssSources=[
-    "/scripts/bootstrap-datepicker/css/bootstrap-datepicker3.min.css"
+    pagetitle = "${pagetitle}"
+    cssSources = [
+    "//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
     ]
-    jsSources=[
-    "/scripts/bootstrap-datepicker/js/bootstrap-datepicker.min.js",
-    "/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.en.min.js",
-    "/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js",
-    "/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.ua.min.js"
+    jsSources = [
+    "https://code.jquery.com/ui/1.12.1/jquery-ui.js",
+    "/scripts/datepicker/datepicker-en.js",
+    "/scripts/datepicker/datepicker-ru.js",
+    "/scripts/datepicker/datepicker-uk.js"
     ]>
 </@h.header>
 
@@ -45,8 +48,8 @@
 
 
 
-            <div class="input-group mydatepicker" id="mydatepicker">
-                <input type="text" class="form-control" placeholder="Select a date" id="dateinput"/>
+            <div class="input-group">
+                <input type="text" class="form-control" id="datepicker" placeholder="Select a date"></p>
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-secondary">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -54,15 +57,12 @@
                 </span>
             </div>
 
-            <#-- jQuery not working. Do something -->
             <script>
-                $('#mydatepicker button').datepicker({
-                    language: "uk"
-                });
-                $('#mydatepicker').on('changeDate', function() {
-                    $('#dateinput').val(
-                        $('#mydatepicker button').datepicker('getFormattedDate')
-                    );
+                $(function() {
+                    $.datepicker.setDefaults($.datepicker.regional["en"]);
+                    $("#datepicker").datepicker({
+                        dateFormat: "dd.mm.yy"
+                    });
                 });
             </script>
 

@@ -1,4 +1,4 @@
-<#macro header cssSources=[] jsSources=[]>
+<#macro header pagetitle="" cssSources=[] jsSources=[]>
 <#assign security=JspTaglibs["http://www.springframework.org/security/tags"] />
 <!DOCTYPE html>
 <html lang="en">
@@ -9,13 +9,13 @@
     <#list cssSources as source>
     <link rel="stylesheet" type="text/css" href="${source}">
     </#list>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <#list jsSources as source>
-    <script type="text/javascript" href="${source}"></script>
+    <script type="text/javascript" src="${source}"></script>
     </#list>
-    <title>SchoolNet</title>
+    <title>${pagetitle}<#if pagetitle!=""> - </#if><@spring.message "schoolnet.title"/></title>
 </head>
 <body>
 <div>
