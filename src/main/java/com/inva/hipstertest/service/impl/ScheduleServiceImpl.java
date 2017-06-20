@@ -122,7 +122,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     /**
      * Get all schedules by requested date and current user form id.
      *
-     * @param date   requested date
+     * @param date requested date
      * @return the list of entities ordered by lesson position
      */
     public List<ScheduleDTO> findByFormIdAndDate(ZonedDateTime date) {
@@ -138,7 +138,47 @@ public class ScheduleServiceImpl implements ScheduleService {
             }
         }
         List<ScheduleDTO> scheduleDTOS = scheduleMapper.schedulesToScheduleDTOs(scheduleByDate);
-        return scheduleDTOS;
+        List<ScheduleDTO> scheduleToSend = buildScheduleForDayWithEmptyRecords(scheduleDTOS);
+        return scheduleToSend;
+    }
+
+    private List<ScheduleDTO> buildScheduleForDayWithEmptyRecords(List<ScheduleDTO> list) {
+        List<ScheduleDTO> resultList = new ArrayList<>();
+        if (list.isEmpty()) {
+            for (int i = 1; i <= 10; i++) {
+                ScheduleDTO emptyScheduleDTO = createEmptyScheduleDTO();
+                emptyScheduleDTO.setLessonPosition(i);
+                resultList.add(emptyScheduleDTO);
+            }
+        } else {
+            int lessonPositions = 1;
+            do {
+                boolean flag = false;
+                for (ScheduleDTO schedule : list) {
+                    if (schedule.getLessonPosition() == lessonPositions) {
+                        resultList.add(schedule);
+                        lessonPositions++;
+                        flag = true;
+                    }
+                }
+                if (!flag){
+                    ScheduleDTO emptyScheduleDTO = createEmptyScheduleDTO();
+                    emptyScheduleDTO.setLessonPosition(lessonPositions++);
+                    resultList.add(emptyScheduleDTO);
+                }
+            } while (lessonPositions <= 10);
+        }
+        return resultList;
+    }
+
+    private ScheduleDTO createEmptyScheduleDTO() {
+        ScheduleDTO emptyScheduleDTO = new ScheduleDTO();
+        emptyScheduleDTO.setLessonName("-");
+        emptyScheduleDTO.setHomework("-");
+        emptyScheduleDTO.setTeacherFirstName("");
+        emptyScheduleDTO.setTeacherLastName("-");
+        emptyScheduleDTO.setClassroomName("-");
+        return emptyScheduleDTO;
     }
 
     /**
