@@ -7,12 +7,13 @@ import com.inva.hipstertest.service.dto.PupilDTO;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -35,7 +36,8 @@ public class PupilController {
     @RequestMapping(value = "pupil-home", method = RequestMethod.GET)
     public String index(@ModelAttribute("model") ModelMap model) {
         PupilDTO pupil = pupilService.findPupilByCurrentUser();
-        List<ScheduleDTO> schedule = scheduleService.findAllByFormId(pupil.getFormId());
+        ZonedDateTime zonedDateTime = ZonedDateTime.now();
+        List<ScheduleDTO> schedule = scheduleService.findByFormIdAndDate(zonedDateTime);
         model.addAttribute("currentPupil", pupil);
         model.addAttribute("mySchedule", schedule);
         return "pupil-home";
@@ -44,10 +46,13 @@ public class PupilController {
     /**
      * @return
      */
-    @RequestMapping("pupil-home/mySchedule/")
+    @RequestMapping("pupil-home/mySchedule/{date}")
     public @ResponseBody
-    List<ScheduleDTO> getListSchedulesByDate() {
-        ZonedDateTime zonedDateTime = ZonedDateTime.now();
+    List<ScheduleDTO> getListSchedulesByDate(@PathVariable String date) {
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime localDateTime = LocalDateTime.parse(date, timeFormatter);
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
         List<ScheduleDTO> scheduleDTO = scheduleService.findByFormIdAndDate(zonedDateTime);
         return scheduleDTO;
     }
