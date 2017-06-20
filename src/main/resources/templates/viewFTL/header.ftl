@@ -112,9 +112,9 @@
                             <i class="fa fa-usd" aria-hidden="true"></i>
                             <span><@spring.message "lang.en"/></span>
                         </a>
-                        <a class="dropdown-item" onclick="change('ua')" href="#">
+                        <a class="dropdown-item" onclick="change('uk')" href="#">
                             <i class="fa fa-eur" aria-hidden="true"></i>
-                            <span><@spring.message "lang.ua"/></span>
+                            <span><@spring.message "lang.uk"/></span>
                         </a>
                         <a class="dropdown-item" onclick="change('ru')" href="#">
                             <i class="fa fa-rub" aria-hidden="true"></i>

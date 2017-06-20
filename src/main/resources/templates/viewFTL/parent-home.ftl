@@ -11,7 +11,8 @@
     "https://code.jquery.com/ui/1.12.1/jquery-ui.js",
     "/scripts/datepicker/datepicker-en.js",
     "/scripts/datepicker/datepicker-ru.js",
-    "/scripts/datepicker/datepicker-uk.js"
+    "/scripts/datepicker/datepicker-uk.js",
+    "/scripts/parent-page.js"
     ]>
 </@h.header>
 
@@ -28,8 +29,9 @@
                 <#assign i=0>
                 <#list model["pupilList"] as pupil>
                     <li class="nav-item">
-                        <a class="nav-link <#if i==0>active</#if>" data-toggle="tab" href="#pupil${pupil.id}" role="tab" aria-controls="pupil${pupil.id}">${pupil.firstName} ${pupil.lastName} [${pupil.formName}]</a>
+                        <a class="nav-link <#if i==0>active</#if>" data-toggle="tab" href="#pupil${pupil.id}" role="tab" aria-controls="pupil${pupil.id}" data-pupil-form-id="${pupil.formId}">${pupil.firstName} ${pupil.lastName} [${pupil.formName}]</a>
                     </li>
+                    <#if i==0><input type="hidden" id="pupilFormId" value="${pupil.formId}"></#if>
                     <#assign i++>
                 <#else>
                     <@spring.message "parent.havenotpupils"/>
@@ -57,68 +59,61 @@
                 </span>
             </div>
 
-            <script>
-                $(function() {
-                    var today = new Date();
-                    var minYear = today.getFullYear();
-                    var maxYear = today.getFullYear();
-                    if (today.getMonth() < 9 - 1) {
-                        minYear -= 1;
-                    } else {
-                        maxYear += 1;
-                    }
-                    $.datepicker.setDefaults($.datepicker.regional["en"]);
-                    $("#datepicker").datepicker({
-                        // defaultDate: new Date(),
-                        dateFormat: "dd.mm.yy",
-                        minDate: new Date(minYear, 9 - 1, 1),
-                        maxDate: new Date(maxYear, 8 - 1, 31),
-                        showButtonPanel: true
-                    });
-                    $("#datepicker").datepicker("setDate", new Date());
-                });
-            </script>
 
-            <br>
-            <div class="tab-content">
-                <div class="tab-pane active" id="schedule" role="tabpanel">
+            <table id="scheduletable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><@spring.message "schedule.date"/></th>
+                        <th><@spring.message "schedule.lesson.position"/></th>
+                        <th><@spring.message "schedule.subject"/></th>
+                        <th><@spring.message "schedule.classroom"/></th>
+                        <th><@spring.message "schedule.teacher"/></th>
+                        <th><@spring.message "schedule.homework"/></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
 
-                    <div class="tab-content">
-                    <#assign i=0>
-                    <#list model["pupilList"] as pupil>
-                        <div class="tab-pane <#if i==0>active</#if>" id="pupil${pupil.id}" role="tabpanel">
-                            <table class="table table-striped">
-                                <tr>
-                                    <th><@spring.message "schedule.date"/></th>
-                                    <th><@spring.message "schedule.lesson.position"/></th>
-                                    <th><@spring.message "schedule.subject"/></th>
-                                    <th><@spring.message "schedule.classroom"/></th>
-                                    <th><@spring.message "schedule.teacher"/></th>
-                                    <th><@spring.message "schedule.homework"/></th>
-                                </tr>
-                                <#list model["schedule" + pupil.id] as schedule>
-                                    <tr>
-                                        <td>${schedule.date}</td>
-                                        <td>${schedule.lessonPosition}</td>
-                                        <td>${schedule.lessonName}</td>
-                                        <td>${schedule.classroomName}</td>
-                                        <td>${schedule.teacherFirstName} ${schedule.teacherLastName}</td>
-                                        <td>${schedule.homework}</td>
-                                    </tr>
-                                </#list>
-                            </table>
-                        </div>
-                        <#assign i++>
-                    </#list>
-                    </div>
+            <#--<br>-->
+            <#--<div class="tab-content">-->
+                <#--<div class="tab-pane active" id="schedule" role="tabpanel">-->
 
-                </div>
-                <div class="tab-pane" id="attendance" role="tabpanel">
+                    <#--<div class="tab-content">-->
+                    <#--<#assign i=0>-->
+                    <#--<#list model["pupilList"] as pupil>-->
+                        <#--<div class="tab-pane <#if i==0>active</#if>" id="pupil${pupil.id}" role="tabpanel">-->
+                            <#--<table class="table table-striped">-->
+                                <#--<tr>-->
+                                    <#--<th><@spring.message "schedule.date"/></th>-->
+                                    <#--<th><@spring.message "schedule.lesson.position"/></th>-->
+                                    <#--<th><@spring.message "schedule.subject"/></th>-->
+                                    <#--<th><@spring.message "schedule.classroom"/></th>-->
+                                    <#--<th><@spring.message "schedule.teacher"/></th>-->
+                                    <#--<th><@spring.message "schedule.homework"/></th>-->
+                                <#--</tr>-->
+                                <#--<#list model["schedule" + pupil.id] as schedule>-->
+                                    <#--<tr>-->
+                                        <#--<td>${schedule.date}</td>-->
+                                        <#--<td>${schedule.lessonPosition}</td>-->
+                                        <#--<td>${schedule.lessonName}</td>-->
+                                        <#--<td>${schedule.classroomName}</td>-->
+                                        <#--<td>${schedule.teacherFirstName} ${schedule.teacherLastName}</td>-->
+                                        <#--<td>${schedule.homework}</td>-->
+                                    <#--</tr>-->
+                                <#--</#list>-->
+                            <#--</table>-->
+                        <#--</div>-->
+                        <#--<#assign i++>-->
+                    <#--</#list>-->
+                    <#--</div>-->
 
-                    Soon will be implemented
+                <#--</div>-->
+                <#--<div class="tab-pane" id="attendance" role="tabpanel">-->
 
-                </div>
-            </div>
+                    <#--Soon will be implemented-->
+
+                <#--</div>-->
+            <#--</div>-->
 
             <#--<script>-->
                 <#--$(function () {-->
