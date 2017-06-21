@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Mapper(componentModel = "spring", uses = {})
 public interface SchoolMapper {
-    @Mapping(source = "school.", target = "firstName")
+    
     SchoolDTO schoolToSchoolDTO(School school);
 
     List<SchoolDTO> schoolsToSchoolDTOs(List<School> schools);
