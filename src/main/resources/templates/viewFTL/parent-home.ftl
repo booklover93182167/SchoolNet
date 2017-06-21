@@ -21,17 +21,17 @@
     <div class="row content">
         <div class="col-sm-2 sidenav"></div>
         <div class="col-sm-8 text-left">
+
             <br>
             <div id="datepicker" style="float: right;"></div>
             <h1><@spring.message "parent.page.title"/></h1>
 
             <br>
-            <p>Тут буде опис</p>
+            <p><@spring.message "parent.page.description"/></p>
 
-            <br>
-            <br>
-            <br><@spring.message "parent.selectpupil"/>
-            <br><br>
+            <br><br><br><br>
+
+            <h5><@spring.message "parent.page.selectpupil"/></h5>
             <ul class="nav nav-pills" id="myTab" role="tablist">
                 <#assign i=0>
                 <#list model["pupilList"] as pupil>
@@ -40,7 +40,7 @@
                     </li>
                     <#assign i++>
                 <#else>
-                    <@spring.message "parent.havenotpupils"/>
+                    <@spring.message "parent.page.havenotpupils"/>
                 </#list>
             </ul>
 
@@ -49,10 +49,10 @@
             <br>
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#week-schedule" role="tab"><@spring.message "schedule.title"/></a>
+                    <a class="nav-link active" data-toggle="tab" href="#week-schedule" role="tab"><@spring.message "parent.page.schedule.title"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#attendance" role="tab"><@spring.message "attendance.title"/></a>
+                    <a class="nav-link" data-toggle="tab" href="#attendance" role="tab"><@spring.message "parent.page.attendance.title"/></a>
                 </li>
             </ul>
 

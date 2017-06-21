@@ -16,12 +16,10 @@ $(function() {
     $("#datepicker").datepicker({
         dateFormat: "dd.mm.yy",
         minDate: new Date(minYear, 9 - 1, 1),
-        maxDate: new Date(maxYear, 8 - 1, 31),
-        showButtonPanel: true
+        maxDate: new Date(maxYear, 8 - 1, 31)
+        // showButtonPanel: true
         // defaultDate: selectedDate
     });
-
-    // $("#datepicker").datepicker("setDate", selectedDate);
 
     $("#datepicker").change(function() {
         selectedDate = $(this).datepicker("getDate");
