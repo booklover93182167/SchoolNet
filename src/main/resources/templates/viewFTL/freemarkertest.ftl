@@ -17,7 +17,7 @@
         </form>
     </fieldset>
     <br/>
-    <a href="logout"><@spring.message "logout"/></a>
+    <a href="logout"><@spring.message "login.signout"/></a>
     <table>
         <tr>
             <th colspan="2"><@spring.message "school.list"/></th>

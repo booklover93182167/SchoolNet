@@ -1,1 +1,1 @@
-<div>FOOTER</div>
+<div><@spring.message "footer.text"/></div>

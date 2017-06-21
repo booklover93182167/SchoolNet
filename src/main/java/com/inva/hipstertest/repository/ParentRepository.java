@@ -22,8 +22,10 @@ public interface ParentRepository extends JpaRepository<Parent,Long> {
     @Query("select parent from Parent parent left join fetch parent.pupils where parent.id =:id")
     Parent findOneWithEagerRelationships(@Param("id") Long id);
 
-
     @Query(value="select parent.id from parent join parent_pupil on parent_pupil.parents_id=parent.id " +
         "join pupil on parent_pupil.pupils_id=pupil.id where pupil.id=:id",nativeQuery = true)
     List<Parent> findParentOfPupil(@Param("id") Long id);
+
+    @Query("select parent from Parent parent where parent.user.login = ?#{principal.username}")
+    Parent findParentByCurrentUser();
 }
