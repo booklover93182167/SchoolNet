@@ -15,11 +15,9 @@
     <form class="form-signin" name="login" action="/freemarker/authenticate" method="post">
         <h2 class="form-signin-heading"><@spring.message "login.page.title"/></h2>
         <label for="inputEmail" class="sr-only"><@spring.message "login.login"/></label>
-        <#--<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>-->
         <@spring.formInput "loginVM.username" />
         <@spring.showErrors "loginVM.username","error" />
         <label for="inputPassword" class="sr-only"><@spring.message "login.password"/></label>
-        <#--<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>-->
         <@spring.formPasswordInput "loginVM.password" />
         <@spring.showErrors "loginVM.username","error" />
         <div class="checkbox">
@@ -27,7 +25,6 @@
                 <input type="checkbox" value="remember-me"> <@spring.message "login.rememberme"/>
             </label>
         </div>
-        <#--<input type="submit" value="Submit"/>-->
         <button class="btn btn-lg btn-primary btn-block" type="submit"><@spring.message "login.signin"/></button>
     </form>
 

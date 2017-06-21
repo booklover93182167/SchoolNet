@@ -33,12 +33,6 @@
 
 
                 <@security.authorize  access="hasRole('ROLE_HEAD_TEACHER')">
-                <li class="nav-item">
-                    <a class="nav-link"  (click)="collapseNavbar()" href="/freemarker/freemarkertest">
-                        <i class="fa fa-home" aria-hidden="true"></i>
-                        <span><@spring.message "navbar.home"/></span>
-                    </a>
-                </li>
                 <li class="nav-item dropdown pointer">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="head-teacher-menu" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                         <span>
