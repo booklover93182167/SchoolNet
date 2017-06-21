@@ -4,7 +4,6 @@ $(function() {
     var monday = getMonday(selectedDate);
     var minYear = selectedDate.getFullYear();
     var maxYear = selectedDate.getFullYear();
-    var lang = $("#lang").val();
 
     if (selectedDate.getMonth() < 9 - 1) {
         minYear -= 1;
@@ -12,7 +11,7 @@ $(function() {
         maxYear += 1;
     }
 
-    $.datepicker.setDefaults($.datepicker.regional[lang]);
+    $.datepicker.setDefaults($.datepicker.regional[window.lang]);
 
     $("#datepicker").datepicker({
         dateFormat: "dd.mm.yy",
@@ -81,10 +80,10 @@ $(function() {
                             '<th colspan="5">' + $.datepicker.formatDate('DD, dd.mm.yy', addDays(monday, i - 1)) + '</th>' +
                         '</tr>' +
                         '<tr>' +
-                            '<th style="width: 2%;"><span class="lesson-position"></span></th>' +
-                            '<th style="width: 40%;"><span class="subject"></span></th>' +
-                            '<th style="width: 18%;"><span class="classroom"></span></th>' +
-                            '<th style="width: 40%;"><span class="teacher"></span></th>' +
+                            '<th style="width: 2%;">' + window.lessonPosition + '</th>' +
+                            '<th style="width: 40%;">' + window.subject + '</th>' +
+                            '<th style="width: 18%;">' + window.classroom + '</th>' +
+                            '<th style="width: 40%;">' + window.teacher + '</th>' +
                         '</tr>' +
                     '</thead>' +
                     '<tbody></tbody>' +
@@ -105,7 +104,7 @@ $(function() {
                     var dayOfWeek = new Date(schedule.date).getDay();
 
                     $('#day' + dayOfWeek + ' tbody tr').eq(schedule.lessonPosition).replaceWith(
-                        '<tr title="Homework: ' + schedule.homework + '">' +
+                        '<tr title="' + window.homework + ': ' + schedule.homework + '">' +
                         '<td>' + (schedule.lessonPosition + 1) + '</td>' +
                         '<td>' + schedule.lessonName + '</td>' +
                         '<td>' + schedule.classroomName + '</td>' +
@@ -114,12 +113,7 @@ $(function() {
                     );
                 });
 
-                $(".lesson-position").text("#");
-                $(".subject").text("Subject");
-                $(".classroom").text("Room");
-                $(".teacher").text("Teacher");
             }
         });
     }
-
 });

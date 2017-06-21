@@ -12,10 +12,8 @@
     "https://code.jquery.com/ui/1.12.1/jquery-ui.js",
     "/scripts/datepicker/datepicker-en.js",
     "/scripts/datepicker/datepicker-ru.js",
-    "/scripts/datepicker/datepicker-uk.js",
-    "/scripts/parent-home.js"
-    ]>
-</@h.header>
+    "/scripts/datepicker/datepicker-uk.js"
+    ]/>
 
 <div class="container-fluid text-center">
     <div class="row content">
@@ -23,15 +21,13 @@
         <div class="col-sm-8 text-left">
 
             <br>
-            <div id="datepicker" style="float: right;"></div>
-            <input type="hidden" id="lang" value="${.locale}">
+            <div id="datepicker" class="float-right"></div>
             <h1><@spring.message "parent.page.title"/></h1>
 
             <br>
             <p><@spring.message "parent.page.description"/></p>
 
-            <br><br><br><br>
-
+            <br><br>
             <h5><@spring.message "parent.page.selectpupil"/></h5>
             <ul class="nav nav-pills" id="myTab" role="tablist">
                 <#assign i=0>
@@ -45,9 +41,8 @@
                 </#list>
             </ul>
 
-            <div style="clear: both"></div>
+            <div class="clearfix"></div>
 
-            <br>
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#week-schedule" role="tab"><@spring.message "parent.page.schedule.title"/></a>
@@ -69,6 +64,16 @@
     </div>
 </div>
 
-<@h.footer>
 
-</@h.footer>
+<script>
+    // Localization Fix
+    window.lang = "${.locale}";
+    window.lessonPosition = "<@spring.message "schedule.lesson.position"/>";
+    window.subject = "<@spring.message "schedule.subject"/>";
+    window.classroom = "<@spring.message "schedule.classroom"/>";
+    window.teacher = "<@spring.message "schedule.teacher"/>";
+    window.homework = "<@spring.message "schedule.homework"/>";
+</script>
+<script type="text/javascript" src="/scripts/parent-home.js"></script>
+
+<@h.footer/>
