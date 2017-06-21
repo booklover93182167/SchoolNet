@@ -1,9 +1,11 @@
 $(function() {
-    var today = new Date();
-    var minYear = today.getFullYear();
-    var maxYear = today.getFullYear();
+    var pupilFormId = 0;
+    var selectedDate = new Date();
+    var monday = getMonday(selectedDate);
+    var minYear = selectedDate.getFullYear();
+    var maxYear = selectedDate.getFullYear();
 
-    if (today.getMonth() < 9 - 1) {
+    if (selectedDate.getMonth() < 9 - 1) {
         minYear -= 1;
     } else {
         maxYear += 1;
@@ -12,25 +14,39 @@ $(function() {
     $.datepicker.setDefaults($.datepicker.regional["en"]);
 
     $("#datepicker").datepicker({
-        // defaultDate: new Date(),
         dateFormat: "dd.mm.yy",
         minDate: new Date(minYear, 9 - 1, 1),
-        maxDate: new Date(maxYear, 8 - 1, 31)
-        // showButtonPanel: true
+        maxDate: new Date(maxYear, 8 - 1, 31),
+        showButtonPanel: true
+        // defaultDate: selectedDate
     });
 
-    $("#datepicker").datepicker("setDate", new Date());
-
-    $("#myTab a").click(function () {
-        var pupilFormId = $(this).data("pupil-form-id");
-        $("#pupilFormId").val(pupilFormId);
-        reloadSchedule();
-    });
+    // $("#datepicker").datepicker("setDate", selectedDate);
 
     $("#datepicker").change(function() {
+        selectedDate = $(this).datepicker("getDate");
+        var newMonday = getMonday(selectedDate);
+
+        if (monday.getTime() === newMonday.getTime()) {
+            console.log("NO reload");
+            return;
+        }
+        monday = newMonday;
         reloadSchedule();
     });
 
+    $("#myTab a").click(function () {
+        var newPupilFormId = $(this).data("pupil-form-id");
+
+        if (pupilFormId === newPupilFormId) {
+            console.log("NO reload");
+            return;
+        }
+        pupilFormId = newPupilFormId;
+        reloadSchedule();
+    });
+
+    $("#myTab a:first").trigger("click");
 
     function getMonday(date) {
         var newDate = new Date(date);
@@ -47,7 +63,6 @@ $(function() {
 
     function formatDate(date) {
         var dayNames = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
         var dayOfWeek = date.getDay();
         var day = date.getDate();
         var month = date.getMonth();
@@ -56,12 +71,11 @@ $(function() {
         return dayNames[dayOfWeek] + ', ' + day + '.' + month + '.' + year;
     }
 
-    reloadSchedule();
-
     function reloadSchedule() {
+        console.log("YES reload");
         var searchParams = {
-            pupilFormId: $("#pupilFormId").val(),
-            date: $("#datepicker").datepicker("getDate")
+            pupilFormId: pupilFormId,
+            date: selectedDate
         };
         $.ajax({
             url : "/freemarker/parent-home/schedule",
@@ -72,12 +86,10 @@ $(function() {
 
                 var daysInWeek = 7;
                 var lessonsCount = 10;
-                var selectedDate = $("#datepicker").datepicker("getDate");
-                var monday = getMonday(selectedDate);
 
-                $("#schedule-wrapper").empty();
+                $("#week-schedule").empty();
                 for(var i = 1; i <= daysInWeek; i++) {
-                    $("#schedule-wrapper").append('<div class="daytable"><table id="day' + i + '" class="table table-striped">' +
+                    $("#week-schedule").append('<div class="day-schedule"><table id="day' + i + '" class="table table-striped">' +
                     '<thead>' +
                         '<tr>' +
                             '<th colspan="5">' + formatDate(addDays(monday, i - 1)) + '</th>' +
@@ -87,7 +99,6 @@ $(function() {
                             '<th style="width: 40%;">Subject</th>' +
                             '<th style="width: 18%;">Room</th>' +
                             '<th style="width: 40%;">Teacher</th>' +
-                            // '<th>Homework</th>' +
                         '</tr>' +
                     '</thead>' +
                     '<tbody></tbody>' +
@@ -116,23 +127,6 @@ $(function() {
                         '</tr>'
                     );
                 });
-
-
-                // Ajax static table
-
-                // $("#scheduletable tbody").empty();
-                // $.each(response, function(j, schedule) {
-                //     $('#scheduletable > tbody:last-child').append(
-                //         "<tr>" +
-                //         "<td>" + schedule.date + "</td>" +
-                //         "<td>" + schedule.lessonPosition + "</td>" +
-                //         "<td>" + schedule.lessonName + "</td>" +
-                //         "<td>" + schedule.classroomName + "</td>" +
-                //         "<td>" + schedule.teacherFirstName + " " + schedule.teacherLastName + "</td>" +
-                //         "<td>" + schedule.homework + "</td>" +
-                //         "</tr>"
-                //     );
-                // });
 
             }
         });
