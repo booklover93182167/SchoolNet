@@ -93,4 +93,10 @@ public class UserAddonServiceImpl implements UserAddonService{
         log.debug("Request to delete UserAddon : {}", id);
         userAddonRepository.delete(id);
     }
+
+    @Override
+    public UserAddonDTO findByCurrentUser() {
+        log.debug("Request to find user by current user");
+        return userAddonMapper.toDto(userAddonRepository.findByCurrentUser());
+    }
 }

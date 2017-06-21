@@ -139,8 +139,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/users/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/headteacher-management").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/headteacher-management/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
-            .antMatchers("/api/teacher-home").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
-            .antMatchers("/api/teacher-home/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
+            .antMatchers("/api/teacher-home").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER, AuthoritiesConstants.HEAD_TEACHER)
+            .antMatchers("/api/teacher-home/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/teacher-schedule").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
             .antMatchers("/api/teacher-schedule/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
 
