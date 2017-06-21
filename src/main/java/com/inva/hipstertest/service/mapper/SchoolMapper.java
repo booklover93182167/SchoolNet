@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Mapper(componentModel = "spring", uses = {})
 public interface SchoolMapper {
-
+    @Mapping(source = "school.", target = "firstName")
     SchoolDTO schoolToSchoolDTO(School school);
 
     List<SchoolDTO> schoolsToSchoolDTOs(List<School> schools);
@@ -29,7 +29,7 @@ public interface SchoolMapper {
      * @param id id of the entity
      * @return the entity instance
      */
-     
+
     default School schoolFromId(Long id) {
         if (id == null) {
             return null;
@@ -38,6 +38,6 @@ public interface SchoolMapper {
         school.setId(id);
         return school;
     }
-    
+
 
 }
