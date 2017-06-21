@@ -4,6 +4,7 @@ $(function() {
     var monday = getMonday(selectedDate);
     var minYear = selectedDate.getFullYear();
     var maxYear = selectedDate.getFullYear();
+    var lang = $("#lang").val();
 
     if (selectedDate.getMonth() < 9 - 1) {
         minYear -= 1;
@@ -11,7 +12,7 @@ $(function() {
         maxYear += 1;
     }
 
-    $.datepicker.setDefaults($.datepicker.regional["en"]);
+    $.datepicker.setDefaults($.datepicker.regional[lang]);
 
     $("#datepicker").datepicker({
         dateFormat: "dd.mm.yy",
@@ -26,7 +27,6 @@ $(function() {
         var newMonday = getMonday(selectedDate);
 
         if (monday.getTime() === newMonday.getTime()) {
-            console.log("NO reload");
             return;
         }
         monday = newMonday;
@@ -37,7 +37,6 @@ $(function() {
         var newPupilFormId = $(this).data("pupil-form-id");
 
         if (pupilFormId === newPupilFormId) {
-            console.log("NO reload");
             return;
         }
         pupilFormId = newPupilFormId;
@@ -59,18 +58,7 @@ $(function() {
         return newDate;
     }
 
-    function formatDate(date) {
-        var dayNames = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        var dayOfWeek = date.getDay();
-        var day = date.getDate();
-        var month = date.getMonth();
-        var year = date.getFullYear();
-
-        return dayNames[dayOfWeek] + ', ' + day + '.' + month + '.' + year;
-    }
-
     function reloadSchedule() {
-        console.log("YES reload");
         var searchParams = {
             pupilFormId: pupilFormId,
             date: selectedDate
@@ -90,13 +78,13 @@ $(function() {
                     $("#week-schedule").append('<div class="day-schedule"><table id="day' + i + '" class="table table-striped">' +
                     '<thead>' +
                         '<tr>' +
-                            '<th colspan="5">' + formatDate(addDays(monday, i - 1)) + '</th>' +
+                            '<th colspan="5">' + $.datepicker.formatDate('DD, dd.mm.yy', addDays(monday, i - 1)) + '</th>' +
                         '</tr>' +
                         '<tr>' +
-                            '<th style="width: 2%;">#</th>' +
-                            '<th style="width: 40%;">Subject</th>' +
-                            '<th style="width: 18%;">Room</th>' +
-                            '<th style="width: 40%;">Teacher</th>' +
+                            '<th style="width: 2%;"><span class="lesson-position"></span></th>' +
+                            '<th style="width: 40%;"><span class="subject"></span></th>' +
+                            '<th style="width: 18%;"><span class="classroom"></span></th>' +
+                            '<th style="width: 40%;"><span class="teacher"></span></th>' +
                         '</tr>' +
                     '</thead>' +
                     '<tbody></tbody>' +
@@ -126,6 +114,10 @@ $(function() {
                     );
                 });
 
+                $(".lesson-position").text("#");
+                $(".subject").text("Subject");
+                $(".classroom").text("Room");
+                $(".teacher").text("Teacher");
             }
         });
     }

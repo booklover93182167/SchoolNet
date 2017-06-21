@@ -5,15 +5,15 @@
 <@h.header
     pagetitle = "${pagetitle}"
     cssSources = [
-    "/scripts/parent-home.css",
-    "//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    "//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css",
+    "/scripts/parent-home.css"
     ]
     jsSources = [
-    "/scripts/parent-home.js",
     "https://code.jquery.com/ui/1.12.1/jquery-ui.js",
     "/scripts/datepicker/datepicker-en.js",
     "/scripts/datepicker/datepicker-ru.js",
-    "/scripts/datepicker/datepicker-uk.js"
+    "/scripts/datepicker/datepicker-uk.js",
+    "/scripts/parent-home.js"
     ]>
 </@h.header>
 
@@ -24,6 +24,7 @@
 
             <br>
             <div id="datepicker" style="float: right;"></div>
+            <input type="hidden" id="lang" value="${.locale}">
             <h1><@spring.message "parent.page.title"/></h1>
 
             <br>
