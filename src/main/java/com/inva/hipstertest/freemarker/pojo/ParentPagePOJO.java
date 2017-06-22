@@ -2,10 +2,20 @@ package com.inva.hipstertest.freemarker.pojo;
 
 import java.time.ZonedDateTime;
 
-public class ScheduleSearchParams {
+public class ParentPagePOJO {
 
+    private Long pupilId;
     private Long pupilFormId;
+    private Long lessonId;
     private ZonedDateTime date;
+
+    public Long getPupilId() {
+        return pupilId;
+    }
+
+    public void setPupilId(Long pupilId) {
+        this.pupilId = pupilId;
+    }
 
     public Long getPupilFormId() {
         return pupilFormId;
@@ -15,6 +25,14 @@ public class ScheduleSearchParams {
         this.pupilFormId = pupilFormId;
     }
 
+    public Long getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(Long lessongId) {
+        this.lessonId = lessongId;
+    }
+
     public ZonedDateTime getDate() {
         return date;
     }
@@ -22,4 +40,5 @@ public class ScheduleSearchParams {
     public void setDate(ZonedDateTime date) {
         this.date = date;
     }
+
 }
