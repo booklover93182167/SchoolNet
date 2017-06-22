@@ -44,6 +44,7 @@ public class AdminController {
         model.addAttribute("schoolList", schoolList);
         model.addAttribute("currentUser", user);
 
+
         return "admin/admin-home";
     }
 
@@ -71,46 +72,44 @@ public class AdminController {
      * @param schoolId
      * @return The index view (FTL)
      */
-    @RequestMapping(value = "freemarker/teachersInSchool/{schoolId}", method = RequestMethod.GET)
+    @RequestMapping(value = "freemarker/admin-home/details/{schoolId}", method = RequestMethod.GET)
     public String index(@ModelAttribute("model") ModelMap model, @PathVariable Long schoolId) {
         List<TeacherDTO> teachers = teacherService.getAllBySchoolId(schoolId);
         String schoolName = schoolService.findOne(schoolId).getName();
-        System.out.println(schoolName);
+        List<TeacherDTO> headTeachers = schoolService.findHeadTeachersOfSchool(schoolId);
         model.addAttribute("teachersList", teachers);
         model.addAttribute("schoolId", schoolId);
         model.addAttribute("schoolName", schoolName);
-        return "admin/teachersInSchool";
+        model.addAttribute("headTeachers", headTeachers);
+        return "admin/admin-home-details";
     }
 
 
-    @RequestMapping(value = "/freemarker/admin-home/newSchool", method = RequestMethod.GET)
+    @RequestMapping(value = "/freemarker/admin-home/createSchool", method = RequestMethod.GET)
     public ModelAndView adminNewSchool() {
         SchoolDTO schoolDTO = new SchoolDTO();
-        return new ModelAndView("admin/newSchool", "schoolDTO", schoolDTO);
+        return new ModelAndView("admin/admin-home-create-school", "schoolDTO", schoolDTO);
     }
 
     /**
      * Creates new teacher in school.
-     *
      */
-    @PostMapping(value = "/freemarker/admin-home/newSchool")
+    @PostMapping(value = "/freemarker/admin-home/createSchool")
     @Timed
-    public ModelAndView adminNewSchool(SchoolDTO schoolDTO, BindingResult bindingResult, String nameFail) throws URISyntaxException {
-        log.debug("Freemarker request to create school : {}", schoolDTO);
-        if (bindingResult.hasErrors()) {
-            log.debug("school binding has errors");
-            return new ModelAndView("admin/newSchool");
+    public String addSchool(@ModelAttribute("schoolDTO") SchoolDTO schoolDTO) {
+        if (schoolDTO.getName() != null && !schoolDTO.getName().isEmpty() &&
+            schoolDTO.getEnabled() != null) {
+            schoolService.save(schoolDTO);
+            return "redirect:";
+        } else {
+            return "redirect:error"; //TODO: create error page
         }
-
-        SchoolDTO result = schoolService.save(schoolDTO);
-        nameFail = "This name is already in use!";
-        if(!result.getEnabled()){
-            // handle email already in use
-            return new ModelAndView("admin/newSchool", "nameFail", nameFail);
-        }
-        // handle creation success
-        return new ModelAndView("redirect:admin/admin-home");
     }
 
+    @RequestMapping(value = "/freemarker/admin-home/createHeadTeacher", method = RequestMethod.GET)
+    public ModelAndView adminNewHeadTeacher() {
+
+        return new ModelAndView("admin/admin-home-create-headTeacher");
+    }
 }
 

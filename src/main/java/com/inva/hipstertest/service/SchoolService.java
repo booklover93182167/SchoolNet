@@ -1,7 +1,11 @@
 package com.inva.hipstertest.service;
 
 import com.inva.hipstertest.domain.School;
+import com.inva.hipstertest.domain.Teacher;
 import com.inva.hipstertest.service.dto.SchoolDTO;
+import com.inva.hipstertest.service.dto.TeacherDTO;
+import org.springframework.data.repository.query.Param;
+
 import java.util.List;
 
 /**
@@ -39,4 +43,12 @@ public interface SchoolService {
      */
     void delete(Long id);
 
+
+
+    /**
+     *  Find all headTeacher of current schhol .
+     *
+     *
+     */
+    List<TeacherDTO> findHeadTeachersOfSchool(Long id);
 }
