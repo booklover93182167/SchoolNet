@@ -34,7 +34,10 @@ $(function() {
         loadSchedule();
     });
 
-    $("#pupil-select a:last").trigger("click");
+    $("#attendance-link").click(function () {
+        $("#datepicker").hide();
+    });
+
     $("#attendance-link").trigger("click");
 
     $("#pupil-select a").click(function () {
@@ -54,9 +57,7 @@ $(function() {
         }
     });
 
-    $("#attendance-link").click(function () {
-        $("#datepicker").hide();
-    });
+    $("#pupil-select a:last").trigger("click");
 
     $("#week-schedule-link").click(function () {
         $("#datepicker").show();
