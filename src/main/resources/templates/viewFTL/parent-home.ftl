@@ -16,10 +16,9 @@ jsSources = [
 "/scripts/parent-home.js"
 ]/>
 
-<div class="container-fluid text-center">
+<div class="container">
     <div class="row content">
-        <div class="col-sm-2 sidenav"></div>
-        <div class="col-sm-8 text-left">
+        <div class="col-sm-12 text-left">
 
         <#if model["pupilList"]?size == 0>
             <h1><@spring.message "parent.page.havenopupils"/></h1>
@@ -61,33 +60,31 @@ jsSources = [
                     <div class="tab-content">
                         <div class="tab-pane" id="week-schedule" role="tabpanel">
 
-                            <#list 1..7 as dayOfWeek>
-                                <div class="day-schedule">
-                                    <table id="day${dayOfWeek}" class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th colspan="5"></th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 2%;"><@spring.message "schedule.lesson.position"/></th>
-                                            <th style="width: 40%;"><@spring.message "schedule.subject"/></th>
-                                            <th style="width: 18%;"><@spring.message "schedule.classroom"/></th>
-                                            <th style="width: 40%;"><@spring.message "schedule.teacher"/></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            <#list 1..10 as lessonPosition>
-                                            <tr>
-                                                <td>${lessonPosition}</td>
+                            <table class="table table-striped">
+                            <#list 0..10 as tableRow>
+
+                                <tr>
+                                    <#list 0..7 as tableCol>
+                                        <#if tableCol == 0>
+                                            <#if tableRow == 0>
+                                                <td class="lesson-position">
+                                                    <@spring.message "schedule.lesson.position"/>
+                                                </td>
+                                            <#else>
+                                                <td class="lesson-position">${tableRow}</td>
+                                            </#if>
+                                        <#else>
+                                            <#if tableRow == 0>
+                                                <td class="day-of-week"></td>
+                                            <#else>
                                                 <td class="for-clear"></td>
-                                                <td class="for-clear"></td>
-                                                <td class="for-clear"></td>
-                                            </tr>
-                                            </#list>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                            </#if>
+                                        </#if>
+                                    </#list>
+                                </tr>
+
                             </#list>
+                            </table>
 
                         </div>
                         <div class="tab-pane" id="attendance" role="tabpanel">
@@ -119,11 +116,11 @@ jsSources = [
 
                 </div>
             </div>
+            <br>
 
         </#if>
 
         </div>
-        <div class="col-sm-2 sidenav"></div>
     </div>
 </div>
 

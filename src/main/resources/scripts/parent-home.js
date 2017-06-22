@@ -13,6 +13,12 @@ $(function() {
         maxYear += 1;
     }
 
+    $(document).tooltip({
+        track: true,
+        show: { duration: 200 },
+        hide: { duration: 200 }
+    });
+
     $.datepicker.setDefaults($.datepicker.regional[lang]);
 
     $("#datepicker").datepicker({
@@ -38,8 +44,6 @@ $(function() {
         $("#datepicker").hide();
     });
 
-    $("#attendance-link").trigger("click");
-
     $("#pupil-select a").click(function () {
         var newPupilFormId = $(this).data("pupil-form-id");
         var newPupilId = $(this).data("pupil-id");
@@ -62,6 +66,8 @@ $(function() {
     $("#week-schedule-link").click(function () {
         $("#datepicker").show();
     });
+
+    $("#week-schedule-link").trigger("click");
 
     $("#lessons").change(function() {
         loadAttendance();
@@ -95,18 +101,18 @@ $(function() {
                 var daysInWeek = 7;
 
                 for(var i = 1; i <= daysInWeek; i++) {
-                    $('#day' + i + ' thead tr th').eq(0).text($.datepicker.formatDate('DD, dd.mm.yy', addDays(monday, i - 1)));
+                    $('#week-schedule table tr:first td').eq(i).html($.datepicker.formatDate('DD<br>dd.mm.yy', addDays(monday, i - 1)));
                 }
 
                 $(".for-clear").empty();
+                $(".for-clear").prop("title", "");
                 $.each(response, function(i, schedule) {
                     var dayOfWeek = new Date(schedule.date).getDay();
-                    var selector = $('#day' + dayOfWeek + ' tbody tr').eq(schedule.lessonPosition);
+
+                    var selector = $('#week-schedule table tr').eq(schedule.lessonPosition).find("td").eq((dayOfWeek == 0 ? 7 : dayOfWeek));
 
                     selector.prop("title", schedule.homework);
-                    selector.find("td").eq(1).text(schedule.lessonName);
-                    selector.find("td").eq(2).text(schedule.classroomName);
-                    selector.find("td").eq(3).text(schedule.teacherFirstName + " " + schedule.teacherLastName);
+                    selector.html(schedule.lessonName + "<br>" + schedule.classroomName + "<br>" + schedule.teacherFirstName + " " + schedule.teacherLastName);
                 });
             }
         });
