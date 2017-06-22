@@ -1,0 +1,10 @@
+.day-schedule {
+    float: left;
+    width: 33%;
+}
+.day-schedule .table td,
+.day-schedule .table th {
+    padding: 1px 2px;
+    text-align: center;
+    white-space: nowrap;
+}

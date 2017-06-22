@@ -68,8 +68,12 @@ public class UserJWTFreemarkerController {
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             if (authorities.contains(new SimpleGrantedAuthority("ROLE_PUPIL"))) {
                 return "redirect:pupil-home";
-            } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_HEAD_TEACHER"))) {
+            } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+                return "redirect:admin-home";
+            }else if (authorities.contains(new SimpleGrantedAuthority("ROLE_HEAD_TEACHER"))) {
                 return "redirect:teacher-mgmt/teacher-mgmt";
+            } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_PARENT"))) {
+                return "redirect:parent-home";
             } else {
                 return "redirect:freemarkertest";
             }

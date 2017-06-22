@@ -20,6 +20,16 @@ public class SchoolDTO implements Serializable {
     @NotNull
     private Boolean enabled;
 
+    private TeacherDTO headTeacher;
+
+    public TeacherDTO getHeadTeacher() {
+        return headTeacher;
+    }
+
+    public void setHeadTeacher(TeacherDTO headTeacher) {
+        this.headTeacher = headTeacher;
+    }
+
     public Long getId() {
         return id;
     }
