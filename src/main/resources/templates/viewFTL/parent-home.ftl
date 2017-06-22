@@ -45,7 +45,7 @@ jsSources = [
             <br>
             <div class="clearfix"></div>
 
-            <ul class="nav nav-tabs" id="data-type-select" role="tablist">
+            <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link" id="week-schedule-link" data-toggle="tab" href="#week-schedule" role="tab"><@spring.message "parent.page.schedule.title"/></a>
                 </li>

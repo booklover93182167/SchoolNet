@@ -1,6 +1,6 @@
 $(function() {
-    var pupilId = 0;
-    var pupilFormId = 0;
+    var pupilId = -1;
+    var pupilFormId = -1;
     var selectedDate = new Date();
     var monday = getMonday(selectedDate);
     var minYear = selectedDate.getFullYear();
@@ -34,24 +34,37 @@ $(function() {
         loadSchedule();
     });
 
+    $("#pupil-select a:last").trigger("click");
+    $("#attendance-link").trigger("click");
+
     $("#pupil-select a").click(function () {
-        pupilFormId = $(this).data("pupil-form-id");
-        pupilId = $(this).data("pupil-id");
+        var newPupilFormId = $(this).data("pupil-form-id");
+        var newPupilId = $(this).data("pupil-id");
 
-        loadSchedule();
-        loadLessons();
-    });
-
-    $("#week-schedule-link").click(function () {
-        $("#datepicker").show();
+        if(pupilId == newPupilId) {
+            return;
+        }
+        pupilId = newPupilId;
+        if(pupilFormId != newPupilFormId) {
+            pupilFormId = newPupilFormId;
+            loadSchedule();
+            loadLessons();
+        } else {
+            loadAttendance();
+        }
     });
 
     $("#attendance-link").click(function () {
         $("#datepicker").hide();
     });
 
-    $("#pupil-select a:last").trigger("click");
-    $("#data-type-select a:last").trigger("click");
+    $("#week-schedule-link").click(function () {
+        $("#datepicker").show();
+    });
+
+    $("#lessons").change(function() {
+        loadAttendance();
+    });
 
     function getMonday(date) {
         var newDate = new Date(date);
@@ -67,6 +80,7 @@ $(function() {
     }
 
     function loadSchedule() {
+        console.log("loadSchedule()");
         var searchParams = {
             pupilFormId: pupilFormId,
             date: selectedDate
@@ -98,6 +112,7 @@ $(function() {
     }
 
     function loadLessons() {
+        console.log("loadLessons()");
         var searchParams = {
             pupilFormId: pupilFormId
         };
@@ -116,11 +131,8 @@ $(function() {
         });
     }
 
-    $("#lessons").change(function() {
-        loadAttendance();
-    });
-
     function loadAttendance() {
+        console.log("loadAttendance()");
         var searchParams = {
             pupilId: pupilId,
             lessonId: $("#lessons").val()
