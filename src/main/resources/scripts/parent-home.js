@@ -4,6 +4,7 @@ $(function() {
     var monday = getMonday(selectedDate);
     var minYear = selectedDate.getFullYear();
     var maxYear = selectedDate.getFullYear();
+    var lang = $("#locale").val();
 
     if (selectedDate.getMonth() < 9 - 1) {
         minYear -= 1;
@@ -11,7 +12,7 @@ $(function() {
         maxYear += 1;
     }
 
-    $.datepicker.setDefaults($.datepicker.regional[window.lang]);
+    $.datepicker.setDefaults($.datepicker.regional[lang]);
 
     $("#datepicker").datepicker({
         dateFormat: "dd.mm.yy",
@@ -68,51 +69,22 @@ $(function() {
             contentType : "application/json",
             data : JSON.stringify(searchParams),
             success : function (response) {
-
                 var daysInWeek = 7;
-                var lessonsCount = 10;
 
-                $("#week-schedule").empty();
                 for(var i = 1; i <= daysInWeek; i++) {
-                    $("#week-schedule").append('<div class="day-schedule"><table id="day' + i + '" class="table table-striped">' +
-                    '<thead>' +
-                        '<tr>' +
-                            '<th colspan="5">' + $.datepicker.formatDate('DD, dd.mm.yy', addDays(monday, i - 1)) + '</th>' +
-                        '</tr>' +
-                        '<tr>' +
-                            '<th style="width: 2%;">' + window.lessonPosition + '</th>' +
-                            '<th style="width: 40%;">' + window.subject + '</th>' +
-                            '<th style="width: 18%;">' + window.classroom + '</th>' +
-                            '<th style="width: 40%;">' + window.teacher + '</th>' +
-                        '</tr>' +
-                    '</thead>' +
-                    '<tbody></tbody>' +
-                    '</table></div>');
-                    for(var j = 1; j <= lessonsCount; j++) {
-                        $('#day' + i + ' > tbody:last-child').append(
-                            '<tr>' +
-                                '<td>' + j + '</td>' +
-                                '<td></td>' +
-                                '<td></td>' +
-                                '<td></td>' +
-                            '</tr>'
-                        );
-                    }
+                    $('#day' + i + ' thead tr th').eq(0).text($.datepicker.formatDate('DD, dd.mm.yy', addDays(monday, i - 1)));
                 }
 
+                $(".for-clear").empty();
                 $.each(response, function(j, schedule) {
                     var dayOfWeek = new Date(schedule.date).getDay();
+                    var selector = $('#day' + dayOfWeek + ' tbody tr').eq(schedule.lessonPosition);
 
-                    $('#day' + dayOfWeek + ' tbody tr').eq(schedule.lessonPosition).replaceWith(
-                        '<tr title="' + window.homework + ': ' + schedule.homework + '">' +
-                        '<td>' + (schedule.lessonPosition + 1) + '</td>' +
-                        '<td>' + schedule.lessonName + '</td>' +
-                        '<td>' + schedule.classroomName + '</td>' +
-                        '<td>' + schedule.teacherFirstName + " " + schedule.teacherLastName + '</td>' +
-                        '</tr>'
-                    );
+                    selector.prop("title", schedule.homework);
+                    selector.find("td").eq(1).text(schedule.lessonName);
+                    selector.find("td").eq(2).text(schedule.classroomName);
+                    selector.find("td").eq(3).text(schedule.teacherFirstName + " " + schedule.teacherLastName);
                 });
-
             }
         });
     }
