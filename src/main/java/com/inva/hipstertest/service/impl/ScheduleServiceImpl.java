@@ -1,16 +1,16 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.Pupil;
-import com.inva.hipstertest.repository.PupilRepository;
-import com.inva.hipstertest.service.ScheduleService;
 import com.inva.hipstertest.domain.Schedule;
+import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.repository.ScheduleRepository;
+import com.inva.hipstertest.service.ScheduleService;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
 import com.inva.hipstertest.service.mapper.ScheduleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -125,19 +125,11 @@ public class ScheduleServiceImpl implements ScheduleService {
      * @param date requested date
      * @return the list of entities ordered by lesson position
      */
-    public List<ScheduleDTO> findByFormIdAndDate(ZonedDateTime date) {
-        log.debug("Request to get schedules for form and date {}", date);
+    @Override
+    public List<ScheduleDTO> findAllByFormIdAndDate(String date) {
         Pupil currentPupil = pupilRepository.findPupilByCurrentUser();
-        List<Schedule> schedules = scheduleRepository.findByFormId(currentPupil.getForm().getId());
-        List<Schedule> scheduleByDate = new ArrayList<>();
-        for (Schedule schedule :
-            schedules) {
-            if (schedule.getDate().getYear() == date.getYear()
-                && schedule.getDate().getDayOfYear() == date.getDayOfYear()) {
-                scheduleByDate.add(schedule);
-            }
-        }
-        List<ScheduleDTO> scheduleDTOS = scheduleMapper.schedulesToScheduleDTOs(scheduleByDate);
+        List<Schedule> schedules = scheduleRepository.findAllByFormIdAndDate(date, currentPupil.getForm().getId());
+        List<ScheduleDTO> scheduleDTOS = scheduleMapper.schedulesToScheduleDTOs(schedules);
         List<ScheduleDTO> scheduleToSend = buildScheduleForDayWithEmptyRecords(scheduleDTOS);
         return scheduleToSend;
     }
@@ -161,7 +153,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                         flag = true;
                     }
                 }
-                if (!flag){
+                if (!flag) {
                     ScheduleDTO emptyScheduleDTO = createEmptyScheduleDTO();
                     emptyScheduleDTO.setLessonPosition(lessonPositions++);
                     resultList.add(emptyScheduleDTO);

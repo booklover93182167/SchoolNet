@@ -1,9 +1,9 @@
 package com.inva.hipstertest.freemarker.controllers;
 
-import com.inva.hipstertest.service.FormService;
+import com.inva.hipstertest.service.AttendancesService;
+import com.inva.hipstertest.service.LessonService;
 import com.inva.hipstertest.service.PupilService;
 import com.inva.hipstertest.service.ScheduleService;
-import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.service.dto.AttendancesDTO;
 import com.inva.hipstertest.service.dto.LessonDTO;
 import com.inva.hipstertest.service.dto.PupilDTO;
@@ -15,10 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,48 +26,46 @@ public class PupilController {
 
     private final PupilService pupilService;
     private final ScheduleService scheduleService;
-    private final FormService formService;
     private final LessonService lessonService;
     private final AttendancesService attendancesService;
 
     public PupilController(PupilService pupilService, ScheduleService scheduleService,
-                           FormService formService, LessonService lessonService,
+                           LessonService lessonService,
                            AttendancesService attendancesService) {
         this.pupilService = pupilService;
         this.scheduleService = scheduleService;
-        this.formService = formService;
         this.lessonService = lessonService;
         this.attendancesService = attendancesService;
     }
 
     /**
+     * Get name of Current pupil.
+     *
      * @param model
-     * @return
+     * @return hme page view (FTL).
      */
     @RequestMapping(value = "pupil-home", method = RequestMethod.GET)
     public String index(@ModelAttribute("model") ModelMap model) {
+        log.debug("Request to get current pupil");
         PupilDTO pupil = pupilService.findPupilByCurrentUser();
-        ZonedDateTime zonedDateTime = ZonedDateTime.now();
-        List<ScheduleDTO> schedule = scheduleService.findByFormIdAndDate(zonedDateTime);
-        model.addAttribute("currentPupil", pupil);
-        model.addAttribute("mySchedule", schedule);
+        model.addAttribute("pupilFirstName",pupil.getFirstName());
+        model.addAttribute("pupilLastName",pupil.getLastName());
         return "pupil-home";
     }
 
     /**
-     * @return
+     * Get schedules by date.
+     *
+     * @param date requested date
+     * @return the list of schedules.
      */
     @RequestMapping("pupil-home/mySchedule/{date}")
     public @ResponseBody
     List<ScheduleDTO> getListSchedulesByDate(@PathVariable String date) {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-        LocalDateTime localDateTime = LocalDateTime.parse(date, timeFormatter);
-        ZoneId zoneId = ZoneId.systemDefault();
-        ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
-        List<ScheduleDTO> scheduleDTO = scheduleService.findByFormIdAndDate(zonedDateTime);
+        log.debug("Request to get schedule for current pupil by date : {}", date);
+        List<ScheduleDTO> scheduleDTO = scheduleService.findAllByFormIdAndDate(date);
         return scheduleDTO;
     }
-
 
     /**
      * Get list of lessons for select.
@@ -104,6 +98,4 @@ public class PupilController {
         Collections.sort(attendancesDTO, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
         return attendancesDTO;
     }
-
-
 }
