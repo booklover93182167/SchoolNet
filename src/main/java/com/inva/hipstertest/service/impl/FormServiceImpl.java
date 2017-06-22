@@ -119,4 +119,15 @@ public class FormServiceImpl implements FormService{
             .map(formMapper::formToFormDTO)
             .collect(Collectors.toCollection(LinkedList::new));
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<FormDTO> findAllUnassignedFormsByCurrentSchool() {
+        log.debug("Request to get all Forms for current school");
+        long idSchool = teacherRepository.findOneWithSchool().getSchool().getId();
+
+        return formRepository.findAllUnassignedFormsByCurrentSchool(idSchool).stream()
+            .map(formMapper::formToFormDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 }

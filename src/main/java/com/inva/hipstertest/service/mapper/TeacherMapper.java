@@ -33,6 +33,7 @@ public interface TeacherMapper {
     @Mapping(source = "firstName", target = "user.firstName")
     @Mapping(source = "lastName", target = "user.lastName")
     @Mapping(source = "email", target = "user.email")
+    @Mapping(source = "form", target = "form")
     Teacher teacherDTOToTeacher(TeacherDTO teacherDTO);
 
     List<Teacher> teacherDTOsToTeachers(List<TeacherDTO> teacherDTOs);

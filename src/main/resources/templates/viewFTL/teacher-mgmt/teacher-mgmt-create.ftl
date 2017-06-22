@@ -2,6 +2,7 @@
 <@h.header>
 
 </@h.header>
+<link rel="stylesheet" type="text/css" href="/scripts/teacher-mgmt-popup.css">
 
 <br>
 <div id="header">
@@ -10,36 +11,54 @@
     </h2>
 </div>
 <form name="create" action="/freemarker/teacher-mgmt/teacher-mgmt-create" method="post">
-<div class="modal-body">
-    <div class="form-group">
-        <label class="form-control-label">First Name</label>
-        <@spring.formInput "teacherDTO.firstName"/>
-        <@spring.showErrors "teacherDTO.firstName","error" />
-    </div>
-    <div class="form-group">
-        <label class="form-control-label">Last Name</label>
-        <@spring.formInput "teacherDTO.lastName" />
-        <@spring.showErrors "teacherDTO.lastName","error" />
-    </div>
-    <div class="form-group">
-        <label class="form-control-label">Email</label>
-        <@spring.formInput "teacherDTO.email" />
-        <@spring.showErrors "teacherDTO.email","error" />
-        <#if emailFail??>
-            <span style="color:red">${emailFail}</span>
-        </#if>
-    </div>
-
+<div class="body">
+        <div class="form-group">
+            <label class="form-control-label" for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" minlength=3 maxlength=50 required>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" minlength=3 maxlength=50 required>Last Name</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" minlength=3 maxlength=50 required>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email"
+                   required minlength="7" maxlength="100">
+        </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">
-        <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+    <button type="button" class="btn btn-info" data-dismiss="modal"
+            onclick="window.location.href='/freemarker/teacher-mgmt/teacher-mgmt/'">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
     </button>
     <button type="submit" class="btn btn-primary">
         <span class="fa fa-save"></span>&nbsp;<span>Save</span>
     </button>
 </div>
 </form>
+<div class="errorModal" id="errorPopup">
+    <div class="modal-content3">
+        <div class="modal-body">
+            <h3>
+                <span style="color:red">
+                    <script>
+                        <#if emailFail??>
+                            document.getElementById('errorPopup').style.display = "block";
+                        </#if>
+                    </script>
+                    Invalid e-mail. Please try another one.
+                </span>
+            </h3>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info"
+                    onclick=hideErrorModal()>
+                <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
+            </button>
+        </div>
+    </div>
+</div>
+<script src="/scripts/teachermgmt.js"></script>
 
 <@h.footer>
 

@@ -47,4 +47,6 @@ public interface FormService {
 
 
     List<FormDTO> findAllFormsByCurrentSchool();
+
+    List<FormDTO> findAllUnassignedFormsByCurrentSchool();
 }

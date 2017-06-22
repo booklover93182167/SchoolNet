@@ -12,17 +12,35 @@
     <fieldset>
         <legend>Login</legend>
         <form name="login" action="/freemarker/authenticate" method="post">
-            Login:
-            <@spring.formInput "loginVM.username" />
-            <span style="color:red"><@spring.showErrors "loginVM.username","error" /></span>
-            <br>
-            Password:
-            <@spring.formPasswordInput "loginVM.password" />
-            <span style="color:red"><@spring.showErrors "loginVM.password","error" /></span>
-            <br>
-            <#if loginFail??>
-                <span style="color:red">${loginFail}<br></span>
-            </#if>
+            <table>
+                <tr>
+                    <td>
+                        Login:
+                    </td>
+                    <td>
+                    <@spring.formInput "loginVM.username" />
+                    </td>
+                    <td>
+                    <span style="color:red"><@spring.showErrors "loginVM.username","error" /></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Password:
+                    </td>
+                    <td>
+                    <@spring.formPasswordInput "loginVM.password" />
+                    </td>
+                    <td>
+                    <span style="color:red"><@spring.showErrors "loginVM.password","error" /></span>
+                    </td>
+                    <td>
+                    <#if loginFail??>
+                        <span style="color:red">${loginFail}<br></span>
+                    </#if>
+                    </td>
+                </tr>
+            </table>
             <input type="submit" value="Submit"/>
         </form>
     </fieldset>

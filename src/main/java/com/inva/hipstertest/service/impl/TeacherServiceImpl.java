@@ -1,6 +1,7 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.*;
+import com.inva.hipstertest.repository.UserRepository;
 import com.inva.hipstertest.service.MailService;
 import com.inva.hipstertest.service.SchoolService;
 import com.inva.hipstertest.service.TeacherService;
@@ -13,6 +14,7 @@ import com.inva.hipstertest.support.methods.SupportCreate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,10 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
 
     private final TeacherRepository teacherRepository;
 
+    private final UserRepository userRepository;
+
+    private final UserService userService;
+
     private final TeacherMapper teacherMapper;
 
     @Autowired
@@ -42,9 +48,13 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
     private UserService service;
 
     public TeacherServiceImpl(TeacherRepository teacherRepository,
-                              TeacherMapper teacherMapper) {
+                              TeacherMapper teacherMapper,
+                              UserService userService,
+                              UserRepository userRepository) {
         this.teacherRepository = teacherRepository;
         this.teacherMapper = teacherMapper;
+        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -58,6 +68,29 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         log.debug("Request to save Teacher : {}", teacherDTO);
         Teacher teacher = teacherMapper.teacherDTOToTeacher(teacherDTO);
         teacher = teacherRepository.save(teacher);
+        TeacherDTO result = teacherMapper.teacherToTeacherDTO(teacher);
+        return result;
+    }
+
+    /**
+     * Save a teacher(and user details).
+     *
+     * @param teacherDTO the entity to save
+     * @return the persisted entity
+     */
+    public TeacherDTO saveTeacherAndUser(TeacherDTO teacherDTO) {
+        log.debug("Request to save Teacher and User : {}", teacherDTO);
+        Teacher teacher = teacherMapper.teacherDTOToTeacher(teacherDTO);
+        TeacherDTO headTeacher = findTeacherByCurrentUser();
+        User teacherUser = userService.getUserWithAuthorities(teacherDTO.getUserId());
+        // modify only if are from same school
+        if (headTeacher.getSchoolId().equals(teacherDTO.getSchoolId())) {
+            teacherUser.setEmail(teacherDTO.getEmail());
+            teacherUser.setFirstName(teacherDTO.getFirstName());
+            teacherUser.setLastName(teacherDTO.getLastName());
+            userRepository.save(teacherUser);
+            teacher = teacherRepository.save(teacher);
+        }
         TeacherDTO result = teacherMapper.teacherToTeacherDTO(teacher);
         return result;
     }

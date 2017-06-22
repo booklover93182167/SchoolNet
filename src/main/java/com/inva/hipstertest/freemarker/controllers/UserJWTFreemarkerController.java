@@ -54,6 +54,7 @@ public class UserJWTFreemarkerController {
     @Timed
     public ModelAndView authenticate(HttpServletResponse httpServletResponse, @Valid LoginVM loginVM, BindingResult result) {
         if (result.hasErrors()) {
+
             return new ModelAndView("login");
         }
         UsernamePasswordAuthenticationToken authenticationToken =
