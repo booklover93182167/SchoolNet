@@ -31,11 +31,11 @@ jsSources = [
 
             <br><br>
             <h5><@spring.message "parent.page.selectpupil"/></h5>
-            <ul class="nav nav-pills" id="myTab" role="tablist">
+            <ul class="nav nav-pills" id="pupil-select" role="tablist">
             <#assign i=0>
             <#list model["pupilList"] as pupil>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#pupil${pupil.id}" role="tab" aria-controls="pupil${pupil.id}" data-pupil-form-id="${pupil.formId}">${pupil.firstName} ${pupil.lastName} [${pupil.formName}]</a>
+                    <a class="nav-link" data-toggle="tab" href="#pupil${pupil.id}" role="tab" aria-controls="pupil${pupil.id}" data-pupil-id="${pupil.id}" data-pupil-form-id="${pupil.formId}">${pupil.firstName} ${pupil.lastName} [${pupil.formName}]</a>
                 </li>
                 <#assign i++>
             <#else>
@@ -45,18 +45,18 @@ jsSources = [
 
             <div class="clearfix"></div>
 
-            <ul class="nav nav-tabs" role="tablist">
+            <ul class="nav nav-tabs" id="data-type-select" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#week-schedule" role="tab"><@spring.message "parent.page.schedule.title"/></a>
+                    <a class="nav-link" data-toggle="tab" href="#week-schedule" role="tab"><@spring.message "parent.page.schedule.title"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#attendance" role="tab"><@spring.message "parent.page.attendance.title"/></a>
+                    <a class="nav-link active" data-toggle="tab" href="#attendance" role="tab"><@spring.message "parent.page.attendance.title"/></a>
                 </li>
             </ul>
 
             <br>
             <div class="tab-content">
-                <div class="tab-pane active" id="week-schedule" role="tabpanel">
+                <div class="tab-pane" id="week-schedule" role="tabpanel">
 
                     <#list 1..7 as dayOfWeek>
                         <div class="day-schedule">
@@ -87,7 +87,24 @@ jsSources = [
                     </#list>
 
                 </div>
-                <div class="tab-pane" id="attendance" role="tabpanel">Soon will be implemented</div>
+                <div class="tab-pane active" id="attendance" role="tabpanel">
+
+                    <div class="form-group">
+                        <label for="lessons">Choose subject:</label>
+                        <select class="form-control" id="lessons"></select>
+                    </div>
+                    <table id="attendanceData" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th style="width: 50%;">Date</th>
+                            <th style="width: 50%;">Mark</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
 
         </div>

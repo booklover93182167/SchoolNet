@@ -1,4 +1,5 @@
 $(function() {
+    var pupilId = 0;
     var pupilFormId = 0;
     var selectedDate = new Date();
     var monday = getMonday(selectedDate);
@@ -30,20 +31,19 @@ $(function() {
             return;
         }
         monday = newMonday;
-        reloadSchedule();
+        loadSchedule();
     });
 
-    $("#myTab a").click(function () {
-        var newPupilFormId = $(this).data("pupil-form-id");
+    $("#pupil-select a").click(function () {
+        pupilFormId = $(this).data("pupil-form-id");
+        pupilId = $(this).data("pupil-id");
 
-        if (pupilFormId === newPupilFormId) {
-            return;
-        }
-        pupilFormId = newPupilFormId;
-        reloadSchedule();
+        // alert(pupilFormId + " " + pupilId);
+        loadSchedule();
+        loadLessons();
     });
 
-    $("#myTab a:first").trigger("click");
+    $("#pupil-select a:last").trigger("click");
 
     function getMonday(date) {
         var newDate = new Date(date);
@@ -58,7 +58,7 @@ $(function() {
         return newDate;
     }
 
-    function reloadSchedule() {
+    function loadSchedule() {
         var searchParams = {
             pupilFormId: pupilFormId,
             date: selectedDate
@@ -76,7 +76,7 @@ $(function() {
                 }
 
                 $(".for-clear").empty();
-                $.each(response, function(j, schedule) {
+                $.each(response, function(i, schedule) {
                     var dayOfWeek = new Date(schedule.date).getDay();
                     var selector = $('#day' + dayOfWeek + ' tbody tr').eq(schedule.lessonPosition);
 
@@ -88,4 +88,47 @@ $(function() {
             }
         });
     }
+
+    function loadLessons() {
+        var searchParams = {
+            pupilFormId: pupilFormId
+        };
+        $.ajax({
+            url : "/freemarker/parent-home/lessons",
+            type : "POST",
+            contentType : "application/json",
+            data : JSON.stringify(searchParams),
+            success : function (response) {
+                $("#lessons").empty();
+                $.each(response, function(i, lesson) {
+                    $("#lessons").append($("<option></option>").attr("value", lesson.id).text(lesson.name));
+                });
+                loadAttendance();
+            }
+        });
+    }
+
+    $("#lessons").change(function() {
+        loadAttendance();
+    });
+
+    function loadAttendance() {
+        var searchParams = {
+            pupilId: pupilId,
+            lessonId: $("#lessons").val()
+        };
+        $.ajax({
+            url : "/freemarker/parent-home/attendance",
+            type : "POST",
+            contentType : "application/json",
+            data : JSON.stringify(searchParams),
+            success : function (response) {
+                $("#attendanceData tbody").empty();
+                $.each(response, function(i, attendance) {
+                    $('#attendanceData tbody').append('<tr><td>' + $.datepicker.formatDate('DD, dd.mm.yy', new Date(attendance.date)) + '</td><td>' + attendance.grade + '</td></tr>');
+                });
+            }
+        });
+    }
+
 });
