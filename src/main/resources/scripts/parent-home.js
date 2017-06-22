@@ -38,12 +38,20 @@ $(function() {
         pupilFormId = $(this).data("pupil-form-id");
         pupilId = $(this).data("pupil-id");
 
-        // alert(pupilFormId + " " + pupilId);
         loadSchedule();
         loadLessons();
     });
 
+    $("#week-schedule-link").click(function () {
+        $("#datepicker").show();
+    });
+
+    $("#attendance-link").click(function () {
+        $("#datepicker").hide();
+    });
+
     $("#pupil-select a:last").trigger("click");
+    $("#data-type-select a:last").trigger("click");
 
     function getMonday(date) {
         var newDate = new Date(date);
@@ -123,10 +131,29 @@ $(function() {
             contentType : "application/json",
             data : JSON.stringify(searchParams),
             success : function (response) {
-                $("#attendanceData tbody").empty();
+                var avgGradeSum = 0;
+                var avgGradeCount = 0;
+
+                $('#attendanceTable tbody').find('tr:not(:last)').remove();
+
                 $.each(response, function(i, attendance) {
-                    $('#attendanceData tbody').append('<tr><td>' + $.datepicker.formatDate('DD, dd.mm.yy', new Date(attendance.date)) + '</td><td>' + attendance.grade + '</td></tr>');
+                    if(attendance.grade > 0) {
+                        avgGradeSum += attendance.grade;
+                        avgGradeCount += 1;
+                    }
+                    $('#attendanceTable tbody').prepend('<tr><td>' + $.datepicker.formatDate('DD, dd.mm.yy', new Date(attendance.date)) + '</td><td>' + attendance.grade + '</td></tr>');
                 });
+
+                if(response.length == 0) {
+                    $("#attendanceEmpty span:first").text($("#pupil-select li a.active").text());
+                    $("#attendanceEmpty span:last").text($("#lessons option:selected").text());
+                    $("#attendanceTable").hide();
+                    $("#attendanceEmpty").show();
+                } else {
+                    $('#avg-grade').text(Number((avgGradeSum/avgGradeCount).toFixed(2)));
+                    $("#attendanceEmpty").hide();
+                    $("#attendanceTable").show();
+                }
             }
         });
     }

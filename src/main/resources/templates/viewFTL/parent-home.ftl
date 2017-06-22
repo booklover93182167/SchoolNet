@@ -42,15 +42,15 @@ jsSources = [
                 <@spring.message "parent.page.havenotpupils"/>
             </#list>
             </ul>
-
+            <br>
             <div class="clearfix"></div>
 
             <ul class="nav nav-tabs" id="data-type-select" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#week-schedule" role="tab"><@spring.message "parent.page.schedule.title"/></a>
+                    <a class="nav-link" id="week-schedule-link" data-toggle="tab" href="#week-schedule" role="tab"><@spring.message "parent.page.schedule.title"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#attendance" role="tab"><@spring.message "parent.page.attendance.title"/></a>
+                    <a class="nav-link" id="attendance-link" data-toggle="tab" href="#attendance" role="tab"><@spring.message "parent.page.attendance.title"/></a>
                 </li>
             </ul>
 
@@ -87,22 +87,29 @@ jsSources = [
                     </#list>
 
                 </div>
-                <div class="tab-pane active" id="attendance" role="tabpanel">
+                <div class="tab-pane" id="attendance" role="tabpanel">
 
                     <div class="form-group">
-                        <label for="lessons">Choose subject:</label>
+                        <label for="lessons"><@spring.message "parent.page.select.subject"/></label>
                         <select class="form-control" id="lessons"></select>
                     </div>
-                    <table id="attendanceData" class="table table-striped">
+                    <table id="attendanceTable" class="table table-striped">
                         <thead>
                         <tr>
-                            <th style="width: 50%;">Date</th>
-                            <th style="width: 50%;">Mark</th>
+                            <th style="width: 50%;"><@spring.message "attendance.date"/></th>
+                            <th style="width: 50%;"><@spring.message "attendance.grade"/></th>
                         </tr>
                         </thead>
                         <tbody>
+                        <tr>
+                            <td class="font-weight-bold"><@spring.message "attendance.average"/></td>
+                            <td class="font-weight-bold" id="avg-grade"></td>
+                        </tr>
                         </tbody>
                     </table>
+                    <div id="attendanceEmpty">
+                        <span></span> <@spring.message "parent.page.havenogrades"/> <span></span>
+                    </div>
 
                 </div>
             </div>
