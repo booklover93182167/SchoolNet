@@ -1,42 +1,98 @@
-var scheduleTable = document.getElementById("scheduleTable");
+$(document).ready(function () {
+    var dateToSend = new Date().toISOString().slice(0, 19);
+
+    getSchedule(dateToSend);
+    lableDate.innerHTML = new Date();
+});
+
 var lableDate = document.getElementById("label_date");
-lableDate.innerHTML = new Date().toDateString();
-
 var selectedDate;
-
+var attendances;
 $(function () {
     $('#calendar').fullCalendar({
         dayClick: function (eventDate) {
             selectedDate = new Date(eventDate);
-            var dateToSend = selectedDate.toISOString();
-            // alert('Clicked on: ' + dateToSend);
+            var dateToSend = selectedDate.toISOString().slice(0, 19);
             lableDate.innerHTML = selectedDate;
-
-            var request = new XMLHttpRequest();
-            request.open('GET', 'pupil-home/mySchedule/' + dateToSend);
-            request.onload = function () {
-                var schedule = JSON.parse(request.responseText);
-                renderHTML(schedule);
-            };
-            request.send();
+            getSchedule(dateToSend)
+            // getAttendance(dateToSend);
         },
         theme: true,
         locale: 'en',
     });
 });
 
-function renderHTML(data) {
-    scheduleTable.innerHTML = '';
-    var table = "<label> My schedule on " + selectedDate + "</label>";
-    table += "<table class=\"table table-striped\"><tr>" +
-        "<th>Position</th> <th>Lesson</th><th>Homework</th><th>Classroom</th> <th>Teacher</th></tr>";
-    for (var i = 0; i < data.length; i++) {
-        table += "<tr><td>" + data[i].lessonPosition + "</td>";
-        table += "<td>" + data[i].lessonName + "</td>";
-        table += "<td>" + data[i].homework + "</td>";
-        table += "<td>" + data[i].classroomName + "</td>";
-        table += "<td>" + data[i].teacherFirstName + " " + data[i].teacherLastName + "</td></tr>";
+function getSchedule(date) {
+    var request = createRequest();
+    if (!request) {
+        return;
     }
-    table += "</table>";
+    request.open('GET', 'pupil-home/mySchedule/' + date);
+    request.onload = function () {
+        var schedule = JSON.parse(request.responseText);
+        getAttendance(date);
+        renderHTMLTable(schedule, attendances);
+    };
+    request.send();
+}
+
+function getAttendance(date) {
+    var request = createRequest();
+
+    if (!request) {
+        return;
+    }
+    request.open('GET', 'pupil-home/myAttendances/' + date, false);
+    request.onload = function () {
+        attendances = JSON.parse(request.responseText);
+    };
+    request.send();
+}
+
+function createRequest() {
+    var request = false;
+    if (window.XMLHttpRequest) {
+        request = new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject) {
+        try {
+            request = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        catch (CatchException) {
+            request = new ActiveXObject("Msxml2.XMLHTTP");
+        }
+    }
+    if (!request) {
+        alert("Cannot create XMLHttpRequest");
+    }
+    return request;
+}
+
+function renderHTMLTable(data, attendance) {
+    var scheduleTable = document.getElementById("scheduleTable");
+    scheduleTable.innerHTML = '';
+    var table = '';
+    for (var i = 0; i < data.length; i++) {
+
+        table += "<tr><td style=\"width: 40px; text-align: center;\">" + data[i].lessonPosition + "</td>";
+        table += "<td style=\"width: 100px; text-align: center;\">" + data[i].lessonName + "</td>";
+        table += "<td id=\"homevork\">" + data[i].homework + "</td>";
+        table += "<td style=\"width: 75px; text-align: center;\">" + data[i].classroomName + "</td>";
+        table += "<td id=\"teacher\" style=\"width: 180px; text-align: center;\">" + data[i].teacherFirstName + " " + data[i].teacherLastName + "</td>";
+        var grade = (data[i].id) ? renderHTMLAttendance(data[i].id, attendance) : "-";
+        table += "<td style=\"width: 40px; text-align: center;\">" + grade + "</td></tr>"
+    }
     scheduleTable.insertAdjacentHTML("beforeend", table);
+}
+
+function renderHTMLAttendance(id, attendances) {
+    var grade = 'n/a';
+    attendances.forEach(function (attendance) {
+        if (attendance.scheduleId === id) {
+            if (attendance.grade != 0) {
+                grade = attendance.grade;
+            }
+        }
+    });
+    return grade;
 }
