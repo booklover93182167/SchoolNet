@@ -30,6 +30,8 @@ public interface FormService {
      */
     List<FormDTO> findAllByTeacherId(Long teacherId);
 
+    FormDTO findOneByTeacherId(Long teacherId);
+
     /**
      *  Get the "id" form.
      *

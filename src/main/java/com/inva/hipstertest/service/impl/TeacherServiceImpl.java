@@ -1,12 +1,11 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.*;
+import com.inva.hipstertest.repository.FormRepository;
 import com.inva.hipstertest.repository.UserRepository;
-import com.inva.hipstertest.service.MailService;
-import com.inva.hipstertest.service.SchoolService;
-import com.inva.hipstertest.service.TeacherService;
+import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.repository.TeacherRepository;
-import com.inva.hipstertest.service.UserService;
+import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
 import com.inva.hipstertest.service.mapper.TeacherMapper;
 import com.inva.hipstertest.support.methods.ROLE_ENUM;
@@ -36,7 +35,10 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
 
     private final UserService userService;
 
+    private final FormService formService;
+
     private final TeacherMapper teacherMapper;
+
 
     @Autowired
     private MailService mailService;
@@ -50,11 +52,13 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
     public TeacherServiceImpl(TeacherRepository teacherRepository,
                               TeacherMapper teacherMapper,
                               UserService userService,
-                              UserRepository userRepository) {
+                              UserRepository userRepository,
+                              FormService formService) {
         this.teacherRepository = teacherRepository;
         this.teacherMapper = teacherMapper;
         this.userService = userService;
         this.userRepository = userRepository;
+        this.formService = formService;
     }
 
     /**
@@ -89,6 +93,18 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
             teacherUser.setFirstName(teacherDTO.getFirstName());
             teacherUser.setLastName(teacherDTO.getLastName());
             userRepository.save(teacherUser);
+            if(teacherDTO.getFormId() != null) {
+                FormDTO formDTO = formService.findOne(teacherDTO.getFormId());
+                formDTO.setTeacherId(teacher.getId());
+                formService.save(formDTO);
+            } else {
+                FormDTO formDTO = formService.findOneByTeacherId(teacherDTO.getId());
+                if(formDTO != null){
+                    formDTO.setTeacherId(null);
+                    formService.save(formDTO);
+                }
+            }
+            //formService.save(formDTO);
             teacher = teacherRepository.save(teacher);
         }
         TeacherDTO result = teacherMapper.teacherToTeacherDTO(teacher);

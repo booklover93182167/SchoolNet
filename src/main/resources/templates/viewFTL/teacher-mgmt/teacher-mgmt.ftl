@@ -157,9 +157,14 @@
                     <div class="form-group">
                         <label class="form-control-label" for="formName">Form <span id="currentForm">-</label>
                         <button id="assign" class="btn btn-secondary"
-                                onclick="showFormAssignModal()">
-                            <span class="fa fa-plus"></span>
-                            <span id="assignchange">Assign</span>
+                                         onclick="showFormAssignModal()">
+                        <span class="fa fa-plus"></span>
+                        <span id="assignchange">Assign</span>
+                        </button>
+                        <button id="remove" class="btn btn-secondary"
+                                onclick="removeFormAssignment()">
+                            <span class="fa fa-minus"></span>
+                            <span id="assignchange">Remove</span>
                         </button>
                     </div>
                 </div>
@@ -178,8 +183,8 @@
         <div id="formAssign" class="editModal">
             <div class="modal-content3">
                 <div class="modal-body">
-                    <select class="form-control form-control-lg" id="forms" name="forms" style="width: auto">
-
+                    <select class="form-control form-control-lg" id="forms" style="width: auto">
+                        <option value="">select</option>
                     </select>
                 </div>
                 <div class="modal-footer">
@@ -188,7 +193,7 @@
                         <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
                     </button>
                     <button type="submit" class="btn btn-primary"
-                            onclick="assignFormToteacher()">
+                            onclick="assignFormToTeacher()">
                         <span class="fa fa-save"></span>&nbsp;<span>Save</span>
                     </button>
                 </div>

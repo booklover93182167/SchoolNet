@@ -132,14 +132,13 @@ public class HeadTeacherController {
      */
     @RequestMapping(value = "freemarker/teacher-mgmt/teacher-mgmt-edit", method = RequestMethod.POST)
     public @ResponseBody TeacherDTO editRequest(@RequestBody Long id){
-        log.debug("Create Ajax request for attendance by id lesson");
+        log.debug("Create Ajax edit request");
         TeacherDTO teacherDTOToSend = teacherService.findOne(id);
         return teacherDTOToSend;
     }
 
     @RequestMapping(value = "freemarker/teacher-mgmt/teacher-mgmt-save", method = RequestMethod.POST)
     public @ResponseBody String saveRequest(@RequestBody @Valid TeacherDTO teacherDTO, BindingResult bindingResult){
-        System.out.println(teacherDTO.getEmail());
         if (bindingResult.hasErrors()) {
             return "Error";
         }
@@ -154,7 +153,7 @@ public class HeadTeacherController {
     @RequestMapping(value = "freemarker/teacher-mgmt/teacher-mgmt-get-av-forms", method = RequestMethod.GET)
     public @ResponseBody List<FormDTO> getAvailableForms(){
         log.debug("Create Ajax request for available forms");
-        List<FormDTO> forms = formService.findAllFormsByCurrentSchool();
+        List<FormDTO> forms = formService.findAllUnassignedFormsByCurrentSchool();
         return forms;
     }
 

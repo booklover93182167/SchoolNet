@@ -82,6 +82,14 @@ public class FormServiceImpl implements FormService{
         return formsDTO;
     }
 
+    @Override
+    public FormDTO findOneByTeacherId(Long teacherId) {
+        log.debug("Request to get all Forms by Teacher : {}", teacherId);
+        Form form = formRepository.findOneByTeacherId(teacherId);
+        FormDTO formDTO = formMapper.formToFormDTO(form);
+        return formDTO;
+    }
+
     /**
      *  Get one form by id.
      *

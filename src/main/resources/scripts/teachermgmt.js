@@ -47,7 +47,6 @@ function editTeacherAjax(id){
             contentType : "application/json",
             data : JSON.stringify(id),
             success : function (response) {
-                console.log(JSON.stringify(response));
                 document.getElementById('emailEdit').value = response.email;
                 document.getElementById('firstNameEdit').value = response.firstName;
                 document.getElementById('lastNameEdit').value = response.lastName;
@@ -77,18 +76,27 @@ function saveTeacher(){
 }
 
 function showFormAssignModal(){
-    //get available forms in school (with no teacher assigned)
+    //get available(assignable) forms in school (with no teacher assigned)
     $.ajax({
         url : "teacher-mgmt-get-av-forms",
         type : "GET",
         contentType : "application/json",
         success : function (response) {
-
+            var formAssign = document.getElementById('forms');
+            var length = formAssign.options.length;
+            for (i = 0; i < length; i++) {
+                formAssign.options[i] = null;
+            }
+            $.each(response, function() {
+                var opt = document.createElement('option');
+                opt.value = this.id;
+                opt.innerHTML = this.name;
+                formAssign.appendChild(opt);
+            });
+            var formAssignModal = document.getElementById('formAssign');
+            formAssignModal.style.display = "block";
         }
     });
-
-    var formAssignModal = document.getElementById('formAssign');
-    formAssignModal.style.display = "block";
 }
 
 function hideFormAssignModal(){
@@ -97,5 +105,17 @@ function hideFormAssignModal(){
 }
 
 function assignFormToTeacher(){
+    var formAssignSelect = document.getElementById('forms');
+    var selected = formAssignSelect.options[ formAssignSelect.selectedIndex ].value;
+    console.log(selected + '111');
+    if (!selected || selected == '') {
+        return;
+    }
+    editedTeacher.formId = selected;
+    hideFormAssignModal();
+}
 
+function removeFormAssignment() {
+    editedTeacher.formId = null;
+    saveTeacher();
 }
