@@ -45,16 +45,17 @@ public class UserJWTFreemarkerController {
     }
 
     @RequestMapping(value = "/freemarker/login", method = RequestMethod.GET)
-    public ModelAndView loginPage() {
+    public ModelAndView loginPage(String loginFail) {
         LoginVM loginVM = new LoginVM();
         return new ModelAndView("login", "loginVM", loginVM);
     }
 
     @PostMapping("/freemarker/authenticate")
     @Timed
-    public String authenticate(HttpServletResponse httpServletResponse, @Valid LoginVM loginVM, BindingResult result) {
+    public ModelAndView authenticate(HttpServletResponse httpServletResponse, @Valid LoginVM loginVM, BindingResult result) {
         if (result.hasErrors()) {
-            return "login";
+
+            return new ModelAndView("login");
         }
         UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
@@ -67,19 +68,20 @@ public class UserJWTFreemarkerController {
 
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             if (authorities.contains(new SimpleGrantedAuthority("ROLE_PUPIL"))) {
-                return "redirect:pupil-home";
+                return new ModelAndView("redirect:pupil-home");
             } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-                return "redirect:admin-home";
+                return new ModelAndView("redirect:admin-home");
             }else if (authorities.contains(new SimpleGrantedAuthority("ROLE_HEAD_TEACHER"))) {
-                return "redirect:teacher-mgmt/teacher-mgmt";
+                return new ModelAndView("redirect:teacher-mgmt/teacher-mgmt");
             } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_PARENT"))) {
-                return "redirect:parent-home";
+                return new ModelAndView("redirect:pupil-home");
             } else {
-                return "redirect:freemarkertest";
+                return new ModelAndView("redirect:freemarkertest");
             }
         } catch (AuthenticationException ae) {
             log.trace("Authentication exception trace: {}", ae);
-            return "login";
+            String loginFail = "Incorrect username or password. Please try again";
+            return new ModelAndView("login", "loginFail", loginFail);
         }
     }
 

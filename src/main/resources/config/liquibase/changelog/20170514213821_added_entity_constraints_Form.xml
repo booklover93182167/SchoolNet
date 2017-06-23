@@ -12,6 +12,10 @@
                                         constraintName="fk_form_school_id"
                                         referencedColumnNames="id"
                                        referencedTableName="school"/>
-
+        <addForeignKeyConstraint baseColumnNames="teacher_id"
+                                 baseTableName="form"
+                                 constraintName="fk_form_teacher_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="teacher"/>
     </changeSet>
 </databaseChangeLog>

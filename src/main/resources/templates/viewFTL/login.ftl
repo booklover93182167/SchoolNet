@@ -9,7 +9,6 @@
     ]>
 </@h.header>
 
-
 <div class="container">
 
     <form class="form-signin" name="login" action="/freemarker/authenticate" method="post">
@@ -36,7 +35,6 @@
         $("#password").attr("placeholder", "<@spring.message 'login.password'/>");
         $("#password").prop('required', true);
     </script>
-
 </div>
 
 <@h.footer>
