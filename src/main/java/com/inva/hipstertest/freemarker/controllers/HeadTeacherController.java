@@ -118,11 +118,7 @@ public class HeadTeacherController {
         TeacherDTO currentTeacher = teacherService.findTeacherByCurrentUser();
         TeacherDTO teacherToDelete = teacherService.findOne(id);
         if (currentTeacher.getSchoolId().equals(teacherToDelete.getSchoolId())) {
-            if(teacherToDelete.getFormId() != null){
-
-            }
             teacherService.delete(id);
-
             return new ModelAndView("redirect:/freemarker/teacher-mgmt/teacher-mgmt");
         } else {
             return new ModelAndView("redirect:/freemarker/teacher-mgmt/teacher-mgmt");
