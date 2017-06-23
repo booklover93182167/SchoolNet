@@ -163,6 +163,11 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Teacher : {}", id);
+        FormDTO formDTO = formService.findOneByTeacherId(id);
+        if (formDTO != null){
+            formDTO.setTeacherId(null);
+            formService.save(formDTO);
+        }
         teacherRepository.delete(id);
     }
 
