@@ -3,43 +3,53 @@
 
 </@h.header>
 
-
+<br>
 <div id="header">
-    <h2></h2>
+    <h2>
+        <span><@spring.message "hello"/> ,</span>
+        <button id="create" class="btn btn-primary float-right create-teacher-management"
+                onclick="window.location.href='/freemarker/admin-home/createSchool'">
+            <span class="fa fa-plus"></span>
+            <span>
+            <@spring.message "school.createNew"/>
+            </span>
+        </button>
+    </h2>
 </div>
 <div id="content">
-    <button id="create" class="btn btn-primary float-right create-teacher-management"
-            onclick="window.location.href='/freemarker/admin-home/newSchool/'">
-        <span class="fa fa-plus"></span>
-        <span>
-            Create a new school
-            </span>
-    </button>
-    <fieldset>
-        <legend><@spring.message "school.add"/></legend>
-        <form name="schoolDTO" action="/freemarker/admin-home/add" method="post">
-        <@spring.message "school.name"/>: <input type="text" name="name"/>
-            <br/><@spring.message "school.enabled"/>:
-            <select name="enabled">
-                <option value="true"><@spring.message "true"/></option>
-                <option value="false"><@spring.message "false"/></option>
-            </select>
-            <br/><input type="submit" value="<@spring.message "save"/>"/>
-        </form>
-    </fieldset>
-    <br/>
     <table class="table table-striped">
         <tr>
+            <th colspan="7"><@spring.message "school.list"/></th>
+        </tr>
+        <tr>
             <th><@spring.message "school.name"/></th>
-            <th><@spring.message "school.headTeacher"/></th>
+            <th><@spring.message "school.id"/></th>
         </tr>
     <#list model["schoolList"] as school>
         <tr>
-            <td><a href="/freemarker/teachersInSchool/${school.id}">${school.name}</a></td>
+            <td>${school.name}</a></td>
             <td>${school.id}</td>
+            <td>
+                <div class="btn-group flex-btn-group-container">
+                    <button id="view" type="submit" class="btn btn-info btn-sm"
+                            onclick="window.location.href='/freemarker/admin-home/details/${school.id}'">
+                        <span class="fa fa-eye"></span>
+                        <span class="hidden-md-down"><@spring.message "school.view"/></span>
+                    </button>
+                    <button id="edit" type="submit" class="btn btn-primary btn-sm">
+                        <span class="fa fa-pencil"></span>
+                        <span class="hidden-md-down"><@spring.message "school.edit"/></span>
+                    </button>
+                    <button id="delete" type="submit" class="btn btn-danger btn-sm">
+                        <span class="fa fa-remove"></span>
+                        <span class="hidden-md-down"><@spring.message "school.delete"/></span>
+                    </button>
+                </div>
+            </td>
         </tr>
     </#list>
     </table>
+    <span></span>
 </div>
 
 

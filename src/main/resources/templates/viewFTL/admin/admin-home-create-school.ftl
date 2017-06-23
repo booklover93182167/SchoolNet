@@ -6,13 +6,13 @@
 <br>
 <div id="header">
     <h2>
-        <span>Create a new school</span>
+        <span><@spring.message "school.createNew"/></span>
     </h2>
 </div>
-<form name="editForm" action="/freemarker/admin-home/newSchool" method="post">
+<form name="editForm" action="/freemarker/admin-home/createSchool" method="post">
     <div class="modal-body">
         <div class="form-group">
-            <label class="form-control-label">School name</label>
+            <label class="form-control-label"><@spring.message "school.name"/></label>
         <@spring.formInput "schoolDTO.name"/>
         <@spring.showErrors "schoolDTO.name","error" />
         <#if nameFail??>
@@ -27,11 +27,15 @@
 
     </div>
     <div class="modal-footer">
+        <button type="submit" class="btn btn-info"
+                onclick="window.location.href='/freemarker/admin-home/'">
+            <span class="fa fa-arrow-left"></span>&nbsp;<span><@spring.message "back"/></span>
+        </button>
         <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+            <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.cancel"/></span>
         </button>
         <button type="submit" class="btn btn-primary">
-            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+            <span class="fa fa-save"></span>&nbsp;<span><@spring.message "school.save"/></span>
         </button>
     </div>
 </form>

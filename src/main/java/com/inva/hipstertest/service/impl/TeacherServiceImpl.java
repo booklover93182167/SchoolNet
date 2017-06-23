@@ -7,6 +7,7 @@ import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.repository.TeacherRepository;
 import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
+import com.inva.hipstertest.service.mapper.SchoolMapper;
 import com.inva.hipstertest.service.mapper.TeacherMapper;
 import com.inva.hipstertest.support.methods.ROLE_ENUM;
 import com.inva.hipstertest.support.methods.SupportCreate;
@@ -39,6 +40,8 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
 
     private final TeacherMapper teacherMapper;
 
+    private final SchoolMapper schoolMapper;
+
 
     @Autowired
     private MailService mailService;
@@ -51,6 +54,7 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
 
     public TeacherServiceImpl(TeacherRepository teacherRepository,
                               TeacherMapper teacherMapper,
+                              SchoolMapper schoolMapper,
                               UserService userService,
                               UserRepository userRepository,
                               FormService formService) {
@@ -59,6 +63,7 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         this.userService = userService;
         this.userRepository = userRepository;
         this.formService = formService;
+        this.schoolMapper = schoolMapper;
     }
 
     /**
@@ -195,6 +200,33 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         /* NEED CREATE NEW EMAIL */
         mailService.sendSimpleEmailTry(user, content); // sendSimpleEmail(teacherDTO.getEmail(), content);
         teacher.setSchool(hteacher.getSchool());
+        teacher.setUser(user);
+        return teacherMapper.teacherToTeacherDTO(teacherRepository.save(teacher));
+    }
+    /**
+     * Save a headTeacher.
+     *
+     */
+    @Override
+    public TeacherDTO saveHeadTeacherWithUser(TeacherDTO teacherDTO, Long schoolId) {
+        log.debug("Request to save headTeacher : {}", teacherDTO);
+
+        teacherDTO.setSchoolId(schoolId);
+        Map<String, Object> information = super.saveUserWithRole(teacherDTO, ROLE_ENUM.HEAD_TEACHER);
+
+        if (information.get("error") != null){
+            teacherDTO.setEnabled(false);
+            return teacherDTO;
+        }
+
+        User user = (User) information.get("userObject");
+        String content = (String) information.get("content");
+        teacherDTO.setEnabled(true);
+        Teacher teacher = teacherMapper.teacherDTOToTeacher(teacherDTO);
+        /* NEED CREATE NEW EMAIL */
+        mailService.sendSimpleEmailTry(user, content); // sendSimpleEmail(teacherDTO.getEmail(), content);
+        School school=schoolMapper.schoolDTOToSchool(schoolService.findOne(schoolId));
+        teacher.setSchool(school);
         teacher.setUser(user);
         return teacherMapper.teacherToTeacherDTO(teacherRepository.save(teacher));
     }

@@ -55,6 +55,8 @@ public interface TeacherService {
      */
     TeacherDTO saveTeacherWithUser(TeacherDTO teacherDTO);
 
+    TeacherDTO saveHeadTeacherWithUser(TeacherDTO teacherDTO, Long schoolId);
+
     List<TeacherDTO> findAllByCurrentSchool();
 
     List<TeacherDTO> getAllBySchoolId (Long id);
