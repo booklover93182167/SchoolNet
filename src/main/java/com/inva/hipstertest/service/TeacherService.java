@@ -59,4 +59,6 @@ public interface TeacherService {
 
     List<TeacherDTO> getAllBySchoolId (Long id);
 
+    TeacherDTO saveTeacherAndUser(TeacherDTO teacherDTO);
+
 }
