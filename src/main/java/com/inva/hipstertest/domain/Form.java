@@ -47,6 +47,10 @@ public class Form implements Serializable {
     @NotNull
     private School school;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Teacher teacher;
+
     public Long getId() {
         return id;
     }
@@ -138,6 +142,19 @@ public class Form implements Serializable {
     public Form school(School school) {
         this.school = school;
         return this;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public Form teacher(Teacher teacher) {
+        this.teacher = teacher;
+        return this;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     public void setSchool(School school) {

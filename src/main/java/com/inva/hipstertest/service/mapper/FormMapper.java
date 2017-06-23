@@ -9,12 +9,13 @@ import java.util.List;
 /**
  * Mapper for the entity Form and its DTO FormDTO.
  */
-@Mapper(componentModel = "spring", uses = {SchoolMapper.class, PupilMapper.class })
+@Mapper(componentModel = "spring", uses = {SchoolMapper.class, PupilMapper.class , TeacherMapper.class})
 public interface FormMapper {
 
     @Mapping(source = "school.id", target = "schoolId")
     @Mapping(source = "form.pupils", target = "pupilsId")
     @Mapping(source = "school.name", target = "schoolName")
+    @Mapping(source = "teacher.id", target = "teacherId")
     FormDTO formToFormDTO(Form form);
 
     List<FormDTO> formsToFormDTOs(List<Form> forms);
@@ -25,6 +26,7 @@ public interface FormMapper {
     @Mapping(target = "schedules", ignore = true)
     @Mapping(source = "schoolId", target = "school")
     @Mapping(source = "id", target = "id")
+    @Mapping(source = "teacherId", target = "teacher")
     Form formDTOToForm(FormDTO formDTO);
 
 

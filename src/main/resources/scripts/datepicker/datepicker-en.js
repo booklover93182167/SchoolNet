@@ -1,5 +1,4 @@
 /* English/UK initialisation for the jQuery UI date picker plugin. */
-/* Written by Stuart. */
 ( function( factory ) {
     if ( typeof define === "function" && define.amd ) {
 
@@ -30,7 +29,7 @@
         isRTL: false,
         showMonthAfterYear: false,
         yearSuffix: "" };
-    datepicker.setDefaults( datepicker.regional[ "en-GB" ] );
+    datepicker.setDefaults( datepicker.regional.en );
 
     return datepicker.regional.en;
 

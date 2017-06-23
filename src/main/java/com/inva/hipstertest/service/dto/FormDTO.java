@@ -27,6 +27,8 @@ public class FormDTO implements Serializable {
 
     private Long schoolId;
 
+    private Long teacherId;
+
     private String schoolName;
 
     private Set<PupilDTO> pupilsId;
@@ -77,6 +79,13 @@ public class FormDTO implements Serializable {
         this.schoolId = schoolId;
     }
 
+    public Long getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
+    }
 
     @Override
     public String toString() {
@@ -85,7 +94,7 @@ public class FormDTO implements Serializable {
             ", name='" + name + '\'' +
             ", enabled=" + enabled +
             ", schoolId=" + schoolId +
-            '}';
+            ", teacherID=" + teacherId + "}";
     }
 
     @Override

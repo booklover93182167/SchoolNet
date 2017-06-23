@@ -1,6 +1,4 @@
 /* Ukrainian (UTF-8) initialisation for the jQuery UI date picker plugin. */
-/* Written by Maxim Drogobitskiy (maxdao@gmail.com). */
-/* Corrected by Igor Milla (igor.fsp.milla@gmail.com). */
 ( function( factory ) {
     if ( typeof define === "function" && define.amd ) {
 
@@ -22,8 +20,8 @@
             "Липень","Серпень","Вересень","Жовтень","Листопад","Грудень" ],
         monthNamesShort: [ "Січ","Лют","Бер","Кві","Тра","Чер",
             "Лип","Сер","Вер","Жов","Лис","Гру" ],
-        dayNames: [ "неділя","понеділок","вівторок","середа","четвер","п’ятниця","субота" ],
-        dayNamesShort: [ "нед","пнд","вів","срд","чтв","птн","сбт" ],
+        dayNames: [ "Неділя","Понеділок","Вівторок","Середа","Четвер","П’ятниця","Субота" ],
+        dayNamesShort: [ "Нед","Пнд","Вів","Срд","Чтв","Птн","Сбт" ],
         dayNamesMin: [ "Нд","Пн","Вт","Ср","Чт","Пт","Сб" ],
         weekHeader: "Тиж",
         dateFormat: "dd.mm.yy",

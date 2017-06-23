@@ -1,9 +1,11 @@
 $(function() {
-    var pupilFormId = 0;
+    var pupilId = -1;
+    var pupilFormId = -1;
     var selectedDate = new Date();
     var monday = getMonday(selectedDate);
     var minYear = selectedDate.getFullYear();
     var maxYear = selectedDate.getFullYear();
+    var lang = $("#locale").val();
 
     if (selectedDate.getMonth() < 9 - 1) {
         minYear -= 1;
@@ -11,7 +13,13 @@ $(function() {
         maxYear += 1;
     }
 
-    $.datepicker.setDefaults($.datepicker.regional["en"]);
+    $(document).tooltip({
+        track: true,
+        show: { duration: 200 },
+        hide: { duration: 200 }
+    });
+
+    $.datepicker.setDefaults($.datepicker.regional[lang]);
 
     $("#datepicker").datepicker({
         dateFormat: "dd.mm.yy",
@@ -26,25 +34,44 @@ $(function() {
         var newMonday = getMonday(selectedDate);
 
         if (monday.getTime() === newMonday.getTime()) {
-            console.log("NO reload");
             return;
         }
         monday = newMonday;
-        reloadSchedule();
+        loadSchedule();
     });
 
-    $("#myTab a").click(function () {
-        var newPupilFormId = $(this).data("pupil-form-id");
+    $("#attendance-link").click(function () {
+        $("#datepicker").hide();
+    });
 
-        if (pupilFormId === newPupilFormId) {
-            console.log("NO reload");
+    $("#pupil-select a").click(function () {
+        var newPupilFormId = $(this).data("pupil-form-id");
+        var newPupilId = $(this).data("pupil-id");
+
+        if(pupilId == newPupilId) {
             return;
         }
-        pupilFormId = newPupilFormId;
-        reloadSchedule();
+        pupilId = newPupilId;
+        if(pupilFormId != newPupilFormId) {
+            pupilFormId = newPupilFormId;
+            loadSchedule();
+            loadLessons();
+        } else {
+            loadAttendance();
+        }
     });
 
-    $("#myTab a:first").trigger("click");
+    $("#pupil-select a:last").trigger("click");
+
+    $("#week-schedule-link").click(function () {
+        $("#datepicker").show();
+    });
+
+    $("#week-schedule-link").trigger("click");
+
+    $("#lessons").change(function() {
+        loadAttendance();
+    });
 
     function getMonday(date) {
         var newDate = new Date(date);
@@ -59,18 +86,8 @@ $(function() {
         return newDate;
     }
 
-    function formatDate(date) {
-        var dayNames = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        var dayOfWeek = date.getDay();
-        var day = date.getDate();
-        var month = date.getMonth();
-        var year = date.getFullYear();
-
-        return dayNames[dayOfWeek] + ', ' + day + '.' + month + '.' + year;
-    }
-
-    function reloadSchedule() {
-        console.log("YES reload");
+    function loadSchedule() {
+        console.log("loadSchedule()");
         var searchParams = {
             pupilFormId: pupilFormId,
             date: selectedDate
@@ -81,51 +98,81 @@ $(function() {
             contentType : "application/json",
             data : JSON.stringify(searchParams),
             success : function (response) {
-
                 var daysInWeek = 7;
-                var lessonsCount = 10;
 
-                $("#week-schedule").empty();
                 for(var i = 1; i <= daysInWeek; i++) {
-                    $("#week-schedule").append('<div class="day-schedule"><table id="day' + i + '" class="table table-striped">' +
-                    '<thead>' +
-                        '<tr>' +
-                            '<th colspan="5">' + formatDate(addDays(monday, i - 1)) + '</th>' +
-                        '</tr>' +
-                        '<tr>' +
-                            '<th style="width: 2%;">#</th>' +
-                            '<th style="width: 40%;">Subject</th>' +
-                            '<th style="width: 18%;">Room</th>' +
-                            '<th style="width: 40%;">Teacher</th>' +
-                        '</tr>' +
-                    '</thead>' +
-                    '<tbody></tbody>' +
-                    '</table></div>');
-                    for(var j = 1; j <= lessonsCount; j++) {
-                        $('#day' + i + ' > tbody:last-child').append(
-                            '<tr>' +
-                                '<td>' + j + '</td>' +
-                                '<td></td>' +
-                                '<td></td>' +
-                                '<td></td>' +
-                            '</tr>'
-                        );
-                    }
+                    $('#week-schedule table tr:first td').eq(i).html($.datepicker.formatDate('DD<br>dd.mm.yy', addDays(monday, i - 1)));
                 }
 
-                $.each(response, function(j, schedule) {
+                $(".for-clear").empty();
+                $(".for-clear").prop("title", "");
+                $.each(response, function(i, schedule) {
                     var dayOfWeek = new Date(schedule.date).getDay();
 
-                    $('#day' + dayOfWeek + ' tbody tr').eq(schedule.lessonPosition).replaceWith(
-                        '<tr title="Homework: ' + schedule.homework + '">' +
-                        '<td>' + (schedule.lessonPosition + 1) + '</td>' +
-                        '<td>' + schedule.lessonName + '</td>' +
-                        '<td>' + schedule.classroomName + '</td>' +
-                        '<td>' + schedule.teacherFirstName + " " + schedule.teacherLastName + '</td>' +
-                        '</tr>'
-                    );
+                    var selector = $('#week-schedule table tr').eq(schedule.lessonPosition).find("td").eq((dayOfWeek == 0 ? 7 : dayOfWeek));
+
+                    selector.prop("title", schedule.homework);
+                    selector.html(schedule.lessonName + "<br>" + schedule.classroomName + "<br>" + schedule.teacherFirstName + " " + schedule.teacherLastName);
+                });
+            }
+        });
+    }
+
+    function loadLessons() {
+        console.log("loadLessons()");
+        var searchParams = {
+            pupilFormId: pupilFormId
+        };
+        $.ajax({
+            url : "/freemarker/parent-home/lessons",
+            type : "POST",
+            contentType : "application/json",
+            data : JSON.stringify(searchParams),
+            success : function (response) {
+                $("#lessons").empty();
+                $.each(response, function(i, lesson) {
+                    $("#lessons").append($("<option></option>").attr("value", lesson.id).text(lesson.name));
+                });
+                loadAttendance();
+            }
+        });
+    }
+
+    function loadAttendance() {
+        console.log("loadAttendance()");
+        var searchParams = {
+            pupilId: pupilId,
+            lessonId: $("#lessons").val()
+        };
+        $.ajax({
+            url : "/freemarker/parent-home/attendance",
+            type : "POST",
+            contentType : "application/json",
+            data : JSON.stringify(searchParams),
+            success : function (response) {
+                var avgGradeSum = 0;
+                var avgGradeCount = 0;
+
+                $('#attendanceTable tbody').find('tr:not(:last)').remove();
+
+                $.each(response, function(i, attendance) {
+                    if(attendance.grade > 0) {
+                        avgGradeSum += attendance.grade;
+                        avgGradeCount += 1;
+                    }
+                    $('#attendanceTable tbody').prepend('<tr><td>' + $.datepicker.formatDate('DD, dd.mm.yy', new Date(attendance.date)) + '</td><td>' + attendance.grade + '</td></tr>');
                 });
 
+                if(response.length == 0) {
+                    $("#attendanceEmpty span:first").text($("#pupil-select li a.active").text());
+                    $("#attendanceEmpty span:last").text($("#lessons option:selected").text());
+                    $("#attendanceTable").hide();
+                    $("#attendanceEmpty").show();
+                } else {
+                    $('#avg-grade').text(Number((avgGradeSum/avgGradeCount).toFixed(2)));
+                    $("#attendanceEmpty").hide();
+                    $("#attendanceTable").show();
+                }
             }
         });
     }
