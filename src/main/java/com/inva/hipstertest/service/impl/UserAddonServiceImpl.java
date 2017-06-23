@@ -97,6 +97,7 @@ public class UserAddonServiceImpl implements UserAddonService{
     @Override
     public UserAddonDTO findByCurrentUser() {
         log.debug("Request to find user by current user");
-        return userAddonMapper.toDto(userAddonRepository.findByCurrentUser());
+        UserAddon userAddon = userAddonRepository.findByCurrentUser();
+        return userAddonMapper.toDto(userAddon);
     }
 }

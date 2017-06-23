@@ -1,10 +1,14 @@
 package com.inva.hipstertest.service.impl;
 
+import com.inva.hipstertest.domain.Teacher;
+import com.inva.hipstertest.repository.TeacherRepository;
 import com.inva.hipstertest.service.SchoolService;
 import com.inva.hipstertest.domain.School;
 import com.inva.hipstertest.repository.SchoolRepository;
 import com.inva.hipstertest.service.dto.SchoolDTO;
+import com.inva.hipstertest.service.dto.TeacherDTO;
 import com.inva.hipstertest.service.mapper.SchoolMapper;
+import com.inva.hipstertest.service.mapper.TeacherMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,17 +23,22 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-public class SchoolServiceImpl implements SchoolService{
+public class SchoolServiceImpl implements SchoolService {
 
     private final Logger log = LoggerFactory.getLogger(SchoolServiceImpl.class);
 
     private final SchoolRepository schoolRepository;
+    private final TeacherRepository teacherRepository;
 
     private final SchoolMapper schoolMapper;
+    private final TeacherMapper teacherMapper;
 
-    public SchoolServiceImpl(SchoolRepository schoolRepository, SchoolMapper schoolMapper) {
+    public SchoolServiceImpl(SchoolRepository schoolRepository, TeacherRepository teacherRepository,
+                             SchoolMapper schoolMapper, TeacherMapper teacherMapper) {
         this.schoolRepository = schoolRepository;
         this.schoolMapper = schoolMapper;
+        this.teacherMapper = teacherMapper;
+        this.teacherRepository = teacherRepository;
     }
 
     /**
@@ -48,9 +57,9 @@ public class SchoolServiceImpl implements SchoolService{
     }
 
     /**
-     *  Get all the schools.
+     * Get all the schools.
      *
-     *  @return the list of entities
+     * @return the list of entities
      */
     @Override
     @Transactional(readOnly = true)
@@ -64,10 +73,10 @@ public class SchoolServiceImpl implements SchoolService{
     }
 
     /**
-     *  Get one school by id.
+     * Get one school by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Override
     @Transactional(readOnly = true)
@@ -79,14 +88,23 @@ public class SchoolServiceImpl implements SchoolService{
     }
 
     /**
-     *  Delete the  school by id.
+     * Delete the  school by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     @Override
     public void delete(Long id) {
         log.debug("Request to delete School : {}", id);
         schoolRepository.delete(id);
+    }
+
+    @Override
+    public List<TeacherDTO> findHeadTeachersOfSchool(Long id) {
+        log.debug("Request to find all headTeachers of School : {}", id);
+        List<Teacher> headTeachers = schoolRepository.findHeadTeachersOfSchool(id);
+        List<TeacherDTO> headTeachersDTO = teacherMapper.teachersToTeacherDTOs(headTeachers);
+            return headTeachersDTO;
+
     }
 
 }
