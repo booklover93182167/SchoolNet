@@ -76,7 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/i18n/**")
             .antMatchers("/content/**")
             .antMatchers("/swagger-ui/index.html")
-            .antMatchers("/scripts/*.{js,css}")
+            .antMatchers("/scripts/**")
             .antMatchers("/test/**");
     }
 
@@ -102,6 +102,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/freemarker/logout").authenticated()
             .antMatchers("/freemarker/teacher-mgmt/**").hasAuthority(AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/freemarker/pupil-home").hasAuthority(AuthoritiesConstants.PUPIL)
+            .antMatchers("/freemarker/parent-home").hasAuthority(AuthoritiesConstants.PARENT)
             .antMatchers("/freemarker/freemarkertest/**").permitAll() // change
 
             .antMatchers("/api/register").permitAll()
@@ -139,8 +140,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/users/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/headteacher-management").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/headteacher-management/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.HEAD_TEACHER)
-            .antMatchers("/api/teacher-home").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
-            .antMatchers("/api/teacher-home/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
+            .antMatchers("/api/teacher-home").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER, AuthoritiesConstants.HEAD_TEACHER)
+            .antMatchers("/api/teacher-home/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/api/teacher-schedule").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
             .antMatchers("/api/teacher-schedule/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.TEACHER)
 

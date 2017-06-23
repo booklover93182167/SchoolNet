@@ -65,11 +65,16 @@ public class UserJWTFreemarkerController {
             boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
             String jwt = tokenProvider.createToken(authentication, rememberMe);
             CookieUtil.create(httpServletResponse, "JWT-TOKEN", jwt, false, -1);
+
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             if (authorities.contains(new SimpleGrantedAuthority("ROLE_PUPIL"))) {
                 return new ModelAndView("redirect:pupil-home");
-            } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_HEAD_TEACHER"))) {
+            } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+                return new ModelAndView("redirect:admin-home");
+            }else if (authorities.contains(new SimpleGrantedAuthority("ROLE_HEAD_TEACHER"))) {
                 return new ModelAndView("redirect:teacher-mgmt/teacher-mgmt");
+            } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_PARENT"))) {
+                return new ModelAndView("redirect:pupil-home");
             } else {
                 return new ModelAndView("redirect:freemarkertest");
             }

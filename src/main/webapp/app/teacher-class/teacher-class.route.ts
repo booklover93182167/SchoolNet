@@ -11,7 +11,7 @@ import {TeacherClassComponent} from "./teacher-class.component";
         component: TeacherClassComponent,
         data:
         {
-           authorities: ['ROLE_TEACHER'],
+           authorities: ['ROLE_TEACHER', 'ROLE_HEAD_TEACHER'],
 
             pageTitle: 'schoolNetApp.teacher-class.myClass'
           },

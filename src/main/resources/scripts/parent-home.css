@@ -1,0 +1,26 @@
+.lesson-position {
+    width: 2%;
+    font-weight: bold;
+}
+.day-of-week {
+    width: 14%;
+    font-weight: bold;
+}
+#week-schedule table tr td {
+    vertical-align: middle;
+    text-align: center;
+    line-height: 16px;
+    height: 60px;
+    font-size: 10pt;
+    padding: 2px 2px;
+}
+#week-schedule table tr:first-child td {
+    line-height: 18px;
+    font-size: 11pt;
+}
+.ui-tooltip {
+    border: 1px solid white;
+    background: #111;
+    color: white;
+    font-size: 11pt;
+}

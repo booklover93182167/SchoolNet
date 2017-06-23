@@ -14,6 +14,7 @@ public interface PupilMapper {
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "form.id", target = "formId")
+    @Mapping(source = "form.name", target = "formName")
     @Mapping(source = "parents", target = "parents")
     @Mapping(source = "user.lastName", target = "lastName")
     @Mapping(source = "user.firstName", target = "firstName")

@@ -23,6 +23,8 @@ public class PupilDTO implements Serializable {
 
     private Long formId;
 
+    private String formName;
+
     private Set<ParentDTO> parents;
 
     private String firstName;
@@ -84,6 +86,14 @@ public class PupilDTO implements Serializable {
 
     public void setFormId(Long formId) {
         this.formId = formId;
+    }
+
+    public String getFormName() {
+        return formName;
+    }
+
+    public void setFormName(String formName) {
+        this.formName = formName;
     }
 
     @Override

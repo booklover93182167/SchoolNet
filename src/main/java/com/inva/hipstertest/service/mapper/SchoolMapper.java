@@ -29,7 +29,7 @@ public interface SchoolMapper {
      * @param id id of the entity
      * @return the entity instance
      */
-     
+
     default School schoolFromId(Long id) {
         if (id == null) {
             return null;
@@ -38,6 +38,6 @@ public interface SchoolMapper {
         school.setId(id);
         return school;
     }
-    
+
 
 }

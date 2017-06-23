@@ -314,5 +314,4 @@ public class UserService {
     public AuthorityRepository getAuthorityRepository() {
         return authorityRepository;
     }
-
 }

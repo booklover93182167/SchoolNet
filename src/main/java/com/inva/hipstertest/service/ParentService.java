@@ -45,4 +45,9 @@ public interface ParentService {
      *  @param id the id of the pupil
      */
     List<ParentDTO> findParentOfPupil(Long id);
+
+    /**
+     * Find parent by current user (via principal)
+     */
+    ParentDTO findParentByCurrentUser();
 }
