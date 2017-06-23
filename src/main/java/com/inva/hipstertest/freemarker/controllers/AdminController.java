@@ -40,11 +40,8 @@ public class AdminController {
         UserAddonDTO user = userAddonService.findByCurrentUser();
         List<SchoolDTO> schoolList = new ArrayList<SchoolDTO>();
         schoolList = schoolService.findAll();
-
         model.addAttribute("schoolList", schoolList);
         model.addAttribute("currentUser", user);
-
-
         return "admin/admin-home";
     }
 
@@ -106,10 +103,30 @@ public class AdminController {
         }
     }
 
-    @RequestMapping(value = "/freemarker/admin-home/createHeadTeacher", method = RequestMethod.GET)
-    public ModelAndView adminNewHeadTeacher() {
+    @RequestMapping(value = "/freemarker/admin-home/createHeadTeacher/{schoolId}", method = RequestMethod.GET)
+    public ModelAndView adminNewHeadTeacher(@PathVariable Long schoolId) {
 
         return new ModelAndView("admin/admin-home-create-headTeacher");
+    }
+
+
+    /**
+     * Creates new head teacher in school.
+     *
+     */
+    @PostMapping(value = "/freemarker/admin-home/createHeadTeacher/{schoolId}")
+    @Timed
+    public ModelAndView adminCreateNewHeadTeacher(TeacherDTO teacherDTO,@PathVariable Long schoolId, BindingResult bindingResult, String emailFail) throws URISyntaxException {
+        log.debug("Freemarker request to save headTeacher : {}", teacherDTO);
+        log.debug(teacherDTO.getFirstName() + " " + teacherDTO.getLastName() + " " + teacherDTO.getEmail());
+        TeacherDTO result = teacherService.saveHeadTeacherWithUser(teacherDTO,schoolId );
+        emailFail = "Invalid e-mail";
+        if(!result.getEnabled()){
+            // handle email already in use
+            return new ModelAndView("admin/admin-home-create-headTeacher", "emailFail", emailFail);
+        }
+        // handle creation success
+        return new ModelAndView("redirect:/freemarker/admin-home");
     }
 }
 

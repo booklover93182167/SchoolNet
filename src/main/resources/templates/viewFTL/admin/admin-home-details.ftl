@@ -32,7 +32,7 @@
         <h2>
 
             <button id="create" class="btn btn-primary float-right create-teacher-management"
-                    onclick="window.location.href='/freemarker/admin-home/createHeadTeacher'">
+                    onclick="window.location.href='/freemarker/admin-home/createHeadTeacher/${schoolId}'">
                 <span class="fa fa-plus"></span>
                 <span>
                 <@spring.message "newHeadTeacher"/>
