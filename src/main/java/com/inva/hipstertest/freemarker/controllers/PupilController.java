@@ -68,6 +68,20 @@ public class PupilController {
     }
 
     /**
+     * Get attendances by date.
+     *
+     * @param date requested date
+     * @return te list of attendances.
+     */
+    @RequestMapping("pupil-home/myAttendances/{date}")
+    public @ResponseBody
+    List<AttendancesDTO> getListAttendancesByDate(@PathVariable String date) {
+        log.debug("Request to get attendance for current pupil by date : {}", date);
+        List<AttendancesDTO> attendancesDTOs = attendancesService.findAllMembersByPupilIdAndDateBetween(date);
+        return attendancesDTOs;
+    }
+
+    /**
      * Get list of lessons for select.
      *
      * @param model
