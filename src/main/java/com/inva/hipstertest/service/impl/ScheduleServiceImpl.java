@@ -12,7 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -123,12 +126,20 @@ public class ScheduleServiceImpl implements ScheduleService {
      * Get all schedules by requested date and current user form id.
      *
      * @param date requested date
-     * @return the list of entities ordered by lesson position
+     * @return the list of entities.
      */
     @Override
     public List<ScheduleDTO> findAllByFormIdAndDate(String date) {
+
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime localDateTime = LocalDateTime.parse(date, timeFormatter);
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime dateStart = localDateTime.atZone(zoneId);
+        ZonedDateTime dateEnd = dateStart.plusDays(1);
+
         Pupil currentPupil = pupilRepository.findPupilByCurrentUser();
-        List<Schedule> schedules = scheduleRepository.findAllByFormIdAndDate(date, currentPupil.getForm().getId());
+        log.debug("Request to get schedules by pupil form and date {}", date);
+        List<Schedule> schedules = scheduleRepository.findAllMembersByFormIdAndDateBetween(currentPupil.getForm().getId(), dateStart, dateEnd);
         List<ScheduleDTO> scheduleDTOS = scheduleMapper.schedulesToScheduleDTOs(schedules);
         List<ScheduleDTO> scheduleToSend = buildScheduleForDayWithEmptyRecords(scheduleDTOS);
         return scheduleToSend;
@@ -190,5 +201,4 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         return result;
     }
-
 }
