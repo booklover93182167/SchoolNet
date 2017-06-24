@@ -7,18 +7,17 @@ $(document).ready(function () {
 
 var lableDate = document.getElementById("label_date");
 var selectedDate;
-var attendances;
+
 $(function () {
     $('#calendar').fullCalendar({
         dayClick: function (eventDate) {
             selectedDate = new Date(eventDate);
             var dateToSend = selectedDate.toISOString().slice(0, 19);
-            lableDate.innerHTML = selectedDate;
+            lableDate.innerHTML = selectedDate.toDateString();
             getSchedule(dateToSend)
-            // getAttendance(dateToSend);
         },
         theme: true,
-        locale: 'en',
+        locale: 'en'
     });
 });
 
@@ -30,23 +29,45 @@ function getSchedule(date) {
     request.open('GET', 'pupil-home/mySchedule/' + date);
     request.onload = function () {
         var schedule = JSON.parse(request.responseText);
+        var attendances;
         getAttendance(date);
-        renderHTMLTable(schedule, attendances);
+        function getAttendance(date) {
+            var request = createRequest();
+
+            if (!request) {
+                return;
+            }
+            request.open('GET', 'pupil-home/myAttendances/' + date, false);
+            request.onload = function () {
+                attendances = JSON.parse(request.responseText);
+            };
+            request.send();
+        }
+        $(".default").html("-");
+        schedule.forEach(function (el) {
+            if (el.id) {
+                var selector = $('table tr').eq(el.lessonPosition);
+                selector.find("td").eq(1).html(el.lessonName);
+                selector.find("td").eq(2).html(el.homework);
+                selector.find("td").eq(3).html(el.classroomName);
+                selector.find("td").eq(4).html(el.teacherLastName + " " + el.teacherFirstName);
+                selector.find("td").eq(5).html(pickUpAttendance(el.id, attendances));
+            }
+        });
     };
     request.send();
 }
 
-function getAttendance(date) {
-    var request = createRequest();
-
-    if (!request) {
-        return;
-    }
-    request.open('GET', 'pupil-home/myAttendances/' + date, false);
-    request.onload = function () {
-        attendances = JSON.parse(request.responseText);
-    };
-    request.send();
+function pickUpAttendance(id, attendances) {
+    var grade = 'n/a';
+    attendances.forEach(function (attendance) {
+        if (attendance.scheduleId === id) {
+            if (attendance.grade != 0) {
+                grade = attendance.grade;
+            }
+        }
+    });
+    return grade;
 }
 
 function createRequest() {
@@ -66,33 +87,4 @@ function createRequest() {
         alert("Cannot create XMLHttpRequest");
     }
     return request;
-}
-
-function renderHTMLTable(data, attendance) {
-    var scheduleTable = document.getElementById("scheduleTable");
-    scheduleTable.innerHTML = '';
-    var table = '';
-    for (var i = 0; i < data.length; i++) {
-
-        table += "<tr><td style=\"width: 40px; text-align: center;\">" + data[i].lessonPosition + "</td>";
-        table += "<td style=\"width: 100px; text-align: center;\">" + data[i].lessonName + "</td>";
-        table += "<td id=\"homevork\">" + data[i].homework + "</td>";
-        table += "<td style=\"width: 75px; text-align: center;\">" + data[i].classroomName + "</td>";
-        table += "<td id=\"teacher\" style=\"width: 180px; text-align: center;\">" + data[i].teacherFirstName + " " + data[i].teacherLastName + "</td>";
-        var grade = (data[i].id) ? renderHTMLAttendance(data[i].id, attendance) : "-";
-        table += "<td style=\"width: 40px; text-align: center;\">" + grade + "</td></tr>"
-    }
-    scheduleTable.insertAdjacentHTML("beforeend", table);
-}
-
-function renderHTMLAttendance(id, attendances) {
-    var grade = 'n/a';
-    attendances.forEach(function (attendance) {
-        if (attendance.scheduleId === id) {
-            if (attendance.grade != 0) {
-                grade = attendance.grade;
-            }
-        }
-    });
-    return grade;
 }

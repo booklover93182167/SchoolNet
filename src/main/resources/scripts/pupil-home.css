@@ -1,0 +1,10 @@
+
+#week-schedule table tr td {
+    vertical-align: middle;
+    text-align: center;
+    line-height: 16px;
+    height: 60px;
+    font-size: 10pt;
+    padding: 2px 2px;
+}
+

@@ -7,28 +7,41 @@
 <link rel='stylesheet' href='/scripts/calendar/fc/fullcalendar.css'/>
 <link rel='stylesheet' href='/scripts/calendar/css/style.css'/>
 
-<div id="header">
-    <h1>Welcome ${model.pupilFirstName} ${model.pupilLastName}</h1>
-    <br>
-</div>
-
-<div class="row">
-    <div class="col-md-7" >
+<div class="container-fluid">
+    <div id="header">
+        <h1>Welcome ${model.pupilFirstName} ${model.pupilLastName}</h1>
+        <br>
         <label> My schedule on <span id="label_date"></span></label>
-        <table class="table table-striped">
-            <tr>
-                <th>Position</th>
-                <th>Lesson</th>
-                <th>Homework</th>
-                <th>Classroom</th>
-                <th>Teacher</th>
-                <th>Attendance</th>
-            </tr>
-            <tbody id="scheduleTable"></tbody>
-        </table>
     </div>
-    <div class="col-md-5">
-        <div id='calendar'></div>
+    <div class="row">
+        <div class="col-md-7">
+            <table class="table table-striped">
+                <tr>
+                    <th>Position</th>
+                    <th>Lesson</th>
+                    <th>Homework</th>
+                    <th>Classroom</th>
+                    <th>Teacher</th>
+                    <th>Attendance</th>
+                </tr>
+                <tbody id="scheduleTable">
+                <#list 1..10 as table_row>
+                <tr id="row">
+                    <#list 0..5 as col>
+                        <#if col == 0>
+                            <td>${table_row}</td>
+                        <#else>
+                            <td class="default">-</td>
+                        </#if>
+                    </#list>
+                </tr>
+                </#list>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-5">
+            <div id='calendar'></div>
+        </div>
     </div>
 </div>
 
