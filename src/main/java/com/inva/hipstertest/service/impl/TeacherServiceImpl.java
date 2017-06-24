@@ -1,18 +1,20 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.*;
-import com.inva.hipstertest.service.MailService;
-import com.inva.hipstertest.service.SchoolService;
-import com.inva.hipstertest.service.TeacherService;
+import com.inva.hipstertest.repository.FormRepository;
+import com.inva.hipstertest.repository.UserRepository;
+import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.repository.TeacherRepository;
-import com.inva.hipstertest.service.UserService;
+import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
+import com.inva.hipstertest.service.mapper.SchoolMapper;
 import com.inva.hipstertest.service.mapper.TeacherMapper;
 import com.inva.hipstertest.support.methods.ROLE_ENUM;
 import com.inva.hipstertest.support.methods.SupportCreate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +32,16 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
 
     private final TeacherRepository teacherRepository;
 
+    private final UserRepository userRepository;
+
+    private final UserService userService;
+
+    private final FormService formService;
+
     private final TeacherMapper teacherMapper;
+
+    private final SchoolMapper schoolMapper;
+
 
     @Autowired
     private MailService mailService;
@@ -42,9 +53,17 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
     private UserService service;
 
     public TeacherServiceImpl(TeacherRepository teacherRepository,
-                              TeacherMapper teacherMapper) {
+                              TeacherMapper teacherMapper,
+                              SchoolMapper schoolMapper,
+                              UserService userService,
+                              UserRepository userRepository,
+                              FormService formService) {
         this.teacherRepository = teacherRepository;
         this.teacherMapper = teacherMapper;
+        this.userService = userService;
+        this.userRepository = userRepository;
+        this.formService = formService;
+        this.schoolMapper = schoolMapper;
     }
 
     /**
@@ -58,6 +77,41 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         log.debug("Request to save Teacher : {}", teacherDTO);
         Teacher teacher = teacherMapper.teacherDTOToTeacher(teacherDTO);
         teacher = teacherRepository.save(teacher);
+        TeacherDTO result = teacherMapper.teacherToTeacherDTO(teacher);
+        return result;
+    }
+
+    /**
+     * Save a teacher(and user details).
+     *
+     * @param teacherDTO the entity to save
+     * @return the persisted entity
+     */
+    public TeacherDTO saveTeacherAndUser(TeacherDTO teacherDTO) {
+        log.debug("Request to save Teacher and User : {}", teacherDTO);
+        Teacher teacher = teacherMapper.teacherDTOToTeacher(teacherDTO);
+        TeacherDTO headTeacher = findTeacherByCurrentUser();
+        User teacherUser = userService.getUserWithAuthorities(teacherDTO.getUserId());
+        // modify only if are from same school
+        if (headTeacher.getSchoolId().equals(teacherDTO.getSchoolId())) {
+            teacherUser.setEmail(teacherDTO.getEmail());
+            teacherUser.setFirstName(teacherDTO.getFirstName());
+            teacherUser.setLastName(teacherDTO.getLastName());
+            userRepository.save(teacherUser);
+            if(teacherDTO.getFormId() != null) {
+                FormDTO formDTO = formService.findOne(teacherDTO.getFormId());
+                formDTO.setTeacherId(teacher.getId());
+                formService.save(formDTO);
+            } else {
+                FormDTO formDTO = formService.findOneByTeacherId(teacherDTO.getId());
+                if(formDTO != null){
+                    formDTO.setTeacherId(null);
+                    formService.save(formDTO);
+                }
+            }
+            //formService.save(formDTO);
+            teacher = teacherRepository.save(teacher);
+        }
         TeacherDTO result = teacherMapper.teacherToTeacherDTO(teacher);
         return result;
     }
@@ -114,6 +168,11 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Teacher : {}", id);
+        FormDTO formDTO = formService.findOneByTeacherId(id);
+        if (formDTO != null){
+            formDTO.setTeacherId(null);
+            formService.save(formDTO);
+        }
         teacherRepository.delete(id);
     }
 
@@ -141,6 +200,33 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         /* NEED CREATE NEW EMAIL */
         mailService.sendSimpleEmailTry(user, content); // sendSimpleEmail(teacherDTO.getEmail(), content);
         teacher.setSchool(hteacher.getSchool());
+        teacher.setUser(user);
+        return teacherMapper.teacherToTeacherDTO(teacherRepository.save(teacher));
+    }
+    /**
+     * Save a headTeacher.
+     *
+     */
+    @Override
+    public TeacherDTO saveHeadTeacherWithUser(TeacherDTO teacherDTO, Long schoolId) {
+        log.debug("Request to save headTeacher : {}", teacherDTO);
+
+        teacherDTO.setSchoolId(schoolId);
+        Map<String, Object> information = super.saveUserWithRole(teacherDTO, ROLE_ENUM.HEAD_TEACHER);
+
+        if (information.get("error") != null){
+            teacherDTO.setEnabled(false);
+            return teacherDTO;
+        }
+
+        User user = (User) information.get("userObject");
+        String content = (String) information.get("content");
+        teacherDTO.setEnabled(true);
+        Teacher teacher = teacherMapper.teacherDTOToTeacher(teacherDTO);
+        /* NEED CREATE NEW EMAIL */
+        mailService.sendSimpleEmailTry(user, content); // sendSimpleEmail(teacherDTO.getEmail(), content);
+        School school=schoolMapper.schoolDTOToSchool(schoolService.findOne(schoolId));
+        teacher.setSchool(school);
         teacher.setUser(user);
         return teacherMapper.teacherToTeacherDTO(teacherRepository.save(teacher));
     }

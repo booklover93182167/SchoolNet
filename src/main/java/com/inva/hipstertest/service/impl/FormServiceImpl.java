@@ -82,6 +82,14 @@ public class FormServiceImpl implements FormService{
         return formsDTO;
     }
 
+    @Override
+    public FormDTO findOneByTeacherId(Long teacherId) {
+        log.debug("Request to get all Forms by Teacher : {}", teacherId);
+        Form form = formRepository.findOneByTeacherId(teacherId);
+        FormDTO formDTO = formMapper.formToFormDTO(form);
+        return formDTO;
+    }
+
     /**
      *  Get one form by id.
      *
@@ -116,6 +124,17 @@ public class FormServiceImpl implements FormService{
         long idSchool = teacherRepository.findOneWithSchool().getSchool().getId();
 
         return formRepository.findAllFormsByCurrentSchool(idSchool).stream()
+            .map(formMapper::formToFormDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<FormDTO> findAllUnassignedFormsByCurrentSchool() {
+        log.debug("Request to get all Forms for current school");
+        long idSchool = teacherRepository.findOneWithSchool().getSchool().getId();
+
+        return formRepository.findAllUnassignedFormsByCurrentSchool(idSchool).stream()
             .map(formMapper::formToFormDTO)
             .collect(Collectors.toCollection(LinkedList::new));
     }

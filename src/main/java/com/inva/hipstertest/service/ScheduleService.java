@@ -1,7 +1,10 @@
 package com.inva.hipstertest.service;
 
 import com.inva.hipstertest.service.dto.ScheduleDTO;
+import org.springframework.data.repository.query.Param;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -49,15 +52,20 @@ public interface ScheduleService {
     List<ScheduleDTO> findAllByFormId(Long id);
 
     /**
-     * Find all Schedules by teacher ID ordered by Date
+     * Find all schedules by teacher ID ordered by Date
      *
      * @param teacherId teacher id
      * @return the list of entities
      */
     List<ScheduleDTO> findAllByTeacherIdOrderByDate(Long teacherId);
 
-    List<ScheduleDTO> findByFormIdAndDate(ZonedDateTime date);
-
+    /**
+     * Find all schedules by form id and requested date.
+     *
+     * @param date requested date
+     * @return the list of entities
+     */
+    List<ScheduleDTO> findAllByFormIdAndDate(String date);
 
     /**
      * Get all the schedules by school id.

@@ -8,12 +8,12 @@
 <link rel='stylesheet' href='/scripts/calendar/css/style.css'/>
 
 <div id="header">
-    <h1>Welcome ${model.currentPupil.firstName} ${model.currentPupil.lastName}</h1>
+    <h1>Welcome ${model.pupilFirstName} ${model.pupilLastName}</h1>
     <br>
 </div>
 
 <div class="row">
-    <div class="col-md-6" id="scheduleTable">
+    <div class="col-md-7" >
         <label> My schedule on <span id="label_date"></span></label>
         <table class="table table-striped">
             <tr>
@@ -22,19 +22,12 @@
                 <th>Homework</th>
                 <th>Classroom</th>
                 <th>Teacher</th>
+                <th>Attendance</th>
             </tr>
-        <#list model["mySchedule"] as schedule>
-            <tr>
-                <td>${schedule.lessonPosition}</td>
-                <td>${schedule.lessonName}</td>
-                <td>${schedule.homework}</td>
-                <td>${schedule.classroomName}</td>
-                <td>${schedule.teacherFirstName} ${schedule.teacherLastName}</td>
-            </tr>
-        </#list>
+            <tbody id="scheduleTable"></tbody>
         </table>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div id='calendar'></div>
     </div>
 </div>

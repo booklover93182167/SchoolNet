@@ -21,7 +21,6 @@ public interface TeacherMapper {
     @Mapping(source = "user.email", target = "email")
     @Mapping(source = "user.login", target = "login")
     @Mapping(source = "form", target = "form")
-        //@Mapping(source = "lessonsName.name", target = "lessonsName")
     TeacherDTO teacherToTeacherDTO(Teacher teacher);
 
     List<TeacherDTO> teachersToTeacherDTOs(List<Teacher> teachers);
