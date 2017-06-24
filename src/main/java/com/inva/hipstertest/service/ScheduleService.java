@@ -66,4 +66,7 @@ public interface ScheduleService {
      * @return the list of entities
      */
     List<ScheduleDTO> findAllBySchoolId(Long schoolId);
+
+    List<ScheduleDTO> findAllByTeacherIdGroupByFormIdAndLessonId(Long teacherId);
+
 }

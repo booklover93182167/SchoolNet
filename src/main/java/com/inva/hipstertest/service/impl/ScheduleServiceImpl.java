@@ -199,4 +199,12 @@ public class ScheduleServiceImpl implements ScheduleService {
         return result;
     }
 
+    @Override
+    public List<ScheduleDTO> findAllByTeacherIdGroupByFormIdAndLessonId(Long teacherId) {
+        log.debug("Request to get distinct schedules for teacher {}", teacherId);
+        List<Schedule> formsAndLessons = scheduleRepository.findAllByTeacherIdGroupByFormIdAndLessonId(teacherId);
+        List<ScheduleDTO> formsAndLessonsDTOs = scheduleMapper.schedulesToScheduleDTOs(formsAndLessons);
+        return formsAndLessonsDTOs;
+    }
+
 }

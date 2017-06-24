@@ -23,4 +23,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Query("select schedule from Schedule schedule, Teacher teacher, School school where schedule.teacher.id = teacher.id and teacher.school.id = school.id and school.id = :schoolId")
     List<Schedule> findAllBySchoolId(@Param("schoolId") Long schoolId);
 
+    @Query("select schedule from Schedule schedule where schedule.enabled = true and schedule.teacher.id = :teacherId group by schedule.form.id, schedule.lesson.id")
+    List<Schedule> findAllByTeacherIdGroupByFormIdAndLessonId(@Param("teacherId") Long teacherId);
+
 }
