@@ -2,11 +2,23 @@ $(document).ready(function () {
     var dateToSend = new Date().toISOString().slice(0, 19);
 
     getSchedule(dateToSend);
-    lableDate.innerHTML = new Date();
+    lableDate.innerHTML = new Date().toDateString();
 });
 
 var lableDate = document.getElementById("label_date");
+
+$.urlParam = function (name) {
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results == null) {
+        return null;
+    }
+    else {
+        return decodeURI(results[1]) || 0;
+    }
+};
+
 var selectedDate;
+var schedules;
 
 $(function () {
     $('#calendar').fullCalendar({
@@ -17,7 +29,7 @@ $(function () {
             getSchedule(dateToSend)
         },
         theme: true,
-        locale: 'en'
+        locale: $.urlParam('lang')
     });
 });
 
@@ -28,8 +40,7 @@ function getSchedule(date) {
     }
     request.open('GET', 'pupil-home/mySchedule/' + date);
     request.onload = function () {
-        var schedule = JSON.parse(request.responseText);
-        var attendances;
+        schedules = JSON.parse(request.responseText);
         getAttendance(date);
         function getAttendance(date) {
             var request = createRequest();
@@ -43,14 +54,15 @@ function getSchedule(date) {
             };
             request.send();
         }
+
         $(".default").html("-");
-        schedule.forEach(function (el) {
+        schedules.forEach(function (el) {
             if (el.id) {
                 var selector = $('table tr').eq(el.lessonPosition);
                 selector.find("td").eq(1).html(el.lessonName);
-                selector.find("td").eq(2).html(el.homework);
+                selector.find("td").eq(2).html(el.homework).addClass("homework");
                 selector.find("td").eq(3).html(el.classroomName);
-                selector.find("td").eq(4).html(el.teacherLastName + " " + el.teacherFirstName);
+                selector.find("td").eq(4).html(el.teacherLastName + " " + el.teacherFirstName).addClass("myTeacher");
                 selector.find("td").eq(5).html(pickUpAttendance(el.id, attendances));
             }
         });
