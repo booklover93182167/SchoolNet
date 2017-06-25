@@ -1,9 +1,10 @@
 package com.inva.hipstertest.freemarker.controllers;
 
-import com.inva.hipstertest.domain.Teacher;
+import com.inva.hipstertest.service.AttendancesService;
 import com.inva.hipstertest.service.PupilService;
 import com.inva.hipstertest.service.ScheduleService;
 import com.inva.hipstertest.service.TeacherService;
+import com.inva.hipstertest.service.dto.AttendancesDTO;
 import com.inva.hipstertest.service.dto.PupilDTO;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 @Controller
 public class TeacherGradebookController {
@@ -27,11 +30,13 @@ public class TeacherGradebookController {
     private final TeacherService teacherService;
     private final ScheduleService scheduleService;
     private final PupilService pupilService;
+    private final AttendancesService attendancesService;
 
-    public TeacherGradebookController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService) {
+    public TeacherGradebookController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService, AttendancesService attendancesService) {
         this.teacherService = teacherService;
         this.scheduleService = scheduleService;
         this.pupilService = pupilService;
+        this.attendancesService = attendancesService;
     }
 
     @RequestMapping(value = "/freemarker/teacher-gradebook", method = RequestMethod.GET)
@@ -48,9 +53,10 @@ public class TeacherGradebookController {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
         List<ScheduleDTO> formsAndLessons = scheduleService.findAllByTeacherIdGroupByFormIdAndLessonId(teacher.getId());
 //        ScheduleDTO formAndLesson = formsAndLessons.get(0);
-        List<ScheduleDTO> lessonsDTOs = scheduleService.findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(teacher.getId(), formId, lessonId);
+        List<ScheduleDTO> schedulesDTOs = scheduleService.findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(teacher.getId(), formId, lessonId);
         List<PupilDTO> pupilDTOs = pupilService.findAllByFormId(formId);
         Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
+        List<AttendancesDTO> attendancesDTOs = attendancesService.findAllWherePupilIdInAndScheduleIdIn(teacher.getId(), formId, lessonId);
 
         Collections.sort(formsAndLessons, (o1, o2) -> o1.getFormName().compareTo(o2.getFormName()));
         Collections.sort(pupilDTOs, comparatorLastNameFirstName);
@@ -58,7 +64,8 @@ public class TeacherGradebookController {
 //        model.addAttribute("formAndLesson", formAndLesson);
         model.addAttribute("teacher", teacher.getFirstName() + " " + teacher.getLastName());
         model.addAttribute("formsAndLessons", formsAndLessons);
-        model.addAttribute("lessons", lessonsDTOs);
+        model.addAttribute("schedules", schedulesDTOs);
+        model.addAttribute("attendances", attendancesDTOs);
         model.addAttribute("formId", formId);
         model.addAttribute("lessonId", lessonId);
         model.addAttribute("pupils", pupilDTOs);

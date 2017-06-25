@@ -10,6 +10,10 @@ pagetitle = "${pagetitle}"
 .gradebook tr th {
     vertical-align: middle;
 }
+.gradebook .date,
+.gradebook .attendance {
+    text-align: center;
+}
 .gradebook tr th.number {
     width: 2%;
 }
@@ -23,7 +27,6 @@ pagetitle = "${pagetitle}"
 <div class="container">
     <div class="row content">
         <div class="col-sm-12 text-left">
-
 
             <br>
             <h1>${pagetitle} ${model["teacher"]}</h1>
@@ -48,33 +51,29 @@ pagetitle = "${pagetitle}"
                 <tr>
                     <th class="number">#</th>
                     <th class="fullname">Full Name</th>
-                    <#list 0..9 as tableCol>
-                        <th class="for-clear date" data-schedule-id="">0${tableCol?index + 1}/06<br>Пн</th>
+                    <#list model["schedules"] as schedule>
+                        <th class="for-clear date" data-schedule-id="${schedule.id}">${schedule.date?substring(8,10)}/${schedule.date?substring(5,7)}<br>${schedule.date?substring(0,4)}</th>
                     </#list>
                 </tr>
 
                 <#items as pupil>
                     <tr data-pupil-id="${pupil.id}">
-                        <#list 0..11 as tableCol>
-                            <#if tableCol == 0>
-                                <td class="number">${pupil?index + 1}</td>
-                            <#elseif tableCol == 1>
-                                <td class="fullname">${pupil.lastName} ${pupil.firstName}</td>
-                            <#else>
-                                <td class="for-clear attendance">12</td>
-                            </#if>
+                        <td class="number">${pupil?index + 1}</td>
+                        <td class="fullname">${pupil.lastName} ${pupil.firstName}</td>
+                        <#list model["schedules"] as schedule>
+                            <td class="for-clear attendance" data-pupil-id="${pupil.id}" data-schedule-id="${schedule.id}">
+                            <#list model["attendances"] as attendance>
+                                <#if attendance.pupilId == pupil.id && attendance.scheduleId == schedule.id>
+                                    ${attendance.grade}
+                                </#if>
+                            </#list>
+                            </td>
                         </#list>
                     </tr>
                 </#items>
+
             </#list>
             </table>
-
-            <ul>
-                <#list model["lessons"] as lesson>
-                    <li>${lesson.date}</li>
-                </#list>
-            </ul>
-
 
             <br>
     </div>

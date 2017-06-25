@@ -128,4 +128,13 @@ public class AttendancesServiceImpl implements AttendancesService{
         List<AttendancesDTO> attendancesDTOs = attendancesMapper.attendancesToAttendancesDTOs(attendances);
         return attendancesDTOs;
     }
+
+    @Override
+    public List<AttendancesDTO> findAllWherePupilIdInAndScheduleIdIn(Long teacherId, Long formId, Long lessonId) {
+        log.debug("Request to get all grades for all pupils in the class {} for all lessons, that gives teacher {} on subject {} for this class", formId, teacherId, lessonId);
+        List<Attendances> attendances = attendancesRepository.findAllWherePupilIdInAndScheduleIdIn(teacherId, formId, lessonId);
+        List<AttendancesDTO> attendancesDTOs = attendancesMapper.attendancesToAttendancesDTOs(attendances);
+        return attendancesDTOs;
+    }
+
 }
