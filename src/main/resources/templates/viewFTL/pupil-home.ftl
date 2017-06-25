@@ -8,10 +8,10 @@
 <link rel='stylesheet' href='/scripts/calendar/css/style.css'/>
 
 <div class="container-fluid">
-    <div id="header">
+    <div class="page-header">
         <h1>Welcome ${model.pupilFirstName} ${model.pupilLastName}</h1>
         <br>
-        <label> My schedule on <span id="label_date"></span></label>
+        <h3> My schedule on <span id="label_date"></span></h3>
     </div>
     <div class="row">
         <div class="col-md-7">
@@ -30,8 +30,12 @@
                     <#list 0..5 as col>
                         <#if col == 0>
                             <td>${table_row}</td>
+                        <#elseif col == 2>
+                            <td class="homework" id="clear">-</td>
+                        <#elseif col == 4>
+                            <td class="teacher" id="clear">-</td>
                         <#else>
-                            <td class="default">-</td>
+                            <td id="clear">-</td>
                         </#if>
                     </#list>
                 </tr>
@@ -41,6 +45,39 @@
         </div>
         <div class="col-md-5">
             <div id='calendar'></div>
+        </div>
+    </div>
+    <div class="container" >
+        <div class="modal fade .modal-sm" id="modal-homework">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title">This is your homework</h3>
+                    </div>
+                    <div class="modal-body" id="setHomework"></div>
+                    <div class="modal-footer">
+                        <a href="" class="btn btn-default" data-dismiss="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="modal fade .modal-sm" id="modal-teacher">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title">Your teacher</h3>
+                    </div>
+                    <div class="modal-body" id="teacher-modal"></div>
+                    <div class="modal-footer">
+                        <a href="" class="btn btn-default" data-dismiss="modal">Close</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

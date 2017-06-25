@@ -1,10 +1,17 @@
 
-#week-schedule table tr td {
-    vertical-align: middle;
+.modal {
     text-align: center;
-    line-height: 16px;
-    height: 60px;
-    font-size: 10pt;
-    padding: 2px 2px;
 }
 
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.homework{
+    width: 50px;
+    height: 20px;
+    overflow: hidden;
+}

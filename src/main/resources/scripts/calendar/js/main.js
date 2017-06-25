@@ -55,14 +55,18 @@ function getSchedule(date) {
             request.send();
         }
 
-        $(".default").html("-");
+        $("#row td:not(:first-child)").html("-");
         schedules.forEach(function (el) {
             if (el.id) {
                 var selector = $('table tr').eq(el.lessonPosition);
                 selector.find("td").eq(1).html(el.lessonName);
-                selector.find("td").eq(2).html(el.homework).addClass("homework");
+                var element = selector.find("td").eq(2).attr('data-toggle', 'modal');
+                element.attr('data-target', '#modal-homework');
+                element.html(el.homework);
                 selector.find("td").eq(3).html(el.classroomName);
-                selector.find("td").eq(4).html(el.teacherLastName + " " + el.teacherFirstName).addClass("myTeacher");
+                element = selector.find("td").eq(4).attr('data-toggle', 'modal');
+                element.attr('data-target', '#modal-teacher');
+                element.html(el.teacherLastName + " " + el.teacherFirstName);
                 selector.find("td").eq(5).html(pickUpAttendance(el.id, attendances));
             }
         });
@@ -100,3 +104,8 @@ function createRequest() {
     }
     return request;
 }
+
+$('.homework').on('click', function () {
+    $('#setHomework').html($(this).text())
+});
+
