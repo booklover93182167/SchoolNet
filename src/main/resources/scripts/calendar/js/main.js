@@ -10,7 +10,7 @@ var lableDate = document.getElementById("label_date");
 $.urlParam = function (name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     if (results == null) {
-        return null;
+        return 'en';
     }
     else {
         return decodeURI(results[1]) || 0;
@@ -66,13 +66,15 @@ function getSchedule(date) {
                 selector.find("td").eq(3).html(el.classroomName);
                 element = selector.find("td").eq(4).attr('data-toggle', 'modal');
                 element.attr('data-target', '#modal-teacher');
-                element.html(el.teacherLastName + " " + el.teacherFirstName);
+                element.attr('trgId', el.teacherId);
+                element.html(el.teacherFirstName + " " + el.teacherLastName);
                 selector.find("td").eq(5).html(pickUpAttendance(el.id, attendances));
             }
         });
     };
     request.send();
 }
+
 
 function pickUpAttendance(id, attendances) {
     var grade = 'n/a';
@@ -109,3 +111,16 @@ $('.homework').on('click', function () {
     $('#setHomework').html($(this).text())
 });
 
+$('.teacher').on('click', function () {
+    var id = $(this).attr('trgId')
+    $.ajax({
+        url: 'pupil-home/teacher',
+        type: 'POST',
+        data: JSON.stringify(id),
+        contentType: 'application/json',
+        success: function (response) {
+            $('#teacher-modal').html('<p>' + response.firstName + ' ' + response.lastName + '</p><br>' +
+                '<p>e-mail: ' + response.email + '</p>')
+        }
+    });
+});

@@ -1,7 +1,5 @@
 <#import "header.ftl" as h>
-<@h.header>
-
-</@h.header>
+<@h.header></@h.header>
 
 <link rel='stylesheet' href='/scripts/calendar/css/jquery-ui.css'/>
 <link rel='stylesheet' href='/scripts/calendar/fc/fullcalendar.css'/>
@@ -31,9 +29,43 @@
                         <#if col == 0>
                             <td>${table_row}</td>
                         <#elseif col == 2>
-                            <td class="homework" id="clear">-</td>
+                            <td class="homework">-</td>
+                            <div class="container">
+                                <div class="modal fade .modal-sm" id="modal-homework">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;
+                                                </button>
+                                                <h3 class="modal-title">This is your homework</h3>
+                                            </div>
+                                            <div class="modal-body" id="setHomework"></div>
+                                            <div class="modal-footer">
+                                                <a href="" class="btn btn-default" data-dismiss="modal">Close</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <#elseif col == 4>
-                            <td class="teacher" id="clear">-</td>
+                            <td class="teacher">-</td>
+                            <div class="container">
+                                <div class="modal fade .modal-sm" id="modal-teacher">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;
+                                                </button>
+                                                <h3 class="modal-title">Your teacher</h3>
+                                            </div>
+                                            <div class="modal-body" id="teacher-modal"></div>
+                                            <div class="modal-footer">
+                                                <a href="" class="btn btn-default" data-dismiss="modal">Close</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <#else>
                             <td id="clear">-</td>
                         </#if>
@@ -47,39 +79,6 @@
             <div id='calendar'></div>
         </div>
     </div>
-    <div class="container" >
-        <div class="modal fade .modal-sm" id="modal-homework">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3 class="modal-title">This is your homework</h3>
-                    </div>
-                    <div class="modal-body" id="setHomework"></div>
-                    <div class="modal-footer">
-                        <a href="" class="btn btn-default" data-dismiss="modal">Close</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="modal fade .modal-sm" id="modal-teacher">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3 class="modal-title">Your teacher</h3>
-                    </div>
-                    <div class="modal-body" id="teacher-modal"></div>
-                    <div class="modal-footer">
-                        <a href="" class="btn btn-default" data-dismiss="modal">Close</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <script src="http://code.jquery.com/jquery.min.js"></script>
@@ -89,7 +88,4 @@
 <script src="/scripts/calendar/fc/locale-all.js"></script>
 <script src="/scripts/calendar/js/main.js"></script>
 
-<@h.footer>
-
-</@h.footer>
-
+<@h.footer></@h.footer>
