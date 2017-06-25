@@ -2,7 +2,7 @@ $(document).ready(function () {
     var dateToSend = new Date().toISOString().slice(0, 19);
 
     getSchedule(dateToSend);
-    lableDate.innerHTML = new Date().toDateString();
+    lableDate.innerHTML = formatter.format(new Date());
 });
 
 var lableDate = document.getElementById("label_date");
@@ -20,12 +20,19 @@ $.urlParam = function (name) {
 var selectedDate;
 var schedules;
 
+var formatter = new Intl.DateTimeFormat($.urlParam('lang'), {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+});
+
 $(function () {
     $('#calendar').fullCalendar({
         dayClick: function (eventDate) {
             selectedDate = new Date(eventDate);
             var dateToSend = selectedDate.toISOString().slice(0, 19);
-            lableDate.innerHTML = selectedDate.toDateString();
+            lableDate.innerHTML = formatter.format(selectedDate);
             getSchedule(dateToSend)
         },
         theme: true,
@@ -119,7 +126,7 @@ $('.teacher').on('click', function () {
         data: JSON.stringify(id),
         contentType: 'application/json',
         success: function (response) {
-            $('#teacher-modal').html('<p>' + response.firstName + ' ' + response.lastName + '</p><br>' +
+            $('#teacher-modal').html('<p>' + response.firstName + ' ' + response.lastName + '</p>' +
                 '<p>e-mail: ' + response.email + '</p>')
         }
     });

@@ -7,20 +7,21 @@
 
 <div class="container-fluid">
     <div class="page-header">
-        <h1>Welcome ${model.pupilFirstName} ${model.pupilLastName}</h1>
+        <h1><@spring.message "pupil.home.welcome"/> ${model.pupilFirstName} ${model.pupilLastName}</h1>
         <br>
-        <h3> My schedule on <span id="label_date"></span></h3>
+        <h4><@spring.message "pupil.home.table.label"/><span id="label_date"></span></h4>
+
     </div>
     <div class="row">
         <div class="col-md-7">
             <table class="table table-striped">
                 <tr>
-                    <th>Position</th>
-                    <th>Lesson</th>
-                    <th>Homework</th>
-                    <th>Classroom</th>
-                    <th>Teacher</th>
-                    <th>Attendance</th>
+                    <th><@spring.message "pupil.home.table.position"/></th>
+                    <th><@spring.message "pupil.home.table.lesson"/></th>
+                    <th><@spring.message "pupil.home.table.homework"/></th>
+                    <th><@spring.message "pupil.home.table.classroom"/></th>
+                    <th><@spring.message "pupil.home.table.teacher"/></th>
+                    <th><@spring.message "pupil.home.table.attendance"/></th>
                 </tr>
                 <tbody id="scheduleTable">
                 <#list 1..10 as table_row>
@@ -37,11 +38,11 @@
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal">&times;
                                                 </button>
-                                                <h3 class="modal-title">This is your homework</h3>
+                                                <h5 class="modal-title"><@spring.message "pupil.home.modal.homework.label"/></h5>
                                             </div>
                                             <div class="modal-body" id="setHomework"></div>
                                             <div class="modal-footer">
-                                                <a href="" class="btn btn-default" data-dismiss="modal">Close</a>
+                                                <a href="" class="btn btn-default" data-dismiss="modal"><@spring.message "pupil.home.modal.close"/></a>
                                             </div>
                                         </div>
                                     </div>
@@ -51,16 +52,16 @@
                             <td class="teacher">-</td>
                             <div class="container">
                                 <div class="modal fade .modal-sm" id="modal-teacher">
-                                    <div class="modal-dialog modal-lg">
+                                    <div class="modal-dialog modal-sm">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal">&times;
                                                 </button>
-                                                <h3 class="modal-title">Your teacher</h3>
+                                                <h5 class="modal-title"><@spring.message "pupil.home.modal.teacher.label"/></h5>
                                             </div>
                                             <div class="modal-body" id="teacher-modal"></div>
                                             <div class="modal-footer">
-                                                <a href="" class="btn btn-default" data-dismiss="modal">Close</a>
+                                                <a href="" class="btn btn-default" data-dismiss="modal"><@spring.message "pupil.home.modal.close"/></a>
                                             </div>
                                         </div>
                                     </div>
