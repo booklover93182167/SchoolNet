@@ -5,6 +5,7 @@ import com.inva.hipstertest.domain.School;
 import com.inva.hipstertest.service.SchoolService;
 import com.inva.hipstertest.service.TeacherService;
 import com.inva.hipstertest.service.UserAddonService;
+import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.dto.SchoolDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
 import com.inva.hipstertest.service.dto.UserAddonDTO;
@@ -40,8 +41,12 @@ public class AdminController {
         UserAddonDTO user = userAddonService.findByCurrentUser();
         List<SchoolDTO> schoolList = new ArrayList<SchoolDTO>();
         schoolList = schoolService.findAll();
+        //List<TeacherDTO> teachers = teacherService.getAllBySchoolId(schoolId);
+       // List<TeacherDTO> headTeachers = schoolService.findHeadTeachersOfSchool(schoolId);
         model.addAttribute("schoolList", schoolList);
         model.addAttribute("currentUser", user);
+       // model.addAttribute("teachersList", teachers);
+       // model.addAttribute("headTeachers", headTeachers);
         return "admin/admin-home";
     }
 
@@ -145,6 +150,19 @@ public class AdminController {
             schoolService.save(schoolToToggle);
             return new ModelAndView("redirect:/freemarker/admin-home");
 
+    }
+
+
+
+    /**
+     * Request to get all head teachers of school
+     * @return available forms
+     */
+    @RequestMapping(value = "freemarker/admin-home/headTeachersOfSchool/{id}", method = RequestMethod.GET)
+    public @ResponseBody List<TeacherDTO> getHeadTeachers(@PathVariable Long id){
+        log.debug("Create Ajax request for headTeachers");
+        List<TeacherDTO> headTeachers = schoolService.findHeadTeachersOfSchool(id);
+        return headTeachers;
     }
 }
 
