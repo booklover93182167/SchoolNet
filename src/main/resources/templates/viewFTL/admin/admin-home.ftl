@@ -27,25 +27,29 @@
         </tr>
     <#list model["schoolList"] as school>
         <tr>
+            <#if school.enabled=true>
+
             <td>${school.name}</a></td>
             <td>${school.id}</td>
             <td>
+                <#if school.enabled!=true>
+                    <button class="badge badge-danger hand"
+                            onclick="window.location.href='/freemarker/admin-home/school-toggle/${school.id}'"><@spring.message "disabled"/>
+                    </button></#if>
+                <#if school.enabled=true>
+                    <button class="badge badge-success hand"
+                            onclick="window.location.href='/freemarker/admin-home/school-toggle/${school.id}'"><@spring.message "enabled"/>
+                    </button></#if>
+            </td>
+            <td>
                 <div class="btn-group flex-btn-group-container">
-                    <button id="view" type="submit" class="btn btn-info btn-sm"
+                    <button id="edit" type="submit" class="btn btn-primary btn-sm"
                             onclick="window.location.href='/freemarker/admin-home/details/${school.id}'">
-                        <span class="fa fa-eye"></span>
-                        <span class="hidden-md-down"><@spring.message "school.view"/></span>
-                    </button>
-                    <button id="edit" type="submit" class="btn btn-primary btn-sm">
                         <span class="fa fa-pencil"></span>
                         <span class="hidden-md-down"><@spring.message "school.edit"/></span>
                     </button>
-                    <button id="delete" type="submit" class="btn btn-danger btn-sm">
-                        <span class="fa fa-remove"></span>
-                        <span class="hidden-md-down"><@spring.message "school.delete"/></span>
-                    </button>
                 </div>
-            </td>
+            </td></#if>
         </tr>
     </#list>
     </table>

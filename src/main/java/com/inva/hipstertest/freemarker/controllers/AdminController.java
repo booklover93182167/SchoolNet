@@ -128,5 +128,23 @@ public class AdminController {
         // handle creation success
         return new ModelAndView("redirect:/freemarker/admin-home");
     }
+
+
+    /**
+     * Toggles schools's "enabled" field.
+     * @param id school to toggle
+     */
+    @RequestMapping(value = "/freemarker/admin-home/school-toggle/{id}", method = RequestMethod.GET)
+    public ModelAndView schoolDisable(@ModelAttribute("model") ModelMap model, @PathVariable Long id){
+        SchoolDTO schoolToToggle = schoolService.findOne(id);
+            if(schoolToToggle.getEnabled()){
+                schoolToToggle.setEnabled(false);
+            } else {
+                schoolToToggle.setEnabled(true);
+            }
+            schoolService.save(schoolToToggle);
+            return new ModelAndView("redirect:/freemarker/admin-home");
+
+    }
 }
 
