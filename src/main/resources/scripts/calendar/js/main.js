@@ -2,23 +2,41 @@ $(document).ready(function () {
     var dateToSend = new Date().toISOString().slice(0, 19);
 
     getSchedule(dateToSend);
-    lableDate.innerHTML = new Date();
+    lableDate.innerHTML = formatter.format(new Date());
 });
 
 var lableDate = document.getElementById("label_date");
+
+$.urlParam = function (name) {
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results == null) {
+        return 'en';
+    }
+    else {
+        return decodeURI(results[1]) || 0;
+    }
+};
+
 var selectedDate;
-var attendances;
+var schedules;
+
+var formatter = new Intl.DateTimeFormat($.urlParam('lang'), {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+});
+
 $(function () {
     $('#calendar').fullCalendar({
         dayClick: function (eventDate) {
             selectedDate = new Date(eventDate);
             var dateToSend = selectedDate.toISOString().slice(0, 19);
-            lableDate.innerHTML = selectedDate;
+            lableDate.innerHTML = formatter.format(selectedDate);
             getSchedule(dateToSend)
-            // getAttendance(dateToSend);
         },
         theme: true,
-        locale: 'en',
+        locale: $.urlParam('lang')
     });
 });
 
@@ -29,24 +47,52 @@ function getSchedule(date) {
     }
     request.open('GET', 'pupil-home/mySchedule/' + date);
     request.onload = function () {
-        var schedule = JSON.parse(request.responseText);
+        schedules = JSON.parse(request.responseText);
         getAttendance(date);
-        renderHTMLTable(schedule, attendances);
+        function getAttendance(date) {
+            var request = createRequest();
+
+            if (!request) {
+                return;
+            }
+            request.open('GET', 'pupil-home/myAttendances/' + date, false);
+            request.onload = function () {
+                attendances = JSON.parse(request.responseText);
+            };
+            request.send();
+        }
+
+        $("#row td:not(:first-child)").html("-");
+        schedules.forEach(function (el) {
+            if (el.id) {
+                var selector = $('table tr').eq(el.lessonPosition);
+                selector.find("td").eq(1).html(el.lessonName);
+                var element = selector.find("td").eq(2).attr('data-toggle', 'modal');
+                element.attr('data-target', '#modal-homework');
+                element.html(el.homework);
+                selector.find("td").eq(3).html(el.classroomName);
+                element = selector.find("td").eq(4).attr('data-toggle', 'modal');
+                element.attr('data-target', '#modal-teacher');
+                element.attr('trgId', el.teacherId);
+                element.html(el.teacherFirstName + " " + el.teacherLastName);
+                selector.find("td").eq(5).html(pickUpAttendance(el.id, attendances));
+            }
+        });
     };
     request.send();
 }
 
-function getAttendance(date) {
-    var request = createRequest();
 
-    if (!request) {
-        return;
-    }
-    request.open('GET', 'pupil-home/myAttendances/' + date, false);
-    request.onload = function () {
-        attendances = JSON.parse(request.responseText);
-    };
-    request.send();
+function pickUpAttendance(id, attendances) {
+    var grade = 'n/a';
+    attendances.forEach(function (attendance) {
+        if (attendance.scheduleId === id) {
+            if (attendance.grade != 0) {
+                grade = attendance.grade;
+            }
+        }
+    });
+    return grade;
 }
 
 function createRequest() {
@@ -68,31 +114,20 @@ function createRequest() {
     return request;
 }
 
-function renderHTMLTable(data, attendance) {
-    var scheduleTable = document.getElementById("scheduleTable");
-    scheduleTable.innerHTML = '';
-    var table = '';
-    for (var i = 0; i < data.length; i++) {
+$('.homework').on('click', function () {
+    $('#setHomework').html($(this).text())
+});
 
-        table += "<tr><td style=\"width: 40px; text-align: center;\">" + data[i].lessonPosition + "</td>";
-        table += "<td style=\"width: 100px; text-align: center;\">" + data[i].lessonName + "</td>";
-        table += "<td id=\"homevork\">" + data[i].homework + "</td>";
-        table += "<td style=\"width: 75px; text-align: center;\">" + data[i].classroomName + "</td>";
-        table += "<td id=\"teacher\" style=\"width: 180px; text-align: center;\">" + data[i].teacherFirstName + " " + data[i].teacherLastName + "</td>";
-        var grade = (data[i].id) ? renderHTMLAttendance(data[i].id, attendance) : "-";
-        table += "<td style=\"width: 40px; text-align: center;\">" + grade + "</td></tr>"
-    }
-    scheduleTable.insertAdjacentHTML("beforeend", table);
-}
-
-function renderHTMLAttendance(id, attendances) {
-    var grade = 'n/a';
-    attendances.forEach(function (attendance) {
-        if (attendance.scheduleId === id) {
-            if (attendance.grade != 0) {
-                grade = attendance.grade;
-            }
+$('.teacher').on('click', function () {
+    var id = $(this).attr('trgId')
+    $.ajax({
+        url: 'pupil-home/teacher',
+        type: 'POST',
+        data: JSON.stringify(id),
+        contentType: 'application/json',
+        success: function (response) {
+            $('#teacher-modal').html('<p>' + response.firstName + ' ' + response.lastName + '</p>' +
+                '<p>e-mail: ' + response.email + '</p>')
         }
     });
-    return grade;
-}
+});

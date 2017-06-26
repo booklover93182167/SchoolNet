@@ -1,13 +1,7 @@
 package com.inva.hipstertest.freemarker.controllers;
 
-import com.inva.hipstertest.service.AttendancesService;
-import com.inva.hipstertest.service.LessonService;
-import com.inva.hipstertest.service.PupilService;
-import com.inva.hipstertest.service.ScheduleService;
-import com.inva.hipstertest.service.dto.AttendancesDTO;
-import com.inva.hipstertest.service.dto.LessonDTO;
-import com.inva.hipstertest.service.dto.PupilDTO;
-import com.inva.hipstertest.service.dto.ScheduleDTO;
+import com.inva.hipstertest.service.*;
+import com.inva.hipstertest.service.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -28,14 +22,16 @@ public class PupilController {
     private final ScheduleService scheduleService;
     private final LessonService lessonService;
     private final AttendancesService attendancesService;
+    private final TeacherService teacherService;
 
     public PupilController(PupilService pupilService, ScheduleService scheduleService,
                            LessonService lessonService,
-                           AttendancesService attendancesService) {
+                           AttendancesService attendancesService, TeacherService teacherService) {
         this.pupilService = pupilService;
         this.scheduleService = scheduleService;
         this.lessonService = lessonService;
         this.attendancesService = attendancesService;
+        this.teacherService = teacherService;
     }
 
     /**
@@ -79,6 +75,19 @@ public class PupilController {
         log.debug("Request to get attendance for current pupil by date : {}", date);
         List<AttendancesDTO> attendancesDTOs = attendancesService.findAllMembersByPupilIdAndDateBetween(date);
         return attendancesDTOs;
+    }
+
+    /**
+     * Get teacher by id.
+     *
+     * @param id - ID of teacher
+     * @return teacherDTO
+     */
+    @RequestMapping(value = "pupil-home/teacher", method = RequestMethod.POST)
+    public @ResponseBody TeacherDTO editRequest(@RequestBody Long id){
+        log.debug("Request to get teacher {}", id);
+        TeacherDTO teacherDTO = teacherService.findOne(id);
+        return teacherDTO;
     }
 
     /**
