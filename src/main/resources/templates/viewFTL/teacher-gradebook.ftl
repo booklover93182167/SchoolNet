@@ -61,13 +61,25 @@ pagetitle = "${pagetitle}"
                         <td class="number">${pupil?index + 1}</td>
                         <td class="fullname">${pupil.lastName} ${pupil.firstName}</td>
                         <#list model["schedules"] as schedule>
-                            <td class="for-clear attendance" data-pupil-id="${pupil.id}" data-schedule-id="${schedule.id}">
+
+                            <#assign attendanceExists = false>
                             <#list model["attendances"] as attendance>
                                 <#if attendance.pupilId == pupil.id && attendance.scheduleId == schedule.id>
-                                    ${attendance.grade}
+                                    <#assign attendanceExists = true>
+                                    <#assign att = attendance>
                                 </#if>
                             </#list>
+
+                            <td class="for-clear attendance" data-pupil-id="${pupil.id}" data-schedule-id="${schedule.id}">
+                                <#if attendanceExists == true>
+                                    <div id="div-attendance-${pupil.id}-${schedule.id}" data-attendance-id="${att.id}"><#if att.grade == 0>-<#else>${att.grade}</#if></div>
+                                    <input class="form-control" maxlength="2" id="input-attendance-${pupil.id}-${schedule.id}" data-attendance-id="${att.id}" data-in-database="1" value="<#if att.grade == 0><#else>${att.grade}</#if>" type="hidden">
+                                <#else>
+                                    <div id="div-attendance-${pupil.id}-${schedule.id}" data-attendance-id="">-</div>
+                                    <input class="form-control" maxlength="2" id="input-attendance-${pupil.id}-${schedule.id}" data-attendance-id="" data-in-database="0" value="" type="hidden">
+                                </#if>
                             </td>
+
                         </#list>
                     </tr>
                 </#items>
@@ -82,7 +94,81 @@ pagetitle = "${pagetitle}"
 
 <script>
     $(function() {
-//        $("#forms-lessons a:first").addClass("active");
+
+        var selectedTd = null;
+        var backupValue = null;
+
+        function hideDivShowInput() {
+            console.log("hideDivShowInput()");
+            selectedTd.find("div").hide();
+            selectedTd.find("input").prop("type", "text");
+            selectedTd.find("input").focus();
+        }
+
+        function hideInputShowDiv() {
+            console.log("hideInputShowDiv()");
+            selectedTd.find("div").show();
+            selectedTd.find("input").prop("type", "hidden");
+            selectedTd = null;
+            backupValue = null;
+        }
+
+        function confirmDiscardChanges() {
+            if (selectedTd.find("input").val() != backupValue) {
+                if (confirm('Are you sure you want to discard changes?')) {
+                    selectedTd.find("input").val(backupValue);
+                    hideInputShowDiv();
+                } else {
+                    return true;
+                }
+            } else {
+                hideInputShowDiv();
+            }
+            return false;
+        }
+
+        $(".attendance").click(function () {
+            if ($(this).is(selectedTd)) {
+                return;
+            }
+            if (selectedTd != null) {
+                if(confirmDiscardChanges()) {
+                    return;
+                }
+            }
+            selectedTd = $(this);
+            backupValue = $(this).find("input").val();
+            hideDivShowInput();
+        });
+
+        $("input").bind("enterKey", function(e) {
+            var string_value = $(this).val();
+            var int_value = parseInt($(this).val(), 10);
+            console.log("int_value: " + int_value);
+
+            if (string_value) {
+                if (int_value < -1 || int_value > 12 || isNaN(int_value)) {
+                    return;
+                }
+            }
+
+            selectedTd.find("input").attr("value", (!string_value ? "" : int_value));
+            selectedTd.find("div").text((!string_value ? "-" : int_value));
+            hideInputShowDiv();
+        });
+
+        $("input").keyup(function(e){
+            if (e.keyCode === 13) {
+                $(this).trigger("enterKey");
+            }
+        });
+
+        $(document).keyup(function(e){
+            if (e.keyCode === 27) {
+                hideInputShowDiv();
+            }
+        });
+
     });
 </script>
 
