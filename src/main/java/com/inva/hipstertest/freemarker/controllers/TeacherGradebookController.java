@@ -52,7 +52,14 @@ public class TeacherGradebookController {
     public String gradebook(@ModelAttribute("model") ModelMap model, @PathVariable Long formId, @PathVariable Long lessonId) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
         List<ScheduleDTO> formsAndLessons = scheduleService.findAllByTeacherIdGroupByFormIdAndLessonId(teacher.getId());
-//        ScheduleDTO formAndLesson = formsAndLessons.get(0);
+        ScheduleDTO formAndLesson = null;
+
+        for(ScheduleDTO item : formsAndLessons) {
+            if(item.getFormId() == formId && item.getLessonId() == lessonId) {
+                formAndLesson = item;
+            }
+        }
+
         List<ScheduleDTO> schedulesDTOs = scheduleService.findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(teacher.getId(), formId, lessonId);
         List<PupilDTO> pupilDTOs = pupilService.findAllByFormId(formId);
         Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
@@ -61,14 +68,14 @@ public class TeacherGradebookController {
         Collections.sort(formsAndLessons, (o1, o2) -> o1.getFormName().compareTo(o2.getFormName()));
         Collections.sort(pupilDTOs, comparatorLastNameFirstName);
 
-//        model.addAttribute("formAndLesson", formAndLesson);
         model.addAttribute("teacher", teacher.getFirstName() + " " + teacher.getLastName());
         model.addAttribute("formsAndLessons", formsAndLessons);
+        model.addAttribute("formAndLesson", formAndLesson);
+        model.addAttribute("pupils", pupilDTOs);
         model.addAttribute("schedules", schedulesDTOs);
         model.addAttribute("attendances", attendancesDTOs);
-        model.addAttribute("formId", formId);
-        model.addAttribute("lessonId", lessonId);
-        model.addAttribute("pupils", pupilDTOs);
+//        model.addAttribute("formId", formId);
+//        model.addAttribute("lessonId", lessonId);
 
         return "teacher-gradebook";
     }

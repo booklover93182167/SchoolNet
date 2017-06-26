@@ -1,6 +1,6 @@
 <#import "header.ftl" as h>
 
-<#assign pagetitle><@spring.message "teacher.gradebook.page.title"/></#assign>
+<#assign pagetitle><@spring.message "teacher.gradebook.page.title"/><#if model["formAndLesson"]??> ${model["formAndLesson"].formName}, ${model["formAndLesson"].lessonName}</#if></#assign>
 
 <@h.header
 pagetitle = "${pagetitle}"
@@ -29,7 +29,8 @@ pagetitle = "${pagetitle}"
         <div class="col-sm-12 text-left">
 
             <br>
-            <h1>${pagetitle} ${model["teacher"]}</h1>
+            <h1>${pagetitle}</h1>
+            <div><@spring.message "teacher.gradebook.logged.as"/> <strong>${model["teacher"]}</strong></div>
 
             <br>
             <p><@spring.message "teacher.gradebook.description"/></p>
@@ -38,57 +39,68 @@ pagetitle = "${pagetitle}"
             <ul class="nav nav-pills" id="forms-lessons">
                 <#items as formAndLesson>
                 <li class="nav-item">
-                    <a class="nav-link <#if model["formId"] == formAndLesson.formId && model["lessonId"] == formAndLesson.lessonId>active</#if>" href="/freemarker/teacher-gradebook/${formAndLesson.formId}/${formAndLesson.lessonId}">${formAndLesson.formName} ${formAndLesson.lessonName}</a>
+                    <a class="nav-link <#if model["formAndLesson"]??><#if model["formAndLesson"].formId == formAndLesson.formId && model["formAndLesson"].lessonId == formAndLesson.lessonId>active</#if></#if>" href="/freemarker/teacher-gradebook/${formAndLesson.formId}/${formAndLesson.lessonId}">${formAndLesson.formName}, ${formAndLesson.lessonName}</a>
                 </li>
                 </#items>
             </ul>
             </#list>
 
             <br>
-            <table class="table table-striped gradebook">
-            <#list model["pupils"]>
+            <#if model["formAndLesson"]??>
 
-                <tr>
-                    <th class="number">#</th>
-                    <th class="fullname">Full Name</th>
-                    <#list model["schedules"] as schedule>
-                        <th class="for-clear date" data-schedule-id="${schedule.id}">${schedule.date?substring(8,10)}/${schedule.date?substring(5,7)}<br>${schedule.date?substring(0,4)}</th>
-                    </#list>
-                </tr>
+                <table class="table table-striped gradebook">
+                <#list model["pupils"]>
 
-                <#items as pupil>
-                    <tr data-pupil-id="${pupil.id}">
-                        <td class="number">${pupil?index + 1}</td>
-                        <td class="fullname">${pupil.lastName} ${pupil.firstName}</td>
+                    <tr>
+                        <th class="number"><@spring.message "teacher.gradebook.table.pupil.position"/></th>
+                        <th class="fullname"><@spring.message "teacher.gradebook.table.pupil.name"/></th>
                         <#list model["schedules"] as schedule>
-
-                            <#assign attendanceExists = false>
-                            <#list model["attendances"] as attendance>
-                                <#if attendance.pupilId == pupil.id && attendance.scheduleId == schedule.id>
-                                    <#assign attendanceExists = true>
-                                    <#assign att = attendance>
-                                </#if>
-                            </#list>
-
-                            <td class="for-clear attendance" data-pupil-id="${pupil.id}" data-schedule-id="${schedule.id}">
-                                <#if attendanceExists == true>
-                                    <div id="div-attendance-${pupil.id}-${schedule.id}" data-attendance-id="${att.id}"><#if att.grade == 0>-<#else>${att.grade}</#if></div>
-                                    <input class="form-control" maxlength="2" id="input-attendance-${pupil.id}-${schedule.id}" data-attendance-id="${att.id}" data-in-database="1" value="<#if att.grade == 0><#else>${att.grade}</#if>" type="hidden">
-                                <#else>
-                                    <div id="div-attendance-${pupil.id}-${schedule.id}" data-attendance-id="">-</div>
-                                    <input class="form-control" maxlength="2" id="input-attendance-${pupil.id}-${schedule.id}" data-attendance-id="" data-in-database="0" value="" type="hidden">
-                                </#if>
-                            </td>
-
+                            <th class="for-clear date" data-schedule-id="${schedule.id}">${schedule.date?substring(8,10)}/${schedule.date?substring(5,7)}<br>${schedule.date?substring(0,4)}</th>
                         </#list>
                     </tr>
-                </#items>
 
-            </#list>
-            </table>
+                    <#items as pupil>
+                        <tr data-pupil-id="${pupil.id}">
+                            <td class="number">${pupil?index + 1}</td>
+                            <td class="fullname">${pupil.lastName} ${pupil.firstName}</td>
+                            <#list model["schedules"] as schedule>
 
-            <br>
-    </div>
+                                <#assign attendanceExists = false>
+                                <#list model["attendances"] as attendance>
+                                    <#if attendance.pupilId == pupil.id && attendance.scheduleId == schedule.id>
+                                        <#assign attendanceExists = true>
+                                        <#assign att = attendance>
+                                    </#if>
+                                </#list>
+
+                                <td class="for-clear attendance" data-pupil-id="${pupil.id}" data-schedule-id="${schedule.id}">
+                                    <#if attendanceExists == true>
+                                        <div id="div-attendance-${pupil.id}-${schedule.id}" data-attendance-id="${att.id}"><#if att.grade == 0>-<#else>${att.grade}</#if></div>
+                                        <input class="form-control" maxlength="2" id="input-attendance-${pupil.id}-${schedule.id}" data-attendance-id="${att.id}" data-in-database="1" value="<#if att.grade == 0><#else>${att.grade}</#if>" type="hidden">
+                                    <#else>
+                                        <div id="div-attendance-${pupil.id}-${schedule.id}" data-attendance-id="">-</div>
+                                        <input class="form-control" maxlength="2" id="input-attendance-${pupil.id}-${schedule.id}" data-attendance-id="" data-in-database="0" value="" type="hidden">
+                                    </#if>
+                                </td>
+
+                            </#list>
+                        </tr>
+                    </#items>
+
+                </#list>
+                </table>
+
+            <#else>
+
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading"><@spring.message "teacher.gradebook.error"/></h4>
+                    <@spring.message "teacher.gradebook.error.description1"/>
+                    <br><@spring.message "teacher.gradebook.error.description2"/>
+                </div>
+
+            </#if>
+
+        </div>
     </div>
 </div>
 
@@ -165,6 +177,7 @@ pagetitle = "${pagetitle}"
 
         $(document).keyup(function(e){
             if (e.keyCode === 27) {
+                selectedTd.find("input").val(backupValue);
                 hideInputShowDiv();
             }
         });
