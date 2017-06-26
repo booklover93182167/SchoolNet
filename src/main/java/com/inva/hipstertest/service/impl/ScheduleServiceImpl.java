@@ -1,18 +1,21 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.Pupil;
-import com.inva.hipstertest.repository.PupilRepository;
-import com.inva.hipstertest.service.ScheduleService;
 import com.inva.hipstertest.domain.Schedule;
+import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.repository.ScheduleRepository;
+import com.inva.hipstertest.service.ScheduleService;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
 import com.inva.hipstertest.service.mapper.ScheduleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -123,62 +126,22 @@ public class ScheduleServiceImpl implements ScheduleService {
      * Get all schedules by requested date and current user form id.
      *
      * @param date requested date
-     * @return the list of entities ordered by lesson position
+     * @return the list of entities.
      */
-    public List<ScheduleDTO> findByFormIdAndDate(ZonedDateTime date) {
-        log.debug("Request to get schedules for form and date {}", date);
+    @Override
+    public List<ScheduleDTO> findAllByFormIdAndDate(String date) {
+
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime localDateTime = LocalDateTime.parse(date, timeFormatter);
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime dateStart = localDateTime.atZone(zoneId);
+        ZonedDateTime dateEnd = dateStart.plusDays(1);
+
         Pupil currentPupil = pupilRepository.findPupilByCurrentUser();
-        List<Schedule> schedules = scheduleRepository.findByFormId(currentPupil.getForm().getId());
-        List<Schedule> scheduleByDate = new ArrayList<>();
-        for (Schedule schedule :
-            schedules) {
-            if (schedule.getDate().getYear() == date.getYear()
-                && schedule.getDate().getDayOfYear() == date.getDayOfYear()) {
-                scheduleByDate.add(schedule);
-            }
-        }
-        List<ScheduleDTO> scheduleDTOS = scheduleMapper.schedulesToScheduleDTOs(scheduleByDate);
-        List<ScheduleDTO> scheduleToSend = buildScheduleForDayWithEmptyRecords(scheduleDTOS);
-        return scheduleToSend;
-    }
-
-    private List<ScheduleDTO> buildScheduleForDayWithEmptyRecords(List<ScheduleDTO> list) {
-        List<ScheduleDTO> resultList = new ArrayList<>();
-        if (list.isEmpty()) {
-            for (int i = 1; i <= 10; i++) {
-                ScheduleDTO emptyScheduleDTO = createEmptyScheduleDTO();
-                emptyScheduleDTO.setLessonPosition(i);
-                resultList.add(emptyScheduleDTO);
-            }
-        } else {
-            int lessonPositions = 1;
-            do {
-                boolean flag = false;
-                for (ScheduleDTO schedule : list) {
-                    if (schedule.getLessonPosition() == lessonPositions) {
-                        resultList.add(schedule);
-                        lessonPositions++;
-                        flag = true;
-                    }
-                }
-                if (!flag){
-                    ScheduleDTO emptyScheduleDTO = createEmptyScheduleDTO();
-                    emptyScheduleDTO.setLessonPosition(lessonPositions++);
-                    resultList.add(emptyScheduleDTO);
-                }
-            } while (lessonPositions <= 10);
-        }
-        return resultList;
-    }
-
-    private ScheduleDTO createEmptyScheduleDTO() {
-        ScheduleDTO emptyScheduleDTO = new ScheduleDTO();
-        emptyScheduleDTO.setLessonName("-");
-        emptyScheduleDTO.setHomework("-");
-        emptyScheduleDTO.setTeacherFirstName("");
-        emptyScheduleDTO.setTeacherLastName("-");
-        emptyScheduleDTO.setClassroomName("-");
-        return emptyScheduleDTO;
+        log.debug("Request to get schedules by pupil form and date {}", date);
+        List<Schedule> schedules = scheduleRepository.findAllMembersByFormIdAndDateBetween(currentPupil.getForm().getId(), dateStart, dateEnd);
+        List<ScheduleDTO> scheduleDTOS = scheduleMapper.schedulesToScheduleDTOs(schedules);
+        return scheduleDTOS;
     }
 
     /**
@@ -198,5 +161,4 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         return result;
     }
-
 }
