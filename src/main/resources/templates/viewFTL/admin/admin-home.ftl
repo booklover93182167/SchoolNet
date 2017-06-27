@@ -14,6 +14,14 @@
             <@spring.message "school.createNew"/>
             </span>
         </button>
+        <button id="deleted" class="btn btn-danger float-right deleted-teacher-management"
+                onclick="window.location.href='/freemarker/admin-home/deletedSchool'">
+            <span class="fa fa-danger"></span>
+            <span>
+            <#--<@spring.message "school.createNew"/>-->
+                Deleted schools
+            </span>
+        </button>
     </h2>
 </div>
 <div id="content">
@@ -24,6 +32,7 @@
     <tr>
         <th><@spring.message "school.name"/></th>
         <th><@spring.message "school.id"/></th>
+        <th>School status</th>
     </tr>
 <#list model["schoolList"] as school>
 <tr>
