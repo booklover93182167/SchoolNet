@@ -38,7 +38,7 @@ public class FreemarkerJWTFilter extends GenericFilterBean {
             // try to get token from header
             String jwt = resolveTokenFromHeader(httpServletRequest);
             // try to get token from cookie
-            if (jwt == null) {
+            if (jwt == null || jwt.isEmpty()) {
                 jwt = resolveTokenFromCookie(httpServletRequest);
             }
             if (StringUtils.hasText(jwt) && this.tokenProvider.validateToken(jwt)) {
