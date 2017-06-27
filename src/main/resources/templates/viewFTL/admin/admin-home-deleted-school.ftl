@@ -17,15 +17,13 @@
             </tr>
             <tr>
                 <th><@spring.message "school.name"/></th>
-                <th><@spring.message "school.id"/></th>
                 <th><@spring.message "school.status"/></th>
             </tr>
         <#list model["schoolList"] as school>
             <tr>
                 <#if school.enabled=false>
 
-                    <td>${school.name}</a></td>
-                    <td>${school.id}</td>
+                    <td>${school.name}</td>
                     <td>
                         <#if school.enabled!=true>
                             <button class="badge badge-danger hand"
