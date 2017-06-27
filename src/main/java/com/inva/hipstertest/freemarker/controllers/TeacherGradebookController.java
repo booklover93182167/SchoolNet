@@ -10,6 +10,9 @@ import com.inva.hipstertest.service.dto.ScheduleDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -40,16 +43,16 @@ public class TeacherGradebookController {
     @RequestMapping(value = "/freemarker/teacher-gradebook", method = RequestMethod.GET)
     public ModelAndView home(@ModelAttribute("model") ModelMap model) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
-        List<ScheduleDTO> formsAndLessons = scheduleService.findAllByTeacherIdGroupByFormIdAndLessonId(teacher.getId());
+        List<ScheduleDTO> formsAndLessons = scheduleService.findFormsAndLessonsByTeacherId(teacher.getId());
         Collections.sort(formsAndLessons, (o1, o2) -> o1.getFormName().compareTo(o2.getFormName()));
         ScheduleDTO formAndLesson = formsAndLessons.get(0);
         return new ModelAndView("redirect:/freemarker/teacher-gradebook/" + formAndLesson.getFormId() + "/" + formAndLesson.getLessonId());
     }
 
     @RequestMapping(value = "/freemarker/teacher-gradebook/{formId}/{lessonId}", method = RequestMethod.GET)
-    public String gradebook(@ModelAttribute("model") ModelMap model, @PathVariable Long formId, @PathVariable Long lessonId) {
+    public String gradebook(@ModelAttribute("model") ModelMap model, @PageableDefault(value = 10) Pageable pageable, @PathVariable Long formId, @PathVariable Long lessonId) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
-        List<ScheduleDTO> formsAndLessons = scheduleService.findAllByTeacherIdGroupByFormIdAndLessonId(teacher.getId());
+        List<ScheduleDTO> formsAndLessons = scheduleService.findFormsAndLessonsByTeacherId(teacher.getId());
         ScheduleDTO formAndLesson = null;
 
         for(ScheduleDTO item : formsAndLessons) {
@@ -58,7 +61,7 @@ public class TeacherGradebookController {
             }
         }
 
-        List<ScheduleDTO> schedulesDTOs = scheduleService.findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(teacher.getId(), formId, lessonId, ZonedDateTime.now());
+        Page<ScheduleDTO> page = scheduleService.findSchedulesByTeacherIdFormIdSubjectIdMaxDate(pageable, teacher.getId(), formId, lessonId, ZonedDateTime.now());
         List<PupilDTO> pupilDTOs = pupilService.findAllByFormId(formId);
         Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
         List<AttendancesDTO> attendancesDTOs = attendancesService.findAllWherePupilIdInAndScheduleIdIn(teacher.getId(), formId, lessonId);
@@ -70,12 +73,24 @@ public class TeacherGradebookController {
         model.addAttribute("formsAndLessons", formsAndLessons);
         model.addAttribute("formAndLesson", formAndLesson);
         model.addAttribute("pupils", pupilDTOs);
-        model.addAttribute("schedules", schedulesDTOs);
         model.addAttribute("attendances", attendancesDTOs);
+        model.addAttribute("schedules", page.getContent());
+        model.addAttribute("sizes", pageable.getPageSize());
+        model.addAttribute("current", pageable.getPageNumber());
+        model.addAttribute("longs", pages(pageable.getPageSize(), teacher.getId(), formId, lessonId, ZonedDateTime.now()));
 //        model.addAttribute("formId", formId);
 //        model.addAttribute("lessonId", lessonId);
 
         return "teacher-gradebook";
+    }
+
+    public long pages(int size, Long teacherId, Long formId, Long lessonId, ZonedDateTime today) {
+        long all = scheduleService.countSchedulesForGradeBook(teacherId, formId, lessonId, today);
+        long realPage = all/size;
+        if(all % size == 0){
+            return realPage;
+        }
+        return realPage + 1;
     }
 
     @RequestMapping(value = "/freemarker/teacher-gradebook/update", method = RequestMethod.POST)

@@ -1,6 +1,8 @@
 package com.inva.hipstertest.repository;
 
 import com.inva.hipstertest.domain.Schedule;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -34,10 +36,13 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
     // Identify specific subjects for specific classes where the specific teacher gives lessons
     @Query("select s from Schedule s where s.enabled = true and s.teacher.id = :teacherId group by s.form.id, s.lesson.id")
-    List<Schedule> findAllByTeacherIdGroupByFormIdAndLessonId(@Param("teacherId") Long teacherId);
+    List<Schedule> findFormsAndLessonsByTeacherId(@Param("teacherId") Long teacherId);
 
     // Identify dates, when for specific class, on specific subject, specific teacher gives lessons
     @Query("select s from Schedule s where s.enabled = true and s.teacher.id = :teacherId and s.form.id = :formId and s.lesson.id = :lessonId and s.date <= :today order by s.date")
-    List<Schedule> findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(@Param("teacherId") Long teacherId, @Param("formId") Long formId, @Param("lessonId") Long lessonId, @Param("today") ZonedDateTime today);
+    Page<Schedule> findSchedulesByTeacherIdFormIdSubjectIdMaxDate(Pageable pageable, @Param("teacherId") Long teacherId, @Param("formId") Long formId, @Param("lessonId") Long lessonId, @Param("today") ZonedDateTime today);
+
+    @Query("select COUNT(s) from Schedule s where s.enabled = true and s.teacher.id = :teacherId and s.form.id = :formId and s.lesson.id = :lessonId and s.date <= :today order by s.date")
+    Long countSchedulesForGradeBook(@Param("teacherId") Long teacherId, @Param("formId") Long formId, @Param("lessonId") Long lessonId, @Param("today") ZonedDateTime today);
 
 }

@@ -39,7 +39,7 @@ pagetitle = "${pagetitle}"
             <ul class="nav nav-pills" id="forms-lessons">
                 <#items as formAndLesson>
                 <li class="nav-item">
-                    <a class="nav-link <#if model["formAndLesson"]??><#if model["formAndLesson"].formId == formAndLesson.formId && model["formAndLesson"].lessonId == formAndLesson.lessonId>active</#if></#if>" href="/freemarker/teacher-gradebook/${formAndLesson.formId}/${formAndLesson.lessonId}">${formAndLesson.formName}, ${formAndLesson.lessonName}</a>
+                    <a class="nav-link <#if model["formAndLesson"]??><#if model["formAndLesson"].formId == formAndLesson.formId && model["formAndLesson"].lessonId == formAndLesson.lessonId>active</#if></#if>" href="/freemarker/teacher-gradebook/${formAndLesson.formId}/${formAndLesson.lessonId}?size=${model["sizes"]}">${formAndLesson.formName}, ${formAndLesson.lessonName}</a>
                 </li>
                 </#items>
             </ul>
@@ -55,7 +55,7 @@ pagetitle = "${pagetitle}"
                         <th class="number"><@spring.message "teacher.gradebook.table.pupil.position"/></th>
                         <th class="fullname"><@spring.message "teacher.gradebook.table.pupil.name"/></th>
                         <#list model["schedules"] as schedule>
-                            <th class="for-clear date" data-schedule-id="${schedule.id}">${schedule.date?substring(8,10)}/${schedule.date?substring(5,7)}<br>${schedule.date?substring(0,4)}</th>
+                            <th class="for-clear date" data-schedule-id="${schedule.id}">${schedule.date?substring(8,10)}/${schedule.date?substring(5,7)}</th>
                         </#list>
                     </tr>
 
@@ -93,6 +93,36 @@ pagetitle = "${pagetitle}"
                 </#list>
                 </table>
 
+                <form id="sizeChangerForm" action="" method="get">
+                <div class="form-group float-right">
+                    <select class="form-control" name="size" id="sizeSelector">
+                        <#list [1, 5, 10, 15, 20] as s>
+                            <#if model["sizes"] == s>
+                                <option value="${s}" selected="selected">${s}</option>
+                            <#else>
+                                <option value="${s}">${s}</option>
+                            </#if>
+                        </#list>
+                    </select>
+                </div>
+                </form>
+
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item<#if model["current"] == 0> disabled</#if>"><a class="page-link" href="?page=0&size=${model["sizes"]}">First</a></li>
+                        <li class="page-item<#if model["current"] == 0> disabled</#if>"><a class="page-link" href="?page=${model["current"]-1}&size=${model["sizes"]}">Previous</a></li>
+                        <#list 0..model["longs"]-1 as i>
+                            <#if model["current"] != i>
+                                <li class="page-item"><a class="page-link" href="?page=${i}&size=${model["sizes"]}">${i+1}</a></li>
+                            <#else>
+                                <li class="page-item active"><span class="page-link">${i+1}</span></li>
+                            </#if>
+                        </#list>
+                        <li class="page-item<#if model["current"] == model["longs"]-1> disabled</#if>"><a class="page-link" href="?page=${model["current"]+1}&size=${model["sizes"]}">Next</a></li>
+                        <li class="page-item<#if model["current"] == model["longs"]-1> disabled</#if>"><a class="page-link" href="?page=${model["longs"]-1}&size=${model["sizes"]}">Last</a></li>
+                    </ul>
+                </nav>
+
             <#else>
 
                 <div class="alert alert-danger" role="alert">
@@ -108,6 +138,10 @@ pagetitle = "${pagetitle}"
 
 <script>
     $(function() {
+
+        $("#sizeSelector").change(function () {
+            $("#sizeChangerForm").submit();
+        });
 
         var selectedTd = null;
         var backupValue = null;
