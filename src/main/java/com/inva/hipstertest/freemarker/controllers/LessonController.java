@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,9 +31,17 @@ public class LessonController {
         return "teacher-mgmt/teacher-mgmt-lessons";
     }
 
-    @RequestMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-lessons", method = RequestMethod.GET)
+    @PostMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-lessons")
     public ModelAndView teacherManagementCreate() {
         LessonDTO lessonDTO = new LessonDTO();
         return new ModelAndView("teacher-mgmt/teacher-mgmt-lessons", "lessonDTO", lessonDTO);
+    }
+
+    @RequestMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-lessons", method = RequestMethod.GET)
+    public String data(@ModelAttribute("model") ModelMap model) {
+        List<LessonDTO> lessonList;
+        lessonList = lessonService.findAll();
+        model.addAttribute("lessonList", lessonList);
+        return "teacher-mgmt/teacher-mgmt-lessons";
     }
 }
