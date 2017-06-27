@@ -50,6 +50,16 @@ public class AdminController {
         return "admin/admin-home";
     }
 
+    @RequestMapping(value = "freemarker/admin-home/deletedSchool", method = RequestMethod.GET)
+    public String dataForDelete(@ModelAttribute("model") ModelMap model) {
+        UserAddonDTO user = userAddonService.findByCurrentUser();
+        List<SchoolDTO> schoolList;
+        schoolList = schoolService.findAll();
+        model.addAttribute("schoolList", schoolList);
+        model.addAttribute("currentUser", user);
+        return "admin/admin-home-deleted-school";
+    }
+
     /**
      * Add a new School
      *
@@ -108,6 +118,18 @@ public class AdminController {
         }
     }
 
+    @PostMapping(value = "/freemarker/admin-home/deletedSchool")
+    @Timed
+    public String deletedSchool(@ModelAttribute("schoolDTO") SchoolDTO schoolDTO) {
+        if (schoolDTO.getName() != null && !schoolDTO.getName().isEmpty() &&
+            schoolDTO.getEnabled() != null) {
+            schoolService.save(schoolDTO);
+            return "redirect:";
+        } else {
+            return "redirect:error";
+        }
+    }
+
     @RequestMapping(value = "/freemarker/admin-home/createHeadTeacher/{schoolId}", method = RequestMethod.GET)
     public ModelAndView adminNewHeadTeacher(@PathVariable Long schoolId) {
 
@@ -141,6 +163,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/freemarker/admin-home/school-toggle/{id}", method = RequestMethod.GET)
     public ModelAndView schoolDisable(@ModelAttribute("model") ModelMap model, @PathVariable Long id){
+        log.debug("Request to toggle school" + id);
         SchoolDTO schoolToToggle = schoolService.findOne(id);
             if(schoolToToggle.getEnabled()){
                 schoolToToggle.setEnabled(false);
