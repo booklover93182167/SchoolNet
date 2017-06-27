@@ -70,18 +70,21 @@ pagetitle = "${pagetitle}"
                                     <#if attendance.pupilId == pupil.id && attendance.scheduleId == schedule.id>
                                         <#assign attendanceExists = true>
                                         <#assign att = attendance>
+                                        <#break>
                                     </#if>
                                 </#list>
 
-                                <td class="for-clear attendance" data-pupil-id="${pupil.id}" data-schedule-id="${schedule.id}">
                                     <#if attendanceExists == true>
-                                        <div id="div-attendance-${pupil.id}-${schedule.id}" data-attendance-id="${att.id}"><#if att.grade == 0>-<#else>${att.grade}</#if></div>
-                                        <input class="form-control" maxlength="2" id="input-attendance-${pupil.id}-${schedule.id}" data-attendance-id="${att.id}" data-in-database="1" value="<#if att.grade == 0><#else>${att.grade}</#if>" type="hidden">
+                                        <td class="for-clear attendance" data-pupil-id="${pupil.id}" data-schedule-id="${schedule.id}" data-attendance-id="${att.id}">
+                                            <div id="div-attendance-${pupil.id}-${schedule.id}" data-attendance-id="${att.id}"><#if !att.grade??>-<#elseif att.grade == 0>N<#else>${att.grade}</#if></div>
+                                            <input class="form-control" maxlength="2" id="input-attendance-${pupil.id}-${schedule.id}" value="<#if att.grade??>${att.grade}</#if>" type="hidden">
+                                        </td>
                                     <#else>
-                                        <div id="div-attendance-${pupil.id}-${schedule.id}" data-attendance-id="">-</div>
-                                        <input class="form-control" maxlength="2" id="input-attendance-${pupil.id}-${schedule.id}" data-attendance-id="" data-in-database="0" value="" type="hidden">
+                                        <td class="for-clear attendance" data-pupil-id="${pupil.id}" data-schedule-id="${schedule.id}" data-attendance-id="-1">
+                                            <div id="div-attendance-${pupil.id}-${schedule.id}" data-attendance-id="">-</div>
+                                            <input class="form-control" maxlength="2" id="input-attendance-${pupil.id}-${schedule.id}" value="" type="hidden">
+                                        </td>
                                     </#if>
-                                </td>
 
                             </#list>
                         </tr>
@@ -94,8 +97,7 @@ pagetitle = "${pagetitle}"
 
                 <div class="alert alert-danger" role="alert">
                     <h4 class="alert-heading"><@spring.message "teacher.gradebook.error"/></h4>
-                    <@spring.message "teacher.gradebook.error.description1"/>
-                    <br><@spring.message "teacher.gradebook.error.description2"/>
+                    <@spring.message "teacher.gradebook.error.description"/>
                 </div>
 
             </#if>
@@ -159,14 +161,46 @@ pagetitle = "${pagetitle}"
             console.log("int_value: " + int_value);
 
             if (string_value) {
-                if (int_value < -1 || int_value > 12 || isNaN(int_value)) {
+                if (int_value < 0 || int_value > 12 || isNaN(int_value)) {
+                    alert("Invalid grade!");
                     return;
                 }
             }
 
-            selectedTd.find("input").attr("value", (!string_value ? "" : int_value));
-            selectedTd.find("div").text((!string_value ? "-" : int_value));
-            hideInputShowDiv();
+            var id = selectedTd.data("attendance-id");
+            var grade = int_value;
+            var enabled = true;
+            var pupilId = selectedTd.data("pupil-id");
+            var scheduleId = selectedTd.data("schedule-id");
+            var attendanceDTO;
+
+            if (id == -1) {
+                attendanceDTO = {
+                    grade: grade,
+                    enabled: enabled,
+                    pupilId: pupilId,
+                    scheduleId: scheduleId
+                };
+            } else {
+                attendanceDTO = {
+                    id : id,
+                    grade: grade,
+                    enabled: enabled,
+                    pupilId: pupilId,
+                    scheduleId: scheduleId
+                };
+            }
+            $.ajax({
+                url : "/freemarker/teacher-gradebook/update",
+                type : "POST",
+                contentType : "application/json",
+                data : JSON.stringify(attendanceDTO),
+                success : function (response) {
+                    selectedTd.find("input").attr("value", (!string_value ? "" : response.grade));
+                    selectedTd.find("div").text((!string_value ? "-" : response.grade));
+                    hideInputShowDiv();
+                }
+            });
         });
 
         $("input").keyup(function(e){

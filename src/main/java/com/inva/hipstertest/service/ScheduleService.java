@@ -77,6 +77,6 @@ public interface ScheduleService {
 
     List<ScheduleDTO> findAllByTeacherIdGroupByFormIdAndLessonId(Long teacherId);
 
-    List<ScheduleDTO> findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(Long teacherId, Long formId, Long lessonId);
+    List<ScheduleDTO> findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(Long teacherId, Long formId, Long lessonId, ZonedDateTime today);
 
 }

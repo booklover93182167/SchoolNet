@@ -12,12 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -60,7 +58,7 @@ public class TeacherGradebookController {
             }
         }
 
-        List<ScheduleDTO> schedulesDTOs = scheduleService.findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(teacher.getId(), formId, lessonId);
+        List<ScheduleDTO> schedulesDTOs = scheduleService.findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(teacher.getId(), formId, lessonId, ZonedDateTime.now());
         List<PupilDTO> pupilDTOs = pupilService.findAllByFormId(formId);
         Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
         List<AttendancesDTO> attendancesDTOs = attendancesService.findAllWherePupilIdInAndScheduleIdIn(teacher.getId(), formId, lessonId);
@@ -78,6 +76,14 @@ public class TeacherGradebookController {
 //        model.addAttribute("lessonId", lessonId);
 
         return "teacher-gradebook";
+    }
+
+    @RequestMapping(value = "/freemarker/teacher-gradebook/update", method = RequestMethod.POST)
+    public @ResponseBody
+    AttendancesDTO updateSchedule(@RequestBody AttendancesDTO attendancesDTO) {
+        log.debug("REST request to create/update Schedule : {}", attendancesDTO);
+        attendancesService.save(attendancesDTO);
+        return attendancesDTO;
     }
 
 }

@@ -171,9 +171,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<ScheduleDTO> findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(Long teacherId, Long formId, Long lessonId) {
+    public List<ScheduleDTO> findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(Long teacherId, Long formId, Long lessonId, ZonedDateTime today) {
         log.debug("Request to get lessons dates where teacher {} gives lessons for class {} on subject {}", teacherId, formId, lessonId);
-        List<Schedule> lessons = scheduleRepository.findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(teacherId, formId, lessonId);
+        List<Schedule> lessons = scheduleRepository.findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(teacherId, formId, lessonId, today);
         List<ScheduleDTO> lessonsDTOs = scheduleMapper.schedulesToScheduleDTOs(lessons);
         return lessonsDTOs;
     }

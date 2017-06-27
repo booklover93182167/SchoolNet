@@ -37,7 +37,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     List<Schedule> findAllByTeacherIdGroupByFormIdAndLessonId(@Param("teacherId") Long teacherId);
 
     // Identify dates, when for specific class, on specific subject, specific teacher gives lessons
-    @Query("select s from Schedule s where s.enabled = true and s.teacher.id = :teacherId and s.form.id = :formId and s.lesson.id = :lessonId order by s.date")
-    List<Schedule> findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(@Param("teacherId") Long teacherId, @Param("formId") Long formId, @Param("lessonId") Long lessonId);
+    @Query("select s from Schedule s where s.enabled = true and s.teacher.id = :teacherId and s.form.id = :formId and s.lesson.id = :lessonId and s.date <= :today order by s.date")
+    List<Schedule> findAllByTeacherIdAndFormIdAndLessonIdOrderByDate(@Param("teacherId") Long teacherId, @Param("formId") Long formId, @Param("lessonId") Long lessonId, @Param("today") ZonedDateTime today);
 
 }
