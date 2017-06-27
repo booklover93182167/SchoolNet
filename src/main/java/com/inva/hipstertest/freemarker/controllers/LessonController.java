@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -22,10 +23,16 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
-    @RequestMapping(value = "freemarker/teacher-mgmt/lessons", method = RequestMethod.GET)
+    @RequestMapping(value = "freemarker/teacher-mgmt-lessons", method = RequestMethod.GET)
     public String lessonList(@ModelAttribute("model")ModelMap model) {
         List<LessonDTO> lessonList = lessonService.findAll();
         model.addAttribute("lessonList", lessonList);
-        return "teacher-mgmt/lessons";
+        return "teacher-mgmt/teacher-mgmt-lessons";
+    }
+
+    @RequestMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-lessons", method = RequestMethod.GET)
+    public ModelAndView teacherManagementCreate() {
+        LessonDTO lessonDTO = new LessonDTO();
+        return new ModelAndView("teacher-mgmt/teacher-mgmt-lessons", "lessonDTO", lessonDTO);
     }
 }
