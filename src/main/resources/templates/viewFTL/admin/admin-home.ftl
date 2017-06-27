@@ -14,6 +14,13 @@
             <@spring.message "school.createNew"/>
             </span>
         </button>
+        <button id="deleted" class="btn btn-danger float-right deleted-teacher-management"
+                onclick="window.location.href='/freemarker/admin-home/deletedSchool'" style="margin-right: 10px">
+            <span class="fa fa-danger"></span>
+            <span>
+            <@spring.message "school.deletedSchools"/>
+            </span>
+        </button>
     </h2>
 </div>
 <div id="content">
@@ -24,6 +31,7 @@
     <tr>
         <th><@spring.message "school.name"/></th>
         <th><@spring.message "school.id"/></th>
+        <th><@spring.message "school.status"/></th>
     </tr>
 <#list model["schoolList"] as school>
 <tr>
@@ -78,7 +86,7 @@
                 </div>
             </div>
         </div>
-    </#if>
+</#if>
 </tr>
 </#list>
 </table>

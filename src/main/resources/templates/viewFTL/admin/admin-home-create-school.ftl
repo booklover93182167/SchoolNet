@@ -27,7 +27,7 @@
 
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-info"
+        <button type="button" class="btn btn-info"
                 onclick="window.location.href='/freemarker/admin-home/'">
             <span class="fa fa-arrow-left"></span>&nbsp;<span><@spring.message "back"/></span>
         </button>
