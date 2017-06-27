@@ -6,7 +6,7 @@
 <br>
 <div id="header">
     <h2>
-        <span><@spring.message "hello"/> ,</span>
+        <span><@spring.message "hello"/> ,${currentUser.userLogin}</span>
         <button id="create" class="btn btn-primary float-right create-teacher-management"
                 onclick="window.location.href='/freemarker/admin-home/createSchool'">
             <span class="fa fa-plus"></span>
@@ -24,79 +24,103 @@
     </h2>
 </div>
 <div id="content">
-<table class="table table-striped">
-    <tr>
-        <th colspan="7"><@spring.message "school.list"/></th>
-    </tr>
-    <tr>
-        <th><@spring.message "school.name"/></th>
-        <th><@spring.message "school.id"/></th>
-        <th><@spring.message "school.status"/></th>
-    </tr>
-<#list model["schoolList"] as school>
-<tr>
-    <#if school.enabled=true>
-
-        <td>${school.name}</a></td>
-        <td>${school.id}</td>
-        <td>
-            <#if school.enabled!=true>
-                <button class="badge badge-danger hand"
-                        onclick="window.location.href='/freemarker/admin-home/school-toggle/${school.id}'"><@spring.message "disabled"/>
-                </button></#if>
+    <table class="table table-striped">
+        <tr>
+            <th colspan="7"><@spring.message "school.list"/></th>
+        </tr>
+        <tr>
+            <th><@spring.message "school.name"/></th>
+            <th><@spring.message "school.id"/></th>
+            <th><@spring.message "school.status"/></th>
+        </tr>
+    <#list schools as school>
+        <tr>
             <#if school.enabled=true>
-                <button class="badge badge-success hand"
-                        onclick="window.location.href='/freemarker/admin-home/school-toggle/${school.id}'"><@spring.message "enabled"/>
-                </button></#if>
-        </td>
-        <td>
-            <div class="btn-group flex-btn-group-container">
-                <button id="view" type="button" class="btn btn-info btn-sm"
-                        onclick="showDetailModal(${school.id})">
-                    <span class="fa fa-eye"></span>
-                    <span class="hidden-md-down"><@spring.message "school.view"/></span>
-                </button>
-                <button id="edit" type="submit" class="btn btn-primary btn-sm"
-                        onclick="window.location.href='/freemarker/admin-home/details/${school.id}'">
-                    <span class="fa fa-pencil"></span>
-                    <span class="hidden-md-down"><@spring.message "school.edit"/></span>
-                </button>
-            </div>
-        </td>
-        <div id="detail${school.id}" class="detailModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>${school.name}</h2>
+
+                <td>${school.name}</a></td>
+                <td>${school.id}</td>
+                <td>
+
+                    <#if school.enabled=true>
+                        <button class="badge badge-success hand"
+                                onclick="window.location.href='/freemarker/admin-home/school-toggle/${school.id}'"><@spring.message "enabled"/>
+                        </button></#if>
+                </td>
+                <td>
+                    <div class="btn-group flex-btn-group-container">
+                        <button id="view" type="button" class="btn btn-info btn-sm"
+                                onclick="showDetailModal(${school.id})">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down"><@spring.message "school.view"/></span>
+                        </button>
+                        <button id="edit" type="submit" class="btn btn-primary btn-sm"
+                                onclick="window.location.href='/freemarker/admin-home/details/${school.id}'">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down"><@spring.message "school.edit"/></span>
+                        </button>
+                    </div>
+                </td>
+                <div id="detail${school.id}" class="detailModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>${school.name}</h2>
+                        </div>
+                        <div class="modal-body">
+                            <dl class="row-md jh-entity-details">
+                                <dt><span><@spring.message "school.name"/></span></dt>
+                                <dd>
+                                    <div>
+                                        <span>${school.name}</span>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-info"
+                                    onclick=removeDetailModal(${school.id})>
+                                <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <dl class="row-md jh-entity-details">
-                        <dt><span><@spring.message "school.name"/></span></dt>
-                        <dd>
-                            <div>
-                                <span>${school.name}</span>
-                            </div>
-                        </dd>
-                    </dl>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-info"
-                            onclick=removeDetailModal(${school.id})>
-                        <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
-                    </button>
-                </div>
-            </div>
+            </#if>
+        </tr>
+    </#list>
+
+
+
+
+        <div>
+            <form action="admin-home" method="get">
+                <select name="size">
+                <#list [5, 10, 15, 20] as s>
+                    <#if sizes == s>
+                        <option value="${s}" selected="selected">${s} items</option>
+                    <#else>
+                        <option value="${s}">${s} items</option>
+                    </#if>
+                </#list>
+                </select>
+                <button type="submit">use</button>
+            </form>
+            <nav aria-label="...">
+                <ul class="pagination">
+                <#list 0..longs-1 as i>
+                    <#if current != i>
+                        <li class="page-item"><a class="page-link" href="?page=${i}&size=${sizes}">${i+1}</a></li>
+                    <#else>
+                        <li class="page-item active"><span class="page-link">${i+1}</span></li>
+                    </#if>
+                </#list>
+                </ul>
+            </nav>
         </div>
-</#if>
-</tr>
-</#list>
-</table>
-<span></span>
+
+    </table>
+    <span></span>
 </div>
-
-
 <script src="/scripts/admin-home.js"></script>
 
 <@h.footer>
 
 </@h.footer>
-

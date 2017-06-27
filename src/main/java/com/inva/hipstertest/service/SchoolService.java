@@ -5,6 +5,9 @@ import com.inva.hipstertest.domain.Teacher;
 import com.inva.hipstertest.service.dto.SchoolDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 import java.util.List;
 
@@ -51,4 +54,23 @@ public interface SchoolService {
      *
      */
     List<TeacherDTO> findHeadTeachersOfSchool(Long id);
+
+
+
+
+    /**
+     +     *FOR PAGEABLE
+     +     * @param pageable
+     +     * @return
+     +     */
+    Page<SchoolDTO> findAll(Pageable pageable);
+
+
+
+    Page<SchoolDTO> findAllEnabled(Pageable pageable);
+     /**
+     *FOR PAGEABLE
+     * @return
+     */
+     Long countAllSchools();
 }

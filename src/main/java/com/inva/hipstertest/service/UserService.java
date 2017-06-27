@@ -281,7 +281,10 @@ public class UserService {
     public User getUserWithAuthorities() {
         return userRepository.findOneWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).orElse(null);
     }
-
+    @Transactional(readOnly = true)
+    public User findByLoginUserId() {
+        return userRepository.findByLoginUserId();
+    }
 
     /**
      * Not activated users should be automatically deleted after 3 days.
@@ -314,4 +317,5 @@ public class UserService {
     public AuthorityRepository getAuthorityRepository() {
         return authorityRepository;
     }
+
 }
