@@ -5,6 +5,7 @@ import com.inva.hipstertest.domain.School;
 import com.inva.hipstertest.service.SchoolService;
 import com.inva.hipstertest.service.TeacherService;
 import com.inva.hipstertest.service.UserAddonService;
+import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.dto.SchoolDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
 import com.inva.hipstertest.service.dto.UserAddonDTO;
@@ -40,9 +41,23 @@ public class AdminController {
         UserAddonDTO user = userAddonService.findByCurrentUser();
         List<SchoolDTO> schoolList = new ArrayList<SchoolDTO>();
         schoolList = schoolService.findAll();
+        //List<TeacherDTO> teachers = teacherService.getAllBySchoolId(schoolId);
+       // List<TeacherDTO> headTeachers = schoolService.findHeadTeachersOfSchool(schoolId);
         model.addAttribute("schoolList", schoolList);
         model.addAttribute("currentUser", user);
+       // model.addAttribute("teachersList", teachers);
+       // model.addAttribute("headTeachers", headTeachers);
         return "admin/admin-home";
+    }
+
+    @RequestMapping(value = "freemarker/admin-home/deletedSchool", method = RequestMethod.GET)
+    public String dataForDelete(@ModelAttribute("model") ModelMap model) {
+        UserAddonDTO user = userAddonService.findByCurrentUser();
+        List<SchoolDTO> schoolList;
+        schoolList = schoolService.findAll();
+        model.addAttribute("schoolList", schoolList);
+        model.addAttribute("currentUser", user);
+        return "admin/admin-home-deleted-school";
     }
 
     /**
@@ -103,6 +118,18 @@ public class AdminController {
         }
     }
 
+    @PostMapping(value = "/freemarker/admin-home/deletedSchool")
+    @Timed
+    public String deletedSchool(@ModelAttribute("schoolDTO") SchoolDTO schoolDTO) {
+        if (schoolDTO.getName() != null && !schoolDTO.getName().isEmpty() &&
+            schoolDTO.getEnabled() != null) {
+            schoolService.save(schoolDTO);
+            return "redirect:";
+        } else {
+            return "redirect:error";
+        }
+    }
+
     @RequestMapping(value = "/freemarker/admin-home/createHeadTeacher/{schoolId}", method = RequestMethod.GET)
     public ModelAndView adminNewHeadTeacher(@PathVariable Long schoolId) {
 
@@ -127,6 +154,38 @@ public class AdminController {
         }
         // handle creation success
         return new ModelAndView("redirect:/freemarker/admin-home");
+    }
+
+
+    /**
+     * Toggles schools's "enabled" field.
+     * @param id school to toggle
+     */
+    @RequestMapping(value = "/freemarker/admin-home/school-toggle/{id}", method = RequestMethod.GET)
+    public ModelAndView schoolDisable(@ModelAttribute("model") ModelMap model, @PathVariable Long id){
+        log.debug("Request to toggle school" + id);
+        SchoolDTO schoolToToggle = schoolService.findOne(id);
+            if(schoolToToggle.getEnabled()){
+                schoolToToggle.setEnabled(false);
+            } else {
+                schoolToToggle.setEnabled(true);
+            }
+            schoolService.save(schoolToToggle);
+            return new ModelAndView("redirect:/freemarker/admin-home");
+
+    }
+
+
+
+    /**
+     * Request to get all head teachers of school
+     * @return available forms
+     */
+    @RequestMapping(value = "freemarker/admin-home/headTeachersOfSchool/{id}", method = RequestMethod.GET)
+    public @ResponseBody List<TeacherDTO> getHeadTeachers(@PathVariable Long id){
+        log.debug("Create Ajax request for headTeachers");
+        List<TeacherDTO> headTeachers = schoolService.findHeadTeachersOfSchool(id);
+        return headTeachers;
     }
 }
 
