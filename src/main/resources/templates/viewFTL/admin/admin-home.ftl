@@ -15,7 +15,7 @@
             </span>
         </button>
         <button id="deleted" class="btn btn-danger float-right deleted-teacher-management"
-                onclick="window.location.href='/freemarker/admin-home/deletedSchool'">
+                onclick="window.location.href='/freemarker/admin-home/deletedSchool'" style="margin-right: 10px">
             <span class="fa fa-danger"></span>
             <span>
             <@spring.message "school.deletedSchools"/>
