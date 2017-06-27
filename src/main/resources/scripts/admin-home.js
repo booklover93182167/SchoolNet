@@ -13,3 +13,10 @@ function removeDetailModal(id) {
     var detailModal = document.getElementById(detailId);
     detailModal.style.display = "none";
 }
+
+
+function onChange() {
+    var x = document.getElementById("mySelect").value;
+    document.getElementById("use").submit(x);
+}
+
