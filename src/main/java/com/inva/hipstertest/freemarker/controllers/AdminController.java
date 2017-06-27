@@ -93,6 +93,12 @@ public class AdminController {
         return new ModelAndView("admin/admin-home-create-school", "schoolDTO", schoolDTO);
     }
 
+    @RequestMapping(value = "/freemarker/admin-home/deletedSchool", method = RequestMethod.GET)
+    public ModelAndView adminDeletedSchool() {
+        SchoolDTO schoolDTO = new SchoolDTO();
+        return new ModelAndView("admin/admin-home-deleted-school", "schoolDTO", schoolDTO);
+    }
+
     /**
      * Creates new teacher in school.
      */
@@ -105,6 +111,18 @@ public class AdminController {
             return "redirect:";
         } else {
             return "redirect:error"; //TODO: create error page
+        }
+    }
+
+    @PostMapping(value = "/freemarker/admin-home/deletedSchool")
+    @Timed
+    public String deletedSchool(@ModelAttribute("schoolDTO") SchoolDTO schoolDTO) {
+        if (schoolDTO.getName() != null && !schoolDTO.getName().isEmpty() &&
+            schoolDTO.getEnabled() != null) {
+            schoolService.save(schoolDTO);
+            return "redirect:";
+        } else {
+            return "redirect:error";
         }
     }
 
