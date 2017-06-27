@@ -31,7 +31,7 @@
     <tr>
         <th><@spring.message "school.name"/></th>
         <th><@spring.message "school.id"/></th>
-        <th>School status</th>
+        <th><@spring.message "school.status"/></th>
     </tr>
 <#list model["schoolList"] as school>
 <tr>
