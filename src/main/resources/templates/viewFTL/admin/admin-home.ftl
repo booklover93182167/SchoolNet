@@ -18,8 +18,7 @@
                 onclick="window.location.href='/freemarker/admin-home/deletedSchool'">
             <span class="fa fa-danger"></span>
             <span>
-            <#--<@spring.message "school.createNew"/>-->
-                Deleted schools
+            <@spring.message "school.deletedSchools"/>
             </span>
         </button>
     </h2>
