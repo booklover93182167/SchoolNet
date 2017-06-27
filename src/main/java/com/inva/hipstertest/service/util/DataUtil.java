@@ -18,7 +18,7 @@ public class DataUtil {
      */
     public static ZonedDateTime getZonedDateTime(String date) {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-        LocalDateTime localDateTime = LocalDateTime.parse(date, timeFormatter);
+        LocalDateTime localDateTime = LocalDateTime.parse(date.substring(0,19), timeFormatter);
         ZoneId zoneId = ZoneId.systemDefault();
         ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
         return zonedDateTime;

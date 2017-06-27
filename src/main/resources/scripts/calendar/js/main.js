@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var dateToSend = new Date().toISOString().slice(0, 19);
+    var dateToSend = new Date().toISOString();
 
     getSchedule(dateToSend);
     lableDate.innerHTML = formatter.format(new Date());
@@ -31,7 +31,7 @@ $(function () {
     $('#calendar').fullCalendar({
         dayClick: function (eventDate) {
             selectedDate = new Date(eventDate);
-            var dateToSend = selectedDate.toISOString().slice(0, 19);
+            var dateToSend = selectedDate.toISOString();
             lableDate.innerHTML = formatter.format(selectedDate);
             getSchedule(dateToSend)
         },
@@ -66,7 +66,6 @@ function getSchedule(date) {
         resetToDefoultVal.removeAttr('trgId', 'data-toggle', 'data-target');
         resetToDefoultVal.removeAttr('data-toggle');
         resetToDefoultVal.removeAttr('data-target');
-        // $("#row td:not(:first-child)").removeAttr('trgId').then(removeAttr());
         schedules.forEach(function (el) {
             if (el.id) {
                 var selector = $('table tr').eq(el.lessonPosition);
@@ -87,11 +86,13 @@ function getSchedule(date) {
 }
 
 function pickUpAttendance(id, attendances) {
-    var grade = 'n/a';
+    var grade = '-';
     attendances.forEach(function (attendance) {
         if (attendance.scheduleId === id) {
             if (attendance.grade != 0) {
                 grade = attendance.grade;
+            } else {
+                grade = 'н';
             }
         }
     });
