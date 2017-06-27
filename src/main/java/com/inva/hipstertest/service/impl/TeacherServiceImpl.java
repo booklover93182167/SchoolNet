@@ -247,11 +247,16 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         return result;
     }
 
+    /**
+     * Get all Teachers by school id.
+     *
+     * @param id the school id
+     * @return the list of entities
+     */
     @Override
     public List<TeacherDTO> getAllBySchoolId(Long id) {
+        log.debug("Request to get all Teachers by school id {}", id);
         List<TeacherDTO> dtoList = teacherMapper.teachersToTeacherDTOs(teacherRepository.getAllBySchoolId(id));
         return dtoList;
     }
-
-
 }

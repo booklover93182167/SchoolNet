@@ -1,6 +1,7 @@
 package com.inva.hipstertest.service;
 
 import com.inva.hipstertest.service.dto.AttendancesDTO;
+
 import java.util.List;
 
 /**
@@ -12,7 +13,6 @@ public interface AttendancesService {
     List<AttendancesDTO> findAllByPupilAndLessonId(Long pupilId, Long lessonId);
 
 
-
     /**
      * Save a attendances.
      *
@@ -22,24 +22,32 @@ public interface AttendancesService {
     AttendancesDTO save(AttendancesDTO attendancesDTO);
 
     /**
-     *  Get all the attendances.
+     * Get all the attendances.
      *
-     *  @return the list of entities
+     * @return the list of entities
      */
     List<AttendancesDTO> findAll();
 
     /**
-     *  Get the "id" attendances.
+     * Get the "id" attendances.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     AttendancesDTO findOne(Long id);
 
     /**
-     *  Delete the "id" attendances.
+     * Delete the "id" attendances.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     * Find all by Pupil id and date.
+     *
+     * @param date requested date
+     * @return list of entities
+     */
+    List<AttendancesDTO> findAllMembersByPupilIdAndDateBetween(String date);
 }

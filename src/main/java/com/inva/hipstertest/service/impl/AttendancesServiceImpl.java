@@ -1,15 +1,22 @@
 package com.inva.hipstertest.service.impl;
 
-import com.inva.hipstertest.service.AttendancesService;
 import com.inva.hipstertest.domain.Attendances;
+import com.inva.hipstertest.domain.Pupil;
 import com.inva.hipstertest.repository.AttendancesRepository;
+import com.inva.hipstertest.repository.PupilRepository;
+import com.inva.hipstertest.service.AttendancesService;
 import com.inva.hipstertest.service.dto.AttendancesDTO;
 import com.inva.hipstertest.service.mapper.AttendancesMapper;
+import com.inva.hipstertest.service.util.DataUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,10 +32,13 @@ public class AttendancesServiceImpl implements AttendancesService{
 
     private final AttendancesRepository attendancesRepository;
 
+    private final PupilRepository pupilRepository;
+
     private final AttendancesMapper attendancesMapper;
 
-    public AttendancesServiceImpl(AttendancesRepository attendancesRepository, AttendancesMapper attendancesMapper) {
+    public AttendancesServiceImpl(AttendancesRepository attendancesRepository, PupilRepository pupilRepository, AttendancesMapper attendancesMapper) {
         this.attendancesRepository = attendancesRepository;
+        this.pupilRepository = pupilRepository;
         this.attendancesMapper = attendancesMapper;
     }
 
@@ -96,5 +106,22 @@ public class AttendancesServiceImpl implements AttendancesService{
     public void delete(Long id) {
         log.debug("Request to delete Attendances : {}", id);
         attendancesRepository.delete(id);
+    }
+
+    /**
+     * Get all attendances by requested date and current pupil id.
+     *
+     * @param date requested date
+     * @return the list of entities.
+     */
+    @Override
+    public List<AttendancesDTO> findAllMembersByPupilIdAndDateBetween(String date) {
+        ZonedDateTime dateStart = DataUtil.getZonedDateTime(date);
+        ZonedDateTime dateEnd = dateStart.plusDays(1);
+        Pupil pupil = pupilRepository.findPupilByCurrentUser();
+        log.debug("Request to get attendances by pupil and date {}", date);
+        List<Attendances> attendances = attendancesRepository.findAllMembersByPupilIdAndDateBetween(pupil.getId(), dateStart, dateEnd);
+        List<AttendancesDTO> attendancesDTOs = attendancesMapper.attendancesToAttendancesDTOs(attendances);
+        return attendancesDTOs;
     }
 }

@@ -1,5 +1,6 @@
 package com.inva.hipstertest.service;
 
+import com.inva.hipstertest.domain.Teacher;
 import com.inva.hipstertest.service.dto.TeacherDTO;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public interface TeacherService {
     TeacherDTO findOne(Long id);
 
     /**
-     *  Find teacher by current user
+     *  Find teacher by current user.
      *
      *  @return the entity
      */
@@ -59,6 +60,11 @@ public interface TeacherService {
 
     List<TeacherDTO> findAllByCurrentSchool();
 
+    /**
+     * Find all teachers by school id.
+     * @param id the school id
+     * @return the list of entities
+     */
     List<TeacherDTO> getAllBySchoolId (Long id);
 
     TeacherDTO saveTeacherAndUser(TeacherDTO teacherDTO);
