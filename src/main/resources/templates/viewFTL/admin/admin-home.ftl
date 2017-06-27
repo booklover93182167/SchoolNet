@@ -100,12 +100,14 @@
             </form>
             <nav aria-label="...">
                 <ul class="pagination">
+                <#if current gt 0 >
                     <li class="page-item">
                         <a class="page-link" href="?page=${current-1}&size=${sizes}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                             <span class="sr-only">Previous</span>
                         </a>
                     </li>
+                </#if>
                 <#list 0..longs-1 as i>
                     <#if current != i>
                         <li class="page-item"><a class="page-link" href="?page=${i}&size=${sizes}">${i+1}</a></li>
@@ -113,14 +115,14 @@
                         <li class="page-item active"><span class="page-link">${i+1}</span></li>
                     </#if>
                 </#list>
+                <#if current < longs-1  >
                     <li class="page-item">
                         <a class="page-link" href="?page=${current+1}&size=${sizes}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                             <span class="sr-only">Next</span>
                         </a>
                     </li>
-
-
+                </#if>
                 </ul>
             </nav>
         </div>
