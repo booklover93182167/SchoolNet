@@ -35,7 +35,7 @@
     </tr>
 <#list model["schoolList"] as school>
 <tr>
-
+    <#if school.enabled=true>
 
         <td>${school.name}</a></td>
         <td>${school.id}</td>
@@ -86,7 +86,7 @@
                 </div>
             </div>
         </div>
-
+</#if>
 </tr>
 </#list>
 </table>
