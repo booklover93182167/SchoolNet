@@ -6,13 +6,13 @@
 <br>
 <div id="header">
     <h2>
-        <span><@spring.message "school.createNew"/></span>
+        Add new lesson
     </h2>
 </div>
 <form name="editForm" action="/freemarker/admin-home/addLesson" method="post">
     <div class="modal-body">
         <div class="form-group">
-            <label class="form-control-label"><@spring.message "school.name"/></label>
+            <label class="form-control-label">Lesson name</label>
         <@spring.formInput "lessonDTO.name"/>
         <@spring.showErrors "lessonDTO.name","error" />
         <#if nameFail??>

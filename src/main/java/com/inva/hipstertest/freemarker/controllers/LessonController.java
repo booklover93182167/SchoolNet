@@ -1,5 +1,6 @@
 package com.inva.hipstertest.freemarker.controllers;
 
+import com.codahale.metrics.annotation.Timed;
 import com.inva.hipstertest.service.LessonService;
 import com.inva.hipstertest.service.dto.LessonDTO;
 import org.slf4j.Logger;
@@ -54,5 +55,23 @@ public class LessonController {
     @RequestMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-add-lesson", method = RequestMethod.GET)
     public String index() {
         return "teacher-mgmt/teacher-mgmt-add-lesson";
+    }
+
+    @RequestMapping(value = "/freemarker/teacher-mgmt/addLesson", method = RequestMethod.GET)
+    public ModelAndView adminNewSchool() {
+        LessonDTO lessonDTO = new LessonDTO();
+        return new ModelAndView("admin/admin-home-add-lesson", "lessonDTO", lessonDTO);
+    }
+
+    @PostMapping(value = "/freemarker/teacher-mgmt/addLesson")
+    @Timed
+    public String addLesson(@ModelAttribute("lessonDTO") LessonDTO lessonDTO) {
+        if (lessonDTO.getName() != null && !lessonDTO.getName().isEmpty() &&
+            lessonDTO.getEnabled() != null) {
+            lessonService.save(lessonDTO);
+            return "redirect:";
+        } else {
+            return "redirect:error";
+        }
     }
 }
