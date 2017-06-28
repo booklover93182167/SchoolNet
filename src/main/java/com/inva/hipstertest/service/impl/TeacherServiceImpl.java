@@ -267,21 +267,24 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService 
     @Override
     public TeacherDTO makeHeadTeacher(Long id) {
         log.debug("Request to make headteacher : {}", id);
-        Teacher teacher=teacherRepository.getOne(id);
-        User user  = teacher.getUser();
+        Teacher teacher = teacherRepository.getOne(id);
+        User user = teacher.getUser();
         Set<Authority> auto = user.getAuthorities();
-        System.out.println("1111111"+auto);
+        // System.out.println("1111111"+auto);
         SimpleGrantedAuthority role = new SimpleGrantedAuthority("ROLE_HEAD_TEACHER");
-
-        Authority authority = new Authority();
-        authority.setName(role.getAuthority());
-        auto.add(authority);
-        user.setAuthorities(auto);
-        userRepository.save(user);
-        teacher.setUser(user);
-        save(teacherMapper.teacherToTeacherDTO(teacher));
-        System.out.println("2222222"+auto);
-        log.debug("making finisheed: {}", id);
-        return teacherMapper.teacherToTeacherDTO(teacher);
+        if (auto.contains(role)) {
+            return teacherMapper.teacherToTeacherDTO(teacher);
+        } else {
+            Authority authority = new Authority();
+            authority.setName(role.getAuthority());
+            auto.add(authority);
+            user.setAuthorities(auto);
+            userRepository.save(user);
+            teacher.setUser(user);
+            save(teacherMapper.teacherToTeacherDTO(teacher));
+            // System.out.println("2222222"+auto);
+            log.debug("making finisheed: {}", id);
+            return teacherMapper.teacherToTeacherDTO(teacher);
+        }
     }
 }

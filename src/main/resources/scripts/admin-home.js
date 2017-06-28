@@ -13,6 +13,7 @@ function removeDetailModal(id) {
     var detailModal = document.getElementById(detailId);
     detailModal.style.display = "none";
 }
+
 function showDisableModal(id) {
     var deleteId = "delete"+id;
     var deleteModal = document.getElementById(deleteId);
@@ -33,6 +34,8 @@ function removeEnableModal(id) {
     var deleteModal = document.getElementById(deleteId);
     deleteModal.style.display = "none";
 }
+
+
 
 function onChange() {
     var x = document.getElementById("mySelect").value;
