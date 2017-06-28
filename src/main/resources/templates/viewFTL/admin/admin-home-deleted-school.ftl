@@ -21,18 +21,15 @@
             </tr>
         <#list disabledSchools as school>
             <tr>
-                <#if school.enabled=false>
+
 
                     <td>${school.name}</td>
                     <td>
-                        <#if school.enabled!=true>
+
                             <button class="badge badge-danger hand"
-                                    onclick="window.location.href='/freemarker/admin-home/school-toggle/${school.id}'"><@spring.message "disabled"/>
-                            </button></#if>
-                        <#if school.enabled=true>
-                            <button class="badge badge-success hand"
-                                    onclick="window.location.href='/freemarker/admin-home/school-toggle/${school.id}'"><@spring.message "enabled"/>
-                            </button></#if>
+                                    onclick="showEnableModal(${school.id})"><@spring.message "disabled"/>
+                            </button>
+
                     </td>
                     <td>
                         <div class="btn-group flex-btn-group-container">
@@ -71,7 +68,25 @@
                             </div>
                         </div>
                     </div>
-                </#if>
+
+                    <div class="deleteModal" id="delete${school.id}">
+                        <div class="modal-content2">
+                            <div class="modal-body">
+                                <h2><@spring.message "school.enableconf"/> ${school.name} <@spring.message "school.enable?"/></h2>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                        onclick="removeEnableModal(${school.id})">
+                                    <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.cancel"/></span>
+                                </button>
+                                <button type="submit" class="btn btn-success"
+                                        onclick="window.location.href='/freemarker/admin-home/school-toggle/${school.id}'">
+                                    <span class="fa fa-check"></span><span><@spring.message "yes"/></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                
             </tr>
         </#list>
 

@@ -34,14 +34,13 @@
         </tr>
     <#list schools as school>
         <tr>
-            <#if school.enabled=true>
+
                 <td>${school.name}</a></td>
                 <td>
-                    <#if school.enabled=true>
-                        <button class="badge badge-success hand"
+                    <button class="badge badge-success hand"
                                 onclick="showDisableModal(${school.id})">
                             <@spring.message "enabled"/>
-                        </button></#if>
+                        </button>
                 </td>
                 <td>
                     <div class="btn-group flex-btn-group-container">
@@ -97,7 +96,7 @@
                         </div>
                     </div>
                 </div>
-            </#if>
+
         </tr>
     </#list>
 
