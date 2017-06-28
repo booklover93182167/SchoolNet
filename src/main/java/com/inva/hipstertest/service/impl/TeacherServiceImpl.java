@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-public class TeacherServiceImpl extends SupportCreate implements TeacherService{
+public class TeacherServiceImpl extends SupportCreate implements TeacherService {
 
     private final Logger log = LoggerFactory.getLogger(TeacherServiceImpl.class);
 
@@ -98,13 +98,13 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
             teacherUser.setFirstName(teacherDTO.getFirstName());
             teacherUser.setLastName(teacherDTO.getLastName());
             userRepository.save(teacherUser);
-            if(teacherDTO.getFormId() != null) {
+            if (teacherDTO.getFormId() != null) {
                 FormDTO formDTO = formService.findOne(teacherDTO.getFormId());
                 formDTO.setTeacherId(teacher.getId());
                 formService.save(formDTO);
             } else {
                 FormDTO formDTO = formService.findOneByTeacherId(teacherDTO.getId());
-                if(formDTO != null){
+                if (formDTO != null) {
                     formDTO.setTeacherId(null);
                     formService.save(formDTO);
                 }
@@ -117,9 +117,9 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
     }
 
     /**
-     *  Get all the teachers.
+     * Get all the teachers.
      *
-     *  @return the list of entities
+     * @return the list of entities
      */
     @Override
     @Transactional(readOnly = true)
@@ -133,10 +133,10 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
     }
 
     /**
-     *  Get one teacher by id.
+     * Get one teacher by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Override
     @Transactional(readOnly = true)
@@ -148,9 +148,9 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
     }
 
     /**
-     *  Find teacher by current user.
+     * Find teacher by current user.
      *
-     *  @return the entity
+     * @return the entity
      */
     @Override
     public TeacherDTO findTeacherByCurrentUser() {
@@ -159,17 +159,16 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
     }
 
 
-
     /**
-     *  Delete the  teacher by id.
+     * Delete the  teacher by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Teacher : {}", id);
         FormDTO formDTO = formService.findOneByTeacherId(id);
-        if (formDTO != null){
+        if (formDTO != null) {
             formDTO.setTeacherId(null);
             formService.save(formDTO);
         }
@@ -179,7 +178,6 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
 
     /**
      * Save a teacher.
-     *
      */
     @Override
     public TeacherDTO saveTeacherWithUser(TeacherDTO teacherDTO) {
@@ -188,7 +186,7 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         teacherDTO.setSchoolId(hteacher.getSchool().getId());
         Map<String, Object> information = super.saveUserWithRole(teacherDTO, ROLE_ENUM.TEACHER);
 
-        if (information.get("error") != null){
+        if (information.get("error") != null) {
             teacherDTO.setEnabled(false);
             return teacherDTO;
         }
@@ -203,9 +201,9 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         teacher.setUser(user);
         return teacherMapper.teacherToTeacherDTO(teacherRepository.save(teacher));
     }
+
     /**
      * Save a headTeacher.
-     *
      */
     @Override
     public TeacherDTO saveHeadTeacherWithUser(TeacherDTO teacherDTO, Long schoolId) {
@@ -214,7 +212,7 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         teacherDTO.setSchoolId(schoolId);
         Map<String, Object> information = super.saveUserWithRole(teacherDTO, ROLE_ENUM.HEAD_TEACHER);
 
-        if (information.get("error") != null){
+        if (information.get("error") != null) {
             teacherDTO.setEnabled(false);
             return teacherDTO;
         }
@@ -225,16 +223,16 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         Teacher teacher = teacherMapper.teacherDTOToTeacher(teacherDTO);
         /* NEED CREATE NEW EMAIL */
         mailService.sendSimpleEmailTry(user, content); // sendSimpleEmail(teacherDTO.getEmail(), content);
-        School school=schoolMapper.schoolDTOToSchool(schoolService.findOne(schoolId));
+        School school = schoolMapper.schoolDTOToSchool(schoolService.findOne(schoolId));
         teacher.setSchool(school);
         teacher.setUser(user);
         return teacherMapper.teacherToTeacherDTO(teacherRepository.save(teacher));
     }
 
     /**
-     *  Get all the teachers.
+     * Get all the teachers.
      *
-     *  @return the list of entities
+     * @return the list of entities
      */
     @Override
     @Transactional(readOnly = true)
@@ -258,5 +256,32 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService{
         log.debug("Request to get all Teachers by school id {}", id);
         List<TeacherDTO> dtoList = teacherMapper.teachersToTeacherDTOs(teacherRepository.getAllBySchoolId(id));
         return dtoList;
+    }
+
+
+    /**
+     * Make teacher a headTeacher.
+     *
+     * @param id the id of the entity
+     */
+    @Override
+    public TeacherDTO makeHeadTeacher(Long id) {
+        log.debug("Request to make headteacher : {}", id);
+        Teacher teacher=teacherRepository.getOne(id);
+        User user  = teacher.getUser();
+        Set<Authority> auto = user.getAuthorities();
+        System.out.println("1111111"+auto);
+        SimpleGrantedAuthority role = new SimpleGrantedAuthority("ROLE_HEAD_TEACHER");
+
+        Authority authority = new Authority();
+        authority.setName(role.getAuthority());
+        auto.add(authority);
+        user.setAuthorities(auto);
+        userRepository.save(user);
+        teacher.setUser(user);
+        save(teacherMapper.teacherToTeacherDTO(teacher));
+        System.out.println("2222222"+auto);
+        log.debug("making finisheed: {}", id);
+        return teacherMapper.teacherToTeacherDTO(teacher);
     }
 }

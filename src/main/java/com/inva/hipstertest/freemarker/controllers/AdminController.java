@@ -197,5 +197,22 @@ public class AdminController {
         List<TeacherDTO> headTeachers = schoolService.findHeadTeachersOfSchool(id);
         return headTeachers;
     }
+
+
+    /**
+     * Make teacher with "id" head teacher.
+     *
+     * @param id teacher
+     */
+    @RequestMapping(value = "/freemarker/admin-home/makeHeadTeacher/{id}", method = RequestMethod.GET)
+    public ModelAndView makeHeadTeacher(@ModelAttribute("model") ModelMap model, @PathVariable Long id) {
+        log.debug("Request make teacher head teacher" + id);
+
+        teacherService.makeHeadTeacher(id);
+            return new ModelAndView("redirect:/freemarker/admin-home");
+
+    }
+
+
 }
 

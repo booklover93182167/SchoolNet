@@ -28,6 +28,7 @@
             <td>
                 <div class="btn-group flex-btn-group-container">
                     <button id="view" type="submit" class="btn btn-info btn-sm"
+                    onclick="window.location.href='/freemarker/admin-home/makeHeadTeacher/${teacher.id}'">
                         <span class="fa fa-check-square-o"></span>
                         <span class="hidden-md-down"><@spring.message "school.headTeacher"/></span>
                     </button>

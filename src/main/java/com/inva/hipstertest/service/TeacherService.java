@@ -69,4 +69,6 @@ public interface TeacherService {
 
     TeacherDTO saveTeacherAndUser(TeacherDTO teacherDTO);
 
+    TeacherDTO makeHeadTeacher(Long id);
+
 }
