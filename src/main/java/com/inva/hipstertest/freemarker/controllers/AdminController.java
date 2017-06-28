@@ -1,12 +1,15 @@
 package com.inva.hipstertest.freemarker.controllers;
 
 import com.codahale.metrics.annotation.Timed;
+import com.inva.hipstertest.domain.User;
 import com.inva.hipstertest.service.SchoolService;
 import com.inva.hipstertest.service.TeacherService;
 import com.inva.hipstertest.service.UserAddonService;
+import com.inva.hipstertest.service.UserService;
 import com.inva.hipstertest.service.dto.SchoolDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
 import com.inva.hipstertest.service.dto.UserAddonDTO;
+import com.inva.hipstertest.service.dto.UserDTO;
 import com.inva.hipstertest.service.mapper.UserMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.data.domain.Pageable;
@@ -30,26 +33,27 @@ public class AdminController {
     private final SchoolService schoolService;
     private final TeacherService teacherService;
     private final UserMapper userMapper;
+    private final UserService userService;
 
-    private final UserAddonService userAddonService;
 
-
-    public AdminController(SchoolService schoolService, TeacherService teacherService, UserAddonService userAddonService, UserMapper userMapper) {
+    public AdminController(SchoolService schoolService, TeacherService teacherService, UserMapper userMapper,
+    UserService userService) {
         this.schoolService = schoolService;
         this.teacherService = teacherService;
-        this.userAddonService = userAddonService;
         this.userMapper = userMapper;
+        this.userService = userService;
     }
 
     @RequestMapping(value = "freemarker/admin-home", method = RequestMethod.GET)
     public String index(Model model, Pageable pageable) {
-        UserAddonDTO user = userAddonService.findByCurrentUser();
+        User user = userService.findByLoginUserId();
+        UserDTO userDTO=userMapper.userToUserDTO(user);
         Page<SchoolDTO> page = schoolService.findAllEnabled(pageable);
         model.addAttribute("schools", page.getContent());
         model.addAttribute("sizes", pageable.getPageSize());
         model.addAttribute("current", pageable.getPageNumber());
         model.addAttribute("longs", enabledPages(pageable.getPageSize()));
-        model.addAttribute("currentUser", user);
+        model.addAttribute("currentUser", userDTO);
         return "admin/admin-home";
     }
 
@@ -65,10 +69,13 @@ public class AdminController {
     @RequestMapping(value = "freemarker/admin-home/deletedSchool", method = RequestMethod.GET)
     public String dataForDelete(Model model, Pageable pageable) {
         Page<SchoolDTO> page = schoolService.findAllDisabled(pageable);
+        User user = userService.findByLoginUserId();
+        UserDTO userDTO=userMapper.userToUserDTO(user);
         model.addAttribute("disabledSchools", page.getContent());
         model.addAttribute("sizes", pageable.getPageSize());
         model.addAttribute("current", pageable.getPageNumber());
         model.addAttribute("longs", disabledPages(pageable.getPageSize()));
+        model.addAttribute("currentUser", userDTO);
         return "admin/admin-home-deleted-school";
     }
 
@@ -98,6 +105,7 @@ public class AdminController {
         model.addAttribute("schoolId", schoolId);
         model.addAttribute("schoolName", schoolName);
         model.addAttribute("headTeachers", headTeachers);
+
         return "admin/admin-home-details";
     }
 
@@ -123,17 +131,6 @@ public class AdminController {
         }
     }
 
-    //@PostMapping(value = "/freemarker/admin-home/deletedSchool")
-    // @Timed
-    // public String deletedSchool(@ModelAttribute("schoolDTO") SchoolDTO schoolDTO) {
-    //     if (schoolDTO.getName() != null && !schoolDTO.getName().isEmpty() &&
-    //        schoolDTO.getEnabled() != null) {
-    //       schoolService.save(schoolDTO);
-    //      return "redirect:";
-    //  } else {
-    //        return "redirect:error";
-    //   }
-    // }
 
     @RequestMapping(value = "/freemarker/admin-home/createHeadTeacher/{schoolId}", method = RequestMethod.GET)
     public ModelAndView adminNewHeadTeacher(@PathVariable Long schoolId) {

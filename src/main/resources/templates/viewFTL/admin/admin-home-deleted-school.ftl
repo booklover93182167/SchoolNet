@@ -6,7 +6,7 @@
 <br>
 <div id="header">
     <h2>
-        <span><@spring.message "hello"/> ,</span>
+        <span><@spring.message "hello"/> ,${currentUser.login}</span>
 
     </h2>
 </div>

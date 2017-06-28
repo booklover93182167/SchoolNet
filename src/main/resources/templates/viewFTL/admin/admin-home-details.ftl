@@ -12,7 +12,7 @@
     <br/>
     <table class="table table-striped">
         <h2>
-        <@spring.message "teacher.list"/> ${schoolId}
+        <@spring.message "teacher.list"/> ${model.schoolName}
         </h2>
         <tr>
             <th id="demo"><@spring.message "firstname"/></th>
