@@ -24,18 +24,24 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
-    @RequestMapping(value = "freemarker/teacher-mgmt-lessons", method = RequestMethod.GET)
-    public String lessonList(@ModelAttribute("model")ModelMap model) {
-        List<LessonDTO> lessonList = lessonService.findAll();
-        model.addAttribute("lessonList", lessonList);
-        return "teacher-mgmt/teacher-mgmt-lessons";
-    }
+//    @RequestMapping(value = "freemarker/teacher-mgmt-lessons", method = RequestMethod.GET)
+//    public String lessonList(@ModelAttribute("model")ModelMap model) {
+//        List<LessonDTO> lessonList = lessonService.findAll();
+//        model.addAttribute("lessonList", lessonList);
+//        return "teacher-mgmt/teacher-mgmt-lessons";
+//    }
 
-    @PostMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-lessons")
-    public ModelAndView teacherManagementCreate() {
-        LessonDTO lessonDTO = new LessonDTO();
-        return new ModelAndView("teacher-mgmt/teacher-mgmt-lessons", "lessonDTO", lessonDTO);
-    }
+//    @PostMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-lessons")
+//    public ModelAndView teacherManagementCreate() {
+//        LessonDTO lessonDTO = new LessonDTO();
+//        return new ModelAndView("teacher-mgmt/teacher-mgmt-lessons", "lessonDTO", lessonDTO);
+//    }
+
+//    @PostMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-add-lessons")
+//    public ModelAndView teacherManagementAdd() {
+//        LessonDTO lessonDTO = new LessonDTO();
+//        return new ModelAndView("teacher-mgmt/teacher-mgmt-add-lessons", "lessonDTO", lessonDTO);
+//    }
 
     @RequestMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-lessons", method = RequestMethod.GET)
     public String data(@ModelAttribute("model") ModelMap model) {
@@ -43,5 +49,10 @@ public class LessonController {
         lessonList = lessonService.findAll();
         model.addAttribute("lessonList", lessonList);
         return "teacher-mgmt/teacher-mgmt-lessons";
+    }
+
+    @RequestMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-add-lesson", method = RequestMethod.GET)
+    public String index() {
+        return "teacher-mgmt/teacher-mgmt-add-lesson";
     }
 }
