@@ -6,20 +6,21 @@
 <br>
 <div id="header">
     <h2>
-        Add new lesson
+    <@spring.message "teacherm.addLesson"/>
     </h2>
 </div>
 <form name="editForm" action="/freemarker/admin-home/addLesson" method="post">
     <div class="modal-body">
         <div class="form-group">
-            <label class="form-control-label">Lesson name</label>
+            <label class="form-control-label"><@spring.message "teacherm.lessonName"/></label>
         <@spring.formInput "lessonDTO.name"/>
         <@spring.showErrors "lessonDTO.name","error" />
         <#if nameFail??>
             <span style="color:red">${nameFail}</span>
         </#if>
         </div>
-        <@spring.message "school.enabled"/>:
+    <@spring.message "school.enabled"/>
+        :
         <select name="enabled">
             <option value="true"><@spring.message "true"/></option>
             <option value="false"><@spring.message "false"/></option>
@@ -32,7 +33,7 @@
             <span class="fa fa-arrow-left"></span>&nbsp;<span><@spring.message "back"/></span>
         </button>
         <button type="button" class="btn btn-default" data-dismiss="modal"
-        onclick="reset()">
+                onclick="reset()">
             <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.cancel"/></span>
         </button>
         <button type="submit" class="btn btn-primary">

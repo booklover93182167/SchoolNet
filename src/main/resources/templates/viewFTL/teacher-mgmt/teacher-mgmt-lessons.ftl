@@ -47,11 +47,11 @@
 <div class="modal-body">
     <table class="table table-striped">
         <tr>
-            <th colspan="7">Lessons list</th>
+            <th colspan="7"><@spring.message "teacherm.list"/></th>
         </tr>
         <tr>
-            <th>Lesson ID</th>
-            <th>Lesson name</th>
+            <th><@spring.message "teacherm.lessonID"/></th>
+            <th><@spring.message "teacherm.lessonName"/></th>
         </tr>
     <#list model["lessonList"] as lesson>
         <tr>
