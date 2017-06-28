@@ -24,6 +24,13 @@ public interface SchoolRepository extends JpaRepository<School,Long> {
     @Query("select s from School s where s.enabled = true")
     Page<School> findAllEnabled(Pageable pageable);
 
+
+    @Query("select s from School s where s.enabled = false")
+    Page<School> findAllDisabled(Pageable pageable);
+
     @Query("SELECT COUNT(s) FROM School s where s.enabled = true")
     Long countAllEnabledSchools();
+
+    @Query("SELECT COUNT(s) FROM School s where s.enabled = false")
+    Long countAllDisabledSchools();
 }

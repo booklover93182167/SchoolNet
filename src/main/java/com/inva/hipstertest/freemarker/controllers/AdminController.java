@@ -48,13 +48,13 @@ public class AdminController {
         model.addAttribute("schools", page.getContent());
         model.addAttribute("sizes", pageable.getPageSize());
         model.addAttribute("current", pageable.getPageNumber());
-        model.addAttribute("longs", pages(pageable.getPageSize()));
+        model.addAttribute("longs", enabledPages(pageable.getPageSize()));
         model.addAttribute("currentUser", user);
         return "admin/admin-home";
     }
 
-    public long pages(int size) {
-        long all = schoolService.countAllSchools();
+    public long enabledPages(int size) {
+        long all = schoolService.countAllEnabledSchools();
         long realPage = all / size;
         if (all % size == 0) {
             return realPage;
@@ -63,14 +63,25 @@ public class AdminController {
     }
 
     @RequestMapping(value = "freemarker/admin-home/deletedSchool", method = RequestMethod.GET)
-    public String dataForDelete(@ModelAttribute("model") ModelMap model) {
-        List<SchoolDTO> schoolList;
-        schoolList = schoolService.findAll();
-        model.addAttribute("schoolList", schoolList);
+    public String dataForDelete( Model model, Pageable pageable) {
+        Page<SchoolDTO> page = schoolService.findAllDisabled(pageable);
+        model.addAttribute("disabledSchools", page.getContent());
+        model.addAttribute("sizes", pageable.getPageSize());
+        model.addAttribute("current", pageable.getPageNumber());
+        model.addAttribute("longs", disabledPages(pageable.getPageSize()));
         return "admin/admin-home-deleted-school";
     }
 
 
+
+    public long disabledPages(int size) {
+        long all = schoolService.countAllDisabledSchools();
+        long realPage = all / size;
+        if (all % size == 0) {
+            return realPage;
+        }
+        return realPage + 1;
+    }
     /**
      * Get list of teachers.
      *
@@ -112,17 +123,17 @@ public class AdminController {
         }
     }
 
-    @PostMapping(value = "/freemarker/admin-home/deletedSchool")
-    @Timed
-    public String deletedSchool(@ModelAttribute("schoolDTO") SchoolDTO schoolDTO) {
-        if (schoolDTO.getName() != null && !schoolDTO.getName().isEmpty() &&
-            schoolDTO.getEnabled() != null) {
-            schoolService.save(schoolDTO);
-            return "redirect:";
-        } else {
-            return "redirect:error";
-        }
-    }
+    //@PostMapping(value = "/freemarker/admin-home/deletedSchool")
+   // @Timed
+   // public String deletedSchool(@ModelAttribute("schoolDTO") SchoolDTO schoolDTO) {
+   //     if (schoolDTO.getName() != null && !schoolDTO.getName().isEmpty() &&
+    //        schoolDTO.getEnabled() != null) {
+     //       schoolService.save(schoolDTO);
+      //      return "redirect:";
+      //  } else {
+    //        return "redirect:error";
+     //   }
+   // }
 
     @RequestMapping(value = "/freemarker/admin-home/createHeadTeacher/{schoolId}", method = RequestMethod.GET)
     public ModelAndView adminNewHeadTeacher(@PathVariable Long schoolId) {
@@ -161,11 +172,15 @@ public class AdminController {
         SchoolDTO schoolToToggle = schoolService.findOne(id);
         if (schoolToToggle.getEnabled()) {
             schoolToToggle.setEnabled(false);
+            schoolService.save(schoolToToggle);
+            return new ModelAndView("redirect:/freemarker/admin-home");
+
         } else {
             schoolToToggle.setEnabled(true);
+            schoolService.save(schoolToToggle);
+            return new ModelAndView("redirect:/freemarker/admin-home/deletedSchool");
         }
-        schoolService.save(schoolToToggle);
-        return new ModelAndView("redirect:/freemarker/admin-home");
+
 
     }
 

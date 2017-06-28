@@ -68,9 +68,19 @@ public interface SchoolService {
 
 
     Page<SchoolDTO> findAllEnabled(Pageable pageable);
+
+    Page<SchoolDTO> findAllDisabled(Pageable pageable);
+
+
      /**
      *FOR PAGEABLE
      * @return
      */
-     Long countAllSchools();
+     Long countAllEnabledSchools();
+
+    /**
+     *FOR PAGEABLE
+     * @return
+     */
+    Long countAllDisabledSchools();
 }

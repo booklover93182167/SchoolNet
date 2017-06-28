@@ -123,8 +123,20 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     @Transactional(readOnly = true)
-    public Long countAllSchools() {
+    public Page<SchoolDTO> findAllDisabled(Pageable pageable) {
+        return schoolRepository.findAllDisabled(pageable).map(schoolMapper::schoolToSchoolDTO);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long countAllEnabledSchools() {
         return schoolRepository.countAllEnabledSchools();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long countAllDisabledSchools() {
+        return schoolRepository.countAllDisabledSchools();
     }
 
 }

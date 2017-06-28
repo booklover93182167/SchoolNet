@@ -35,13 +35,12 @@
     <#list schools as school>
         <tr>
             <#if school.enabled=true>
-
                 <td>${school.name}</a></td>
                 <td>
-
                     <#if school.enabled=true>
                         <button class="badge badge-success hand"
-                                onclick="window.location.href='/freemarker/admin-home/school-toggle/${school.id}'"><@spring.message "enabled"/>
+                                onclick="showDisableModal(${school.id})">
+                            <@spring.message "enabled"/>
                         </button></#if>
                 </td>
                 <td>
@@ -77,6 +76,23 @@
                             <button type="submit" class="btn btn-info"
                                     onclick=removeDetailModal(${school.id})>
                                 <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="deleteModal" id="delete${school.id}">
+                    <div class="modal-content2">
+                        <div class="modal-body">
+                            <h2><@spring.message "school.disableconf"/> ${school.name} <@spring.message "school.disable?"/></h2>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    onclick="removeDisableModal(${school.id})">
+                                <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.cancel"/></span>
+                            </button>
+                            <button type="submit" class="btn btn-success"
+                                    onclick="window.location.href='/freemarker/admin-home/school-toggle/${school.id}'">
+                                <span class="fa fa-check"></span><span><@spring.message "yes"/></span>
                             </button>
                         </div>
                     </div>
