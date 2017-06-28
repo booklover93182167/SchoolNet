@@ -71,4 +71,6 @@ public interface TeacherService {
 
     TeacherDTO makeHeadTeacher(Long id);
 
+    TeacherDTO unMakeHeadTeacher(Long id);
+
 }

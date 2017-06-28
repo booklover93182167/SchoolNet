@@ -104,7 +104,7 @@
                             <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.cancel"/></span>
                         </button>
                         <button type="submit" class="btn btn-success"
-                                onclick="window.location.href=''">
+                                onclick="window.location.href='/freemarker/admin-home/unMakeHeadTeacher/${headTeacher.id}'">
                             <span class="fa fa-check"></span><span><@spring.message "yes"/></span>
                         </button>
                     </div>

@@ -213,6 +213,19 @@ public class AdminController {
 
     }
 
+    /**
+     * Unmake teacher with "id" head teacher.
+     *
+     * @param id teacher
+     */
+    @RequestMapping(value = "/freemarker/admin-home/unMakeHeadTeacher/{id}", method = RequestMethod.GET)
+    public ModelAndView unMakeHeadTeacher(@ModelAttribute("model") ModelMap model, @PathVariable Long id) {
+        log.debug("Request to unmake teacher head teacher" + id);
+
+        teacherService.unMakeHeadTeacher(id);
+        return new ModelAndView("redirect:/freemarker/admin-home");
+
+    }
 
 }
 

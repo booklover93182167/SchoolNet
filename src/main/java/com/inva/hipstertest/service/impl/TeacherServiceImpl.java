@@ -270,7 +270,6 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService 
         Teacher teacher = teacherRepository.getOne(id);
         User user = teacher.getUser();
         Set<Authority> auto = user.getAuthorities();
-        // System.out.println("1111111"+auto);
         SimpleGrantedAuthority role = new SimpleGrantedAuthority("ROLE_HEAD_TEACHER");
         if (auto.contains(role)) {
             return teacherMapper.teacherToTeacherDTO(teacher);
@@ -282,9 +281,32 @@ public class TeacherServiceImpl extends SupportCreate implements TeacherService 
             userRepository.save(user);
             teacher.setUser(user);
             save(teacherMapper.teacherToTeacherDTO(teacher));
-            // System.out.println("2222222"+auto);
-            log.debug("making finisheed: {}", id);
             return teacherMapper.teacherToTeacherDTO(teacher);
         }
+    }
+
+    /**
+     * Unmake teacher a headTeacher.
+     *
+     * @param id the id of the entity
+     */
+    @Override
+    public TeacherDTO unMakeHeadTeacher(Long id) {
+        log.debug("Request to unmake headteacher : {}", id);
+        Teacher teacher = teacherRepository.getOne(id);
+        User user = teacher.getUser();
+        Set<Authority> auto = user.getAuthorities();
+        for (Iterator<Authority> it = auto.iterator(); it.hasNext(); ) {
+            Authority f = it.next();
+            if (f.getName().equals("ROLE_HEAD_TEACHER"))
+            it.remove();
+        }
+
+        user.setAuthorities(auto);
+        userRepository.save(user);
+        teacher.setUser(user);
+        save(teacherMapper.teacherToTeacherDTO(teacher));
+        return teacherMapper.teacherToTeacherDTO(teacher);
+
     }
 }
