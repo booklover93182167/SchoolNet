@@ -99,6 +99,15 @@
                     </li>
                 </@security.authorize>
 
+                <@security.authorize  access="hasRole('ROLE_TEACHER')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/freemarker/teacher-gradebook">
+                            <i class="fa fa-book" aria-hidden="true"></i>
+                            <span><@spring.message "navbar.gradebook"/></span>
+                        </a>
+                    </li>
+                </@security.authorize>
+
                 <li class="nav-item dropdown pointer">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="languagesnavBarDropdown" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                         <span>
