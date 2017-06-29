@@ -1,7 +1,10 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.Pupil;
+import com.inva.hipstertest.domain.User;
+import com.inva.hipstertest.repository.FormRepository;
 import com.inva.hipstertest.repository.PupilRepository;
+import com.inva.hipstertest.repository.UserRepository;
 import com.inva.hipstertest.service.PupilService;
 import com.inva.hipstertest.service.dto.PupilDTO;
 import com.inva.hipstertest.service.mapper.PupilMapper;
@@ -25,10 +28,18 @@ public class PupilServiceImpl implements PupilService {
 
     private final PupilRepository pupilRepository;
 
+    private final UserRepository userRepository;
+
+    private final FormRepository formRepository;
+
     private final PupilMapper pupilMapper;
 
-    public PupilServiceImpl(PupilRepository pupilRepository, PupilMapper pupilMapper) {
+
+
+    public PupilServiceImpl(PupilRepository pupilRepository, UserRepository userRepository, FormRepository formRepository, PupilMapper pupilMapper) {
         this.pupilRepository = pupilRepository;
+        this.userRepository = userRepository;
+        this.formRepository = formRepository;
         this.pupilMapper = pupilMapper;
     }
 
@@ -42,6 +53,10 @@ public class PupilServiceImpl implements PupilService {
     public PupilDTO save(PupilDTO pupilDTO) {
         log.debug("Request to save Pupil : {}", pupilDTO);
         Pupil pupil = pupilMapper.pupilDTOToPupil(pupilDTO);
+        // refresh entities from database
+        pupil.setUser(userRepository.findOne(pupil.getUser().getId()));
+        pupil.setForm(formRepository.findOne(pupil.getForm().getId()));
+
         pupil = pupilRepository.save(pupil);
         PupilDTO result = pupilMapper.pupilToPupilDTO(pupil);
         return result;

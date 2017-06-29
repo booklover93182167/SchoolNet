@@ -1,17 +1,21 @@
 package com.inva.hipstertest.service.dto;
 
 
-import com.inva.hipstertest.domain.Parent;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
-
+import java.util.Set;
 /**
  * A DTO for the Pupil entity.
  */
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PupilDTO implements Serializable {
 
     private Long id;

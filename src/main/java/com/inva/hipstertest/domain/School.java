@@ -1,6 +1,10 @@
 package com.inva.hipstertest.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -17,6 +21,10 @@ import java.util.Objects;
 @Entity
 @Table(name = "school")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class School implements Serializable {
 
     private static final long serialVersionUID = 1L;
