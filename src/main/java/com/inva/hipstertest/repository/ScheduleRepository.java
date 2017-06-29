@@ -37,7 +37,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 //    Identify specific subjects for specific classes where the specific teacher gives lessons
 //    @Query("select s from Schedule s where s.enabled = true and s.teacher.id = :teacherId group by s.form.id, s.lesson.id")
 //    PostgreSql fix, need correction of database
-    @Query(value="select max(id) as id, max(jhi_date) as jhi_date, max(homework) as homework, max(lesson_position) as lesson_position, lesson_id, form_id, max(classroom_id) as classroom_id, 1 as enabled, max(teacher_id) as teacher_id from schedule where enabled = true and teacher_id = :teacherId group by form_id, lesson_id", nativeQuery = true)
+    @Query(value="select max(id) as id, max(jhi_date) as jhi_date, max(homework) as homework, max(lesson_position) as lesson_position, lesson_id, form_id, max(classroom_id) as classroom_id, true as enabled, max(teacher_id) as teacher_id from schedule where enabled = true and teacher_id = :teacherId group by form_id, lesson_id", nativeQuery = true)
     List<Schedule> findFormsAndLessonsByTeacherId(@Param("teacherId") Long teacherId);
 
     // Identify dates, when for specific class, on specific subject, specific teacher gives lessons
