@@ -25,25 +25,6 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
-//    @RequestMapping(value = "freemarker/teacher-mgmt-lessons", method = RequestMethod.GET)
-//    public String lessonList(@ModelAttribute("model")ModelMap model) {
-//        List<LessonDTO> lessonList = lessonService.findAll();
-//        model.addAttribute("lessonList", lessonList);
-//        return "teacher-mgmt/teacher-mgmt-lessons";
-//    }
-
-//    @PostMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-lessons")
-//    public ModelAndView teacherManagementCreate() {
-//        LessonDTO lessonDTO = new LessonDTO();
-//        return new ModelAndView("teacher-mgmt/teacher-mgmt-lessons", "lessonDTO", lessonDTO);
-//    }
-
-//    @PostMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-add-lessons")
-//    public ModelAndView teacherManagementAdd() {
-//        LessonDTO lessonDTO = new LessonDTO();
-//        return new ModelAndView("teacher-mgmt/teacher-mgmt-add-lessons", "lessonDTO", lessonDTO);
-//    }
-
     @RequestMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-lessons", method = RequestMethod.GET)
     public String data(@ModelAttribute("model") ModelMap model) {
         List<LessonDTO> lessonList;
@@ -65,13 +46,8 @@ public class LessonController {
 
     @PostMapping(value = "/freemarker/teacher-mgmt/addLesson")
     @Timed
-    public String addLesson(@ModelAttribute("lessonDTO") LessonDTO lessonDTO) {
-        if (lessonDTO.getName() != null && !lessonDTO.getName().isEmpty() &&
-            lessonDTO.getEnabled() != null) {
-            lessonService.save(lessonDTO);
-            return "redirect:";
-        } else {
-            return "redirect:error";
-        }
+    public ModelAndView addLesson(LessonDTO lessonDTO) {
+        LessonDTO result = lessonService.save(lessonDTO); //TODO: This save doesn't work. Write a new one!
+        return new ModelAndView("redirect:/freemarker/teacher-mgmt/teacher-mgmt-lessons/");
     }
 }
