@@ -1,6 +1,7 @@
 package com.inva.hipstertest.service;
 
 import com.inva.hipstertest.service.dto.LessonDTO;
+
 import java.util.List;
 
 /**
@@ -17,16 +18,16 @@ public interface LessonService {
     LessonDTO save(LessonDTO lessonDTO);
 
     /**
-     *  Get all the lessons.
+     * Get all the lessons.
      *
-     *  @return the list of entities
+     * @return the list of entities
      */
     List<LessonDTO> findAll();
 
     /**
-     *  Get all the lessons by teacher id.
+     * Get all the lessons by teacher id.
      *
-     *  @return the list of entities
+     * @return the list of entities
      */
     List<LessonDTO> getAllLessonsByTeacherId(Long teacherId);
 
@@ -40,17 +41,17 @@ public interface LessonService {
     List<LessonDTO> getDistinctLessonsForForm(Long formId);
 
     /**
-     *  Get the "id" lesson.
+     * Get the "id" lesson.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     LessonDTO findOne(Long id);
 
     /**
-     *  Delete the "id" lesson.
+     * Delete the "id" lesson.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     void delete(Long id);
 }
