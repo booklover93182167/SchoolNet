@@ -20,6 +20,7 @@ public interface PupilRepository extends JpaRepository<Pupil, Long> {
     @Query("select pupil from Pupil pupil where pupil.user.login = ?#{principal.username}")
     Pupil findPupilByCurrentUser();
 
-    @Query(value="select * from pupil join parent_pupil on pupil.id = parent_pupil.pupils_id where parents_id = :parentId", nativeQuery = true)
+    @Query("select pupil from Parent parent join parent.pupils pupil where parent.id = :parentId")
     List<Pupil> findAllByParentId(@Param("parentId") Long parentId);
+
 }

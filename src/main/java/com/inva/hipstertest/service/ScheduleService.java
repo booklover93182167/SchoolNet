@@ -1,6 +1,8 @@
 package com.inva.hipstertest.service;
 
 import com.inva.hipstertest.service.dto.ScheduleDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
 import java.sql.Date;
@@ -74,4 +76,11 @@ public interface ScheduleService {
      * @return the list of entities
      */
     List<ScheduleDTO> findAllBySchoolId(Long schoolId);
+
+    List<ScheduleDTO> findFormsAndLessonsByTeacherId(Long teacherId);
+
+    Page<ScheduleDTO> findSchedulesByTeacherIdFormIdSubjectIdMaxDate(Pageable pageable, Long teacherId, Long formId, Long lessonId, ZonedDateTime today);
+
+    Long countSchedulesForGradeBook(Long teacherId, Long formId, Long lessonId, ZonedDateTime today);
+
 }
