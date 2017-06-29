@@ -44,6 +44,9 @@ public class TeacherGradebookController {
     public ModelAndView home(@ModelAttribute("model") ModelMap model) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
         List<ScheduleDTO> formsAndLessons = scheduleService.findFormsAndLessonsByTeacherId(teacher.getId());
+        if(formsAndLessons.isEmpty()) {
+            return new ModelAndView("redirect:/freemarker/error");
+        }
         Collections.sort(formsAndLessons, (o1, o2) -> o1.getFormName().compareTo(o2.getFormName()));
         ScheduleDTO formAndLesson = formsAndLessons.get(0);
         return new ModelAndView("redirect:/freemarker/teacher-gradebook/" + formAndLesson.getFormId() + "/" + formAndLesson.getLessonId());
@@ -53,6 +56,9 @@ public class TeacherGradebookController {
     public String gradebook(@ModelAttribute("model") ModelMap model, @PageableDefault(value = 10) Pageable pageable, @PathVariable Long formId, @PathVariable Long lessonId) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
         List<ScheduleDTO> formsAndLessons = scheduleService.findFormsAndLessonsByTeacherId(teacher.getId());
+        if(formsAndLessons.isEmpty()) {
+            return "redirect:/freemarker/error";
+        }
         ScheduleDTO formAndLesson = null;
 
         for(ScheduleDTO item : formsAndLessons) {

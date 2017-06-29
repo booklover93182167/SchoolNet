@@ -1,0 +1,15 @@
+.gradebook tr th {
+    vertical-align: middle;
+}
+.gradebook .date,
+.gradebook .attendance {
+    text-align: center;
+}
+.gradebook tr th.number {
+    width: 2%;
+}
+.gradebook tr th.fullname {
+}
+.gradebook tr th.date {
+    width: 6%;
+}
