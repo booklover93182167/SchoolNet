@@ -18,14 +18,6 @@ public interface LessonService {
     LessonDTO save(LessonDTO lessonDTO);
 
     /**
-     * Save a lesson.
-     *
-     * @param lessonDTO the entity to save
-     * @return the persisted entity
-     */
-    LessonDTO saveLesson(LessonDTO lessonDTO);
-
-    /**
      * Get all the lessons.
      *
      * @return the list of entities
