@@ -34,15 +34,11 @@
             <td>
                 <div class="btn-group flex-btn-group-container">
                     <button id="view" type="button" class="btn btn-info btn-sm"
-                            onclick="showDetailModal(${school.id})">
+                            onclick="window.location.href='/freemarker/admin-home/details/${school.id}'">
                         <span class="fa fa-eye"></span>
                         <span class="hidden-md-down"><@spring.message "school.view"/></span>
                     </button>
-                    <button id="edit" type="submit" class="btn btn-primary btn-sm"
-                            onclick="window.location.href='/freemarker/admin-home/details/${school.id}'">
-                        <span class="fa fa-pencil"></span>
-                        <span class="hidden-md-down"><@spring.message "school.edit"/></span>
-                    </button>
+                    
                 </div>
             </td>
             <div id="detail${school.id}" class="detailModal">
