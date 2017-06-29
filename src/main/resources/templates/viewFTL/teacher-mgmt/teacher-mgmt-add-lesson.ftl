@@ -23,7 +23,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-info"
-                onclick="window.location.href='/freemarker/teacher-mgmt/'">
+                onclick="window.location.href='/freemarker/teacher-mgmt/teacher-mgmt-lessons/'">
             <span class="fa fa-arrow-left"></span>&nbsp;<span><@spring.message "back"/></span>
         </button>
         <button type="button" class="btn btn-default" data-dismiss="modal"
