@@ -37,7 +37,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Page<User> findAllByLoginNot(Pageable pageable, String login);
 
-    //@Query("select u.id from User u where u.login =?#{principal.username}")
-    //Long findByLoginUserId();
+    @Query("select u from User u where u.login =?#{principal.username}")
+    User findByLoginUserId();
 
 }
