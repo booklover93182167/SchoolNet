@@ -11,7 +11,7 @@
 </div>
 <form name="editForm" action="/freemarker/admin-home/createSchool" method="post">
     <div class="modal-body">
-        <div class="form-group">
+        <div class="form-group" >
             <label class="form-control-label"><@spring.message "school.name"/></label>
         <@spring.formInput "schoolDTO.name"/>
         <@spring.showErrors "schoolDTO.name","error" />
@@ -20,7 +20,7 @@
         </#if>
         </div>
         <@spring.message "school.enabled"/>:
-        <select name="enabled">
+        <select name="enabled" class="custom-select">
             <option value="true"><@spring.message "true"/></option>
             <option value="false"><@spring.message "false"/></option>
         </select>
@@ -33,7 +33,7 @@
         </button>
         <button type="button" class="btn btn-default" data-dismiss="modal"
         onclick="reset()">
-            <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.cancel"/></span>
+            <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.clear"/></span>
         </button>
         <button type="submit" class="btn btn-primary">
             <span class="fa fa-save"></span>&nbsp;<span><@spring.message "school.save"/></span>

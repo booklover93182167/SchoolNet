@@ -20,18 +20,17 @@
 }
 
 #scheduleTable table tr td {
+    white-space: nowrap;
     vertical-align: middle;
     text-align: center;
     line-height: 16px;
     height: 43px;
-    font-size: 10pt;
-    padding: 2px 2px;
+    font-size: 11pt;
+    padding: 2px 5px;
 }
 
-#scheduleTable table tr:first-child td {
-    line-height: 18px;
-    font-size: 11pt;
-    width: 5px;
+#scheduleTable table tr td:last-child, #scheduleTable table tr td:first-child {
+    width: 15px;
 }
 
 td.homework{
