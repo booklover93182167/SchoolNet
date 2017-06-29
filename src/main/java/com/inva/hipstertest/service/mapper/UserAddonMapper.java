@@ -12,9 +12,11 @@ import org.mapstruct.*;
 public interface UserAddonMapper extends EntityMapper <UserAddonDTO, UserAddon> {
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "user.login", target = "userLogin")
-    UserAddonDTO toDto(UserAddon userAddon); 
+    UserAddonDTO toDto(UserAddon userAddon);
+
+
     @Mapping(source = "userId", target = "user")
-    UserAddon toEntity(UserAddonDTO userAddonDTO); 
+    UserAddon toEntity(UserAddonDTO userAddonDTO);
     /**
      * generating the fromId for all mappers if the databaseType is sql, as the class has relationship to it might need it, instead of
      * creating a new attribute to know if the entity has any relationship from some other entity
@@ -22,7 +24,7 @@ public interface UserAddonMapper extends EntityMapper <UserAddonDTO, UserAddon> 
      * @param id id of the entity
      * @return the entity instance
      */
-     
+
     default UserAddon fromId(Long id) {
         if (id == null) {
             return null;

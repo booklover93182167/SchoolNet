@@ -34,7 +34,7 @@
         </button>
         <button type="button" class="btn btn-default" data-dismiss="modal"
                 onclick="reset()">
-            <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.cancel"/></span>
+            <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.clear"/></span>
         </button>
         <button type="submit" class="btn btn-primary">
             <span class="fa fa-save"></span>&nbsp;<span><@spring.message "save"/></span>
