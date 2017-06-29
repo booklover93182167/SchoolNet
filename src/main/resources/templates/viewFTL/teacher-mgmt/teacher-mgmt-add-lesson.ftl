@@ -13,7 +13,7 @@
     <div class="body">
         <div class="form-group">
             <label class="form-control-label" for="name"><@spring.message "teacherm.createNewLessons"/></label>
-            <input type="text" class="form-control" id="lessonName" name="lessonName" minlength=3 maxlength=50 required>
+            <input type="text" class="form-control" id="lessonName" name="name" minlength=3 maxlength=50 required>
         </div>
     <@spring.message "school.enabled"/>
         <select name="enabled">

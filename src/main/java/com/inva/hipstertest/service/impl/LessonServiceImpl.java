@@ -41,8 +41,11 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public LessonDTO save(LessonDTO lessonDTO) {
         log.debug("Request to save Lesson : {}", lessonDTO);
+        System.out.println("2");
         Lesson lesson = lessonMapper.lessonDTOToLesson(lessonDTO);
+        System.out.println("3");
         lesson = lessonRepository.save(lesson);
+        System.out.println("4");
         LessonDTO result = lessonMapper.lessonToLessonDTO(lesson);
         return result;
     }
@@ -114,5 +117,10 @@ public class LessonServiceImpl implements LessonService {
     public void delete(Long id) {
         log.debug("Request to delete Lesson : {}", id);
         lessonRepository.delete(id);
+    }
+
+    @Override
+    public LessonDTO saveLesson(LessonDTO lessonDTO) {
+        return null;
     }
 }

@@ -44,10 +44,24 @@ public class LessonController {
         return new ModelAndView("admin/admin-home-add-lesson", "lessonDTO", lessonDTO);
     }
 
+//    @PostMapping(value = "/freemarker/teacher-mgmt/addLesson")
+//    @Timed
+//    public ModelAndView add(LessonDTO lessonDTO) {
+//        System.out.println("1");
+//        LessonDTO result = lessonService.save(lessonDTO); //TODO: This save doesn't work. Write a new one!
+//        System.out.println("5");
+//        return new ModelAndView("redirect:/freemarker/teacher-mgmt/teacher-mgmt-lessons/");
+//    }
+
     @PostMapping(value = "/freemarker/teacher-mgmt/addLesson")
     @Timed
-    public ModelAndView addLesson(LessonDTO lessonDTO) {
-        LessonDTO result = lessonService.save(lessonDTO); //TODO: This save doesn't work. Write a new one!
-        return new ModelAndView("redirect:/freemarker/teacher-mgmt/teacher-mgmt-lessons/");
+    public String addLesson(@ModelAttribute("lessonDTO") LessonDTO lessonDTO) {
+        if (lessonDTO.getName() != null && !lessonDTO.getName().isEmpty() &&
+            lessonDTO.getEnabled() != null) {
+            lessonService.save(lessonDTO);
+            return "redirect:/freemarker/teacher-mgmt/teacher-mgmt-lessons/";
+        } else {
+            return "redirect:error"; //TODO: create error page
+        }
     }
 }
