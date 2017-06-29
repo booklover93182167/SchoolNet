@@ -4,11 +4,9 @@ import com.codahale.metrics.annotation.Timed;
 import com.inva.hipstertest.domain.User;
 import com.inva.hipstertest.service.SchoolService;
 import com.inva.hipstertest.service.TeacherService;
-import com.inva.hipstertest.service.UserAddonService;
 import com.inva.hipstertest.service.UserService;
 import com.inva.hipstertest.service.dto.SchoolDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
-import com.inva.hipstertest.service.dto.UserAddonDTO;
 import com.inva.hipstertest.service.dto.UserDTO;
 import com.inva.hipstertest.service.mapper.UserMapper;
 import org.springframework.stereotype.Controller;
@@ -22,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -90,7 +87,7 @@ public class AdminController {
     }
 
     /**
-     * Get list of teachers.
+     * Get list of teachers of school with schoolId.
      *
      * @param model
      * @param schoolId
@@ -223,6 +220,9 @@ public class AdminController {
         return new ModelAndView("redirect:/freemarker/admin-home");
 
     }
+
+
+
 
 }
 

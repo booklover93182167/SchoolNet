@@ -1,10 +1,12 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.Teacher;
+import com.inva.hipstertest.domain.User;
 import com.inva.hipstertest.repository.TeacherRepository;
 import com.inva.hipstertest.service.SchoolService;
 import com.inva.hipstertest.domain.School;
 import com.inva.hipstertest.repository.SchoolRepository;
+import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.dto.SchoolDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
 import com.inva.hipstertest.service.mapper.SchoolMapper;
@@ -137,6 +139,24 @@ public class SchoolServiceImpl implements SchoolService {
     @Transactional(readOnly = true)
     public Long countAllDisabledSchools() {
         return schoolRepository.countAllDisabledSchools();
+    }
+
+    /**
+     * Save a school.
+     *
+     * @param schoolDTO the entity to save
+     * @return the persisted entity
+     */
+    public SchoolDTO saveSchool(SchoolDTO schoolDTO) {
+        log.debug("Request to save School : {}", schoolDTO);
+        School school = schoolMapper.schoolDTOToSchool(schoolDTO);
+
+            school.setName(schoolDTO.getName());
+
+            schoolRepository.save(school);
+
+        SchoolDTO result = schoolMapper.schoolToSchoolDTO(school);
+        return result;
     }
 
 }

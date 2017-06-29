@@ -1,6 +1,9 @@
 /**
  * Created by User on 26.06.2017.
  */
+
+
+
 function showDetailModal(id) {
     var detailId = "detail"+id;
     var detailModal = document.getElementById(detailId);
@@ -38,7 +41,8 @@ function removeEnableModal(id) {
 
 
 function onChange() {
-    var x = document.getElementById("mySelect").value;
-    document.getElementById("use").submit(x);
+    document.getElementById("use").submit();
 }
+
+
 
