@@ -86,7 +86,7 @@ public class AdminController {
     }
 
     /**
-     * Get list of teachers.
+     * Get list of teachers of school with schoolId.
      *
      * @param model
      * @param schoolId
@@ -218,6 +218,9 @@ public class AdminController {
         return new ModelAndView("redirect:/freemarker/admin-home");
 
     }
+
+
+
 
 }
 

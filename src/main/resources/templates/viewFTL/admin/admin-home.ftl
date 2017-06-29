@@ -45,40 +45,14 @@
             <td>
                 <div class="btn-group flex-btn-group-container">
                     <button id="view" type="button" class="btn btn-info btn-sm"
-                            onclick="showDetailModal(${school.id})">
+                            onclick="window.location.href='/freemarker/admin-home/details/${school.id}'">
                         <span class="fa fa-eye"></span>
                         <span class="hidden-md-down"><@spring.message "school.view"/></span>
                     </button>
-                    <button id="edit" type="submit" class="btn btn-primary btn-sm"
-                            onclick="window.location.href='/freemarker/admin-home/details/${school.id}'">
-                        <span class="fa fa-pencil"></span>
-                        <span class="hidden-md-down"><@spring.message "school.edit"/></span>
-                    </button>
                 </div>
             </td>
-            <div id="detail${school.id}" class="detailModal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>${school.name}</h2>
-                    </div>
-                    <div class="modal-body">
-                        <dl class="row-md jh-entity-details">
-                            <dt><span><@spring.message "school.name"/></span></dt>
-                            <dd>
-                                <div>
-                                    <span>${school.name}</span>
-                                </div>
-                            </dd>
-                        </dl>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-info"
-                                onclick=removeDetailModal(${school.id})>
-                            <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+
+
             <div class="deleteModal" id="delete${school.id}">
                 <div class="modal-content2">
                     <div class="modal-body">
@@ -102,7 +76,7 @@
 
     <#if longs gt 0 >
         <div>
-            <form action="admin-home" method="get" id="use">
+            <form id="use">
                 <select name="size" class="custom-select" id="mySelect" onchange="onChange()">
                     <#list [5, 10, 15, 20] as s>
                         <#if sizes == s>

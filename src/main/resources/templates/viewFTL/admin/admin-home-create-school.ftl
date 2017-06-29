@@ -15,9 +15,6 @@
             <label class="form-control-label"><@spring.message "school.name"/></label>
         <@spring.formInput "schoolDTO.name"/>
         <@spring.showErrors "schoolDTO.name","error" />
-        <#if nameFail??>
-            <span style="color:red">${nameFail}</span>
-        </#if>
         </div>
         <@spring.message "school.enabled"/>:
         <select name="enabled" class="custom-select">

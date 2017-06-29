@@ -91,7 +91,7 @@
     </#list>
     <#if longs gt 0 >
         <div>
-            <form action="deletedSchool" method="get" id="use">
+            <form id="use">
                 <select name="size" class="custom-select" id="mySelect" onchange="onChange()">
                     <#list [5, 10, 15, 20] as s>
                         <#if sizes == s>

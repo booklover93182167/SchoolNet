@@ -83,4 +83,6 @@ public interface SchoolService {
      * @return
      */
     Long countAllDisabledSchools();
+
+  
 }
