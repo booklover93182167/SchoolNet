@@ -52,7 +52,7 @@ public class LessonController {
             lessonService.save(lessonDTO);
             return "redirect:/freemarker/teacher-mgmt/teacher-mgmt-lessons/";
         } else {
-            return "redirect:error"; //TODO: create error page
+            return "redirect:error";
         }
     }
 }
