@@ -4,25 +4,12 @@
 
 <@h.header
 pagetitle = "${pagetitle}"
-/>
-
-<style>
-.gradebook tr th {
-    vertical-align: middle;
-}
-.gradebook .date,
-.gradebook .attendance {
-    text-align: center;
-}
-.gradebook tr th.number {
-    width: 2%;
-}
-.gradebook tr th.fullname {
-}
-.gradebook tr th.date {
-    width: 6%;
-}
-</style>
+cssSources = [
+"/scripts/teacher-gradebook.css"
+]
+jsSources = [
+"/scripts/teacher-gradebook.js"
+]/>
 
 <div class="container">
     <div class="row content">
@@ -109,8 +96,8 @@ pagetitle = "${pagetitle}"
 
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item<#if model["current"] == 0> disabled</#if>"><a class="page-link" href="?page=0&size=${model["sizes"]}">First</a></li>
-                        <li class="page-item<#if model["current"] == 0> disabled</#if>"><a class="page-link" href="?page=${model["current"]-1}&size=${model["sizes"]}">Previous</a></li>
+                        <li class="page-item<#if model["current"] == 0> disabled</#if>"><a class="page-link" href="?page=0&size=${model["sizes"]}"><@spring.message "pagination.first"/></a></li>
+                        <li class="page-item<#if model["current"] == 0> disabled</#if>"><a class="page-link" href="?page=${model["current"]-1}&size=${model["sizes"]}"><@spring.message "pagination.prev"/></a></li>
                         <#list 0..model["longs"]-1 as i>
                             <#if model["current"] != i>
                                 <li class="page-item"><a class="page-link" href="?page=${i}&size=${model["sizes"]}">${i+1}</a></li>
@@ -118,8 +105,8 @@ pagetitle = "${pagetitle}"
                                 <li class="page-item active"><span class="page-link">${i+1}</span></li>
                             </#if>
                         </#list>
-                        <li class="page-item<#if model["current"] == model["longs"]-1> disabled</#if>"><a class="page-link" href="?page=${model["current"]+1}&size=${model["sizes"]}">Next</a></li>
-                        <li class="page-item<#if model["current"] == model["longs"]-1> disabled</#if>"><a class="page-link" href="?page=${model["longs"]-1}&size=${model["sizes"]}">Last</a></li>
+                        <li class="page-item<#if model["current"] == model["longs"]-1> disabled</#if>"><a class="page-link" href="?page=${model["current"]+1}&size=${model["sizes"]}"><@spring.message "pagination.next"/></a></li>
+                        <li class="page-item<#if model["current"] == model["longs"]-1> disabled</#if>"><a class="page-link" href="?page=${model["longs"]-1}&size=${model["sizes"]}"><@spring.message "pagination.last"/></a></li>
                     </ul>
                 </nav>
 
@@ -135,122 +122,5 @@ pagetitle = "${pagetitle}"
         </div>
     </div>
 </div>
-
-<script>
-    $(function() {
-
-        $("#sizeSelector").change(function () {
-            $("#sizeChangerForm").submit();
-        });
-
-        var selectedTd = null;
-        var backupValue = null;
-
-        function hideDivShowInput() {
-            console.log("hideDivShowInput()");
-            selectedTd.find("div").hide();
-            selectedTd.find("input").prop("type", "text");
-            selectedTd.find("input").focus();
-        }
-
-        function hideInputShowDiv() {
-            console.log("hideInputShowDiv()");
-            selectedTd.find("div").show();
-            selectedTd.find("input").prop("type", "hidden");
-            selectedTd = null;
-            backupValue = null;
-        }
-
-        function confirmDiscardChanges() {
-            if (selectedTd.find("input").val() != backupValue) {
-                if (confirm('Are you sure you want to discard changes?')) {
-                    selectedTd.find("input").val(backupValue);
-                    hideInputShowDiv();
-                } else {
-                    return true;
-                }
-            } else {
-                hideInputShowDiv();
-            }
-            return false;
-        }
-
-        $(".attendance").click(function () {
-            if ($(this).is(selectedTd)) {
-                return;
-            }
-            if (selectedTd != null) {
-                if(confirmDiscardChanges()) {
-                    return;
-                }
-            }
-            selectedTd = $(this);
-            backupValue = $(this).find("input").val();
-            hideDivShowInput();
-        });
-
-        $("input").bind("enterKey", function(e) {
-            var string_value = $(this).val();
-            var int_value = parseInt($(this).val(), 10);
-            console.log("int_value: " + int_value);
-
-            if (string_value) {
-                if (int_value < 0 || int_value > 12 || isNaN(int_value)) {
-                    alert("Invalid grade!");
-                    return;
-                }
-            }
-
-            var id = selectedTd.data("attendance-id");
-            var grade = int_value;
-            var enabled = true;
-            var pupilId = selectedTd.data("pupil-id");
-            var scheduleId = selectedTd.data("schedule-id");
-            var attendanceDTO;
-
-            if (id == -1) {
-                attendanceDTO = {
-                    grade: grade,
-                    enabled: enabled,
-                    pupilId: pupilId,
-                    scheduleId: scheduleId
-                };
-            } else {
-                attendanceDTO = {
-                    id : id,
-                    grade: grade,
-                    enabled: enabled,
-                    pupilId: pupilId,
-                    scheduleId: scheduleId
-                };
-            }
-            $.ajax({
-                url : "/freemarker/teacher-gradebook/update",
-                type : "POST",
-                contentType : "application/json",
-                data : JSON.stringify(attendanceDTO),
-                success : function (response) {
-                    selectedTd.find("input").attr("value", (!string_value ? "" : response.grade));
-                    selectedTd.find("div").text((!string_value ? "-" : response.grade));
-                    hideInputShowDiv();
-                }
-            });
-        });
-
-        $("input").keyup(function(e){
-            if (e.keyCode === 13) {
-                $(this).trigger("enterKey");
-            }
-        });
-
-        $(document).keyup(function(e){
-            if (e.keyCode === 27) {
-                selectedTd.find("input").val(backupValue);
-                hideInputShowDiv();
-            }
-        });
-
-    });
-</script>
 
 <@h.footer/>

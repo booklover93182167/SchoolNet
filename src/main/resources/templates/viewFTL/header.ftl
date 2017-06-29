@@ -99,7 +99,7 @@
                     </li>
                 </@security.authorize>
 
-                <@security.authorize  access="hasRole('ROLE_TEACHER')">
+                <@security.authorize  access="hasAnyRole('ROLE_TEACHER', 'ROLE_HEAD_TEACHER')">
                     <li class="nav-item">
                         <a class="nav-link" href="/freemarker/teacher-gradebook">
                             <i class="fa fa-book" aria-hidden="true"></i>
