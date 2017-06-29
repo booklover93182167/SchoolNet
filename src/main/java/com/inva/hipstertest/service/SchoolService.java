@@ -84,5 +84,5 @@ public interface SchoolService {
      */
     Long countAllDisabledSchools();
 
-   SchoolDTO saveSchool(SchoolDTO schoolDTO);
+  
 }
