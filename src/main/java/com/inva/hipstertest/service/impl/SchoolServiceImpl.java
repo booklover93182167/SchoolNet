@@ -141,22 +141,6 @@ public class SchoolServiceImpl implements SchoolService {
         return schoolRepository.countAllDisabledSchools();
     }
 
-    /**
-     * Save a school.
-     *
-     * @param schoolDTO the entity to save
-     * @return the persisted entity
-     */
-    public SchoolDTO saveSchool(SchoolDTO schoolDTO) {
-        log.debug("Request to save School : {}", schoolDTO);
-        School school = schoolMapper.schoolDTOToSchool(schoolDTO);
-
-            school.setName(schoolDTO.getName());
-
-            schoolRepository.save(school);
-
-        SchoolDTO result = schoolMapper.schoolToSchoolDTO(school);
-        return result;
-    }
+   
 
 }
