@@ -10,6 +10,8 @@ import com.inva.hipstertest.service.mapper.ScheduleMapper;
 import com.inva.hipstertest.service.util.DataUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -157,4 +159,26 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         return result;
     }
+
+    @Override
+    public List<ScheduleDTO> findFormsAndLessonsByTeacherId(Long teacherId) {
+        log.debug("Request to get classes and subjects where teacher {} gives lessons", teacherId);
+        List<Schedule> formsAndLessons = scheduleRepository.findFormsAndLessonsByTeacherId(teacherId);
+        List<ScheduleDTO> formsAndLessonsDTOs = scheduleMapper.schedulesToScheduleDTOs(formsAndLessons);
+        return formsAndLessonsDTOs;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ScheduleDTO> findSchedulesByTeacherIdFormIdSubjectIdMaxDate(Pageable pageable, Long teacherId, Long formId, Long lessonId, ZonedDateTime today) {
+        log.debug("Request to get lessons dates where teacher {} gives lessons for class {} on subject {}", teacherId, formId, lessonId);
+        return scheduleRepository.findSchedulesByTeacherIdFormIdSubjectIdMaxDate(pageable, teacherId, formId, lessonId, today).map(scheduleMapper::scheduleToScheduleDTO);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long countSchedulesForGradeBook(Long teacherId, Long formId, Long lessonId, ZonedDateTime today) {
+        return scheduleRepository.countSchedulesForGradeBook(teacherId, formId, lessonId, today);
+    }
+
 }

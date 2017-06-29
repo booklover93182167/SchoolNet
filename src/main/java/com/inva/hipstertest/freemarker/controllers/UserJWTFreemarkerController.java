@@ -74,7 +74,9 @@ public class UserJWTFreemarkerController {
             }else if (authorities.contains(new SimpleGrantedAuthority("ROLE_HEAD_TEACHER"))) {
                 return new ModelAndView("redirect:teacher-mgmt/teacher-mgmt");
             } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_PARENT"))) {
-                return new ModelAndView("redirect:pupil-home");
+                return new ModelAndView("redirect:parent-home");
+            } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_TEACHER"))) {
+                return new ModelAndView("redirect:teacher-gradebook");
             } else {
                 return new ModelAndView("redirect:freemarkertest");
             }

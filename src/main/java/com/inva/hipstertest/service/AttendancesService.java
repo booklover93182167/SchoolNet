@@ -50,4 +50,7 @@ public interface AttendancesService {
      * @return list of entities
      */
     List<AttendancesDTO> findAllMembersByPupilIdAndDateBetween(String date);
+
+    List<AttendancesDTO> findAllWherePupilIdInAndScheduleIdIn(Long teacherId, Long formId, Long lessonId);
+
 }
