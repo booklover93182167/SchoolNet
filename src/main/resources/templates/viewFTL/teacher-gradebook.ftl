@@ -96,8 +96,8 @@ jsSources = [
 
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item<#if model["current"] == 0> disabled</#if>"><a class="page-link" href="?page=0&size=${model["sizes"]}">First</a></li>
-                        <li class="page-item<#if model["current"] == 0> disabled</#if>"><a class="page-link" href="?page=${model["current"]-1}&size=${model["sizes"]}">Previous</a></li>
+                        <li class="page-item<#if model["current"] == 0> disabled</#if>"><a class="page-link" href="?page=0&size=${model["sizes"]}"><@spring.message "pagination.first"/></a></li>
+                        <li class="page-item<#if model["current"] == 0> disabled</#if>"><a class="page-link" href="?page=${model["current"]-1}&size=${model["sizes"]}"><@spring.message "pagination.prev"/></a></li>
                         <#list 0..model["longs"]-1 as i>
                             <#if model["current"] != i>
                                 <li class="page-item"><a class="page-link" href="?page=${i}&size=${model["sizes"]}">${i+1}</a></li>
@@ -105,8 +105,8 @@ jsSources = [
                                 <li class="page-item active"><span class="page-link">${i+1}</span></li>
                             </#if>
                         </#list>
-                        <li class="page-item<#if model["current"] == model["longs"]-1> disabled</#if>"><a class="page-link" href="?page=${model["current"]+1}&size=${model["sizes"]}">Next</a></li>
-                        <li class="page-item<#if model["current"] == model["longs"]-1> disabled</#if>"><a class="page-link" href="?page=${model["longs"]-1}&size=${model["sizes"]}">Last</a></li>
+                        <li class="page-item<#if model["current"] == model["longs"]-1> disabled</#if>"><a class="page-link" href="?page=${model["current"]+1}&size=${model["sizes"]}"><@spring.message "pagination.next"/></a></li>
+                        <li class="page-item<#if model["current"] == model["longs"]-1> disabled</#if>"><a class="page-link" href="?page=${model["longs"]-1}&size=${model["sizes"]}"><@spring.message "pagination.last"/></a></li>
                     </ul>
                 </nav>
 
