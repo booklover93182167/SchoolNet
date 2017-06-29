@@ -11,6 +11,7 @@ import com.inva.hipstertest.domain.User;
 import com.inva.hipstertest.repository.FormRepository;
 import com.inva.hipstertest.repository.SchoolRepository;
 import com.inva.hipstertest.repository.UserRepository;
+import com.inva.hipstertest.service.BaseServiceTest;
 import com.inva.hipstertest.service.ParentService;
 import com.inva.hipstertest.service.PupilService;
 import com.inva.hipstertest.service.UserService;
@@ -37,28 +38,13 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SchoolNetApp.class)
 @Transactional
-public class PupilServiceImplTest {
+public class PupilServiceImplTest extends BaseServiceTest{
 
     @Autowired
     private PupilService pupilService;
 
     @Autowired
     private ParentService parentService;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private FormRepository formRepository;
-
-    @Autowired
-    private  UserProvider userProvider;
-
-    @Autowired
-    private SchoolProvider schoolProvider;
-
-    @Autowired
-    private FormProvider formProvider;
 
     private User user;
     private School school;
