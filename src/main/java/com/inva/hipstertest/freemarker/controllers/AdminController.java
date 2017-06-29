@@ -155,7 +155,7 @@ public class AdminController {
         }
         // handle creation success
         return new ModelAndView("redirect:/freemarker/admin-home");
-    }
+    } //ЦЕЙ МЕТОД ВІДПОВІДАЄ ЗА КНОПКУ SAVE
 
 
     /**
