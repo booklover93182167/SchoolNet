@@ -2,13 +2,18 @@ package com.inva.hipstertest.service.dto;
 
 import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.dto.LessonDTO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TeacherDTO implements Serializable {
 
     private Long id;

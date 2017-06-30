@@ -1,5 +1,6 @@
 package com.inva.hipstertest.domain;
 
+import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -16,6 +17,10 @@ import java.util.Objects;
 @Entity
 @Table(name = "parent")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Parent implements Serializable {
 
     private static final long serialVersionUID = 1L;
