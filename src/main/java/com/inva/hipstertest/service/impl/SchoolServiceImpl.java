@@ -1,10 +1,12 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.Teacher;
+import com.inva.hipstertest.domain.User;
 import com.inva.hipstertest.repository.TeacherRepository;
 import com.inva.hipstertest.service.SchoolService;
 import com.inva.hipstertest.domain.School;
 import com.inva.hipstertest.repository.SchoolRepository;
+import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.dto.SchoolDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
 import com.inva.hipstertest.service.mapper.SchoolMapper;
@@ -13,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -103,8 +107,40 @@ public class SchoolServiceImpl implements SchoolService {
         log.debug("Request to find all headTeachers of School : {}", id);
         List<Teacher> headTeachers = schoolRepository.findHeadTeachersOfSchool(id);
         List<TeacherDTO> headTeachersDTO = teacherMapper.teachersToTeacherDTOs(headTeachers);
-            return headTeachersDTO;
+        return headTeachersDTO;
 
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<SchoolDTO> findAll(Pageable pageable) {
+        return schoolRepository.findAll(pageable).map(schoolMapper::schoolToSchoolDTO);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<SchoolDTO> findAllEnabled(Pageable pageable) {
+        return schoolRepository.findAllEnabled(pageable).map(schoolMapper::schoolToSchoolDTO);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<SchoolDTO> findAllDisabled(Pageable pageable) {
+        return schoolRepository.findAllDisabled(pageable).map(schoolMapper::schoolToSchoolDTO);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long countAllEnabledSchools() {
+        return schoolRepository.countAllEnabledSchools();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long countAllDisabledSchools() {
+        return schoolRepository.countAllDisabledSchools();
+    }
+
+   
 
 }
