@@ -1,8 +1,7 @@
 package com.inva.hipstertest.service;
 
-import com.inva.hipstertest.data.provider.FormProvider;
-import com.inva.hipstertest.data.provider.SchoolProvider;
-import com.inva.hipstertest.data.provider.UserProvider;
+import com.inva.hipstertest.data.provider.*;
+import com.inva.hipstertest.domain.Pupil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,4 +19,13 @@ public abstract class BaseServiceTest {
 
     @Autowired
     protected FormProvider formProvider;
+
+    @Autowired
+    protected TeacherProvider teacherProvider;
+
+    @Autowired
+    protected ParentProvider parentProvider;
+
+    @Autowired
+    protected PupilProvider pupilProvider;
 }

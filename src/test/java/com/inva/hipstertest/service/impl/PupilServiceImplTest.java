@@ -38,7 +38,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SchoolNetApp.class)
 @Transactional
-public class PupilServiceImplTest extends BaseServiceTest{
+public class PupilServiceImplTest extends BaseServiceTest {
 
     @Autowired
     private PupilService pupilService;
@@ -89,16 +89,16 @@ public class PupilServiceImplTest extends BaseServiceTest{
 
     @Test
     public void shouldFindOne() throws Exception {
-        long pupilId = 3L;
+        Long pupilId = 3L;
         PupilDTO pupil = pupilService.findOne(pupilId);
         assertNotNull(pupil);
-        assertEquals(new Long(pupilId), pupil.getId());
+        assertEquals(pupilId, pupil.getId());
 
     }
 
     @Test
     public void shouldDelete() throws Exception {
-        long pupilId = 3L;
+        Long pupilId = 3L;
         PupilDTO pupil = pupilService.findOne(pupilId);
         assertNotNull(pupil);
         pupilService.delete(pupilId);
