@@ -1,24 +1,14 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.SchoolNetApp;
-import com.inva.hipstertest.data.provider.FormProvider;
-import com.inva.hipstertest.data.provider.SchoolProvider;
-import com.inva.hipstertest.data.provider.UserProvider;
 import com.inva.hipstertest.domain.Form;
-import com.inva.hipstertest.domain.Pupil;
 import com.inva.hipstertest.domain.School;
 import com.inva.hipstertest.domain.User;
-import com.inva.hipstertest.repository.FormRepository;
-import com.inva.hipstertest.repository.SchoolRepository;
-import com.inva.hipstertest.repository.UserRepository;
 import com.inva.hipstertest.service.BaseServiceTest;
 import com.inva.hipstertest.service.ParentService;
 import com.inva.hipstertest.service.PupilService;
-import com.inva.hipstertest.service.UserService;
 import com.inva.hipstertest.service.dto.ParentDTO;
 import com.inva.hipstertest.service.dto.PupilDTO;
-import com.inva.hipstertest.service.dto.UserDTO;
-import org.aspectj.bridge.IMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,8 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
-import java.util.stream.Collector;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -126,5 +117,4 @@ public class PupilServiceImplTest extends BaseServiceTest {
             assertTrue(pupil.getParents().contains(parent));
         }
     }
-
 }

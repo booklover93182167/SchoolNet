@@ -10,12 +10,10 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
+
 /**
  * A DTO for the Pupil entity.
  */
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class PupilDTO implements Serializable {
 
     private Long id;
@@ -35,6 +33,20 @@ public class PupilDTO implements Serializable {
 
     private String lastName;
 
+    public PupilDTO() {
+    }
+
+    private PupilDTO(Builder builder) {
+        this.id = builder.id;
+        this.enabled = builder.enabled;
+        this.userId = builder.userId;
+        this.formId = builder.formId;
+        this.formName = builder.formName;
+        this.parents = builder.parents;
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -42,7 +54,6 @@ public class PupilDTO implements Serializable {
     public void setFirstName(String pupilFirstName) {
         this.firstName = pupilFirstName;
     }
-
 
 
     public String getLastName() {
@@ -68,6 +79,7 @@ public class PupilDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public Boolean getEnabled() {
         return enabled;
     }
@@ -111,7 +123,9 @@ public class PupilDTO implements Serializable {
 
         PupilDTO pupilDTO = (PupilDTO) o;
 
-        if ( ! Objects.equals(id, pupilDTO.id)) { return false; }
+        if (!Objects.equals(id, pupilDTO.id)) {
+            return false;
+        }
 
         return true;
     }
@@ -127,5 +141,65 @@ public class PupilDTO implements Serializable {
             "id=" + id +
             ", enabled='" + enabled + "'" +
             '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private Boolean enabled;
+        private Long userId;
+        private Long formId;
+        private String formName;
+        private Set<ParentDTO> parents;
+        private String firstName;
+        private String lastName;
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder enabled(Boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public Builder userId(Long userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Builder formId(Long formId) {
+            this.formId = formId;
+            return this;
+        }
+
+        public Builder formName(String formName) {
+            this.formName = formName;
+            return this;
+        }
+
+        public Builder parents(Set<ParentDTO> parents) {
+            this.parents = parents;
+            return this;
+        }
+
+        public Builder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public PupilDTO build() {
+            return new PupilDTO(this);
+        }
     }
 }

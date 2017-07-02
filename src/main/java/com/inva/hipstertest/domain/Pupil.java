@@ -21,10 +21,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "pupil")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Builder
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Pupil implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,7 +49,19 @@ public class Pupil implements Serializable {
 
     @ManyToMany(mappedBy = "pupils")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Parent> parents ;
+    private Set<Parent> parents;
+
+    public Pupil() {
+    }
+
+    private Pupil(Builder builder) {
+        this.id = builder.id;
+        this.enabled = builder.enabled;
+        this.user = builder.user;
+        this.attendances = builder.attendances;
+        this.form = builder.form;
+        this.parents = builder.parents;
+    }
 
     public Long getId() {
         return id;
@@ -178,5 +186,53 @@ public class Pupil implements Serializable {
             "id=" + id +
             ", enabled='" + enabled + "'" +
             '}';
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private Boolean enabled;
+        private User user;
+        private Set<Attendances> attendances = new HashSet<>();
+        private Form form;
+        private Set<Parent> parents;
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder enabled(Boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public Builder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public Builder attendances(Set<Attendances> attendances) {
+            this.attendances = attendances;
+            return this;
+        }
+
+        public Builder form(Form form) {
+            this.form = form;
+            return this;
+        }
+
+        public Builder parents(Set<Parent> parents) {
+            this.parents = parents;
+            return this;
+        }
+
+        public Pupil build(){
+            return new Pupil(this);
+        }
     }
 }

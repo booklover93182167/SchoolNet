@@ -21,10 +21,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "teacher")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Builder
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Teacher implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,8 +46,8 @@ public class Teacher implements Serializable {
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "teacher_lesson",
-               joinColumns = @JoinColumn(name="teachers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="lessons_id", referencedColumnName="id"))
+        joinColumns = @JoinColumn(name = "teachers_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "lessons_id", referencedColumnName = "id"))
     private Set<Lesson> lessons = new HashSet<>();
 
     @ManyToOne(optional = false)
@@ -62,6 +58,19 @@ public class Teacher implements Serializable {
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Schedule> schedules = new HashSet<>();
+
+    public Teacher() {
+    }
+
+    private Teacher(Builder builder) {
+        this.id = builder.id;
+        this.enabled = builder.enabled;
+        this.user = builder.user;
+        this.form = builder.form;
+        this.lessons = builder.lessons;
+        this.school = builder.school;
+        this.schedules = builder.schedules;
+    }
 
     public Long getId() {
         return id;
@@ -199,5 +208,59 @@ public class Teacher implements Serializable {
             "id=" + id +
             ", enabled='" + enabled + "'" +
             '}';
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private Boolean enabled;
+        private User user;
+        private Form form;
+        private Set<Lesson> lessons = new HashSet<>();
+        private School school;
+        private Set<Schedule> schedules = new HashSet<>();
+
+        public Builder id(Long id){
+            this.id = id;
+            return this;
+        }
+
+        public Builder enabled(Boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public Builder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public Builder form(Form form) {
+            this.form = form;
+            return this;
+        }
+
+        public Builder lessons(Set<Lesson> lessons) {
+            this.lessons = lessons;
+            return this;
+        }
+
+        public Builder school(School school) {
+            this.school = school;
+            return this;
+        }
+
+        public Builder schedules(Set<Schedule> schedules) {
+            this.schedules = schedules;
+            return this;
+        }
+
+        public Teacher build(){
+            return new Teacher(this);
+        }
     }
 }

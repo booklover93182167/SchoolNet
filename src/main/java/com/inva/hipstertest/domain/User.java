@@ -28,10 +28,6 @@ import java.time.ZonedDateTime;
 @Entity
 @Table(name = "jhi_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Builder
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,7 +45,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     @NotNull
     @Size(min = 60, max = 60)
-    @Column(name = "password_hash",length = 60)
+    @Column(name = "password_hash", length = 60)
     private String password;
 
     @Size(min = 1, max = 50)
@@ -99,6 +95,24 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @BatchSize(size = 20)
     @Cascade(CascadeType.MERGE)
     private Set<Authority> authorities = new HashSet<>();
+
+    public User() {
+    }
+
+    private User(Builder builder) {
+        this.id = builder.id;
+        this.login = builder.login;
+        this.password = builder.password;
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.email = builder.email;
+        this.activated = builder.activated;
+        this.langKey = builder.langKey;
+        this.imageUrl = builder.imageUrl;
+        this.activationKey = builder.activationKey;
+        this.resetKey = builder.resetKey;
+        this.resetDate = builder.resetDate;
+    }
 
     public Long getId() {
         return id;
@@ -182,11 +196,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
     }
 
     public ZonedDateTime getResetDate() {
-       return resetDate;
+        return resetDate;
     }
 
     public void setResetDate(ZonedDateTime resetDate) {
-       this.resetDate = resetDate;
+        this.resetDate = resetDate;
     }
 
     public String getLangKey() {
@@ -236,5 +250,89 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", langKey='" + langKey + '\'' +
             ", activationKey='" + activationKey + '\'' +
             "}";
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private String login;
+        private String password;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private boolean activated = false;
+        private String langKey;
+        private String imageUrl;
+        private String activationKey;
+        private String resetKey;
+        private ZonedDateTime resetDate = null;
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder login(String login) {
+            this.login = login;
+            return this;
+        }
+
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder activated(Boolean activated) {
+            this.activated = activated;
+            return this;
+        }
+
+        public Builder langKey(String langKey) {
+            this.langKey = langKey;
+            return this;
+        }
+
+        public Builder imageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+            return this;
+        }
+
+        public Builder activationKey(String activationKey) {
+            this.activationKey = activationKey;
+            return this;
+        }
+
+        public Builder resetKey(String resetKey) {
+            this.resetKey = resetKey;
+            return this;
+        }
+
+        public Builder resetDate(ZonedDateTime resetDate) {
+            this.resetDate = resetDate;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
     }
 }

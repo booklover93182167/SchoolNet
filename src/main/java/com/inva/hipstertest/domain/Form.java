@@ -21,10 +21,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "form")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Builder
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Form implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,6 +54,19 @@ public class Form implements Serializable {
     @OneToOne
     @JoinColumn(unique = true)
     private Teacher teacher;
+
+    public Form() {
+    }
+
+    private Form(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.enabled = builder.enabled;
+        this.pupils = builder.pupils;
+        this.schedules = builder.schedules;
+        this.school = builder.school;
+        this.teacher = builder.teacher;
+    }
 
     public Long getId() {
         return id;
@@ -196,5 +205,59 @@ public class Form implements Serializable {
             ", name='" + name + "'" +
             ", enabled='" + enabled + "'" +
             '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private String name;
+        private Boolean enabled;
+        private Set<Pupil> pupils = new HashSet<>();
+        private Set<Schedule> schedules = new HashSet<>();
+        private School school;
+        private Teacher teacher;
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder enabled(Boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public Builder pupils(Set<Pupil> pupils) {
+            this.pupils = pupils;
+            return this;
+        }
+
+        public Builder schedules(Set<Schedule> schedules) {
+            this.schedules = schedules;
+            return this;
+        }
+
+        public Builder school(School school) {
+            this.school = school;
+            return this;
+        }
+
+        public Builder teacher(Teacher teacher) {
+            this.teacher = teacher;
+            return this;
+        }
+
+        public Form build() {
+            return new Form(this);
+        }
     }
 }

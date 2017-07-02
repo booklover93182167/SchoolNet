@@ -17,10 +17,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "parent")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Builder
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Parent implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,9 +37,19 @@ public class Parent implements Serializable {
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "parent_pupil",
-               joinColumns = @JoinColumn(name="parents_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="pupils_id", referencedColumnName="id"))
+        joinColumns = @JoinColumn(name = "parents_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "pupils_id", referencedColumnName = "id"))
     private Set<Pupil> pupils;
+
+    public Parent() {
+    }
+
+    private Parent(Builder builder) {
+        this.id = builder.id;
+        this.enabled = builder.enabled;
+        this.user = builder.user;
+        this.pupils = builder.pupils;
+    }
 
     public Long getId() {
         return id;
@@ -130,5 +136,41 @@ public class Parent implements Serializable {
             "id=" + id +
             ", enabled='" + enabled + "'" +
             '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private Boolean enabled;
+        private User user;
+        private Set<Pupil> pupils;
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder enabled(Boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public Builder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public Builder pupils(Set<Pupil> pupils) {
+            this.pupils = pupils;
+            return this;
+        }
+
+        public Parent build() {
+            return new Parent(this);
+        }
     }
 }

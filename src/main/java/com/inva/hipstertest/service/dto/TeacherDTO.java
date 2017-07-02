@@ -1,5 +1,6 @@
 package com.inva.hipstertest.service.dto;
 
+import com.inva.hipstertest.domain.Lesson;
 import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.dto.LessonDTO;
 import lombok.AllArgsConstructor;
@@ -11,9 +12,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class TeacherDTO implements Serializable {
 
     private Long id;
@@ -26,7 +25,7 @@ public class TeacherDTO implements Serializable {
     private Long formId;
 
     private String formName;
-    private FormDTO form;   // what
+    private FormDTO form;   // what TODO: remove this field and then correct builder
 
     private Set<LessonDTO> lessons = new HashSet<>(); // the hell
 
@@ -42,6 +41,25 @@ public class TeacherDTO implements Serializable {
 
     private String login;
 
+    public TeacherDTO() {
+    }
+
+    public TeacherDTO(Builder builder) {
+        this.id = builder.id;
+        this.enabled = builder.enabled;
+        this.userId = builder.userId;
+        this.formId = builder.formId;
+        this.formName = builder.formName;
+        this.form = builder.form;
+        this.lessons = builder.lessons;
+        this.lessonsName = builder.lessonsName;
+        this.schoolId = builder.schoolId;
+        this.lastName = builder.lastName;
+        this.firstName = builder.firstName;
+        this.email = builder.email;
+        this.login = builder.login;
+    }
+
     public FormDTO getForm() {
         return form;
     }
@@ -50,7 +68,7 @@ public class TeacherDTO implements Serializable {
         this.form = form;
     }
 
-    public Set<String > getLessonsName() {
+    public Set<String> getLessonsName() {
         return lessonsName;
     }
 
@@ -73,6 +91,7 @@ public class TeacherDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public Boolean getEnabled() {
         return enabled;
     }
@@ -157,7 +176,9 @@ public class TeacherDTO implements Serializable {
 
         TeacherDTO teacherDTO = (TeacherDTO) o;
 
-        if ( ! Objects.equals(id, teacherDTO.id)) { return false; }
+        if (!Objects.equals(id, teacherDTO.id)) {
+            return false;
+        }
 
         return true;
     }
@@ -173,5 +194,95 @@ public class TeacherDTO implements Serializable {
             "id=" + id +
             ", enabled='" + enabled + "'" +
             '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private Boolean enabled;
+        private Long userId;
+        private Long formId;
+        private String formName;
+        private FormDTO form;
+        private Set<LessonDTO> lessons = new HashSet<>();
+        private Set<String> lessonsName = new HashSet<>();
+        private Long schoolId;
+        private String lastName;
+        private String firstName;
+        private String email;
+        private String login;
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder enabled(Boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public Builder userId(Long userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Builder formId(Long formId) {
+            this.formId = formId;
+            return this;
+        }
+
+        public Builder formName(String formName) {
+            this.formName = formName;
+            return this;
+        }
+
+        public Builder form(FormDTO form) {
+            this.form = form;
+            return this;
+        }
+
+        public Builder lessons(Set<LessonDTO> lessons) {
+            this.lessons = lessons;
+            return this;
+        }
+
+        public Builder lessonsName(Set<String> lessonsName) {
+            this.lessonsName = lessonsName;
+            return this;
+        }
+
+        public Builder schoolId(Long schoolId) {
+            this.schoolId = schoolId;
+            return this;
+        }
+
+        public Builder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder login(String login) {
+            this.login = login;
+            return this;
+        }
+
+        public TeacherDTO build() {
+            return new TeacherDTO(this);
+        }
     }
 }

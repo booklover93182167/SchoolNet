@@ -37,7 +37,7 @@ public class TeacherServiceImplTest extends BaseServiceTest{
     }
 
     @Test
-    public void save() throws Exception {
+    public void shouldSave() throws Exception {
         TeacherDTO teacherDTO = TeacherDTO.builder()
             .enabled(true)
             .userId(user.getId())

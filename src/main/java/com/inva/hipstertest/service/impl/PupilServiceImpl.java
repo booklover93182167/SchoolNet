@@ -53,10 +53,6 @@ public class PupilServiceImpl implements PupilService {
     public PupilDTO save(PupilDTO pupilDTO) {
         log.debug("Request to save Pupil : {}", pupilDTO);
         Pupil pupil = pupilMapper.pupilDTOToPupil(pupilDTO);
-        // refresh entities from database
-        pupil.setUser(userRepository.findOne(pupil.getUser().getId()));
-        pupil.setForm(formRepository.findOne(pupil.getForm().getId()));
-
         pupil = pupilRepository.save(pupil);
         PupilDTO result = pupilMapper.pupilToPupilDTO(pupil);
         return result;
