@@ -24,7 +24,7 @@ public class UserProvider {
             .build();
     }
 
-    public User persistUserDefault(){
+    public User persistUserDefault() {
         return userRepository.save(getUser());
     }
 }

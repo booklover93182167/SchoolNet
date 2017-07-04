@@ -1,9 +1,8 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.SchoolNetApp;
-import com.inva.hipstertest.domain.Form;
-import com.inva.hipstertest.domain.School;
-import com.inva.hipstertest.domain.User;
+import com.inva.hipstertest.data.provider.UserProvider;
+import com.inva.hipstertest.domain.*;
 import com.inva.hipstertest.service.BaseServiceTest;
 import com.inva.hipstertest.service.ParentService;
 import com.inva.hipstertest.service.PupilService;
@@ -34,33 +33,28 @@ public class PupilServiceImplTest extends BaseServiceTest {
     @Autowired
     private PupilService pupilService;
 
-    @Autowired
-    private ParentService parentService;
-
     private User user;
-    private School school;
     private Form form;
+    private Pupil pupil;
+    private School school;
+    private Parent parent;
 
     @Before
     public void setUp() throws Exception {
-        user = userProvider.persistUserDefault();
         school = schoolProvider.persistSchoolDefault();
         form = formProvider.persistFormWithSchool(school);
+        user = userProvider.persistUserDefault();
+//        pupil = pupilProvider.persistPupilWithUser(user, form);
+        parent = parentProvider.persistParentWithUser(user);
     }
-
 
     @Test
     public void shouldSave() throws Exception {
         // arrange
-        Set<ParentDTO> parents = new HashSet<ParentDTO>();
         PupilDTO pupilDTO = PupilDTO.builder()
-            .firstName(user.getFirstName())
-            .lastName(user.getLastName())
             .enabled(true)
             .formId(form.getId())
             .userId(user.getId())
-            .parents(parents)
-            .formName(form.getName())
             .build();
 
         // act
@@ -80,16 +74,15 @@ public class PupilServiceImplTest extends BaseServiceTest {
 
     @Test
     public void shouldFindOne() throws Exception {
-        Long pupilId = 3L;
+        Long pupilId = pupil.getId();
         PupilDTO pupil = pupilService.findOne(pupilId);
         assertNotNull(pupil);
         assertEquals(pupilId, pupil.getId());
-
     }
 
     @Test
     public void shouldDelete() throws Exception {
-        Long pupilId = 3L;
+        Long pupilId = 4L;
         PupilDTO pupil = pupilService.findOne(pupilId);
         assertNotNull(pupil);
         pupilService.delete(pupilId);
@@ -99,18 +92,19 @@ public class PupilServiceImplTest extends BaseServiceTest {
 
     @Test
     public void shouldFindAllByFormId() throws Exception {
-        Long formId = 4L;
+        Long formId = form.getId();
         List<PupilDTO> pupils = pupilService.findAllByFormId(formId);
         assertNotNull(pupils);
         assertTrue(!pupils.isEmpty());
-        PupilDTO pupilDTO = pupils.get(0);
-        assertNotNull(pupilDTO);
-        assertTrue(formId.equals(pupilDTO.getFormId()));
+        for (PupilDTO pupil :
+            pupils) {
+            assertNotNull(pupil);
+            assertTrue(formId.equals(pupil.getFormId()));
+        }
     }
 
     @Test
     public void shouldFindAllByParentId() throws Exception {
-        ParentDTO parent = parentService.findOne(4L);
         List<PupilDTO> pupils = pupilService.findAllByParentId(parent.getId());
         assertNotNull(pupils);
         for (PupilDTO pupil : pupils) {

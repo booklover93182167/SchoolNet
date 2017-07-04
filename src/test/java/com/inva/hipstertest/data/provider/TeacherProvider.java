@@ -27,6 +27,15 @@ public class TeacherProvider {
             .build();
     }
 
+    public static Teacher getTeacher(Long id) {
+        return Teacher.builder()
+            .id(id)
+            .enabled(true)
+            .form(FormProvider.getForm())
+            .user(UserProvider.getUser())
+            .build();
+    }
+
     public Teacher persistTeacherDefault(){
         return teacherRepository.save(getTeacher());
     }
