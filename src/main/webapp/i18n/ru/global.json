@@ -38,6 +38,7 @@
                 "parentMySuffix": "Родитель",
                 "userAddon": "User Addon",
                 "course": "Курс",
+                "lessonType": "Тип урока",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
