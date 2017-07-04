@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class CourseServiceImpl implements CourseService{
 
     private final Logger log = LoggerFactory.getLogger(CourseServiceImpl.class);
-    
+
     private final CourseRepository courseRepository;
 
     private final CourseMapper courseMapper;
@@ -51,7 +51,7 @@ public class CourseServiceImpl implements CourseService{
 
     /**
      *  Get all the courses.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -88,4 +88,13 @@ public class CourseServiceImpl implements CourseService{
         log.debug("Request to delete Course : {}", id);
         courseRepository.delete(id);
     }
+
+    @Override
+    public List<CourseDTO> findByTeacherId(Long teacherId) {
+        log.debug("Request to get classes and subjects where teacher {} gives lessons", teacherId);
+        List<Course> formsAndLessons = courseRepository.findByTeacherId(teacherId);
+        List<CourseDTO> formsAndLessonsDTOs = courseMapper.coursesToCourseDTOs(formsAndLessons);
+        return formsAndLessonsDTOs;
+    }
+
 }

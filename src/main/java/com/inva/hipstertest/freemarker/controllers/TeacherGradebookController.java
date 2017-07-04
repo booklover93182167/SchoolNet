@@ -1,13 +1,7 @@
 package com.inva.hipstertest.freemarker.controllers;
 
-import com.inva.hipstertest.service.AttendancesService;
-import com.inva.hipstertest.service.PupilService;
-import com.inva.hipstertest.service.ScheduleService;
-import com.inva.hipstertest.service.TeacherService;
-import com.inva.hipstertest.service.dto.AttendancesDTO;
-import com.inva.hipstertest.service.dto.PupilDTO;
-import com.inva.hipstertest.service.dto.ScheduleDTO;
-import com.inva.hipstertest.service.dto.TeacherDTO;
+import com.inva.hipstertest.service.*;
+import com.inva.hipstertest.service.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -32,36 +26,38 @@ public class TeacherGradebookController {
     private final ScheduleService scheduleService;
     private final PupilService pupilService;
     private final AttendancesService attendancesService;
+    private final CourseService courseService;
 
-    public TeacherGradebookController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService, AttendancesService attendancesService) {
+    public TeacherGradebookController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService, AttendancesService attendancesService, CourseService courseService) {
         this.teacherService = teacherService;
         this.scheduleService = scheduleService;
         this.pupilService = pupilService;
         this.attendancesService = attendancesService;
+        this.courseService = courseService;
     }
 
     @RequestMapping(value = "/freemarker/teacher-gradebook", method = RequestMethod.GET)
     public ModelAndView home(@ModelAttribute("model") ModelMap model) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
-        List<ScheduleDTO> formsAndLessons = scheduleService.findFormsAndLessonsByTeacherId(teacher.getId());
+        List<CourseDTO> formsAndLessons = courseService.findByTeacherId(teacher.getId());
         if(formsAndLessons.isEmpty()) {
             return new ModelAndView("redirect:/freemarker/error");
         }
         Collections.sort(formsAndLessons, (o1, o2) -> o1.getFormName().compareTo(o2.getFormName()));
-        ScheduleDTO formAndLesson = formsAndLessons.get(0);
+        CourseDTO formAndLesson = formsAndLessons.get(0);
         return new ModelAndView("redirect:/freemarker/teacher-gradebook/" + formAndLesson.getFormId() + "/" + formAndLesson.getLessonId());
     }
 
     @RequestMapping(value = "/freemarker/teacher-gradebook/{formId}/{lessonId}", method = RequestMethod.GET)
     public String gradebook(@ModelAttribute("model") ModelMap model, @PageableDefault(value = 10) Pageable pageable, @PathVariable Long formId, @PathVariable Long lessonId) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
-        List<ScheduleDTO> formsAndLessons = scheduleService.findFormsAndLessonsByTeacherId(teacher.getId());
+        List<CourseDTO> formsAndLessons = courseService.findByTeacherId(teacher.getId());
         if(formsAndLessons.isEmpty()) {
             return "redirect:/freemarker/error";
         }
-        ScheduleDTO formAndLesson = null;
+        CourseDTO formAndLesson = null;
 
-        for(ScheduleDTO item : formsAndLessons) {
+        for(CourseDTO item : formsAndLessons) {
             if(item.getFormId() == formId && item.getLessonId() == lessonId) {
                 formAndLesson = item;
             }

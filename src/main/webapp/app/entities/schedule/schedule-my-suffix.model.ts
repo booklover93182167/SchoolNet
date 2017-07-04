@@ -15,7 +15,7 @@ export class ScheduleMySuffix {
         public classroomName?: string,
         public teacherLastName?: string,
         public teacherFirstName?: string,
-
+        public courseId?: number,
     ) {
         this.enabled = false;
     }

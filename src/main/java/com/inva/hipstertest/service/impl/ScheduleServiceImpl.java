@@ -161,14 +161,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<ScheduleDTO> findFormsAndLessonsByTeacherId(Long teacherId) {
-        log.debug("Request to get classes and subjects where teacher {} gives lessons", teacherId);
-        List<Schedule> formsAndLessons = scheduleRepository.findFormsAndLessonsByTeacherId(teacherId);
-        List<ScheduleDTO> formsAndLessonsDTOs = scheduleMapper.schedulesToScheduleDTOs(formsAndLessons);
-        return formsAndLessonsDTOs;
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public Page<ScheduleDTO> findSchedulesByTeacherIdFormIdSubjectIdMaxDate(Pageable pageable, Long teacherId, Long formId, Long lessonId, ZonedDateTime today) {
         log.debug("Request to get lessons dates where teacher {} gives lessons for class {} on subject {}", teacherId, formId, lessonId);

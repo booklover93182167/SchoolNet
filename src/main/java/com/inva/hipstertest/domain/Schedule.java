@@ -41,26 +41,25 @@ public class Schedule implements Serializable {
     @Column(name = "enabled", nullable = false)
     private Boolean enabled;
 
-    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "schedule")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Attendances> attendances = new HashSet<>();
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
     private Lesson lesson;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
     private Form form;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
     private Classroom classroom;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
     private Teacher teacher;
+
+    @ManyToOne
+    private Course course;
 
     public Long getId() {
         return id;
@@ -190,13 +189,26 @@ public class Schedule implements Serializable {
         return teacher;
     }
 
+    public Schedule teacher(Teacher teacher) {
+        this.teacher = teacher;
+        return this;
+    }
+
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
 
-    public Schedule teacher(Teacher teacher) {
-        this.teacher = teacher;
+    public Course getCourse() {
+        return course;
+    }
+
+    public Schedule course(Course course) {
+        this.course = course;
         return this;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @Override

@@ -34,15 +34,17 @@ public class ScheduleDTO implements Serializable {
 
     private Long teacherId;
 
-    private String teacherLastName;
-
-    private String teacherFirstName;
+    private Long courseId;
 
     private String lessonName;
 
     private String formName;
 
     private String classroomName;
+
+    private String teacherFirstName;
+
+    private String teacherLastName;
 
     public Long getId() {
         return id;
@@ -51,6 +53,7 @@ public class ScheduleDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public ZonedDateTime getDate() {
         return date;
     }
@@ -58,6 +61,7 @@ public class ScheduleDTO implements Serializable {
     public void setDate(ZonedDateTime date) {
         this.date = date;
     }
+
     public String getHomework() {
         return homework;
     }
@@ -65,6 +69,7 @@ public class ScheduleDTO implements Serializable {
     public void setHomework(String homework) {
         this.homework = homework;
     }
+
     public Integer getLessonPosition() {
         return lessonPosition;
     }
@@ -72,6 +77,7 @@ public class ScheduleDTO implements Serializable {
     public void setLessonPosition(Integer lessonPosition) {
         this.lessonPosition = lessonPosition;
     }
+
     public Boolean getEnabled() {
         return enabled;
     }
@@ -112,6 +118,14 @@ public class ScheduleDTO implements Serializable {
         this.teacherId = teacherId;
     }
 
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
+
     public String getLessonName() {
         return lessonName;
     }
@@ -136,20 +150,20 @@ public class ScheduleDTO implements Serializable {
         this.classroomName = classroomName;
     }
 
-    public String getTeacherLastName() {
-        return teacherLastName;
-    }
-
-    public void setTeacherLastName(String teacherLastName) {
-        this.teacherLastName = teacherLastName;
-    }
-
     public String getTeacherFirstName() {
         return teacherFirstName;
     }
 
     public void setTeacherFirstName(String teacherFirstName) {
         this.teacherFirstName = teacherFirstName;
+    }
+
+    public String getTeacherLastName() {
+        return teacherLastName;
+    }
+
+    public void setTeacherLastName(String teacherLastName) {
+        this.teacherLastName = teacherLastName;
     }
 
     @Override
@@ -162,26 +176,29 @@ public class ScheduleDTO implements Serializable {
         }
 
         ScheduleDTO scheduleDTO = (ScheduleDTO) o;
-
-        if ( ! Objects.equals(id, scheduleDTO.id)) { return false; }
-
-        return true;
+        if(scheduleDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), scheduleDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(getId());
     }
 
     @Override
     public String toString() {
         return "ScheduleDTO{" +
-            "id=" + id +
-            ", date='" + date + "'" +
-            ", homework='" + homework + "'" +
-            ", lessonPosition='" + lessonPosition + "'" +
-            ", enabled='" + enabled + "'" +
-            '}';
+            "id=" + getId() +
+            ", date='" + getDate() + "'" +
+            ", homework='" + getHomework() + "'" +
+            ", lessonPosition='" + getLessonPosition() + "'" +
+            ", enabled='" + getEnabled() + "'" +
+            ", course='" + getCourseId() + "'" +
+            ", form='" + getFormName() + "'" +
+            ", lesson='" + getLessonName() + "'" +
+            ", teacher='" + getTeacherFirstName() + " " + getTeacherLastName() + "'" +
+            "}";
     }
-
 }

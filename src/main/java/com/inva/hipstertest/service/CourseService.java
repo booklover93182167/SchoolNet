@@ -20,7 +20,7 @@ public interface CourseService {
 
     /**
      *  Get all the courses.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -40,4 +40,7 @@ public interface CourseService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    List<CourseDTO> findByTeacherId(Long teacherId);
+
 }

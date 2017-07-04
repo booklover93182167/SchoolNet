@@ -77,8 +77,6 @@ public interface ScheduleService {
      */
     List<ScheduleDTO> findAllBySchoolId(Long schoolId);
 
-    List<ScheduleDTO> findFormsAndLessonsByTeacherId(Long teacherId);
-
     Page<ScheduleDTO> findSchedulesByTeacherIdFormIdSubjectIdMaxDate(Pageable pageable, Long teacherId, Long formId, Long lessonId, ZonedDateTime today);
 
     Long countSchedulesForGradeBook(Long teacherId, Long formId, Long lessonId, ZonedDateTime today);

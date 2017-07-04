@@ -65,7 +65,19 @@
                   separator=";"
                   tableName="teacher_lesson"/>
         <loadData encoding="UTF-8"
-                  file="config/liquibase/schedule2.csv"
+                  file="config/liquibase/course.csv"
+                  separator=";"
+                  tableName="course">
+            <column name="enabled" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/lesson_type.csv"
+                  separator=";"
+                  tableName="lesson_type">
+            <column name="enabled" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/schedule.csv"
                   separator=";"
                   tableName="schedule">
             <column name="enabled" type="boolean"/>
@@ -80,18 +92,6 @@
                   file="config/liquibase/user_authority.csv"
                   separator=";"
                   tableName="jhi_user_authority"/>
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/course.csv"
-                  separator=";"
-                  tableName="course">
-            <column name="enabled" type="boolean"/>
-        </loadData>
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/lesson_type.csv"
-                  separator=";"
-                  tableName="lesson_type">
-            <column name="enabled" type="boolean"/>
-        </loadData>
     </changeSet>
 </databaseChangeLog>
 

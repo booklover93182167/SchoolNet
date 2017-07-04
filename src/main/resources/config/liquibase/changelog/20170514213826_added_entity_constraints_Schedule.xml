@@ -7,7 +7,7 @@
         Added the constraints for entity Schedule.
     -->
     <changeSet id="20170514213826-2" author="jhipster">
-
+        
         <addForeignKeyConstraint baseColumnNames="lesson_id"
                                  baseTableName="schedule"
                                  constraintName="fk_schedule_lesson_id"
@@ -31,6 +31,12 @@
                                  constraintName="fk_schedule_teacher_id"
                                  referencedColumnNames="id"
                                  referencedTableName="teacher"/>
+
+        <addForeignKeyConstraint baseColumnNames="course_id"
+                                 baseTableName="schedule"
+                                 constraintName="fk_schedule_course_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="course"/>
 
     </changeSet>
 </databaseChangeLog>
