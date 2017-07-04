@@ -63,12 +63,12 @@ jsSources = [
 
                                     <#if attendanceExists == true>
                                         <td class="for-clear attendance" data-pupil-id="${pupil.id}" data-schedule-id="${schedule.id}" data-attendance-id="${att.id}">
-                                            <div id="div-attendance-${pupil.id}-${schedule.id}" data-attendance-id="${att.id}"><#if !att.grade??>-<#elseif att.grade == 0>N<#else>${att.grade}</#if></div>
+                                            <div id="div-attendance-${pupil.id}-${schedule.id}"><#if !att.grade??>-<#elseif att.grade == 0>N<#else>${att.grade}</#if></div>
                                             <input class="form-control" maxlength="2" id="input-attendance-${pupil.id}-${schedule.id}" value="<#if att.grade??>${att.grade}</#if>" type="hidden">
                                         </td>
                                     <#else>
                                         <td class="for-clear attendance" data-pupil-id="${pupil.id}" data-schedule-id="${schedule.id}" data-attendance-id="-1">
-                                            <div id="div-attendance-${pupil.id}-${schedule.id}" data-attendance-id="">-</div>
+                                            <div id="div-attendance-${pupil.id}-${schedule.id}">-</div>
                                             <input class="form-control" maxlength="2" id="input-attendance-${pupil.id}-${schedule.id}" value="" type="hidden">
                                         </td>
                                     </#if>

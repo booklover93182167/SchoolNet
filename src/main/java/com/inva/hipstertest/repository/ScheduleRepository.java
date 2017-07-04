@@ -34,13 +34,9 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
         "schedule.date between :startDate and :endDate")
     List<Schedule> findAllMembersByFormIdAndDateBetween(@Param("formId") Long formId, @Param("startDate") ZonedDateTime startDate, @Param("endDate") ZonedDateTime endDate);
 
-//    Identify specific subjects for specific classes where the specific teacher gives lessons
-//    @Query("select s from Schedule s where s.enabled = true and s.teacher.id = :teacherId group by s.form.id, s.lesson.id")
-//    PostgreSql fix, need correction of database
-    @Query(value="select *, max(id), max(jhi_date), max(homework), max(lesson_position), max(classroom_id), max(teacher_id) from schedule where enabled = true and teacher_id = :teacherId group by form_id, lesson_id, enabled", nativeQuery = true)
+    @Query("select s from Schedule s where s.enabled = true and s.teacher.id = :teacherId group by s.form.id, s.lesson.id")
     List<Schedule> findFormsAndLessonsByTeacherId(@Param("teacherId") Long teacherId);
 
-    // Identify dates, when for specific class, on specific subject, specific teacher gives lessons
     @Query("select s from Schedule s where s.enabled = true and s.teacher.id = :teacherId and s.form.id = :formId and s.lesson.id = :lessonId and s.date <= :today order by s.date")
     Page<Schedule> findSchedulesByTeacherIdFormIdSubjectIdMaxDate(Pageable pageable, @Param("teacherId") Long teacherId, @Param("formId") Long formId, @Param("lessonId") Long lessonId, @Param("today") ZonedDateTime today);
 

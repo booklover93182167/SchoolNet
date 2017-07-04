@@ -103,8 +103,8 @@ public class TeacherGradebookController {
     public @ResponseBody
     AttendancesDTO updateSchedule(@RequestBody AttendancesDTO attendancesDTO) {
         log.debug("REST request to create/update Schedule : {}", attendancesDTO);
-        attendancesService.save(attendancesDTO);
-        return attendancesDTO;
+        AttendancesDTO newAttendancesDTO = attendancesService.save(attendancesDTO);
+        return newAttendancesDTO;
     }
 
 }
