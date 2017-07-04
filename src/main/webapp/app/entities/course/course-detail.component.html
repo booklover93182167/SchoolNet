@@ -1,0 +1,43 @@
+
+<div *ngIf="course">
+    <h2><span jhiTranslate="schoolNetApp.course.detail.title">Course</span> {{course.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="schoolNetApp.course.enabled">Enabled</span></dt>
+        <dd>
+            <span>{{course.enabled}}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolNetApp.course.form">Form</span></dt>
+        <dd>
+            <div *ngIf="course.formId">
+                <a [routerLink]="['/form-my-suffix', course.formId]">{{course.formId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="schoolNetApp.course.lesson">Lesson</span></dt>
+        <dd>
+            <div *ngIf="course.lessonId">
+                <a [routerLink]="['/lesson-my-suffix', course.lessonId]">{{course.lessonId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="schoolNetApp.course.teacher">Teacher</span></dt>
+        <dd>
+            <div *ngIf="course.teacherId">
+                <a [routerLink]="['/teacher-my-suffix', course.teacherId]">{{course.teacherId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'course/'+ course.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
