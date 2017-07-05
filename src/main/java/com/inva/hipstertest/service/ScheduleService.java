@@ -3,10 +3,7 @@ package com.inva.hipstertest.service;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -62,14 +59,6 @@ public interface ScheduleService {
     List<ScheduleDTO> findAllByTeacherIdOrderByDate(Long teacherId);
 
     /**
-     * Find all schedules by form id and requested date.
-     *
-     * @param date requested date
-     * @return the list of entities
-     */
-    List<ScheduleDTO> findAllByFormIdAndDate(String date);
-
-    /**
      * Get all the schedules by school id.
      *
      * @param schoolId the id of the school
@@ -80,5 +69,7 @@ public interface ScheduleService {
     Page<ScheduleDTO> findSchedulesByTeacherIdFormIdSubjectIdMaxDate(Pageable pageable, Long teacherId, Long formId, Long lessonId, ZonedDateTime today);
 
     Long countSchedulesForGradeBook(Long teacherId, Long formId, Long lessonId, ZonedDateTime today);
+
+    List<ScheduleDTO> findAllByFormIdAndDateBetween(Long formId, ZonedDateTime startDate, ZonedDateTime endDate);
 
 }

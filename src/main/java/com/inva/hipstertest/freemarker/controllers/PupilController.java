@@ -2,6 +2,7 @@ package com.inva.hipstertest.freemarker.controllers;
 
 import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.service.dto.*;
+import com.inva.hipstertest.service.util.DataUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,8 +61,12 @@ public class PupilController {
     public @ResponseBody
     List<ScheduleDTO> getListSchedulesByDate(@PathVariable String date) {
         log.debug("Request to get schedule for current pupil by date : {}", date);
-        List<ScheduleDTO> scheduleDTO = scheduleService.findAllByFormIdAndDate(date);
-        return scheduleDTO;
+        PupilDTO pupilDTO = pupilService.findPupilByCurrentUser();
+        ZonedDateTime dateStart = DataUtil.getZonedDateTime(date);
+        ZonedDateTime dateEnd = dateStart.plusDays(1);
+        List<ScheduleDTO> scheduleDTOs = scheduleService.findAllByFormIdAndDateBetween(pupilDTO.getFormId(), dateStart, dateEnd);
+
+        return scheduleDTOs;
     }
 
     /**

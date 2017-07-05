@@ -1,13 +1,11 @@
 package com.inva.hipstertest.service.impl;
 
-import com.inva.hipstertest.domain.Pupil;
 import com.inva.hipstertest.domain.Schedule;
 import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.repository.ScheduleRepository;
 import com.inva.hipstertest.service.ScheduleService;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
 import com.inva.hipstertest.service.mapper.ScheduleMapper;
-import com.inva.hipstertest.service.util.DataUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -15,11 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -126,30 +120,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     /**
-     * Get all schedules by requested date and current user form id.
-     *
-     * @param date requested date
-     * @return the list of entities.
-     */
-    @Override
-    public List<ScheduleDTO> findAllByFormIdAndDate(String date) {
-        ZonedDateTime dateStart = DataUtil.getZonedDateTime(date);
-        ZonedDateTime dateEnd = dateStart.plusDays(1);
-        Pupil currentPupil = pupilRepository.findPupilByCurrentUser();
-        log.debug("Request to get schedules by pupil form and date {}", date);
-        List<Schedule> schedules = scheduleRepository.findAllMembersByFormIdAndDateBetween(currentPupil.getForm().getId(), dateStart, dateEnd);
-        List<ScheduleDTO> scheduleDTOS = scheduleMapper.schedulesToScheduleDTOs(schedules);
-        return scheduleDTOS;
-    }
-
-    /**
      * Get all the schedules by school id.
      *
      * @param schoolId the id of the school
      * @return the list of entities
      */
     @Override
-    @Transactional(readOnly = true)
     public List<ScheduleDTO> findAllBySchoolId(Long schoolId) {
         log.debug("Request to get all Schedules by school id : {}", schoolId);
         //log.debug(scheduleRepository.findAllByFormId(1L).toString());
@@ -161,16 +137,22 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Page<ScheduleDTO> findSchedulesByTeacherIdFormIdSubjectIdMaxDate(Pageable pageable, Long teacherId, Long formId, Long lessonId, ZonedDateTime today) {
         log.debug("Request to get lessons dates where teacher {} gives lessons for class {} on subject {}", teacherId, formId, lessonId);
         return scheduleRepository.findSchedulesByTeacherIdFormIdSubjectIdMaxDate(pageable, teacherId, formId, lessonId, today).map(scheduleMapper::scheduleToScheduleDTO);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Long countSchedulesForGradeBook(Long teacherId, Long formId, Long lessonId, ZonedDateTime today) {
         return scheduleRepository.countSchedulesForGradeBook(teacherId, formId, lessonId, today);
+    }
+
+    @Override
+    public List<ScheduleDTO> findAllByFormIdAndDateBetween(Long formId, ZonedDateTime startDate, ZonedDateTime endDate) {
+        log.debug("Request to get schedules by formId {} and date between {} and {}", formId, startDate, endDate);
+        List<Schedule> schedules = scheduleRepository.findAllByFormIdAndDateBetween(formId, startDate, endDate);
+        List<ScheduleDTO> scheduleDTOS = scheduleMapper.schedulesToScheduleDTOs(schedules);
+        return scheduleDTOS;
     }
 
 }
