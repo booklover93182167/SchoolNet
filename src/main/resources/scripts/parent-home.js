@@ -61,7 +61,7 @@ $(function() {
         }
     });
 
-    $("#pupil-select a:last").trigger("click");
+    $("#pupil-select a:first").trigger("click");
 
     $("#week-schedule-link").click(function () {
         $("#datepicker").show();

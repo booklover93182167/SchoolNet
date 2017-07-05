@@ -61,6 +61,9 @@ public class Schedule implements Serializable {
     @ManyToOne
     private Course course;
 
+    @ManyToOne
+    private LessonType lessonType;
+
     public Long getId() {
         return id;
     }
@@ -211,6 +214,19 @@ public class Schedule implements Serializable {
         this.course = course;
     }
 
+    public LessonType getLessonType() {
+        return lessonType;
+    }
+
+    public Schedule lessonType(LessonType lessonType) {
+        this.lessonType = lessonType;
+        return this;
+    }
+
+    public void setLessonType(LessonType lessonType) {
+        this.lessonType = lessonType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -220,25 +236,25 @@ public class Schedule implements Serializable {
             return false;
         }
         Schedule schedule = (Schedule) o;
-        if (schedule.id == null || id == null) {
+        if (schedule.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(id, schedule.id);
+        return Objects.equals(getId(), schedule.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(getId());
     }
 
     @Override
     public String toString() {
         return "Schedule{" +
-            "id=" + id +
-            ", date='" + date + "'" +
-            ", homework='" + homework + "'" +
-            ", lessonPosition='" + lessonPosition + "'" +
-            ", enabled='" + enabled + "'" +
-            '}';
+            "id=" + getId() +
+            ", date='" + getDate() + "'" +
+            ", homework='" + getHomework() + "'" +
+            ", lessonPosition='" + getLessonPosition() + "'" +
+            ", enabled='" + isEnabled() + "'" +
+            "}";
     }
 }

@@ -26,6 +26,7 @@
             <th><span jhiTranslate="schoolNetApp.schedule.classroom">Classroom</span></th>
             <th><span jhiTranslate="schoolNetApp.schedule.teacher">Teacher</span></th>
             <th><span jhiTranslate="schoolNetApp.schedule.course">Course</span></th>
+            <th><span jhiTranslate="schoolNetApp.schedule.lessonType">Lesson Type</span></th>
             <th></th>
             </tr>
             </thead>
@@ -59,6 +60,11 @@
                 <td>
                     <div *ngIf="schedule.courseId">
                         <a [routerLink]="['../course', schedule.courseId  ]" >{{schedule.courseId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="schedule.lessonTypeId">
+                        <a [routerLink]="['../lesson-type', schedule.lessonTypeId  ]" >{{schedule.lessonTypeId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

@@ -32,19 +32,27 @@ public class ScheduleDTO implements Serializable {
 
     private Long classroomId;
 
+    private String classroomName;
+
     private Long teacherId;
+
+    private String tempTeacherFirstName;
+
+    private String tempTeacherLastName;
 
     private Long courseId;
 
-    private String lessonName;
-
     private String formName;
 
-    private String classroomName;
+    private String lessonName;
 
     private String teacherFirstName;
 
     private String teacherLastName;
+
+    private Long lessonTypeId;
+
+    private String lessonTypeName;
 
     public Long getId() {
         return id;
@@ -126,44 +134,12 @@ public class ScheduleDTO implements Serializable {
         this.courseId = courseId;
     }
 
-    public String getLessonName() {
-        return lessonName;
+    public Long getLessonTypeId() {
+        return lessonTypeId;
     }
 
-    public void setLessonName(String lessonName) {
-        this.lessonName = lessonName;
-    }
-
-    public String getFormName() {
-        return formName;
-    }
-
-    public void setFormName(String formName) {
-        this.formName = formName;
-    }
-
-    public String getClassroomName() {
-        return classroomName;
-    }
-
-    public void setClassroomName(String classroomName) {
-        this.classroomName = classroomName;
-    }
-
-    public String getTeacherFirstName() {
-        return teacherFirstName;
-    }
-
-    public void setTeacherFirstName(String teacherFirstName) {
-        this.teacherFirstName = teacherFirstName;
-    }
-
-    public String getTeacherLastName() {
-        return teacherLastName;
-    }
-
-    public void setTeacherLastName(String teacherLastName) {
-        this.teacherLastName = teacherLastName;
+    public void setLessonTypeId(Long lessonTypeId) {
+        this.lessonTypeId = lessonTypeId;
     }
 
     @Override
@@ -199,6 +175,71 @@ public class ScheduleDTO implements Serializable {
             ", form='" + getFormName() + "'" +
             ", lesson='" + getLessonName() + "'" +
             ", teacher='" + getTeacherFirstName() + " " + getTeacherLastName() + "'" +
+            ", temp_teacher='" + getTempTeacherFirstName() + " " + getTempTeacherLastName() + "'" +
             "}";
+    }
+
+    public String getClassroomName() {
+        return classroomName;
+    }
+
+    public void setClassroomName(String classroomName) {
+        this.classroomName = classroomName;
+    }
+
+    public String getTempTeacherFirstName() {
+        return tempTeacherFirstName;
+    }
+
+    public void setTempTeacherFirstName(String tempTeacherFirstName) {
+        this.tempTeacherFirstName = tempTeacherFirstName;
+    }
+
+    public String getTempTeacherLastName() {
+        return tempTeacherLastName;
+    }
+
+    public void setTempTeacherLastName(String tempTeacherLastName) {
+        this.tempTeacherLastName = tempTeacherLastName;
+    }
+
+    public String getFormName() {
+        return formName;
+    }
+
+    public void setFormName(String formName) {
+        this.formName = formName;
+    }
+
+    public String getLessonName() {
+        return lessonName;
+    }
+
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
+    }
+
+    public String getTeacherFirstName() {
+        return teacherFirstName;
+    }
+
+    public void setTeacherFirstName(String teacherFirstName) {
+        this.teacherFirstName = teacherFirstName;
+    }
+
+    public String getTeacherLastName() {
+        return teacherLastName;
+    }
+
+    public void setTeacherLastName(String teacherLastName) {
+        this.teacherLastName = teacherLastName;
+    }
+
+    public String getLessonTypeName() {
+        return lessonTypeName;
+    }
+
+    public void setLessonTypeName(String lessonTypeName) {
+        this.lessonTypeName = lessonTypeName;
     }
 }

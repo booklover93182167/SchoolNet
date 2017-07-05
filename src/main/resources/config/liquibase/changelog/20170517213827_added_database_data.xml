@@ -27,7 +27,7 @@
             <column name="enabled" type="boolean"/>
         </loadData>
         <loadData encoding="UTF-8"
-                  file="config/liquibase/pupill.csv"
+                  file="config/liquibase/pupil.csv"
                   separator=";"
                   tableName="pupil">
             <column name="enabled" type="boolean"/>
@@ -94,5 +94,3 @@
                   tableName="jhi_user_authority"/>
     </changeSet>
 </databaseChangeLog>
-
-

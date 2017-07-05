@@ -90,11 +90,19 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public List<CourseDTO> findByTeacherId(Long teacherId) {
-        log.debug("Request to get classes and subjects where teacher {} gives lessons", teacherId);
-        List<Course> formsAndLessons = courseRepository.findByTeacherId(teacherId);
-        List<CourseDTO> formsAndLessonsDTOs = courseMapper.coursesToCourseDTOs(formsAndLessons);
-        return formsAndLessonsDTOs;
+    public List<CourseDTO> findAllByFormId(Long formId) {
+        log.debug("Request to get courses where formId {}", formId);
+        List<Course> courses = courseRepository.findAllByFormId(formId);
+        List<CourseDTO> courseDTOS = courseMapper.coursesToCourseDTOs(courses);
+        return courseDTOS;
+    }
+
+    @Override
+    public List<CourseDTO> findAllByTeacherId(Long teacherId) {
+        log.debug("Request to get courses where teacherId {}", teacherId);
+        List<Course> courses = courseRepository.findAllByTeacherId(teacherId);
+        List<CourseDTO> courseDTOS = courseMapper.coursesToCourseDTOs(courses);
+        return courseDTOS;
     }
 
 }

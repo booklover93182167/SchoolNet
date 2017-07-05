@@ -50,6 +50,12 @@
                 <a [routerLink]="['/course', schedule.courseId]">{{schedule.courseId}}</a>
             </div>
         </dd>
+        <dt><span jhiTranslate="schoolNetApp.schedule.lessonType">Lesson Type</span></dt>
+        <dd>
+            <div *ngIf="schedule.lessonTypeId">
+                <a [routerLink]="['/lesson-type', schedule.lessonTypeId]">{{schedule.lessonTypeId}}</a>
+            </div>
+        </dd>
     </dl>
 
     <button type="submit"

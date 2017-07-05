@@ -25,8 +25,8 @@ public class PupilController {
     private final TeacherService teacherService;
 
     public PupilController(PupilService pupilService, ScheduleService scheduleService,
-                           LessonService lessonService,
-                           AttendancesService attendancesService, TeacherService teacherService) {
+                           LessonService lessonService, AttendancesService attendancesService,
+                           TeacherService teacherService) {
         this.pupilService = pupilService;
         this.scheduleService = scheduleService;
         this.lessonService = lessonService;
@@ -100,7 +100,7 @@ public class PupilController {
     public String getCurrentPupilAttendances(Model model){
         log.debug("Request to get Attendances for current pupil");
         PupilDTO pupilDTO = pupilService.findPupilByCurrentUser();
-        model.addAttribute("lessons",lessonService.getDistinctLessonsForForm(pupilDTO.getFormId()));
+        model.addAttribute("lessons",lessonService.findAllByFormId(pupilDTO.getFormId()));
         model.addAttribute("pupilFirstName",pupilDTO.getFirstName());
         model.addAttribute("pupilLastName",pupilDTO.getLastName());
         return "attendances";

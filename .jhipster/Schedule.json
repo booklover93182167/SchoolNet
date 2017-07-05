@@ -36,6 +36,12 @@
             "otherEntityName": "course",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "lessonType",
+            "otherEntityName": "lessonType",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "fields": [

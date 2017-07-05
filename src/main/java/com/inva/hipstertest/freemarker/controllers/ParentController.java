@@ -69,7 +69,7 @@ public class ParentController {
     public @ResponseBody
     List<LessonDTO> pupilLessons(@RequestBody ParentPagePOJO parentPagePOJO){
         log.debug("Create ajax request for pupil lessons");
-        List<LessonDTO> lessonDTOs = lessonService.getDistinctLessonsForForm(parentPagePOJO.getPupilFormId());
+        List<LessonDTO> lessonDTOs = lessonService.findAllByFormId(parentPagePOJO.getPupilFormId());
         Collections.sort(lessonDTOs, (o1, o2) -> o1.getName().compareTo(o2.getName()));
         return lessonDTOs;
     }

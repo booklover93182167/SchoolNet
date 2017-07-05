@@ -39,27 +39,27 @@ public class TeacherGradebookController {
     @RequestMapping(value = "/freemarker/teacher-gradebook", method = RequestMethod.GET)
     public ModelAndView home(@ModelAttribute("model") ModelMap model) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
-        List<CourseDTO> formsAndLessons = courseService.findByTeacherId(teacher.getId());
-        if(formsAndLessons.isEmpty()) {
+        List<CourseDTO> courseDTOs = courseService.findAllByTeacherId(teacher.getId());
+        if(courseDTOs.isEmpty()) {
             return new ModelAndView("redirect:/freemarker/error");
         }
-        Collections.sort(formsAndLessons, (o1, o2) -> o1.getFormName().compareTo(o2.getFormName()));
-        CourseDTO formAndLesson = formsAndLessons.get(0);
-        return new ModelAndView("redirect:/freemarker/teacher-gradebook/" + formAndLesson.getFormId() + "/" + formAndLesson.getLessonId());
+        Collections.sort(courseDTOs, (o1, o2) -> o1.getFormName().compareTo(o2.getFormName()));
+        CourseDTO courseDTO = courseDTOs.get(0);
+        return new ModelAndView("redirect:/freemarker/teacher-gradebook/" + courseDTO.getFormId() + "/" + courseDTO.getLessonId());
     }
 
     @RequestMapping(value = "/freemarker/teacher-gradebook/{formId}/{lessonId}", method = RequestMethod.GET)
     public String gradebook(@ModelAttribute("model") ModelMap model, @PageableDefault(value = 10) Pageable pageable, @PathVariable Long formId, @PathVariable Long lessonId) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
-        List<CourseDTO> formsAndLessons = courseService.findByTeacherId(teacher.getId());
-        if(formsAndLessons.isEmpty()) {
+        List<CourseDTO> courseDTOs = courseService.findAllByTeacherId(teacher.getId());
+        if(courseDTOs.isEmpty()) {
             return "redirect:/freemarker/error";
         }
-        CourseDTO formAndLesson = null;
+        CourseDTO courseDTO = null;
 
-        for(CourseDTO item : formsAndLessons) {
+        for(CourseDTO item : courseDTOs) {
             if(item.getFormId() == formId && item.getLessonId() == lessonId) {
-                formAndLesson = item;
+                courseDTO = item;
             }
         }
 
@@ -68,20 +68,18 @@ public class TeacherGradebookController {
         Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
         List<AttendancesDTO> attendancesDTOs = attendancesService.findAllWherePupilIdInAndScheduleIdIn(teacher.getId(), formId, lessonId);
 
-        Collections.sort(formsAndLessons, (o1, o2) -> o1.getFormName().compareTo(o2.getFormName()));
+        Collections.sort(courseDTOs, (o1, o2) -> o1.getFormName().compareTo(o2.getFormName()));
         Collections.sort(pupilDTOs, comparatorLastNameFirstName);
 
         model.addAttribute("teacher", teacher.getFirstName() + " " + teacher.getLastName());
-        model.addAttribute("formsAndLessons", formsAndLessons);
-        model.addAttribute("formAndLesson", formAndLesson);
+        model.addAttribute("formsAndLessons", courseDTOs);
+        model.addAttribute("formAndLesson", courseDTO);
         model.addAttribute("pupils", pupilDTOs);
         model.addAttribute("attendances", attendancesDTOs);
         model.addAttribute("schedules", page.getContent());
         model.addAttribute("sizes", pageable.getPageSize());
         model.addAttribute("current", pageable.getPageNumber());
         model.addAttribute("longs", pages(pageable.getPageSize(), teacher.getId(), formId, lessonId, ZonedDateTime.now()));
-//        model.addAttribute("formId", formId);
-//        model.addAttribute("lessonId", lessonId);
 
         return "teacher-gradebook";
     }

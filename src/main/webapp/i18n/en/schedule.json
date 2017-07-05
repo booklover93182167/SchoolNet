@@ -24,7 +24,8 @@
             "form": "Form",
             "classroom": "Classroom",
             "teacher": "Teacher",
-            "course": "Course"
+            "course": "Course",
+            "lessonType": "Lesson Type"
         }
     }
 }

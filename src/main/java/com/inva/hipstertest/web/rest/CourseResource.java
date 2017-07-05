@@ -33,7 +33,7 @@ public class CourseResource {
     private final Logger log = LoggerFactory.getLogger(CourseResource.class);
 
     private static final String ENTITY_NAME = "course";
-        
+
     private final CourseService courseService;
 
     public CourseResource(CourseService courseService) {

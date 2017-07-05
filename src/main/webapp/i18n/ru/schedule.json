@@ -24,7 +24,8 @@
             "form": "Класс",
             "classroom": "Кабинет",
             "teacher": "Учитель",
-            "course": "Курс"
+            "course": "Курс",
+            "lessonType": "Тип урока"
         }
     }
 }
