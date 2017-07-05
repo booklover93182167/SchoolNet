@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Mapper for the entity Schedule and its DTO ScheduleDTO.
  */
-@Mapper(componentModel = "spring", uses = {LessonMapper.class, FormMapper.class, ClassroomMapper.class, TeacherMapper.class, CourseMapper.class })
+@Mapper(componentModel = "spring", uses = {LessonMapper.class, FormMapper.class, ClassroomMapper.class, TeacherMapper.class, CourseMapper.class, LessonTypeMapper.class, })
 public interface ScheduleMapper {
 
     @Mapping(source = "classroom.id", target = "classroomId")
@@ -24,6 +24,8 @@ public interface ScheduleMapper {
     @Mapping(source = "course.teacher.user.lastName", target = "teacherLastName")
     @Mapping(source = "teacher.user.firstName", target = "tempTeacherFirstName")
     @Mapping(source = "teacher.user.lastName", target = "tempTeacherLastName")
+    @Mapping(source = "lessonType.id", target = "lessonTypeId")
+    @Mapping(source = "lessonType.name", target = "lessonTypeName")
     ScheduleDTO scheduleToScheduleDTO(Schedule schedule);
 
     List<ScheduleDTO> schedulesToScheduleDTOs(List<Schedule> schedules);
@@ -34,6 +36,7 @@ public interface ScheduleMapper {
     @Mapping(source = "lessonId", target = "course.lesson")
     @Mapping(source = "formId", target = "course.form")
     @Mapping(source = "teacherId", target = "course.teacher")
+    @Mapping(source = "lessonTypeId", target = "lessonType")
     Schedule scheduleDTOToSchedule(ScheduleDTO scheduleDTO);
 
     List<Schedule> scheduleDTOsToSchedules(List<ScheduleDTO> scheduleDTOs);

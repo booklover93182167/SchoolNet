@@ -13,3 +13,12 @@
 .gradebook tr th.date {
     width: 6%;
 }
+
+tr:nth-child(even) .lesson-type-3 {
+    border: 1px solid #ffcfcf;
+    background: #ffcfcf;
+}
+tr:nth-child(odd) .lesson-type-3 {
+    border: 1px solid #ffb3b3;
+    background: #ffb3b3;
+}

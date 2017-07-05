@@ -39,22 +39,22 @@
                 <td>{{schedule.enabled}}</td>
                 <td>
                     <div *ngIf="schedule.lessonId">
-                        <a [routerLink]="['../lesson-my-suffix', schedule.lessonId  ]" >{{schedule.lessonId}}</a>
+                        <a [routerLink]="['../lesson-my-suffix', schedule.lessonId  ]" >{{schedule.lessonName}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="schedule.formId">
-                        <a [routerLink]="['../form-my-suffix', schedule.formId  ]" >{{schedule.formId}}</a>
+                        <a [routerLink]="['../form-my-suffix', schedule.formId  ]" >{{schedule.formName}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="schedule.classroomId">
-                        <a [routerLink]="['../classroom-my-suffix', schedule.classroomId  ]" >{{schedule.classroomId}}</a>
+                        <a [routerLink]="['../classroom-my-suffix', schedule.classroomId  ]" >{{schedule.classroomName}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="schedule.teacherId">
-                        <a [routerLink]="['../teacher-my-suffix', schedule.teacherId  ]" >{{schedule.teacherId}}</a>
+                        <a [routerLink]="['../teacher-my-suffix', schedule.teacherId  ]" >{{schedule.teacherFirstName}} {{schedule.teacherLastName}}</a>
                     </div>
                 </td>
                 <td>
@@ -64,7 +64,7 @@
                 </td>
                 <td>
                     <div *ngIf="schedule.lessonTypeId">
-                        <a [routerLink]="['../lesson-type', schedule.lessonTypeId  ]" >{{schedule.lessonTypeId}}</a>
+                        <a [routerLink]="['../lesson-type', schedule.lessonTypeId  ]" >{{schedule.lessonTypeName}}</a>
                     </div>
                 </td>
                 <td class="text-right">

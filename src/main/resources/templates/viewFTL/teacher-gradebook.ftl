@@ -42,7 +42,7 @@ jsSources = [
                         <th class="number"><@spring.message "teacher.gradebook.table.pupil.position"/></th>
                         <th class="fullname"><@spring.message "teacher.gradebook.table.pupil.name"/></th>
                         <#list model["schedules"] as schedule>
-                            <th class="for-clear date" data-schedule-id="${schedule.id}">${schedule.date?substring(8,10)}/${schedule.date?substring(5,7)}</th>
+                            <th class="for-clear date lesson-type-${schedule.lessonTypeId}" title="${schedule.lessonTypeName}" data-schedule-id="${schedule.id}">${schedule.date?substring(8,10)}/${schedule.date?substring(5,7)}</th>
                         </#list>
                     </tr>
 
@@ -62,12 +62,12 @@ jsSources = [
                                 </#list>
 
                                     <#if attendanceExists == true>
-                                        <td class="for-clear attendance" data-pupil-id="${pupil.id}" data-schedule-id="${schedule.id}" data-attendance-id="${att.id}">
+                                        <td class="for-clear attendance lesson-type-${schedule.lessonTypeId}" data-pupil-id="${pupil.id}" data-schedule-id="${schedule.id}" data-attendance-id="${att.id}">
                                             <div id="div-attendance-${pupil.id}-${schedule.id}"><#if !att.grade??>-<#elseif att.grade == 0>N<#else>${att.grade}</#if></div>
                                             <input class="form-control" maxlength="2" id="input-attendance-${pupil.id}-${schedule.id}" value="<#if att.grade??>${att.grade}</#if>" type="hidden">
                                         </td>
                                     <#else>
-                                        <td class="for-clear attendance" data-pupil-id="${pupil.id}" data-schedule-id="${schedule.id}" data-attendance-id="-1">
+                                        <td class="for-clear attendance lesson-type-${schedule.lessonTypeId}" data-pupil-id="${pupil.id}" data-schedule-id="${schedule.id}" data-attendance-id="-1">
                                             <div id="div-attendance-${pupil.id}-${schedule.id}">-</div>
                                             <input class="form-control" maxlength="2" id="input-attendance-${pupil.id}-${schedule.id}" value="" type="hidden">
                                         </td>
