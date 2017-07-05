@@ -22,9 +22,8 @@ public interface AttendancesRepository extends JpaRepository<Attendances, Long> 
         "a.schedule.id in (select s.id from Schedule s where s.course.lesson.id = :lessonId)")
     List<Attendances> findAllByPupilAndLessonId(@Param("pupilId") Long pupilId, @Param("lessonId") Long lessonId);
 
-    @Query("select a from Attendances a where a.enabled = true " +
-        "and a.pupil.id in (select p.id from Pupil p left join p.form form where p.enabled = true and form.id = :formId) " +
-        "and a.schedule.id in (select s.id from Schedule s where s.enabled = true and s.course.teacher.id = :teacherId and s.course.form.id = :formId and s.course.lesson.id = :lessonId)")
+    @Query("select a from Attendances a where a.enabled = true and a.schedule.id in " +
+        "(select s.id from Schedule s where s.enabled = true and s.course.teacher.id = :teacherId and s.course.form.id = :formId and s.course.lesson.id = :lessonId)")
     List<Attendances> findAllWherePupilIdInAndScheduleIdIn(@Param("teacherId") Long teacherId, @Param("formId") Long formId, @Param("lessonId") Long lessonId);
 
 }

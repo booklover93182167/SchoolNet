@@ -28,7 +28,9 @@ public class TeacherGradebookController {
     private final AttendancesService attendancesService;
     private final CourseService courseService;
 
-    public TeacherGradebookController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService, AttendancesService attendancesService, CourseService courseService) {
+    public TeacherGradebookController(TeacherService teacherService, ScheduleService scheduleService,
+                                      PupilService pupilService, AttendancesService attendancesService,
+                                      CourseService courseService) {
         this.teacherService = teacherService;
         this.scheduleService = scheduleService;
         this.pupilService = pupilService;
@@ -37,37 +39,32 @@ public class TeacherGradebookController {
     }
 
     @RequestMapping(value = "/freemarker/teacher-gradebook", method = RequestMethod.GET)
-    public ModelAndView home(@ModelAttribute("model") ModelMap model) {
-        TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
-        List<CourseDTO> courseDTOs = courseService.findAllByTeacherId(teacher.getId());
-        if(courseDTOs.isEmpty()) {
-            return new ModelAndView("redirect:/freemarker/error");
-        }
-        Collections.sort(courseDTOs, (o1, o2) -> o1.getFormName().compareTo(o2.getFormName()));
-        CourseDTO courseDTO = courseDTOs.get(0);
-        return new ModelAndView("redirect:/freemarker/teacher-gradebook/" + courseDTO.getFormId() + "/" + courseDTO.getLessonId());
-    }
-
-    @RequestMapping(value = "/freemarker/teacher-gradebook/{formId}/{lessonId}", method = RequestMethod.GET)
-    public String gradebook(@ModelAttribute("model") ModelMap model, @PageableDefault(value = 10) Pageable pageable, @PathVariable Long formId, @PathVariable Long lessonId) {
+    public String home(@ModelAttribute("model") ModelMap model) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
         List<CourseDTO> courseDTOs = courseService.findAllByTeacherId(teacher.getId());
         if(courseDTOs.isEmpty()) {
             return "redirect:/freemarker/error";
         }
-        CourseDTO courseDTO = null;
+        Collections.sort(courseDTOs, (o1, o2) -> o1.getFormName().compareTo(o2.getFormName()));
+        CourseDTO courseDTO = courseDTOs.get(0);
+        return "redirect:/freemarker/teacher-gradebook/" + courseDTO.getFormId() + "/" + courseDTO.getLessonId();
+    }
 
-        for(CourseDTO item : courseDTOs) {
-            if(item.getFormId() == formId && item.getLessonId() == lessonId) {
-                courseDTO = item;
-            }
+    @RequestMapping(value = "/freemarker/teacher-gradebook/{formId}/{lessonId}", method = RequestMethod.GET)
+    public String gradebook(@ModelAttribute("model") ModelMap model, @PageableDefault(value = 10) Pageable pageable, @PathVariable Long formId, @PathVariable Long lessonId) {
+        TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
+        CourseDTO courseDTO = courseService.findOneByFormIdLessonIdTeacherId(formId, lessonId, teacher.getId());
+
+        if(courseDTO == null) {
+            return "redirect:/freemarker/error";
         }
 
+        List<CourseDTO> courseDTOs = courseService.findAllByTeacherId(teacher.getId());
         Page<ScheduleDTO> page = scheduleService.findSchedulesByTeacherIdFormIdSubjectIdMaxDate(pageable, teacher.getId(), formId, lessonId, ZonedDateTime.now());
         List<PupilDTO> pupilDTOs = pupilService.findAllByFormId(formId);
-        Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
         List<AttendancesDTO> attendancesDTOs = attendancesService.findAllWherePupilIdInAndScheduleIdIn(teacher.getId(), formId, lessonId);
 
+        Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
         Collections.sort(courseDTOs, (o1, o2) -> o1.getFormName().compareTo(o2.getFormName()));
         Collections.sort(pupilDTOs, comparatorLastNameFirstName);
 

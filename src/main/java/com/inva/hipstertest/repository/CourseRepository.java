@@ -19,4 +19,7 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
     @Query("select c from Course c where c.enabled = true and c.teacher.id = :teacherId")
     List<Course> findAllByTeacherId(@Param("teacherId") Long teacherId);
 
+    @Query("select c from Course c where c.enabled = true and c.form.id = :formId and c.lesson.id = :lessonId and c.teacher.id = :teacherId")
+    Course findOneByFormIdLessonIdTeacherId(@Param("formId") Long formId, @Param("lessonId") Long lessonId, @Param("teacherId") Long teacherId);
+
 }

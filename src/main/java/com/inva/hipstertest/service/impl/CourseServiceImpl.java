@@ -105,4 +105,12 @@ public class CourseServiceImpl implements CourseService{
         return courseDTOS;
     }
 
+    @Override
+    public CourseDTO findOneByFormIdLessonIdTeacherId(Long formId, Long lessonId, Long teacherId) {
+        log.debug("Request to get course where formId {}, lessonId {}, teacherId {}", formId, lessonId, teacherId);
+        Course course = courseRepository.findOneByFormIdLessonIdTeacherId(formId, lessonId, teacherId);
+        CourseDTO courseDTO = courseMapper.courseToCourseDTO(course);
+        return courseDTO;
+    }
+
 }

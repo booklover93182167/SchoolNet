@@ -45,4 +45,6 @@ public interface CourseService {
 
     List<CourseDTO> findAllByTeacherId(Long teacherId);
 
+    CourseDTO findOneByFormIdLessonIdTeacherId(Long formId, Long lessonId, Long teacherId);
+
 }
