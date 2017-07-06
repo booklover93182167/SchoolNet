@@ -1,5 +1,7 @@
 $(function() {
 
+    $('[data-toggle="tooltip"]').tooltip();
+
     $("#sizeSelector").change(function () {
         $("#sizeChangerForm").submit();
     });

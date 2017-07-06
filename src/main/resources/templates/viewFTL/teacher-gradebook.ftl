@@ -49,7 +49,7 @@ jsSources = [
                             <th class="number"><@spring.message "teacher.gradebook.table.pupil.position"/></th>
                             <th class="fullname"><@spring.message "teacher.gradebook.table.pupil.name"/></th>
                             <#list model["schedules"] as schedule>
-                                <th class="for-clear date lesson-type-${schedule.lessonTypeId}" title="${schedule.lessonTypeName}" data-schedule-id="${schedule.id}">${schedule.date?substring(8,10)}/${schedule.date?substring(5,7)}</th>
+                                <th class="for-clear date lesson-type-${schedule.lessonTypeId}" data-toggle="tooltip" data-placement="top" title="${schedule.lessonTypeName}" data-schedule-id="${schedule.id}">${schedule.date?substring(8,10)}/${schedule.date?substring(5,7)}</th>
                             </#list>
                         </tr>
 
