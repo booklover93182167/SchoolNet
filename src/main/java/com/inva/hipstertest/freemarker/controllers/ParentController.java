@@ -70,7 +70,7 @@ public class ParentController {
     public @ResponseBody
     List<AttendancesDTO> pupilAttendance(@RequestBody ParentPagePOJO parentPagePOJO){
         log.debug("Create ajax request for pupil attendance by lesson id");
-        List<AttendancesDTO> attendancesDTO = attendancesService.findAllByPupilAndLessonId(parentPagePOJO.getPupilId(), parentPagePOJO.getLessonId());
+        List<AttendancesDTO> attendancesDTO = attendancesService.findAllByPupilIdAndLessonId(parentPagePOJO.getPupilId(), parentPagePOJO.getLessonId());
         Collections.sort(attendancesDTO, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
         return attendancesDTO;
     }

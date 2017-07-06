@@ -41,10 +41,30 @@ public interface CourseService {
      */
     void delete(Long id);
 
+    /**
+     * Get all the courses by form id.
+     *
+     * @param formId the id of the form
+     * @return the list of entities
+     */
     List<CourseDTO> findAllByFormId(Long formId);
 
+    /**
+     * Get all the courses by teacher id.
+     *
+     * @param teacherId the id of the teacher
+     * @return the list of entities
+     */
     List<CourseDTO> findAllByTeacherId(Long teacherId);
 
+    /**
+     * Get one course by form id, lesson id, teacher id.
+     *
+     * @param formId the id of the form
+     * @param lessonId the id of the lesson
+     * @param teacherId the id of the teacher
+     * @return one course
+     */
     CourseDTO findOneByFormIdLessonIdTeacherId(Long formId, Long lessonId, Long teacherId);
 
 }

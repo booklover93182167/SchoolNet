@@ -89,6 +89,12 @@ public class CourseServiceImpl implements CourseService{
         courseRepository.delete(id);
     }
 
+    /**
+     * Get all the courses by form id.
+     *
+     * @param formId the id of the form
+     * @return the list of entities
+     */
     @Override
     public List<CourseDTO> findAllByFormId(Long formId) {
         log.debug("Request to get courses where formId {}", formId);
@@ -97,6 +103,12 @@ public class CourseServiceImpl implements CourseService{
         return courseDTOS;
     }
 
+    /**
+     * Get all the courses by teacher id.
+     *
+     * @param teacherId the id of the teacher
+     * @return the list of entities
+     */
     @Override
     public List<CourseDTO> findAllByTeacherId(Long teacherId) {
         log.debug("Request to get courses where teacherId {}", teacherId);
@@ -105,6 +117,14 @@ public class CourseServiceImpl implements CourseService{
         return courseDTOS;
     }
 
+    /**
+     * Get one course by form id, lesson id, teacher id.
+     *
+     * @param formId the id of the form
+     * @param lessonId the id of the lesson
+     * @param teacherId the id of the teacher
+     * @return one course
+     */
     @Override
     public CourseDTO findOneByFormIdLessonIdTeacherId(Long formId, Long lessonId, Long teacherId) {
         log.debug("Request to get course where formId {}, lessonId {}, teacherId {}", formId, lessonId, teacherId);

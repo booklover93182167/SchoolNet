@@ -43,7 +43,7 @@ public interface ScheduleService {
     void delete(Long id);
 
     /**
-     * Find all Schedules by form ID
+     * Get all Schedules by form ID
      *
      * @param id form Id of Pupil
      * @return the list of entities
@@ -51,7 +51,7 @@ public interface ScheduleService {
     List<ScheduleDTO> findAllByFormId(Long id);
 
     /**
-     * Find all schedules by teacher ID ordered by Date
+     * Get all schedules by teacher ID ordered by Date
      *
      * @param teacherId teacher id
      * @return the list of entities
@@ -66,10 +66,42 @@ public interface ScheduleService {
      */
     List<ScheduleDTO> findAllBySchoolId(Long schoolId);
 
-    Page<ScheduleDTO> findSchedulesByTeacherIdFormIdSubjectIdMaxDate(Pageable pageable, Long teacherId, Long formId, Long lessonId, ZonedDateTime today);
+    /**
+     * Get page with schedules by courseId and maxDate.
+     *
+     * @param pageable pageable object
+     * @param courseId the id of the course
+     * @param maxDate top limit date
+     * @return page with schedules
+     */
+    Page<ScheduleDTO> findAllByCourseIdAndMaxDate(Pageable pageable, Long courseId, ZonedDateTime maxDate);
 
-    Long countSchedulesForGradeBook(Long teacherId, Long formId, Long lessonId, ZonedDateTime today);
+    /**
+     * Count all schedules by courseId and maxDate.
+     *
+     * @param courseId the id of the course
+     * @param maxDate top limit date
+     * @return number of schedules
+     */
+    Long countAllByCourseIdAndMaxDate(Long courseId, ZonedDateTime maxDate);
 
+    /**
+     * Get all the schedules by form id and exact date.
+     *
+     * @param formId the id of the form
+     * @param date requested date
+     * @return the list of entities
+     */
+    List<ScheduleDTO> findAllByFormIdAndExactDate(Long formId, String date);
+
+    /**
+     * Get all the schedules by form id and date between.
+     *
+     * @param formId the id of the form
+     * @param startDate first date
+     * @param endDate last date
+     * @return the list of entities
+     */
     List<ScheduleDTO> findAllByFormIdAndDateBetween(Long formId, ZonedDateTime startDate, ZonedDateTime endDate);
 
 }

@@ -1,6 +1,6 @@
 <#import "header.ftl" as h>
 
-<#assign pagetitle><@spring.message "teacher.gradebook.page.title"/><#if model["formAndLesson"]??> ${model["formAndLesson"].formName}, ${model["formAndLesson"].lessonName}</#if></#assign>
+<#assign pagetitle><@spring.message "teacher.gradebook.page.title"/><#if model["course"]??> ${model["course"].formName}, ${model["course"].lessonName}</#if></#assign>
 
 <@h.header
 pagetitle = "${pagetitle}"
@@ -22,18 +22,18 @@ jsSources = [
             <br>
             <p><@spring.message "teacher.gradebook.description"/></p>
 
-            <#list model["formsAndLessons"]>
-            <ul class="nav nav-pills" id="forms-lessons">
-                <#items as formAndLesson>
+            <#list model["courses"]>
+            <ul class="nav nav-pills">
+                <#items as course>
                 <li class="nav-item">
-                    <a class="nav-link <#if model["formAndLesson"]??><#if model["formAndLesson"].formId == formAndLesson.formId && model["formAndLesson"].lessonId == formAndLesson.lessonId>active</#if></#if>" href="/freemarker/teacher-gradebook/${formAndLesson.formId}/${formAndLesson.lessonId}?size=${model["sizes"]}">${formAndLesson.formName}, ${formAndLesson.lessonName}</a>
+                    <a class="nav-link <#if model["course"].id == course.id>active</#if>" href="/freemarker/teacher-gradebook/${course.id}?size=${model["sizes"]}">${course.formName}, ${course.lessonName}</a>
                 </li>
                 </#items>
             </ul>
             </#list>
 
             <br>
-            <#if model["formAndLesson"]??>
+            <#if model["course"]??>
 
                 <table class="table table-striped gradebook">
                 <#list model["pupils"]>

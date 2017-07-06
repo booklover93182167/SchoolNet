@@ -95,6 +95,9 @@ $(function() {
                 selectedTd.find("input").attr("value", (!string_value ? "" : response.grade));
                 selectedTd.find("div").text((!string_value ? "-" : response.grade));
                 hideInputShowDiv();
+            },
+            error: function(){
+                // add error handling
             }
         });
     });

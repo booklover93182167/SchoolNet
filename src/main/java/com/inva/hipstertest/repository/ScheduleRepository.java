@@ -28,10 +28,10 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Query("select s from Schedule s where s.course.form.id = :formId and s.date between :startDate and :endDate")
     List<Schedule> findAllByFormIdAndDateBetween(@Param("formId") Long formId, @Param("startDate") ZonedDateTime startDate, @Param("endDate") ZonedDateTime endDate);
 
-    @Query("select s from Schedule s where s.enabled = true and s.course.teacher.id = :teacherId and s.course.form.id = :formId and s.course.lesson.id = :lessonId and s.date <= :today order by s.date")
-    Page<Schedule> findSchedulesByTeacherIdFormIdSubjectIdMaxDate(Pageable pageable, @Param("teacherId") Long teacherId, @Param("formId") Long formId, @Param("lessonId") Long lessonId, @Param("today") ZonedDateTime today);
+    @Query("select s from Schedule s where s.enabled = true and s.course.id = :courseId and s.date <= :maxDate order by s.date")
+    Page<Schedule> findAllByCourseIdAndMaxDate(Pageable pageable, @Param("courseId") Long courseId, @Param("maxDate") ZonedDateTime maxDate);
 
-    @Query("select count(s) from Schedule s where s.enabled = true and s.course.teacher.id = :teacherId and s.course.form.id = :formId and s.course.lesson.id = :lessonId and s.date <= :today order by s.date")
-    Long countSchedulesForGradeBook(@Param("teacherId") Long teacherId, @Param("formId") Long formId, @Param("lessonId") Long lessonId, @Param("today") ZonedDateTime today);
+    @Query("select count(s) from Schedule s where s.enabled = true and s.course.id = :courseId and s.date <= :maxDate order by s.date")
+    Long countAllByCourseIdAndMaxDate(@Param("courseId") Long courseId, @Param("maxDate") ZonedDateTime maxDate);
 
 }
