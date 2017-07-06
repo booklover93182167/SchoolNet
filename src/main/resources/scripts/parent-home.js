@@ -113,8 +113,8 @@ $(function() {
 
                     var selector = $('#week-schedule table tr').eq(schedule.lessonPosition).find("td").eq((dayOfWeek == 0 ? 7 : dayOfWeek));
 
-                    selector.prop("title", schedule.homework);
-                    selector.html(schedule.lessonName + "<br>" + schedule.classroomName + "<br>" + schedule.teacherFirstName + " " + schedule.teacherLastName);
+                    selector.prop('title', schedule.homework);
+                    selector.html(schedule.lessonName + '<br>' + schedule.classroomName + '<br>' + (schedule.tempTeacherId ? '<span class="temp-teacher">' + schedule.tempTeacherFirstName + ' ' + schedule.tempTeacherLastName + '</span>' : schedule.teacherFirstName + ' ' + schedule.teacherLastName));
                 });
             },
             error: function(){

@@ -46,6 +46,8 @@ public class ScheduleDTO implements Serializable {
 
     private String lessonName;
 
+    private Long tempTeacherId;
+
     private String teacherFirstName;
 
     private String teacherLastName;
@@ -219,6 +221,14 @@ public class ScheduleDTO implements Serializable {
         this.lessonName = lessonName;
     }
 
+    public Long getTempTeacherId() {
+        return tempTeacherId;
+    }
+
+    public void setTempTeacherId(Long tempTeacherId) {
+        this.tempTeacherId = tempTeacherId;
+    }
+
     public String getTeacherFirstName() {
         return teacherFirstName;
     }
@@ -242,4 +252,5 @@ public class ScheduleDTO implements Serializable {
     public void setLessonTypeName(String lessonTypeName) {
         this.lessonTypeName = lessonTypeName;
     }
+
 }

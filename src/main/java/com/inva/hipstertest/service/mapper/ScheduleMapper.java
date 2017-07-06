@@ -22,6 +22,7 @@ public interface ScheduleMapper {
     @Mapping(source = "course.teacher.id", target = "teacherId")
     @Mapping(source = "course.teacher.user.firstName", target = "teacherFirstName")
     @Mapping(source = "course.teacher.user.lastName", target = "teacherLastName")
+    @Mapping(source = "teacher.id", target = "tempTeacherId")
     @Mapping(source = "teacher.user.firstName", target = "tempTeacherFirstName")
     @Mapping(source = "teacher.user.lastName", target = "tempTeacherLastName")
     @Mapping(source = "lessonType.id", target = "lessonTypeId")
@@ -32,6 +33,7 @@ public interface ScheduleMapper {
 
     @Mapping(target = "attendances", ignore = true)
     @Mapping(source = "classroomId", target = "classroom")
+    @Mapping(source = "tempTeacherId", target = "teacher")
     @Mapping(source = "courseId", target = "course")
     @Mapping(source = "lessonId", target = "course.lesson")
     @Mapping(source = "formId", target = "course.form")
