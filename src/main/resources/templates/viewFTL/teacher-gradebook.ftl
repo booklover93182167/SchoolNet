@@ -90,7 +90,7 @@ jsSources = [
                 <form id="sizeChangerForm" action="" method="get">
                     <div class="form-group float-right">
                         <select class="form-control" name="size" id="sizeSelector">
-                            <#list [1, 5, 10, 15, 20] as s>
+                            <#list [1, 5, 10, 15] as s>
                                 <#if model["sizes"] == s>
                                     <option value="${s}" selected="selected">${s}</option>
                                 <#else>
