@@ -105,7 +105,14 @@ jsSources = [
                     <ul class="pagination justify-content-center">
                         <li class="page-item<#if model["current"] == 0> disabled</#if>"><a class="page-link" href="?page=0&size=${model["sizes"]}"><@spring.message "pagination.first"/></a></li>
                         <li class="page-item<#if model["current"] == 0> disabled</#if>"><a class="page-link" href="?page=${model["current"]-1}&size=${model["sizes"]}"><@spring.message "pagination.prev"/></a></li>
-                        <#list 0..model["longs"]-1 as i>
+                        <#assign first = 0>
+                        <#assign last = model["longs"] - 1>
+                        <#assign width = 2>
+                        <#assign start = model["current"] - width>
+                        <#assign end = model["current"] + width>
+                        <#if (start < first)><#assign start = first></#if>
+                        <#if (end > last)><#assign end = last></#if>
+                        <#list start..end as i>
                             <#if model["current"] != i>
                                 <li class="page-item"><a class="page-link" href="?page=${i}&size=${model["sizes"]}">${i+1}</a></li>
                             <#else>
