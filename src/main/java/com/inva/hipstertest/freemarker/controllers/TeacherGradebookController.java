@@ -41,34 +41,49 @@ public class TeacherGradebookController {
     public String home(@ModelAttribute("model") ModelMap model) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
         List<CourseDTO> courses = courseService.findAllByTeacherId(teacher.getId());
+
+        model.addAttribute("teacher", teacher.getFirstName() + " " + teacher.getLastName());
+
         if(courses.isEmpty()) {
-            return "redirect:/freemarker/error";
+            model.addAttribute("error", 1);
+            return "teacher-gradebook";
         }
-        Collections.sort(courses, (o1, o2) -> o1.getFormName().compareTo(o2.getFormName()));
-        CourseDTO course = courses.get(0);
-        return "redirect:/freemarker/teacher-gradebook/" + course.getId();
+        return "redirect:/freemarker/teacher-gradebook/" + courses.get(0).getId();
     }
 
     @RequestMapping(value = "/freemarker/teacher-gradebook/{courseId}", method = RequestMethod.GET)
     public String gradebook(@ModelAttribute("model") ModelMap model, @PageableDefault(value = 10) Pageable pageable, @PathVariable Long courseId) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
+        List<CourseDTO> courses = courseService.findAllByTeacherId(teacher.getId());
+
+        model.addAttribute("teacher", teacher.getFirstName() + " " + teacher.getLastName());
+
+        if(courses.isEmpty()) {
+            model.addAttribute("error", 1);
+            return "teacher-gradebook";
+        }
+
+        model.addAttribute("courses", courses);
         CourseDTO course = courseService.findOne(courseId);
 
         if(course == null) {
-            return "redirect:/freemarker/error";
+            model.addAttribute("error", 2);
+            return "teacher-gradebook";
         }
 
-        List<CourseDTO> courses = courseService.findAllByTeacherId(teacher.getId());
+        model.addAttribute("course", course);
+
+        if(!teacher.getId().equals(course.getTeacherId())) {
+            model.addAttribute("error", 3);
+            return "teacher-gradebook";
+        }
+
         Page<ScheduleDTO> page = scheduleService.findAllByCourseIdAndMaxDate(pageable, course.getId(), ZonedDateTime.now());
         List<PupilDTO> pupils = pupilService.findAllByFormId(course.getFormId());
         List<AttendancesDTO> attendances = attendancesService.findAllByCourseId(course.getId());
-
         Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
         Collections.sort(pupils, comparatorLastNameFirstName);
 
-        model.addAttribute("teacher", teacher.getFirstName() + " " + teacher.getLastName());
-        model.addAttribute("courses", courses);
-        model.addAttribute("course", course);
         model.addAttribute("pupils", pupils);
         model.addAttribute("attendances", attendances);
         model.addAttribute("schedules", page.getContent());
