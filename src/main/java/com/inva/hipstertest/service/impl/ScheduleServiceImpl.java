@@ -2,6 +2,7 @@ package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.Pupil;
 import com.inva.hipstertest.domain.Schedule;
+import com.inva.hipstertest.freemarker.searchcriteria.ScheduleSearchCriteria;
 import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.repository.ScheduleRepository;
 import com.inva.hipstertest.service.ScheduleService;
@@ -15,11 +16,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.time.temporal.ChronoField;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -181,4 +180,34 @@ public class ScheduleServiceImpl implements ScheduleService {
         return scheduleRepository.countSchedulesForGradeBook(teacherId, formId, lessonId, today);
     }
 
+    /**
+     * Get all schedules by searching parameters.
+     *
+     * @param scheduleSearchCriteria searching parameters
+     * @return the list of entities.
+     */
+    @Override
+    public List<ScheduleDTO> getScheduleBySearchCriteria(ScheduleSearchCriteria scheduleSearchCriteria) {
+        ZonedDateTime date = DataUtil.getZonedDateTime(scheduleSearchCriteria.getDate());
+        ZonedDateTime lastMonday = date.with(ChronoField.DAY_OF_WEEK, 1);
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime nextMonday = lastMonday.toLocalDate().atStartOfDay(zoneId).plusWeeks(1);
+
+        List<Schedule> schedules;
+        Long id = scheduleSearchCriteria.getId();
+        switch (scheduleSearchCriteria.getScheduleType()) {
+            case BY_FORM:
+                schedules = scheduleRepository.findAllMembersByFormIdAndDateBetween(id, lastMonday, nextMonday);
+                break;
+            case BY_TEACHER:
+                schedules = scheduleRepository.findAllByTeacherIdAndDateBetween(id, lastMonday, nextMonday);
+                break;
+            case BY_CLASSROOM:
+                schedules = scheduleRepository.findAllMembersByClassroomIdAndDateBetween(id, lastMonday, nextMonday);
+                break;
+            default:
+                throw new RuntimeException("invalid schedule type");
+        }
+        return scheduleMapper.schedulesToScheduleDTOs(schedules);
+    }
 }
