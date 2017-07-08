@@ -1,6 +1,6 @@
 package com.inva.hipstertest.freemarker.controllers;
 
-import com.inva.hipstertest.freemarker.pojo.ParentPagePOJO;
+import com.inva.hipstertest.freemarker.searchcriteria.ParentPagePOJO;
 import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.service.dto.AttendancesDTO;
 import com.inva.hipstertest.service.dto.LessonDTO;

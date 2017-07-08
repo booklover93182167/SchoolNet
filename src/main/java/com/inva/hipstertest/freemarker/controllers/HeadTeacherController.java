@@ -1,17 +1,15 @@
 package com.inva.hipstertest.freemarker.controllers;
 
 import com.codahale.metrics.annotation.Timed;
-import com.inva.hipstertest.service.FormService;
-import com.inva.hipstertest.service.SchoolService;
-import com.inva.hipstertest.service.TeacherService;
-import com.inva.hipstertest.service.UserService;
+import com.inva.hipstertest.freemarker.searchcriteria.ScheduleSearchCriteria;
+import com.inva.hipstertest.service.*;
+import com.inva.hipstertest.service.dto.ClassroomDTO;
 import com.inva.hipstertest.service.dto.FormDTO;
+import com.inva.hipstertest.service.dto.ScheduleDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
-import com.inva.hipstertest.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -20,23 +18,29 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class HeadTeacherController {
 
     private final Logger log = LoggerFactory.getLogger(HeadTeacherController.class);
     private final TeacherService teacherService;
+    private final ScheduleService scheduleService;
     private final SchoolService schoolService;
+    private final ClassroomService classroomService;
     private final FormService formService;
     private final UserService userService;
     private static final String ENTITY_NAME = "teacher";
 
-    public HeadTeacherController(TeacherService teacherService, SchoolService schoolService,
-                                 FormService formService, UserService userService){
+    public HeadTeacherController(TeacherService teacherService, ScheduleService scheduleService, SchoolService schoolService,
+                                 ClassroomService classroomService, FormService formService, UserService userService){
         this.teacherService = teacherService;
+        this.scheduleService = scheduleService;
         this.schoolService = schoolService;
+        this.classroomService = classroomService;
         this.formService = formService;
         this.userService = userService;
     }
@@ -155,6 +159,41 @@ public class HeadTeacherController {
         log.debug("Create Ajax request for available forms");
         List<FormDTO> forms = formService.findAllUnassignedFormsByCurrentSchool();
         return forms;
+    }
+
+    @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt", method = RequestMethod.GET)
+    public String scheduling(@ModelAttribute("model") ModelMap model) {
+        return "scheduling-control";
+    }
+
+    @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/forms", method = RequestMethod.GET)
+    public @ResponseBody List<FormDTO> getAllFormsFromCurrentSchool(){
+        log.debug("Create Ajax request for all forms");
+        List<FormDTO> forms = formService.findAllFormsByCurrentSchool();
+        return forms;
+    }
+
+    @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/teachers", method = RequestMethod.GET)
+    public @ResponseBody List<TeacherDTO> getAllTeachersFromCurrentSchool(){
+        log.debug("Create Ajax request for all teachers");
+        List<TeacherDTO> teachers = teacherService.findAllByCurrentSchool();
+        return teachers;
+    }
+
+    @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/classrooms", method = RequestMethod.GET)
+    public @ResponseBody List<ClassroomDTO> getAllClassroomsFromCurrentSchool(){
+        log.debug("Create Ajax request for all classrooms");
+        List<ClassroomDTO> classrooms = classroomService.findAllByCurrentSchool();
+        return classrooms;
+    }
+
+    @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/schedule", method = RequestMethod.POST)
+    public @ResponseBody List<ScheduleDTO> getScheduleBySearchCriteria(@RequestBody ScheduleSearchCriteria scheduleSearchCriteria){
+        log.debug("Create Ajax request to search schedule by search criteria");
+        Validate.notNull(scheduleSearchCriteria.getId(), "Field Date on search criteria can not be empty.");
+        Validate.notNull(scheduleSearchCriteria.getScheduleType(), "Field Date on search criteria can not be empty.");
+        Validate.notNull(scheduleSearchCriteria.getDate(), "Field Date on search criteria can not be empty.");
+        return scheduleService.getScheduleBySearchCriteria(scheduleSearchCriteria);
     }
 
 }
