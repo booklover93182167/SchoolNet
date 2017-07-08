@@ -16,14 +16,13 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
-    @Query("select schedule from Schedule schedule where schedule.form.id = :formId")
+    @Query("select s from Schedule s where s.course.form.id = :formId")
     List<Schedule> findByFormId(@Param("formId") Long formId);
 
-    @Query("select schedule from Schedule schedule where schedule.enabled = true and " +
-        "schedule.teacher.id = :teacherId order by schedule.date")
+    @Query("select s from Schedule s where s.enabled = true and s.course.teacher.id = :teacherId order by s.date")
     List<Schedule> findAllByTeacherIdOrderByDate(@Param("teacherId") Long teacherId);
 
-    @Query("select schedule from Schedule schedule, Teacher teacher, School school where schedule.teacher.id = teacher.id and teacher.school.id = school.id and school.id = :schoolId")
+    @Query("select schedule from Schedule schedule, Teacher teacher, School school where schedule.course.teacher.id = teacher.id and teacher.school.id = school.id and school.id = :schoolId")
     List<Schedule> findAllBySchoolId(@Param("schoolId") Long schoolId);
 
     @Query("select schedule from Schedule schedule where schedule.form.id = :formId and " +
@@ -43,6 +42,11 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     List<Schedule> findAllMembersByClassroomIdAndDateBetween(@Param("classroomId") Long classroomId,
                                                              @Param("startDate") ZonedDateTime startDate,
                                                              @Param("endDate") ZonedDateTime endDate);
+    @Query("select s from Schedule s where s.course.form.id = :formId and s.date between :startDate and :endDate")
+    List<Schedule> findAllByFormIdAndDateBetween(@Param("formId") Long formId, @Param("startDate") ZonedDateTime startDate, @Param("endDate") ZonedDateTime endDate);
+
+    @Query("select s from Schedule s where s.enabled = true and s.course.id = :courseId and s.date <= :maxDate order by s.date")
+    Page<Schedule> findAllByCourseIdAndMaxDate(Pageable pageable, @Param("courseId") Long courseId, @Param("maxDate") ZonedDateTime maxDate);
 
 //    Identify specific subjects for specific classes where the specific teacher gives lessons
 //    @Query("select s from Schedule s where s.enabled = true and s.teacher.id = :teacherId group by s.form.id, s.lesson.id")
@@ -56,4 +60,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
     @Query("select COUNT(s) from Schedule s where s.enabled = true and s.teacher.id = :teacherId and s.form.id = :formId and s.lesson.id = :lessonId and s.date <= :today order by s.date")
     Long countSchedulesForGradeBook(@Param("teacherId") Long teacherId, @Param("formId") Long formId, @Param("lessonId") Long lessonId, @Param("today") ZonedDateTime today);
+    @Query("select count(s) from Schedule s where s.enabled = true and s.course.id = :courseId and s.date <= :maxDate order by s.date")
+    Long countAllByCourseIdAndMaxDate(@Param("courseId") Long courseId, @Param("maxDate") ZonedDateTime maxDate);
+
 }

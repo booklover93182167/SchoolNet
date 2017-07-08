@@ -51,8 +51,8 @@ public class LessonController {
             lessonDTO.getEnabled() != null) {
             lessonService.save(lessonDTO);
             return "redirect:/freemarker/teacher-mgmt/teacher-mgmt-lessons/";
-        } else {
-            return "redirect:error";
         }
+        return "redirect:error";
+
     }
 }

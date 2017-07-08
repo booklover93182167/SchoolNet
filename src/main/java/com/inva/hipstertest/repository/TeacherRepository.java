@@ -30,6 +30,4 @@ public interface TeacherRepository extends JpaRepository<Teacher,Long> {
 
     List<Teacher> getAllBySchoolId(@Param("id") Long id);
 
-
-
 }

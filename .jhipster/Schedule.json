@@ -8,24 +8,39 @@
             "otherEntityRelationshipName": "schedule"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipValidateRules": "required",
             "relationshipName": "lesson",
             "otherEntityName": "lesson",
+            "relationshipType": "many-to-one",
             "otherEntityField": "id"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipValidateRules": "required",
             "relationshipName": "form",
             "otherEntityName": "form",
+            "relationshipType": "many-to-one",
             "otherEntityField": "id"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipValidateRules": "required",
             "relationshipName": "classroom",
             "otherEntityName": "classroom",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "teacher",
+            "otherEntityName": "teacher",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "course",
+            "otherEntityName": "course",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "lessonType",
+            "otherEntityName": "lessonType",
+            "relationshipType": "many-to-one",
             "otherEntityField": "id"
         }
     ],
@@ -57,9 +72,9 @@
         }
     ],
     "changelogDate": "20170514213826",
-    "entityTableName": "schedule",
     "dto": "mapstruct",
-    "pagination": "no",
     "service": "serviceImpl",
+    "entityTableName": "schedule",
+    "pagination": "no",
     "angularJSSuffix": "mySuffix"
 }
