@@ -10,7 +10,7 @@ import {ScheduleMySuffix} from '../entities/schedule/schedule-my-suffix.model';
 @Injectable()
 export class TeacherHomeService {
 
-    // private resourceUrlLesson = 'api/teacher-home/lessons/teacher';
+    private resourceUrlLesson = 'api/teacher-home/lessons/teacher';
     private resourceUrlForm = 'api/teacher-home/forms/teacher';
     private resourceUrlCurrentTeacher = 'api/teacher-home/teachers/current';
     private resourceUrlSchedule = 'api/teacher-home/schedules';
@@ -20,6 +20,10 @@ export class TeacherHomeService {
 
     queryForm(teacherId: number): Observable<Response> {
         return this.http.get(`${this.resourceUrlForm}/${teacherId}`);
+    }
+
+    queryLesson(teacherId: number): Observable<Response> {
+        return this.http.get(`${this.resourceUrlLesson}/${teacherId}`);
     }
 
     getCurrentTeacher(): Observable<Response> {

@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Attendances.
@@ -105,11 +103,10 @@ public class AttendancesResource {
 
     @GetMapping("/pupilhome/{pupilId}/{lessonId}")
     @Timed
-    public List<AttendancesDTO> findAllByPupilAndLessonId(@PathVariable("pupilId") Long pupilId, @PathVariable("lessonId") Long lessonId) {
-        log.debug("REST request to get Attendances : {}", pupilId);
-        return attendancesService.findAllByPupilAndLessonId(pupilId, lessonId);
+    public List<AttendancesDTO> findAllByPupilIdAndLessonId(@PathVariable("pupilId") Long pupilId, @PathVariable("lessonId") Long lessonId) {
+        log.debug("REST request to get attendances by pupilId {} and lessonId {}", pupilId, lessonId);
+        return attendancesService.findAllByPupilIdAndLessonId(pupilId, lessonId);
     }
-
 
     /**
      * DELETE  /attendances/:id : delete the "id" attendances.

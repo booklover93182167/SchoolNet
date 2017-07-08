@@ -44,6 +44,13 @@ jsSources = [
             <br>
             <div class="clearfix"></div>
 
+            <div class="alert alert-danger" style="display: none;" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Error!</strong> Couldn't load schedule/subjects/grades.
+            </div>
+
             <div class="card">
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" role="tablist">

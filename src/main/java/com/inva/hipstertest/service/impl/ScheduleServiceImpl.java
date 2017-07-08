@@ -1,6 +1,5 @@
 package com.inva.hipstertest.service.impl;
 
-import com.inva.hipstertest.domain.Pupil;
 import com.inva.hipstertest.domain.Schedule;
 import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.repository.ScheduleRepository;
@@ -15,11 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,7 +64,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Transactional(readOnly = true)
     public List<ScheduleDTO> findAll() {
         log.debug("Request to get all Schedules");
-        //log.debug(scheduleRepository.findAllByFormId(1L).toString());
         List<ScheduleDTO> result = scheduleRepository.findAll().stream()
             .map(scheduleMapper::scheduleToScheduleDTO)
             .collect(Collectors.toCollection(LinkedList::new));
@@ -126,33 +120,14 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     /**
-     * Get all schedules by requested date and current user form id.
-     *
-     * @param date requested date
-     * @return the list of entities.
-     */
-    @Override
-    public List<ScheduleDTO> findAllByFormIdAndDate(String date) {
-        ZonedDateTime dateStart = DataUtil.getZonedDateTime(date);
-        ZonedDateTime dateEnd = dateStart.plusDays(1);
-        Pupil currentPupil = pupilRepository.findPupilByCurrentUser();
-        log.debug("Request to get schedules by pupil form and date {}", date);
-        List<Schedule> schedules = scheduleRepository.findAllMembersByFormIdAndDateBetween(currentPupil.getForm().getId(), dateStart, dateEnd);
-        List<ScheduleDTO> scheduleDTOS = scheduleMapper.schedulesToScheduleDTOs(schedules);
-        return scheduleDTOS;
-    }
-
-    /**
      * Get all the schedules by school id.
      *
      * @param schoolId the id of the school
      * @return the list of entities
      */
     @Override
-    @Transactional(readOnly = true)
     public List<ScheduleDTO> findAllBySchoolId(Long schoolId) {
         log.debug("Request to get all Schedules by school id : {}", schoolId);
-        //log.debug(scheduleRepository.findAllByFormId(1L).toString());
         List<ScheduleDTO> result = scheduleRepository.findAllBySchoolId(schoolId).stream()
             .map(scheduleMapper::scheduleToScheduleDTO)
             .collect(Collectors.toCollection(LinkedList::new));
@@ -160,25 +135,64 @@ public class ScheduleServiceImpl implements ScheduleService {
         return result;
     }
 
+    /**
+     * Get page with schedules by courseId and maxDate.
+     *
+     * @param pageable pageable object
+     * @param courseId the id of the course
+     * @param maxDate top limit date
+     * @return page with schedules
+     */
     @Override
-    public List<ScheduleDTO> findFormsAndLessonsByTeacherId(Long teacherId) {
-        log.debug("Request to get classes and subjects where teacher {} gives lessons", teacherId);
-        List<Schedule> formsAndLessons = scheduleRepository.findFormsAndLessonsByTeacherId(teacherId);
-        List<ScheduleDTO> formsAndLessonsDTOs = scheduleMapper.schedulesToScheduleDTOs(formsAndLessons);
-        return formsAndLessonsDTOs;
+    public Page<ScheduleDTO> findAllByCourseIdAndMaxDate(Pageable pageable, Long courseId, ZonedDateTime maxDate) {
+        log.debug("Request to get schedules by courseId {} and max date {}", courseId, maxDate);
+        return scheduleRepository.findAllByCourseIdAndMaxDate(pageable, courseId, maxDate).map(scheduleMapper::scheduleToScheduleDTO);
     }
 
+    /**
+     * Count all schedules by courseId and maxDate.
+     *
+     * @param courseId the id of the course
+     * @param maxDate top limit date
+     * @return number of schedules
+     */
     @Override
-    @Transactional(readOnly = true)
-    public Page<ScheduleDTO> findSchedulesByTeacherIdFormIdSubjectIdMaxDate(Pageable pageable, Long teacherId, Long formId, Long lessonId, ZonedDateTime today) {
-        log.debug("Request to get lessons dates where teacher {} gives lessons for class {} on subject {}", teacherId, formId, lessonId);
-        return scheduleRepository.findSchedulesByTeacherIdFormIdSubjectIdMaxDate(pageable, teacherId, formId, lessonId, today).map(scheduleMapper::scheduleToScheduleDTO);
+    public Long countAllByCourseIdAndMaxDate(Long courseId, ZonedDateTime maxDate) {
+        log.debug("Request to count schedules by courseId {} and max date {}", courseId, maxDate);
+        return scheduleRepository.countAllByCourseIdAndMaxDate(courseId, maxDate);
     }
 
+    /**
+     * Get all the schedules by form id and exact date.
+     *
+     * @param formId the id of the form
+     * @param date requested date
+     * @return the list of entities
+     */
     @Override
-    @Transactional(readOnly = true)
-    public Long countSchedulesForGradeBook(Long teacherId, Long formId, Long lessonId, ZonedDateTime today) {
-        return scheduleRepository.countSchedulesForGradeBook(teacherId, formId, lessonId, today);
+    public List<ScheduleDTO> findAllByFormIdAndExactDate(Long formId, String date) {
+        log.debug("Request to get schedules by formId {} and exact date {}", formId, date);
+        ZonedDateTime dateStart = DataUtil.getZonedDateTime(date);
+        ZonedDateTime dateEnd = dateStart.plusDays(1);
+        List<Schedule> schedules = scheduleRepository.findAllByFormIdAndDateBetween(formId, dateStart, dateEnd);
+        List<ScheduleDTO> scheduleDTOS = scheduleMapper.schedulesToScheduleDTOs(schedules);
+        return scheduleDTOS;
+    }
+
+    /**
+     * Get all the schedules by form id and date between.
+     *
+     * @param formId the id of the form
+     * @param startDate first date
+     * @param endDate last date
+     * @return the list of entities
+     */
+    @Override
+    public List<ScheduleDTO> findAllByFormIdAndDateBetween(Long formId, ZonedDateTime startDate, ZonedDateTime endDate) {
+        log.debug("Request to get schedules by formId {} and date between {} and {}", formId, startDate, endDate);
+        List<Schedule> schedules = scheduleRepository.findAllByFormIdAndDateBetween(formId, startDate, endDate);
+        List<ScheduleDTO> scheduleDTOS = scheduleMapper.schedulesToScheduleDTOs(schedules);
+        return scheduleDTOS;
     }
 
 }

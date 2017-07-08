@@ -2,7 +2,7 @@
     "schoolNetApp": {
         "schedule" : {
             "home": {
-                "title": "Schedules",
+                "title": "Расписание",
                 "createLabel": "Создать новый Schedule",
                 "createOrEditLabel": "Создать или отредактировать Schedule"
             },
@@ -13,17 +13,19 @@
                 "question": "Вы уверены что хотите удалить Schedule {{ id }}?"
             },
             "detail": {
-                "title": "Schedule"
+                "title": "Расписание"
             },
-            "date": "Date",
-            "homework": "Homework",
-            "lessonPosition": "Lesson Position",
-            "enabled": "Enabled",
-            "attendances": "Attendances",
-            "lesson": "Lesson",
-            "form": "Form",
-            "classroom": "Classroom",
-            "teacher": "Teacher"
+            "date": "Дата",
+            "homework": "Домашнее задание",
+            "lessonPosition": "Позиция урока",
+            "enabled": "Включено",
+            "attendances": "Успешность",
+            "lesson": "Предмет",
+            "form": "Класс",
+            "classroom": "Кабинет",
+            "teacher": "Учитель",
+            "course": "Курс",
+            "lessonType": "Тип урока"
         }
     }
 }

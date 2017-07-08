@@ -47,6 +47,9 @@ export class ScheduleMySuffixDetailComponent implements OnInit, OnDestroy {
     }
 
     registerChangeInSchedules() {
-        this.eventSubscriber = this.eventManager.subscribe('scheduleListModification', (response) => this.load(this.schedule.id));
+        this.eventSubscriber = this.eventManager.subscribe(
+            'scheduleListModification',
+            (response) => this.load(this.schedule.id)
+        );
     }
 }

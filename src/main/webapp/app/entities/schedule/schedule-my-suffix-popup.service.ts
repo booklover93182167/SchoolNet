@@ -4,6 +4,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { ScheduleMySuffix } from './schedule-my-suffix.model';
 import { ScheduleMySuffixService } from './schedule-my-suffix.service';
+
 @Injectable()
 export class ScheduleMySuffixPopupService {
     private isOpen = false;
