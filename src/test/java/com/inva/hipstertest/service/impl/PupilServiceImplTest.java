@@ -1,12 +1,9 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.SchoolNetApp;
-import com.inva.hipstertest.data.provider.UserProvider;
 import com.inva.hipstertest.domain.*;
 import com.inva.hipstertest.service.BaseServiceTest;
-import com.inva.hipstertest.service.ParentService;
 import com.inva.hipstertest.service.PupilService;
-import com.inva.hipstertest.service.dto.ParentDTO;
 import com.inva.hipstertest.service.dto.PupilDTO;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,9 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -46,6 +41,16 @@ public class PupilServiceImplTest extends BaseServiceTest {
         user = userProvider.persistUserDefault();
 //        pupil = pupilProvider.persistPupilWithUser(user, form);
         parent = parentProvider.persistParentWithUser(user);
+    }
+
+    @Test
+    public void shouldDelete() throws Exception {
+        Long pupilId = pupil.getId();
+        PupilDTO pupil = pupilService.findOne(pupilId);
+        assertNotNull(pupil);
+        pupilService.delete(pupilId);
+        PupilDTO maybePupil = pupilService.findOne(pupilId);
+        assertNull(maybePupil);
     }
 
     @Test
@@ -78,16 +83,6 @@ public class PupilServiceImplTest extends BaseServiceTest {
         PupilDTO pupil = pupilService.findOne(pupilId);
         assertNotNull(pupil);
         assertEquals(pupilId, pupil.getId());
-    }
-
-    @Test
-    public void shouldDelete() throws Exception {
-        Long pupilId = 4L;
-        PupilDTO pupil = pupilService.findOne(pupilId);
-        assertNotNull(pupil);
-        pupilService.delete(pupilId);
-        PupilDTO maybePupil = pupilService.findOne(pupilId);
-        assertNull(maybePupil);
     }
 
     @Test
