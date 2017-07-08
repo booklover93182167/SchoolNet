@@ -1,0 +1,15 @@
+.table th {
+    text-align: center;
+}
+
+.table td {
+    text-align: center;
+}
+
+.table td:not(:first-child):hover{
+    background: #ccc;
+}
+
+.table td:not(:first-child){
+    transition: all .1s;
+}
