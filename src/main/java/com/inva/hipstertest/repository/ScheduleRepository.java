@@ -25,13 +25,13 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Query("select schedule from Schedule schedule, Teacher teacher, School school where schedule.course.teacher.id = teacher.id and teacher.school.id = school.id and school.id = :schoolId")
     List<Schedule> findAllBySchoolId(@Param("schoolId") Long schoolId);
 
-    @Query("select schedule from Schedule schedule where schedule.form.id = :formId and " +
+    @Query("select schedule from Schedule schedule where schedule.course.form.id = :formId and " +
         "schedule.date between :startDate and :endDate")
     List<Schedule> findAllMembersByFormIdAndDateBetween(@Param("formId") Long formId,
                                                         @Param("startDate") ZonedDateTime startDate,
                                                         @Param("endDate") ZonedDateTime endDate);
 
-    @Query("select schedule from Schedule schedule where schedule.teacher.id = :teacherId and " +
+    @Query("select schedule from Schedule schedule where schedule.course.teacher.id = :teacherId and " +
         "schedule.date between :startDate and :endDate")
     List<Schedule> findAllByTeacherIdAndDateBetween(@Param("teacherId") Long formId,
                                                     @Param("startDate") ZonedDateTime startDate,
@@ -42,6 +42,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     List<Schedule> findAllMembersByClassroomIdAndDateBetween(@Param("classroomId") Long classroomId,
                                                              @Param("startDate") ZonedDateTime startDate,
                                                              @Param("endDate") ZonedDateTime endDate);
+
     @Query("select s from Schedule s where s.course.form.id = :formId and s.date between :startDate and :endDate")
     List<Schedule> findAllByFormIdAndDateBetween(@Param("formId") Long formId, @Param("startDate") ZonedDateTime startDate, @Param("endDate") ZonedDateTime endDate);
 
