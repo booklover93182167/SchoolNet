@@ -41,10 +41,10 @@ jsSources = [
                 <thead>
                 <th># Pos</th>
                 <#list 1..7 as week_day>
-                    <th id="${week_day}"></th>
+                <th id="${week_day}"></th>
                 </#list>
                 </thead>
-                <tbody>
+                <tbody">
                 <#list 1..10 as row>
                 <tr id="${row}">
                     <td>${row}</td>
@@ -67,9 +67,49 @@ jsSources = [
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h5 class="modal-title">Add or edit schedule</h5>
                 </div>
-                <div class="modal-body" ></div>
-                <div class="modal-footer">
-                    <a href="" class="btn btn-default" data-dismiss="modal">Close</a>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-form-label" for="date">Date from table</label>
+                            <fieldset disabled>
+                                <input class="form-control" type="date" value="" id="date">
+                            </fieldset>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-form-label" for="lesson_position">Lesson position from table</label>
+                            <fieldset disabled>
+                                <select id="lesson_position" class="form-control"></select>
+                            </fieldset>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="col-form-label" for="teacher">Teacher name</label>
+                            <fieldset disabled>
+                                <input type="text" id="teacher" class="form-control">
+                            </fieldset>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="col-form-label" for="lesson">Lesson</label>
+                            <select class="form-control" id="lesson"></select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="col-form-label" for="lesson_type">Lesson type</label>
+                            <select class="form-control" id="lesson_type"></select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="col-form-label" for="form_name">Form</label>
+                            <select class="form-control" id="form_name"></select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.cancel"/></span>
+                        </button>
+                        <button type="submit" class="btn btn-success" data-dismiss="modal">
+                        <#--onclick="saveSchedule()">-->
+                            <span class="fa fa-save"></span>&nbsp;<span><@spring.message "save"/></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

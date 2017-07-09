@@ -13,3 +13,7 @@
 .table td:not(:first-child){
     transition: all .1s;
 }
+
+.table td:not(:first-child){
+    font-size: 12px;
+}
