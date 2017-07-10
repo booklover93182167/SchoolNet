@@ -13,10 +13,12 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
-    @Query("select l from Lesson l where l.id in (select distinct c.lesson.id from Course c where c.teacher.id = :teacherId)")
-    List<Lesson> findAllByTeacherId(@Param("teacherId") Long teacherId);
+    @Query("select lessons from Lesson lessons join lessons.teachers teacher where teacher.id =:teacherId")
+    List<Lesson> getAllLessonsByTeacherId(@Param("teacherId") Long teacherId);
 
-    @Query("select l from Lesson l where l.id in (select distinct c.lesson.id from Course c where c.form.id = :formId)")
-    List<Lesson> findAllByFormId(@Param("formId") Long formId);
+    //TODO: need to rewrite HQL
+    @Query(value = "SELECT DISTINCT lesson.id, lesson.name, lesson.enabled FROM lesson LEFT JOIN schedule\n" +
+        "ON lesson.id = schedule.lesson_id WHERE form_id =:formId", nativeQuery = true)
+    List<Lesson> getDistinctLessonsForForm(@Param("formId") Long formId);
 
 }

@@ -25,8 +25,8 @@ public class PupilController {
     private final TeacherService teacherService;
 
     public PupilController(PupilService pupilService, ScheduleService scheduleService,
-                           LessonService lessonService, AttendancesService attendancesService,
-                           TeacherService teacherService) {
+                           LessonService lessonService,
+                           AttendancesService attendancesService, TeacherService teacherService) {
         this.pupilService = pupilService;
         this.scheduleService = scheduleService;
         this.lessonService = lessonService;
@@ -59,9 +59,8 @@ public class PupilController {
     public @ResponseBody
     List<ScheduleDTO> getListSchedulesByDate(@PathVariable String date) {
         log.debug("Request to get schedule for current pupil by date : {}", date);
-        PupilDTO pupilDTO = pupilService.findPupilByCurrentUser();
-        List<ScheduleDTO> scheduleDTOs = scheduleService.findAllByFormIdAndExactDate(pupilDTO.getFormId(), date);
-        return scheduleDTOs;
+        List<ScheduleDTO> scheduleDTO = scheduleService.findAllByFormIdAndDate(date);
+        return scheduleDTO;
     }
 
     /**
@@ -74,8 +73,7 @@ public class PupilController {
     public @ResponseBody
     List<AttendancesDTO> getListAttendancesByDate(@PathVariable String date) {
         log.debug("Request to get attendance for current pupil by date : {}", date);
-        PupilDTO pupilDTO = pupilService.findPupilByCurrentUser();
-        List<AttendancesDTO> attendancesDTOs = attendancesService.findAllByPupilIdAndExactDate(pupilDTO.getId(), date);
+        List<AttendancesDTO> attendancesDTOs = attendancesService.findAllMembersByPupilIdAndDateBetween(date);
         return attendancesDTOs;
     }
 
@@ -102,7 +100,7 @@ public class PupilController {
     public String getCurrentPupilAttendances(Model model){
         log.debug("Request to get Attendances for current pupil");
         PupilDTO pupilDTO = pupilService.findPupilByCurrentUser();
-        model.addAttribute("lessons",lessonService.findAllByFormId(pupilDTO.getFormId()));
+        model.addAttribute("lessons",lessonService.getDistinctLessonsForForm(pupilDTO.getFormId()));
         model.addAttribute("pupilFirstName",pupilDTO.getFirstName());
         model.addAttribute("pupilLastName",pupilDTO.getLastName());
         return "attendances";
@@ -119,7 +117,7 @@ public class PupilController {
         log.debug("Create Ajax request for attendance by id lesson");
         PupilDTO pupilDTO = pupilService.findPupilByCurrentUser();
         List<AttendancesDTO> attendancesDTO =
-            attendancesService.findAllByPupilIdAndLessonId(pupilDTO.getId(),lessonDTO.getId());
+            attendancesService.findAllByPupilAndLessonId(pupilDTO.getId(),lessonDTO.getId());
         Collections.sort(attendancesDTO, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
         return attendancesDTO;
     }

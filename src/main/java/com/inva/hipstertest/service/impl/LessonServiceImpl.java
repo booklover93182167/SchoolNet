@@ -69,9 +69,9 @@ public class LessonServiceImpl implements LessonService {
      * @return the list of entities
      */
     @Override
-    public List<LessonDTO> findAllByTeacherId(Long teacherId) {
+    public List<LessonDTO> getAllLessonsByTeacherId(Long teacherId) {
         log.debug("Request to get all Lessons by teacher {}", teacherId);
-        List<Lesson> lessons = lessonRepository.findAllByTeacherId(teacherId);
+        List<Lesson> lessons = lessonRepository.getAllLessonsByTeacherId(teacherId);
         List<LessonDTO> lessonDTOs = lessonMapper.lessonsToLessonDTOs(lessons);
         return lessonDTOs;
     }
@@ -83,9 +83,9 @@ public class LessonServiceImpl implements LessonService {
      * @return list of lesson DTO's
      */
     @Override
-    public List<LessonDTO> findAllByFormId(Long formId) {
+    public List<LessonDTO> getDistinctLessonsForForm(Long formId) {
         log.debug("Request to get distinct Lessons by form {}", formId);
-        List<Lesson> lessons = lessonRepository.findAllByFormId(formId);
+        List<Lesson> lessons = lessonRepository.getDistinctLessonsForForm(formId);
         List<LessonDTO> lessonDTOS = lessonMapper.lessonsToLessonDTOs(lessons);
         return lessonDTOS;
     }

@@ -32,12 +32,14 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="schoolNetApp.schedule.homework" for="field_homework">Homework</label>
             <input type="text" class="form-control" name="homework" id="field_homework"
-                [(ngModel)]="schedule.homework"  />
+                [(ngModel)]="schedule.homework"
+             />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="schoolNetApp.schedule.lessonPosition" for="field_lessonPosition">Lesson Position</label>
             <input type="number" class="form-control" name="lessonPosition" id="field_lessonPosition"
-                [(ngModel)]="schedule.lessonPosition" required />
+                [(ngModel)]="schedule.lessonPosition"
+            required />
             <div [hidden]="!(editForm.controls.lessonPosition?.dirty && editForm.controls.lessonPosition?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.lessonPosition?.errors?.required" jhiTranslate="entity.validation.required">
@@ -52,7 +54,8 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="schoolNetApp.schedule.enabled" for="field_enabled">Enabled</label>
             <input type="checkbox" class="form-control" name="enabled" id="field_enabled"
-                [(ngModel)]="schedule.enabled"  />
+                [(ngModel)]="schedule.enabled"
+             />
             <div [hidden]="!(editForm.controls.enabled?.dirty && editForm.controls.enabled?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.enabled?.errors?.required" jhiTranslate="entity.validation.required">
@@ -63,45 +66,51 @@
 
         <div class="form-group">
             <label jhiTranslate="schoolNetApp.schedule.lesson" for="field_lesson">Lesson</label>
-            <select class="form-control" id="field_lesson" name="lesson" [(ngModel)]="schedule.lessonId" >
-                <option [ngValue]="null"></option>
+            <select class="form-control" id="field_lesson" name="lesson" [(ngModel)]="schedule.lessonId"  required>
                 <option [ngValue]="lessonOption.id" *ngFor="let lessonOption of lessons; trackBy: trackLessonById">{{lessonOption.id}}</option>
             </select>
         </div>
+        <div [hidden]="!(editForm.controls.lesson?.dirty && editForm.controls.lesson?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.lesson?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
         <div class="form-group">
             <label jhiTranslate="schoolNetApp.schedule.form" for="field_form">Form</label>
-            <select class="form-control" id="field_form" name="form" [(ngModel)]="schedule.formId" >
-                <option [ngValue]="null"></option>
+            <select class="form-control" id="field_form" name="form" [(ngModel)]="schedule.formId"  required>
                 <option [ngValue]="formOption.id" *ngFor="let formOption of forms; trackBy: trackFormById">{{formOption.id}}</option>
             </select>
         </div>
+        <div [hidden]="!(editForm.controls.form?.dirty && editForm.controls.form?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.form?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
         <div class="form-group">
             <label jhiTranslate="schoolNetApp.schedule.classroom" for="field_classroom">Classroom</label>
-            <select class="form-control" id="field_classroom" name="classroom" [(ngModel)]="schedule.classroomId" >
-                <option [ngValue]="null"></option>
+            <select class="form-control" id="field_classroom" name="classroom" [(ngModel)]="schedule.classroomId"  required>
                 <option [ngValue]="classroomOption.id" *ngFor="let classroomOption of classrooms; trackBy: trackClassroomById">{{classroomOption.id}}</option>
             </select>
         </div>
+        <div [hidden]="!(editForm.controls.classroom?.dirty && editForm.controls.classroom?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.classroom?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
         <div class="form-group">
-            <label jhiTranslate="schoolNetApp.schedule.teacher" for="field_teacher">Teacher</label>
-            <select class="form-control" id="field_teacher" name="teacher" [(ngModel)]="schedule.teacherId" >
-                <option [ngValue]="null"></option>
+            <label jhiTranslate="schoolNetApp.schedule.teacher" for="field_teacher">Classroom</label>
+            <select class="form-control" id="field_teacher" name="teacher" [(ngModel)]="schedule.teacherId"  required>
                 <option [ngValue]="teacherOption.id" *ngFor="let teacherOption of teachers; trackBy: trackTeacherById">{{teacherOption.id}}</option>
             </select>
         </div>
-        <div class="form-group">
-            <label jhiTranslate="schoolNetApp.schedule.course" for="field_course">Course</label>
-            <select class="form-control" id="field_course" name="course" [(ngModel)]="schedule.courseId" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="courseOption.id" *ngFor="let courseOption of courses; trackBy: trackCourseById">{{courseOption.id}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label jhiTranslate="schoolNetApp.schedule.lessonType" for="field_lessonType">Lesson Type</label>
-            <select class="form-control" id="field_lessonType" name="lessonType" [(ngModel)]="schedule.lessonTypeId" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="lessonTypeOption.id" *ngFor="let lessonTypeOption of lessontypes; trackBy: trackLessonTypeById">{{lessonTypeOption.id}}</option>
-            </select>
+        <div [hidden]="!(editForm.controls.classroom?.dirty && editForm.controls.classroom?.invalid)">
+            <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.classroom?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
         </div>
     </div>
     <div class="modal-footer">

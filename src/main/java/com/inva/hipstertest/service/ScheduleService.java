@@ -3,7 +3,10 @@ package com.inva.hipstertest.service;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -43,7 +46,7 @@ public interface ScheduleService {
     void delete(Long id);
 
     /**
-     * Get all Schedules by form ID
+     * Find all Schedules by form ID
      *
      * @param id form Id of Pupil
      * @return the list of entities
@@ -51,12 +54,20 @@ public interface ScheduleService {
     List<ScheduleDTO> findAllByFormId(Long id);
 
     /**
-     * Get all schedules by teacher ID ordered by Date
+     * Find all schedules by teacher ID ordered by Date
      *
      * @param teacherId teacher id
      * @return the list of entities
      */
     List<ScheduleDTO> findAllByTeacherIdOrderByDate(Long teacherId);
+
+    /**
+     * Find all schedules by form id and requested date.
+     *
+     * @param date requested date
+     * @return the list of entities
+     */
+    List<ScheduleDTO> findAllByFormIdAndDate(String date);
 
     /**
      * Get all the schedules by school id.
@@ -66,42 +77,10 @@ public interface ScheduleService {
      */
     List<ScheduleDTO> findAllBySchoolId(Long schoolId);
 
-    /**
-     * Get page with schedules by courseId and maxDate.
-     *
-     * @param pageable pageable object
-     * @param courseId the id of the course
-     * @param maxDate top limit date
-     * @return page with schedules
-     */
-    Page<ScheduleDTO> findAllByCourseIdAndMaxDate(Pageable pageable, Long courseId, ZonedDateTime maxDate);
+    List<ScheduleDTO> findFormsAndLessonsByTeacherId(Long teacherId);
 
-    /**
-     * Count all schedules by courseId and maxDate.
-     *
-     * @param courseId the id of the course
-     * @param maxDate top limit date
-     * @return number of schedules
-     */
-    Long countAllByCourseIdAndMaxDate(Long courseId, ZonedDateTime maxDate);
+    Page<ScheduleDTO> findSchedulesByTeacherIdFormIdSubjectIdMaxDate(Pageable pageable, Long teacherId, Long formId, Long lessonId, ZonedDateTime today);
 
-    /**
-     * Get all the schedules by form id and exact date.
-     *
-     * @param formId the id of the form
-     * @param date requested date
-     * @return the list of entities
-     */
-    List<ScheduleDTO> findAllByFormIdAndExactDate(Long formId, String date);
-
-    /**
-     * Get all the schedules by form id and date between.
-     *
-     * @param formId the id of the form
-     * @param startDate first date
-     * @param endDate last date
-     * @return the list of entities
-     */
-    List<ScheduleDTO> findAllByFormIdAndDateBetween(Long formId, ZonedDateTime startDate, ZonedDateTime endDate);
+    Long countSchedulesForGradeBook(Long teacherId, Long formId, Long lessonId, ZonedDateTime today);
 
 }

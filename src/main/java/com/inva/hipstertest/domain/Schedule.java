@@ -41,28 +41,26 @@ public class Schedule implements Serializable {
     @Column(name = "enabled", nullable = false)
     private Boolean enabled;
 
-    @OneToMany(mappedBy = "schedule")
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Attendances> attendances = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private Lesson lesson;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private Form form;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private Classroom classroom;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private Teacher teacher;
-
-    @ManyToOne
-    private Course course;
-
-    @ManyToOne
-    private LessonType lessonType;
 
     public Long getId() {
         return id;
@@ -192,39 +190,13 @@ public class Schedule implements Serializable {
         return teacher;
     }
 
-    public Schedule teacher(Teacher teacher) {
-        this.teacher = teacher;
-        return this;
-    }
-
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
 
-    public Course getCourse() {
-        return course;
-    }
-
-    public Schedule course(Course course) {
-        this.course = course;
+    public Schedule teacher(Teacher teacher) {
+        this.teacher = teacher;
         return this;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public LessonType getLessonType() {
-        return lessonType;
-    }
-
-    public Schedule lessonType(LessonType lessonType) {
-        this.lessonType = lessonType;
-        return this;
-    }
-
-    public void setLessonType(LessonType lessonType) {
-        this.lessonType = lessonType;
     }
 
     @Override
@@ -236,25 +208,25 @@ public class Schedule implements Serializable {
             return false;
         }
         Schedule schedule = (Schedule) o;
-        if (schedule.getId() == null || getId() == null) {
+        if (schedule.id == null || id == null) {
             return false;
         }
-        return Objects.equals(getId(), schedule.getId());
+        return Objects.equals(id, schedule.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return Objects.hashCode(id);
     }
 
     @Override
     public String toString() {
         return "Schedule{" +
-            "id=" + getId() +
-            ", date='" + getDate() + "'" +
-            ", homework='" + getHomework() + "'" +
-            ", lessonPosition='" + getLessonPosition() + "'" +
-            ", enabled='" + isEnabled() + "'" +
-            "}";
+            "id=" + id +
+            ", date='" + date + "'" +
+            ", homework='" + homework + "'" +
+            ", lessonPosition='" + lessonPosition + "'" +
+            ", enabled='" + enabled + "'" +
+            '}';
     }
 }
