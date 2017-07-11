@@ -1,6 +1,6 @@
 package com.inva.hipstertest.freemarker.searchcriteria;
 
-import com.inva.hipstertest.domain.enums.ScheduleType;
+import com.inva.hipstertest.domain.enums.ScheduleFilterType;
 
 /**
  * Created by slavkosoltys on 06.07.17.
@@ -9,7 +9,7 @@ public class ScheduleSearchCriteria {
 
     private Long id;
     private String date;
-    private ScheduleType scheduleType;
+    private ScheduleFilterType scheduleFilterType;
 
     public Long getId() {
         return id;
@@ -19,12 +19,12 @@ public class ScheduleSearchCriteria {
         this.id = id;
     }
 
-    public ScheduleType getScheduleType() {
-        return scheduleType;
+    public ScheduleFilterType getScheduleFilterType() {
+        return scheduleFilterType;
     }
 
-    public void setScheduleType(ScheduleType scheduleType) {
-        this.scheduleType = scheduleType;
+    public void setScheduleFilterType(ScheduleFilterType scheduleFilterType) {
+        this.scheduleFilterType = scheduleFilterType;
     }
 
     public String getDate() {

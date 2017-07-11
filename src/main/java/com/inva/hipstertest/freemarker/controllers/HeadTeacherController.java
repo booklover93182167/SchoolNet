@@ -18,9 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.net.URISyntaxException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -190,9 +187,9 @@ public class HeadTeacherController {
     @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/schedule", method = RequestMethod.POST)
     public @ResponseBody List<ScheduleDTO> getScheduleBySearchCriteria(@RequestBody ScheduleSearchCriteria scheduleSearchCriteria){
         log.debug("Create Ajax request to search schedule by search criteria");
-        Validate.notNull(scheduleSearchCriteria.getId(), "Field Date on search criteria can not be empty.");
-        Validate.notNull(scheduleSearchCriteria.getScheduleType(), "Field Date on search criteria can not be empty.");
-        Validate.notNull(scheduleSearchCriteria.getDate(), "Field Date on search criteria can not be empty.");
+        Validate.notNull(scheduleSearchCriteria.getId(), "Field 'id' on search criteria can not be empty.");
+        Validate.notNull(scheduleSearchCriteria.getScheduleFilterType(), "Field 'Schedule type' on search criteria can not be empty.");
+        Validate.notNull(scheduleSearchCriteria.getDate(), "Field 'Date' on search criteria can not be empty.");
         return scheduleService.getScheduleBySearchCriteria(scheduleSearchCriteria);
     }
 
