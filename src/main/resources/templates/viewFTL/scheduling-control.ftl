@@ -84,7 +84,7 @@ jsSources = [
                         </div>
                         <div class="col-md-6">
                             <label class="col-form-label" for="teacher">Teacher name</label>
-                            <fieldset disabled>
+                            <fieldset id="teacher_input" disabled>
                                 <select id="teacher" class="form-control"></select>
                             </fieldset>
                         </div>

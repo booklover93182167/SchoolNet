@@ -209,11 +209,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         ZonedDateTime date = DataUtil.getZonedDateTime(scheduleSearchCriteria.getDate());
         ZonedDateTime lastMonday = date.with(ChronoField.DAY_OF_WEEK, 1);
         ZoneId zoneId = ZoneId.systemDefault();
-        ZonedDateTime nextMonday = lastMonday.toLocalDate().atStartOfDay(zoneId).plusWeeks(1);
+        ZonedDateTime nextMonday = lastMonday.toLocalDate().atStartOfDay(zoneId).plusWeeks(1).minusDays(1);
 
         List<Schedule> schedules;
         Long id = scheduleSearchCriteria.getId();
-        switch (scheduleSearchCriteria.getScheduleType()) {
+        switch (scheduleSearchCriteria.getScheduleFilterType()) {
             case BY_FORM:
                 schedules = scheduleRepository.findAllMembersByFormIdAndDateBetween(id, lastMonday, nextMonday);
                 break;

@@ -13,7 +13,7 @@ public class ReportBatchJob {
     @Autowired
     private PupilService pupilService;
 
-    @Scheduled(cron = "0,10 * * * * *") // use https://crontab-generator.org/ for expression
+    @Scheduled(cron = "0 9 10 * * *") // use https://crontab-generator.org/ for expression
     public void run() {
         System.out.println(">>>>>>>>>>>>>>>>>>>>> JOB <<<<<<<<<<<<<<<<<<<<<<");
 

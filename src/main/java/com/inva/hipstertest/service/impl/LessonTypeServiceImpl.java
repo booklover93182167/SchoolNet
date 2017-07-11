@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class LessonTypeServiceImpl implements LessonTypeService{
 
     private final Logger log = LoggerFactory.getLogger(LessonTypeServiceImpl.class);
-    
+
     private final LessonTypeRepository lessonTypeRepository;
 
     private final LessonTypeMapper lessonTypeMapper;
@@ -51,7 +51,7 @@ public class LessonTypeServiceImpl implements LessonTypeService{
 
     /**
      *  Get all the lessonTypes.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -87,5 +87,17 @@ public class LessonTypeServiceImpl implements LessonTypeService{
     public void delete(Long id) {
         log.debug("Request to delete LessonType : {}", id);
         lessonTypeRepository.delete(id);
+    }
+
+    /**
+     *  Get all the lessonTypes.
+     *
+     *  @return the list of entities
+     */
+    @Override
+    public List<LessonTypeDTO> findAll() {
+        log.debug("Request to get all LessonTypes");
+        List<LessonType> lessonTypeList = lessonTypeRepository.findAll();
+        return lessonTypeMapper.lessonTypesToLessonTypeDTOs(lessonTypeList);
     }
 }

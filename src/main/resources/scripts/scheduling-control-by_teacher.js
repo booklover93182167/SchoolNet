@@ -1,35 +1,59 @@
+var scheduleToEdit;
+var scheduleId;
 var selectedTeacher;
-var teacherId;
+var selectedTeacherId = 1;
 
 $('#target-element').on('change', function () {
     selectedTeacher = $(this).find("option:selected").text();
-    teacherId = $(this).find("option:selected").val();
+    selectedTeacherId = $(this).find("option:selected").val();
 });
 
+$('.modal-teacher #teacher').on('change', function () {
+    selectedTeacherId = $(this).find("option:selected").val();
+    loadLessons();
+});
 
 $('.table td:not(:first-child)').on('click', function () {
+    scheduleId = $(this).attr('id');
+    if (scheduleId) {
+        $('.modal-teacher #teacher_input').prop('disabled', false);
+        fillUpLessonPosition($(this).closest("tr").prevAll("tr").length + 1);
+        getListTeachersForModals();
+        loadLessons();
+        getListLessonType();
+        getListFormsForModal();
+        getListClassroomsForModal();
 
-// set schedule date to teachers modal window ---------------------------
-    $('.modal-body #date').html('');
-    var tt = getMonday(selectedDate);
-    var date = new Date(tt);
-    var newDate = new Date(date);
-    var weekDay = $(this).index() - 1;
-    newDate.setDate(newDate.getDate() + weekDay);
-    $('.modal-body #date').attr('value', newDate.toISOString().slice(0, 10));
-// set lesson position to teachers modal window ---------------------------
-    var number = $(this).closest("tr").prevAll("tr").length + 1;
-    $('.modal-teacher #lesson_position').html('');
+        loadCurrentSchedule();
+
+    } else {
+        $('.modal-teacher #teacher_input').prop('disabled', true);
+        // set schedule date to teachers modal window ---------------------------
+        $('.modal-body #date').html('');
+        var tt = getMonday(selectedDate);
+        var date = new Date(tt);
+        var newDate = new Date(date);
+        var weekDay = $(this).index() - 1;
+        newDate.setDate(newDate.getDate() + weekDay);
+        $('.modal-teacher #date').attr('value', newDate.toISOString().slice(0, 10));
+        // set lesson position to teachers modal window ---------------------------
+
+        fillUpLessonPosition();
+        setTeacherToModalWindow();
+        loadLessons();
+        getListLessonType();
+        getListFormsForModal();
+        getListClassroomsForModal();
+    }
+});
+
+function fillUpLessonPosition(number) {
+    // $('.modal-teacher #lesson_position').html('');;
     $('<option>')
         .text(number)
+        .val(number)
         .appendTo($('.modal-teacher #lesson_position'));
-
-    setTeacherToModalWindow();
-    loadLessons();
-    getListLessonType();
-    getListForms();
-    getListClassrooms();
-});
+}
 
 function setTeacherToModalWindow() {
 
@@ -38,7 +62,7 @@ function setTeacherToModalWindow() {
         selectedTeacher = $('#target-element').find("option:first-child").text()
     }
     $('<option>')
-        .val(teacherId)
+        .val(selectedTeacherId)
         .text(selectedTeacher)
         .appendTo($('.modal-teacher #teacher'));
 }
@@ -49,7 +73,7 @@ function getListLessonType() {
         type: "GET",
         contentType: "application/json",
         success: function (response) {
-            fillUpSelectElemnt($('.modal-teacher #lesson_type'), response);
+            fillUpSelectElement($('.modal-teacher #lesson_type'), response);
         },
         error: function (e) {
             console.log(e.message);
@@ -57,13 +81,21 @@ function getListLessonType() {
     });
 }
 
-function getListForms() {
+function getListFormsForModal() {
+    // TODO change to method POST
+    var searchParams = {
+        formId: '',
+        lessonPosition: '',
+        date: ''
+    };
     $.ajax({
         url: "/freemarker/teacher-mgmt/schedule-mgmt/forms",
         type: "GET",
+        // type: "POST",
         contentType: "application/json",
+        // data: JSON.stringify(searchParams),
         success: function (response) {
-            fillUpSelectElemnt($('.modal-teacher #form_name'), response);
+            fillUpSelectElement($('.modal-teacher #form_name'), response);
         },
         error: function (e) {
             console.log(e.message);
@@ -71,13 +103,20 @@ function getListForms() {
     });
 }
 
-function getListClassrooms() {
+function getListClassroomsForModal() {
+    // TODO change to method POST
+    var searchParams = {
+        lessonPosition: '',
+        date: ''
+    };
     $.ajax({
         url: "/freemarker/teacher-mgmt/schedule-mgmt/classrooms",
         type: "GET",
+        // type: "POST",
         contentType: "application/json",
+        // data: JSON.stringify(searchParams),
         success: function (response) {
-            fillUpSelectElemnt($('.modal-teacher #classroom_name'), response);
+            fillUpSelectElement($('.modal-teacher #classroom_name'), response);
         },
         error: function (e) {
             console.log(e.message);
@@ -87,8 +126,8 @@ function getListClassrooms() {
 
 function loadLessons() {
     var searchParams = {
-        id: elementId,
-        lessonFilterType: target
+        id: selectedTeacherId,
+        lessonFilterType: 'BY_TEACHER'
     };
     $.ajax({
         url: "/freemarker/teacher-mgmt/schedule-mgmt/lessons",
@@ -96,7 +135,7 @@ function loadLessons() {
         contentType: "application/json",
         data: JSON.stringify(searchParams),
         success: function (response) {
-            fillUpSelectElemnt($('.modal-teacher #lessons'), response);
+            fillUpSelectElement($('.modal-teacher #lessons'), response);
         },
         error: function (e) {
             console.log(e.message);
@@ -104,7 +143,7 @@ function loadLessons() {
     })
 }
 
-function fillUpSelectElemnt(target, listOfElements) {
+function fillUpSelectElement(target, listOfElements) {
     target.html('');
     $.each(listOfElements, function () {
         $('<option>')
@@ -113,3 +152,116 @@ function fillUpSelectElemnt(target, listOfElements) {
             .appendTo(target);
     })
 }
+
+function fillUpSelectTeachers(target, listOfElements) {
+    target.html('');
+    $.each(listOfElements, function () {
+        $('<option>')
+            .val(this.id)
+            .text(this.firstName + " " + this.lastName)
+            .appendTo(target);
+    })
+}
+
+function saveSchedule() {
+    var schedule = {
+        date: '',
+        enabled: '',
+        lessonPosition: '',
+        teacherId: '',
+        lessonId: '',
+        lessonTypeId: '',
+        formId: '',
+        classroomId: ''
+    };
+    $.ajax({
+        url: "/freemarker/teacher-mgmt/schedule-mgmt/schedule-create",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(schedule),
+        success: function (response) {
+
+            fillUpScheduleTable(response);
+
+        },
+        error: function (e) {
+            console.log(e.message);
+        }
+    })
+}
+
+function loadCurrentSchedule() {
+    $.ajax({
+        url: "/freemarker/teacher-mgmt/schedule-mgmt/schedule/" + scheduleId,
+        type: "GET",
+        contentType: "application/json",
+        success: function (response) {
+            scheduleToEdit = response;
+
+            // set date from stored schedule
+            $('.modal-body #date').html('').attr('value', response.date.slice(0, 10));
+            // set lesson position
+            fillUpLessonPosition();
+            // teacher
+
+            // lesson
+
+            // lesson type
+
+            // form
+
+            // classroom
+
+
+        },
+        error: function (e) {
+            console.log(e.message);
+        }
+    })
+}
+
+function getListTeachersForModals() {
+    $.ajax({
+        url: "/freemarker/teacher-mgmt/schedule-mgmt/teachers",
+        type: "GET",
+        contentType: "application/json",
+        success: function (response) {
+            fillUpSelectTeachers($('.modal-teacher #teacher'), response);
+            if (response[0])
+                teacherId = response[0].id;
+        },
+
+        error: function (e) {
+            console.log(e.message);
+        }
+    });
+}
+
+function updateSchedule() {
+    var schedule = {
+        id: '',
+        date: '',
+        enabled: '',
+        lessonPosition: '',
+        teacherId: '',
+        lessonId: '',
+        lessonTypeId: '',
+        formId: '',
+        classroomId: ''
+    };
+    $.ajax({
+        url: "/freemarker/teacher-mgmt/schedule-mgmt/schedule-create",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(schedule),
+        success: function (response) {
+
+            fillUpScheduleTable(response);
+
+        },
+        error: function (e) {
+            console.log(e.message);
+        }
+    })
+}
+

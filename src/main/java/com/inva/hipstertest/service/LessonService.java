@@ -1,5 +1,6 @@
 package com.inva.hipstertest.service;
 
+import com.inva.hipstertest.freemarker.searchcriteria.LessonsSearchCriteria;
 import com.inva.hipstertest.service.dto.LessonDTO;
 
 import java.util.List;
@@ -54,4 +55,12 @@ public interface LessonService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     * Get lessons by search criteria.
+     *
+     * @param lessonSearchCriteria search options
+     * @return the list of entities
+     */
+    List<LessonDTO> getLessonsBySearchCriteria(LessonsSearchCriteria lessonSearchCriteria);
 }

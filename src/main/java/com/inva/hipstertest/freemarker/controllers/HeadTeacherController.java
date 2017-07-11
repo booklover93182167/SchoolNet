@@ -3,10 +3,7 @@ package com.inva.hipstertest.freemarker.controllers;
 import com.codahale.metrics.annotation.Timed;
 import com.inva.hipstertest.freemarker.searchcriteria.ScheduleSearchCriteria;
 import com.inva.hipstertest.service.*;
-import com.inva.hipstertest.service.dto.ClassroomDTO;
-import com.inva.hipstertest.service.dto.FormDTO;
-import com.inva.hipstertest.service.dto.ScheduleDTO;
-import com.inva.hipstertest.service.dto.TeacherDTO;
+import com.inva.hipstertest.service.dto.*;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -193,4 +190,38 @@ public class HeadTeacherController {
         return scheduleService.getScheduleBySearchCriteria(scheduleSearchCriteria);
     }
 
+    /**
+     * Get schedule by id.
+     *
+     * @param scheduleId schedule id
+     * @return the ScheduleDTO.
+     */
+    @RequestMapping("/freemarker/teacher-mgmt/schedule-mgmt/schedule/{scheduleId}")
+    public @ResponseBody ScheduleDTO getSchedulesById(@PathVariable("scheduleId") Long scheduleId) {
+        log.debug("Request to get schedule by id : {}", scheduleId);
+        ScheduleDTO scheduleDTO = scheduleService.findOne(scheduleId);
+        return scheduleDTO;
+    }
+
+
+//
+//    /**
+//     * POST  /schedules : Create a new schedule.
+//     *
+//     * @param scheduleDTO the scheduleDTO to create
+//     * @return the ResponseEntity with status 201 (Created) and with body the new scheduleDTO, or with status 400 (Bad Request) if the schedule has already an ID
+//     * @throws URISyntaxException if the Location URI syntax is incorrect
+//     */
+//    @PostMapping("/freemarker/teacher-mgmt/schedule-mgmt/schedule-create")
+//    @Timed
+//    public ScheduleDTO createNewSchedule(@Valid @RequestBody ScheduleDTO scheduleDTO) throws URISyntaxException {
+//        log.debug("REST request to save Schedule : {}", scheduleDTO);
+//        if (scheduleDTO.getId() != null) {
+//            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new schedule cannot already have an ID")).body(null);
+//        }
+//        ScheduleDTO result = scheduleService.save(scheduleDTO);
+//        return ResponseEntity.created(new URI("/api/schedules/" + result.getId()))
+//            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+//            .body(result);
+//    }
 }

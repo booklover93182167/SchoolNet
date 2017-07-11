@@ -3,13 +3,11 @@ var selectedDate = new Date();
 var target = 'BY_TEACHER';
 var currentElement;
 var storedListOfSchedules = [];
-var storedListOfClassrooms = [];
 
 $(document).ready(function () {
     var date = new Date();
     setTableHeader(date);
     getListTeachers();
-    loadSchedule()
 });
 
 $('.datepicker').datepicker({
@@ -47,7 +45,7 @@ function setTableHeader(dateStart) {
         tableHeader.find('th').eq(i + 1).html(weekDay + "<br>" + day + " " + month);
     }
 }
-
+// on target change
 $('#target').on('change', function () {
     target = $(this).find("option:selected").val();
     $('.target_element').attr('data-target', '#' + target);
@@ -104,7 +102,7 @@ function getListForms() {
         type: "GET",
         contentType: "application/json",
         success: function (response) {
-            fillUpSelectElemnt($('#target-element select'), response);
+            fillUpSelectElement($('#target-element select'), response);
             if (response[0].id) {
                 elementId = response[0].id;
             }
@@ -122,7 +120,7 @@ function getListClassrooms() {
         type: "GET",
         contentType: "application/json",
         success: function (response) {
-            fillUpSelectElemnt($('#target-element select'), response);
+            fillUpSelectElement($('#target-element select'), response);
             if (response[0].id) {
                 elementId = response[0].id;
             }
@@ -134,33 +132,42 @@ function getListClassrooms() {
     });
 }
 
-// function loadLessons() {
-//     var searchParams = {
-//         id: elementId,
-//         lessonFilterType: target
-//     };
-//     $.ajax({
-//         url: "/freemarker/teacher-mgmt/schedule-mgmt/lessons",
-//         type: "POST",
-//         contentType: "application/json",
-//         data: JSON.stringify(searchParams),
-//         success: function (response) {
-//             storedListOfLessons = response;
-//             fillUpSelectElemnt($('.modal-body #lessons'), storedListOfLessons);
-//         },
-//         error: function (e) {
-//             console.log(e.message);
-//         }
-//     })
-// }
-
-function fillUpSelectElemnt(target, listOfElements) {
+function fillUpSelectElement(target, listOfElements) {
     target.html('');
     $.each(listOfElements, function () {
         $('<option>')
             .val(this.id)
             .text(this.name)
             .appendTo(target);
+    })
+}
+
+function fillUpScheduleTable(schedules) {
+    refreshTable();
+    schedules.forEach(function (el) {
+        if (el.id) {
+            var dayToCorrect = new Date(el.date).getDay();
+            var day = dayToCorrect === 0 ? 7 : dayToCorrect;
+            var selector = $('.table tr').eq(el.lessonPosition);
+            if (target === 'BY_TEACHER') {
+                selector.find("td").eq(day).html(el.lessonName + "<br> Classroom: " + el.classroomName + "<br> Form: " + el.formName)
+                    .attr("isEmpty", "false").attr("id", el.id);
+            } else if (target === 'BY_FORM') {
+                selector.find("td").eq(day).html(el.lessonName + "<br> Classroom: " + el.classroomName + "<br> Teacher: " + el.teacherFirstName + ' ' + el.teacherLastName)
+                    .attr("isEmpty", "false").attr("id", el.id);
+            } else if (target === 'BY_CLASSROOM') {
+                selector.find("td").eq(day).html(el.lessonName + "<br> Form: " + el.formName + "<br> Teacher: " + el.teacherFirstName + ' ' + el.teacherLastName)
+                    .attr("isEmpty", "false").attr("id", el.id);
+            }
+        }
+    });
+}
+
+function refreshTable() {
+    $('#schedule table tr').each(function () {
+        $(this).find('td[id]').each(function () {
+            $(this).removeAttr('id')
+        });
     })
 }
 
@@ -178,25 +185,12 @@ function loadSchedule() {
         data: JSON.stringify(searchParams),
         success: function (response) {
             storedListOfSchedules = response;
-            response.forEach(function (el) {
-                if (el.id) {
-                    var dayToCorrect = new Date(el.date).getDay();
-                    var day = dayToCorrect === 0 ? 7 : dayToCorrect;
-                    var selector = $('.table tr').eq(el.lessonPosition);
-                    selector.find("td").eq(day).html(el.lessonName + "<br> Classroom: " + el.classroomName + "<br> Form: " + el.formName)
-                        .attr("isEmpty", "false").attr("id", el.id);
-                }
-            });
+
+            fillUpScheduleTable(response);
+
         },
         error: function (e) {
             console.log(e.message);
         }
     })
-}
-
-
-
-
-function rebuildModalWindow() {
-// TODO rebuild modal window on change target elements
 }

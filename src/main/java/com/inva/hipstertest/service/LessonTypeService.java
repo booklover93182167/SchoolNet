@@ -1,5 +1,6 @@
 package com.inva.hipstertest.service;
 
+import com.inva.hipstertest.domain.LessonType;
 import com.inva.hipstertest.service.dto.LessonTypeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +21,7 @@ public interface LessonTypeService {
 
     /**
      *  Get all the lessonTypes.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -40,4 +41,11 @@ public interface LessonTypeService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     *  Get all the lessonTypes.
+     *
+     *  @return the list of entities
+     */
+    List<LessonTypeDTO> findAll();
 }

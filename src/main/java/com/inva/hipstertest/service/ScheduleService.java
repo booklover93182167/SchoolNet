@@ -105,5 +105,11 @@ public interface ScheduleService {
      */
     List<ScheduleDTO> findAllByFormIdAndDateBetween(Long formId, ZonedDateTime startDate, ZonedDateTime endDate);
 
+    /**
+     * Get all schedules by search criteria.
+     *
+     * @param scheduleSearchCriteria search options
+     * @return the list of entities
+     */
     List<ScheduleDTO> getScheduleBySearchCriteria(ScheduleSearchCriteria scheduleSearchCriteria);
 }
