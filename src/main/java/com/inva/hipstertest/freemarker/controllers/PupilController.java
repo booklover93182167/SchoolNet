@@ -23,15 +23,18 @@ public class PupilController {
     private final LessonService lessonService;
     private final AttendancesService attendancesService;
     private final TeacherService teacherService;
+    private final SchoolService schoolService;
 
     public PupilController(PupilService pupilService, ScheduleService scheduleService,
                            LessonService lessonService,
-                           AttendancesService attendancesService, TeacherService teacherService) {
+                           AttendancesService attendancesService, TeacherService teacherService,
+                           SchoolService schoolService) {
         this.pupilService = pupilService;
         this.scheduleService = scheduleService;
         this.lessonService = lessonService;
         this.attendancesService = attendancesService;
         this.teacherService = teacherService;
+        this.schoolService = schoolService;
     }
 
     /**
@@ -43,9 +46,15 @@ public class PupilController {
     @RequestMapping(value = "pupil-home", method = RequestMethod.GET)
     public String index(@ModelAttribute("model") ModelMap model) {
         log.debug("Request to get current pupil");
-        PupilDTO pupil = pupilService.findPupilByCurrentUser();
-        model.addAttribute("pupilFirstName",pupil.getFirstName());
-        model.addAttribute("pupilLastName",pupil.getLastName());
+        PupilDTO currentUser = pupilService.findPupilByCurrentUser();
+
+        Boolean schoolEnabled = schoolService.getSchoolStatus(schoolService.getSchoolIdByForm(currentUser.getFormId()));
+        if (schoolEnabled == false) {
+            model.addAttribute("currentUser", currentUser);
+            return "schoolDisabledPage";
+        }
+        model.addAttribute("pupilFirstName", currentUser.getFirstName());
+        model.addAttribute("pupilLastName", currentUser.getLastName());
         return "pupil-home";
     }
 
@@ -84,7 +93,8 @@ public class PupilController {
      * @return teacherDTO
      */
     @RequestMapping(value = "pupil-home/teacher", method = RequestMethod.POST)
-    public @ResponseBody TeacherDTO editRequest(@RequestBody Long id){
+    public @ResponseBody
+    TeacherDTO editRequest(@RequestBody Long id) {
         log.debug("Request to get teacher {}", id);
         TeacherDTO teacherDTO = teacherService.findOne(id);
         return teacherDTO;
@@ -97,12 +107,20 @@ public class PupilController {
      * @return The attendances view (FTL)
      */
     @RequestMapping(value = "pupil/attendances", method = RequestMethod.GET)
-    public String getCurrentPupilAttendances(Model model){
+    public String getCurrentPupilAttendances(@ModelAttribute("model") ModelMap model) {
         log.debug("Request to get Attendances for current pupil");
-        PupilDTO pupilDTO = pupilService.findPupilByCurrentUser();
-        model.addAttribute("lessons",lessonService.getDistinctLessonsForForm(pupilDTO.getFormId()));
-        model.addAttribute("pupilFirstName",pupilDTO.getFirstName());
-        model.addAttribute("pupilLastName",pupilDTO.getLastName());
+
+
+        PupilDTO currentUser = pupilService.findPupilByCurrentUser();
+        Boolean schoolEnabled = schoolService.getSchoolStatus(schoolService.getSchoolIdByForm(currentUser.getFormId()));
+        if (schoolEnabled == false) {
+            model.addAttribute("currentUser", currentUser);
+            return "schoolDisabledPage";
+        }
+        model.addAttribute("pupilFirstName", currentUser.getFirstName());
+        model.addAttribute("pupilLastName", currentUser.getLastName());
+        model.addAttribute("lessons", lessonService.getDistinctLessonsForForm(currentUser.getFormId()));
+
         return "attendances";
     }
 
@@ -113,11 +131,12 @@ public class PupilController {
      * @return The List<AttendancesDTO> with attendance by choose id.lessons.
      */
     @RequestMapping(value = "pupil/att", method = RequestMethod.POST)
-    public @ResponseBody List<AttendancesDTO> requestSome(@RequestBody LessonDTO lessonDTO){
+    public @ResponseBody
+    List<AttendancesDTO> requestSome(@RequestBody LessonDTO lessonDTO) {
         log.debug("Create Ajax request for attendance by id lesson");
         PupilDTO pupilDTO = pupilService.findPupilByCurrentUser();
         List<AttendancesDTO> attendancesDTO =
-            attendancesService.findAllByPupilAndLessonId(pupilDTO.getId(),lessonDTO.getId());
+            attendancesService.findAllByPupilAndLessonId(pupilDTO.getId(), lessonDTO.getId());
         Collections.sort(attendancesDTO, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
         return attendancesDTO;
     }

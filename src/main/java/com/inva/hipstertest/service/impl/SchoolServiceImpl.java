@@ -141,6 +141,16 @@ public class SchoolServiceImpl implements SchoolService {
         return schoolRepository.countAllDisabledSchools();
     }
 
-   
+    @Override
+    public Boolean getSchoolStatus(Long id) {
+        Boolean schoolStatus = schoolRepository.getOne(id).isEnabled();
+        return schoolStatus;
+    }
+
+    @Override
+    public Long getSchoolIdByForm(Long formId) {
+        Long id = schoolRepository.getSchoolIdByForm(formId);
+        return id;
+    }
 
 }

@@ -34,7 +34,7 @@ public class HeadTeacherController {
     private static final String ENTITY_NAME = "teacher";
 
     public HeadTeacherController(TeacherService teacherService, SchoolService schoolService,
-                                 FormService formService, UserService userService){
+                                 FormService formService, UserService userService) {
         this.teacherService = teacherService;
         this.schoolService = schoolService;
         this.formService = formService;
@@ -51,23 +51,35 @@ public class HeadTeacherController {
     @RequestMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt", method = RequestMethod.GET)
     public String teacherManagement(@ModelAttribute("model") ModelMap model) {
         log.debug("request to get teacher by current user");
-        TeacherDTO currentTeacher = teacherService.findTeacherByCurrentUser();
-        log.debug("request to get all teachers by School Id " + currentTeacher.getSchoolId());
-        List<TeacherDTO> teachers = teacherService.getAllBySchoolId(currentTeacher.getSchoolId());
-        model.addAttribute("currentTeacher", currentTeacher);
+        TeacherDTO currentUser = teacherService.findTeacherByCurrentUser();
+        log.debug("request to get all teachers by School Id " + currentUser.getSchoolId());
+        Boolean schoolEnabled = schoolService.getSchoolStatus(currentUser.getSchoolId());
+        log.debug("request to get all teachers by School Id " + currentUser.getSchoolId());
+        List<TeacherDTO> teachers = teacherService.getAllBySchoolId(currentUser.getSchoolId());
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("schoolEnabled", schoolEnabled);
         model.addAttribute("teachers", teachers);
+        if (schoolEnabled == false) {
+            model.addAttribute("currentUser", currentUser);
+            return "schoolDisabledPage";
+        }
         return "teacher-mgmt/teacher-mgmt";
     }
 
     @RequestMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-create", method = RequestMethod.GET)
-    public ModelAndView teacherManagementCreate() {
+    public ModelAndView teacherManagementCreate(@ModelAttribute("model") ModelMap model) {
         TeacherDTO teacherDTO = new TeacherDTO();
+        TeacherDTO currentUser = teacherService.findTeacherByCurrentUser();
+            Boolean schoolEnabled=schoolService.getSchoolStatus(currentUser.getSchoolId());
+               if (schoolEnabled==false){
+                       model.addAttribute("currentUser", currentUser);
+                       return  new ModelAndView ("schoolDisabledPage");
+                   }
         return new ModelAndView("teacher-mgmt/teacher-mgmt-create", "teacherDTO", teacherDTO);
     }
 
     /**
      * Creates new teacher in school.
-     *
      */
     @PostMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-create")
     @Timed
@@ -76,7 +88,7 @@ public class HeadTeacherController {
         log.debug(teacherDTO.getFirstName() + " " + teacherDTO.getLastName() + " " + teacherDTO.getEmail());
         TeacherDTO result = teacherService.saveTeacherWithUser(teacherDTO);
         emailFail = "Invalid e-mail";
-        if(!result.getEnabled()){
+        if (!result.getEnabled()) {
             // handle email already in use
             return new ModelAndView("teacher-mgmt/teacher-mgmt-create", "emailFail", emailFail);
         }
@@ -86,14 +98,15 @@ public class HeadTeacherController {
 
     /**
      * Toggles teacher's "enabled" field.
+     *
      * @param id teacher to toggle
      */
     @RequestMapping(value = "/freemarker/teacher-mgmt-toggle/{id}", method = RequestMethod.GET)
-    public ModelAndView teacherManagementDisable(@ModelAttribute("model") ModelMap model, @PathVariable Long id){
+    public ModelAndView teacherManagementDisable(@ModelAttribute("model") ModelMap model, @PathVariable Long id) {
         TeacherDTO currentTeacher = teacherService.findTeacherByCurrentUser();
         TeacherDTO teacherToToggle = teacherService.findOne(id);
         if (currentTeacher.getSchoolId().equals(teacherToToggle.getSchoolId())) {
-            if(teacherToToggle.getEnabled()){
+            if (teacherToToggle.getEnabled()) {
                 teacherToToggle.setEnabled(false);
             } else {
                 teacherToToggle.setEnabled(true);
@@ -108,12 +121,12 @@ public class HeadTeacherController {
 
     /**
      * Deletes Teacher by ID
-     * @param id - ID of teacher to be deleted
      *
+     * @param id - ID of teacher to be deleted
      */
     @GetMapping("/freemarker/teacher-mgmt-delete/{id}")
     @Timed
-    public ModelAndView teacherManagementDelete(@PathVariable Long id){
+    public ModelAndView teacherManagementDelete(@PathVariable Long id) {
         log.debug("Freemarker request to delete Teacher : {}", id);
         TeacherDTO currentTeacher = teacherService.findTeacherByCurrentUser();
         TeacherDTO teacherToDelete = teacherService.findOne(id);
@@ -127,18 +140,21 @@ public class HeadTeacherController {
 
     /**
      * Request to receive complete teacherDTO for further editing
+     *
      * @param id - ID of teacher to Edit
      * @return teacherDTO
      */
     @RequestMapping(value = "freemarker/teacher-mgmt/teacher-mgmt-edit", method = RequestMethod.POST)
-    public @ResponseBody TeacherDTO editRequest(@RequestBody Long id){
+    public @ResponseBody
+    TeacherDTO editRequest(@RequestBody Long id) {
         log.debug("Create Ajax edit request");
         TeacherDTO teacherDTOToSend = teacherService.findOne(id);
         return teacherDTOToSend;
     }
 
     @RequestMapping(value = "freemarker/teacher-mgmt/teacher-mgmt-save", method = RequestMethod.POST)
-    public @ResponseBody String saveRequest(@RequestBody @Valid TeacherDTO teacherDTO, BindingResult bindingResult){
+    public @ResponseBody
+    String saveRequest(@RequestBody @Valid TeacherDTO teacherDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "Error";
         }
@@ -148,10 +164,12 @@ public class HeadTeacherController {
 
     /**
      * Request to get available forms to assign to Teacher
+     *
      * @return available forms
      */
     @RequestMapping(value = "freemarker/teacher-mgmt/teacher-mgmt-get-av-forms", method = RequestMethod.GET)
-    public @ResponseBody List<FormDTO> getAvailableForms(){
+    public @ResponseBody
+    List<FormDTO> getAvailableForms() {
         log.debug("Create Ajax request for available forms");
         List<FormDTO> forms = formService.findAllUnassignedFormsByCurrentSchool();
         return forms;
