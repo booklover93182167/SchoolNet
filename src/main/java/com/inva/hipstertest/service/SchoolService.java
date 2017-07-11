@@ -83,6 +83,13 @@ public interface SchoolService {
      * @return
      */
     Long countAllDisabledSchools();
+    /**
+     *finds if school is enabled or disabled
+     *
+     */
+    Boolean getSchoolStatus(Long id);
 
-  
+    Long getSchoolIdByForm(Long formId);
+
+
 }

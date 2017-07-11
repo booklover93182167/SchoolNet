@@ -15,7 +15,7 @@ import java.util.List;
  * Spring Data JPA repository for the School entity.
  */
 @SuppressWarnings("unused")
-public interface SchoolRepository extends JpaRepository<School,Long> {
+public interface SchoolRepository extends JpaRepository<School, Long> {
 
 
     @Query("select t from Teacher t left join  t.user where(t.school.id = :id and 'ROLE_HEAD_TEACHER' in elements(t.user.authorities)) ")
@@ -33,4 +33,10 @@ public interface SchoolRepository extends JpaRepository<School,Long> {
 
     @Query("SELECT COUNT(s) FROM School s where s.enabled = false")
     Long countAllDisabledSchools();
+
+    @Query(value = " SELECT school.id FROM schoolnet.school\n" +
+        "join form on form.school_id=school.id\n" +
+        "where form.id=:formId", nativeQuery = true)
+    Long getSchoolIdByForm(@Param("formId") Long formId);
+
 }

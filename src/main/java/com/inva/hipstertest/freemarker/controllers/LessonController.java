@@ -2,7 +2,10 @@ package com.inva.hipstertest.freemarker.controllers;
 
 import com.codahale.metrics.annotation.Timed;
 import com.inva.hipstertest.service.LessonService;
+import com.inva.hipstertest.service.SchoolService;
+import com.inva.hipstertest.service.TeacherService;
 import com.inva.hipstertest.service.dto.LessonDTO;
+import com.inva.hipstertest.service.dto.TeacherDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,14 +23,25 @@ public class LessonController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final LessonService lessonService;
+    private final TeacherService teacherService;
+    private final SchoolService schoolService;
 
-    public LessonController(LessonService lessonService) {
+    public LessonController(LessonService lessonService, TeacherService teacherService, SchoolService schoolService) {
         this.lessonService = lessonService;
+        this.teacherService = teacherService;
+        this.schoolService = schoolService;
     }
 
     @RequestMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-lessons", method = RequestMethod.GET)
     public String data(@ModelAttribute("model") ModelMap model) {
         List<LessonDTO> lessonList;
+        log.debug("request to get school status by current user");
+               TeacherDTO currentUser = teacherService.findTeacherByCurrentUser();
+              Boolean schoolEnabled=schoolService.getSchoolStatus(currentUser.getSchoolId());
+               if (schoolEnabled==false){
+                        model.addAttribute("currentUser", currentUser);
+                       return "schoolDisabledPage";
+                   }
         lessonList = lessonService.findAll();
         model.addAttribute("lessonList", lessonList);
         return "teacher-mgmt/teacher-mgmt-lessons";

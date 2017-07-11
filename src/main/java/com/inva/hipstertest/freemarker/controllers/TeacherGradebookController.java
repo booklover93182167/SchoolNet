@@ -1,9 +1,6 @@
 package com.inva.hipstertest.freemarker.controllers;
 
-import com.inva.hipstertest.service.AttendancesService;
-import com.inva.hipstertest.service.PupilService;
-import com.inva.hipstertest.service.ScheduleService;
-import com.inva.hipstertest.service.TeacherService;
+import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.service.dto.AttendancesDTO;
 import com.inva.hipstertest.service.dto.PupilDTO;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
@@ -32,17 +29,26 @@ public class TeacherGradebookController {
     private final ScheduleService scheduleService;
     private final PupilService pupilService;
     private final AttendancesService attendancesService;
+    private final SchoolService schoolService;
 
-    public TeacherGradebookController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService, AttendancesService attendancesService) {
+    public TeacherGradebookController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService,
+                                      AttendancesService attendancesService, SchoolService schoolService) {
         this.teacherService = teacherService;
         this.scheduleService = scheduleService;
         this.pupilService = pupilService;
         this.attendancesService = attendancesService;
+        this.schoolService = schoolService;
     }
 
     @RequestMapping(value = "/freemarker/teacher-gradebook", method = RequestMethod.GET)
     public ModelAndView home(@ModelAttribute("model") ModelMap model) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
+        log.debug("request to get school status by current user");
+               Boolean schoolEnabled=schoolService.getSchoolStatus(teacher.getSchoolId());
+        if (schoolEnabled==false){
+                       model.addAttribute("currentUser", teacher);
+            return new ModelAndView("schoolDisabledPage");
+        }
         List<ScheduleDTO> formsAndLessons = scheduleService.findFormsAndLessonsByTeacherId(teacher.getId());
         if(formsAndLessons.isEmpty()) {
             return new ModelAndView("redirect:/freemarker/error");
@@ -55,6 +61,12 @@ public class TeacherGradebookController {
     @RequestMapping(value = "/freemarker/teacher-gradebook/{formId}/{lessonId}", method = RequestMethod.GET)
     public String gradebook(@ModelAttribute("model") ModelMap model, @PageableDefault(value = 10) Pageable pageable, @PathVariable Long formId, @PathVariable Long lessonId) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
+        log.debug("request to get school status by current user");
+                Boolean schoolEnabled=schoolService.getSchoolStatus(teacher.getSchoolId());
+                if (schoolEnabled==false){
+                        model.addAttribute("currentUser", teacher);
+                       return "schoolDisabledPage";
+                   }
         List<ScheduleDTO> formsAndLessons = scheduleService.findFormsAndLessonsByTeacherId(teacher.getId());
         if(formsAndLessons.isEmpty()) {
             return "redirect:/freemarker/error";
