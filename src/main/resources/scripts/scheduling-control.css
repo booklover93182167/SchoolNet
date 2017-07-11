@@ -6,14 +6,15 @@
     text-align: center;
 }
 
-.table td:not(:first-child):hover{
+.table td:not(:first-child):hover {
     background: #ccc;
 }
 
-.table td:not(:first-child){
+.table td:not(:first-child) {
     transition: all .1s;
 }
 
-.table td:not(:first-child){
+.table td:not(:first-child) {
     font-size: 12px;
+    padding: 2px 2px 2px 2px;
 }
