@@ -47,8 +47,8 @@ public interface FormService {
      */
     void delete(Long id);
 
+
     List<FormDTO> findAllFormsByCurrentSchool();
 
     List<FormDTO> findAllUnassignedFormsByCurrentSchool();
-
 }

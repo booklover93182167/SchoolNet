@@ -9,36 +9,27 @@ import java.util.List;
 /**
  * Mapper for the entity Schedule and its DTO ScheduleDTO.
  */
-@Mapper(componentModel = "spring", uses = {LessonMapper.class, FormMapper.class, ClassroomMapper.class, TeacherMapper.class, CourseMapper.class, LessonTypeMapper.class, })
+@Mapper(componentModel = "spring", uses = {LessonMapper.class, FormMapper.class, ClassroomMapper.class, TeacherMapper.class, })
 public interface ScheduleMapper {
 
-    @Mapping(source = "classroom.id", target = "classroomId")
+    @Mapping(source = "lesson.name", target = "lessonName")
+    @Mapping(source = "form.name", target = "formName")
     @Mapping(source = "classroom.name", target = "classroomName")
-    @Mapping(source = "course.id", target = "courseId")
-    @Mapping(source = "course.form.id", target = "formId")
-    @Mapping(source = "course.form.name", target = "formName")
-    @Mapping(source = "course.lesson.id", target = "lessonId")
-    @Mapping(source = "course.lesson.name", target = "lessonName")
-    @Mapping(source = "course.teacher.id", target = "teacherId")
-    @Mapping(source = "course.teacher.user.firstName", target = "teacherFirstName")
-    @Mapping(source = "course.teacher.user.lastName", target = "teacherLastName")
-    @Mapping(source = "teacher.id", target = "tempTeacherId")
-    @Mapping(source = "teacher.user.firstName", target = "tempTeacherFirstName")
-    @Mapping(source = "teacher.user.lastName", target = "tempTeacherLastName")
-    @Mapping(source = "lessonType.id", target = "lessonTypeId")
-    @Mapping(source = "lessonType.name", target = "lessonTypeName")
+    @Mapping(source = "lesson.id", target = "lessonId")
+    @Mapping(source = "form.id", target = "formId")
+    @Mapping(source = "classroom.id", target = "classroomId")
+    @Mapping(source = "teacher.id", target = "teacherId")
+    @Mapping(source = "teacher.user.lastName", target = "teacherLastName")
+    @Mapping(source = "teacher.user.firstName", target = "teacherFirstName")
     ScheduleDTO scheduleToScheduleDTO(Schedule schedule);
 
     List<ScheduleDTO> schedulesToScheduleDTOs(List<Schedule> schedules);
 
     @Mapping(target = "attendances", ignore = true)
+    @Mapping(source = "lessonId", target = "lesson")
+    @Mapping(source = "formId", target = "form")
     @Mapping(source = "classroomId", target = "classroom")
-    @Mapping(source = "tempTeacherId", target = "teacher")
-    @Mapping(source = "courseId", target = "course")
-    @Mapping(source = "lessonId", target = "course.lesson")
-    @Mapping(source = "formId", target = "course.form")
-    @Mapping(source = "teacherId", target = "course.teacher")
-    @Mapping(source = "lessonTypeId", target = "lessonType")
+    @Mapping(source = "teacherId", target = "teacher")
     Schedule scheduleDTOToSchedule(ScheduleDTO scheduleDTO);
 
     List<Schedule> scheduleDTOsToSchedules(List<ScheduleDTO> scheduleDTOs);
@@ -58,5 +49,6 @@ public interface ScheduleMapper {
         schedule.setId(id);
         return schedule;
     }
+
 
 }

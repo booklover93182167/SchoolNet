@@ -32,29 +32,17 @@ public class ScheduleDTO implements Serializable {
 
     private Long classroomId;
 
-    private String classroomName;
-
     private Long teacherId;
-
-    private String tempTeacherFirstName;
-
-    private String tempTeacherLastName;
-
-    private Long courseId;
-
-    private String formName;
-
-    private String lessonName;
-
-    private Long tempTeacherId;
-
-    private String teacherFirstName;
 
     private String teacherLastName;
 
-    private Long lessonTypeId;
+    private String teacherFirstName;
 
-    private String lessonTypeName;
+    private String lessonName;
+
+    private String formName;
+
+    private String classroomName;
 
     public Long getId() {
         return id;
@@ -63,7 +51,6 @@ public class ScheduleDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
     public ZonedDateTime getDate() {
         return date;
     }
@@ -71,7 +58,6 @@ public class ScheduleDTO implements Serializable {
     public void setDate(ZonedDateTime date) {
         this.date = date;
     }
-
     public String getHomework() {
         return homework;
     }
@@ -79,7 +65,6 @@ public class ScheduleDTO implements Serializable {
     public void setHomework(String homework) {
         this.homework = homework;
     }
-
     public Integer getLessonPosition() {
         return lessonPosition;
     }
@@ -87,7 +72,6 @@ public class ScheduleDTO implements Serializable {
     public void setLessonPosition(Integer lessonPosition) {
         this.lessonPosition = lessonPosition;
     }
-
     public Boolean getEnabled() {
         return enabled;
     }
@@ -128,20 +112,44 @@ public class ScheduleDTO implements Serializable {
         this.teacherId = teacherId;
     }
 
-    public Long getCourseId() {
-        return courseId;
+    public String getLessonName() {
+        return lessonName;
     }
 
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
     }
 
-    public Long getLessonTypeId() {
-        return lessonTypeId;
+    public String getFormName() {
+        return formName;
     }
 
-    public void setLessonTypeId(Long lessonTypeId) {
-        this.lessonTypeId = lessonTypeId;
+    public void setFormName(String formName) {
+        this.formName = formName;
+    }
+
+    public String getClassroomName() {
+        return classroomName;
+    }
+
+    public void setClassroomName(String classroomName) {
+        this.classroomName = classroomName;
+    }
+
+    public String getTeacherLastName() {
+        return teacherLastName;
+    }
+
+    public void setTeacherLastName(String teacherLastName) {
+        this.teacherLastName = teacherLastName;
+    }
+
+    public String getTeacherFirstName() {
+        return teacherFirstName;
+    }
+
+    public void setTeacherFirstName(String teacherFirstName) {
+        this.teacherFirstName = teacherFirstName;
     }
 
     @Override
@@ -154,103 +162,26 @@ public class ScheduleDTO implements Serializable {
         }
 
         ScheduleDTO scheduleDTO = (ScheduleDTO) o;
-        if(scheduleDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), scheduleDTO.getId());
+
+        if ( ! Objects.equals(id, scheduleDTO.id)) { return false; }
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return Objects.hashCode(id);
     }
 
     @Override
     public String toString() {
         return "ScheduleDTO{" +
-            "id=" + getId() +
-            ", date='" + getDate() + "'" +
-            ", homework='" + getHomework() + "'" +
-            ", lessonPosition='" + getLessonPosition() + "'" +
-            ", enabled='" + getEnabled() + "'" +
-            ", course='" + getCourseId() + "'" +
-            ", form='" + getFormName() + "'" +
-            ", lesson='" + getLessonName() + "'" +
-            ", teacher='" + getTeacherFirstName() + " " + getTeacherLastName() + "'" +
-            ", temp_teacher='" + getTempTeacherFirstName() + " " + getTempTeacherLastName() + "'" +
-            "}";
-    }
-
-    public String getClassroomName() {
-        return classroomName;
-    }
-
-    public void setClassroomName(String classroomName) {
-        this.classroomName = classroomName;
-    }
-
-    public String getTempTeacherFirstName() {
-        return tempTeacherFirstName;
-    }
-
-    public void setTempTeacherFirstName(String tempTeacherFirstName) {
-        this.tempTeacherFirstName = tempTeacherFirstName;
-    }
-
-    public String getTempTeacherLastName() {
-        return tempTeacherLastName;
-    }
-
-    public void setTempTeacherLastName(String tempTeacherLastName) {
-        this.tempTeacherLastName = tempTeacherLastName;
-    }
-
-    public String getFormName() {
-        return formName;
-    }
-
-    public void setFormName(String formName) {
-        this.formName = formName;
-    }
-
-    public String getLessonName() {
-        return lessonName;
-    }
-
-    public void setLessonName(String lessonName) {
-        this.lessonName = lessonName;
-    }
-
-    public Long getTempTeacherId() {
-        return tempTeacherId;
-    }
-
-    public void setTempTeacherId(Long tempTeacherId) {
-        this.tempTeacherId = tempTeacherId;
-    }
-
-    public String getTeacherFirstName() {
-        return teacherFirstName;
-    }
-
-    public void setTeacherFirstName(String teacherFirstName) {
-        this.teacherFirstName = teacherFirstName;
-    }
-
-    public String getTeacherLastName() {
-        return teacherLastName;
-    }
-
-    public void setTeacherLastName(String teacherLastName) {
-        this.teacherLastName = teacherLastName;
-    }
-
-    public String getLessonTypeName() {
-        return lessonTypeName;
-    }
-
-    public void setLessonTypeName(String lessonTypeName) {
-        this.lessonTypeName = lessonTypeName;
+            "id=" + id +
+            ", date='" + date + "'" +
+            ", homework='" + homework + "'" +
+            ", lessonPosition='" + lessonPosition + "'" +
+            ", enabled='" + enabled + "'" +
+            '}';
     }
 
 }

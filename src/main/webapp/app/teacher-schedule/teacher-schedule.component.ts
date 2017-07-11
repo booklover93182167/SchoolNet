@@ -120,8 +120,7 @@ export class TeacherScheduleComponent implements OnInit {
         let daySchedule: ScheduleMySuffix[] = [];
 
         for(let i = 1; i <= 10; i++) {
-            let blankSchedule = new ScheduleMySuffix();
-            blankSchedule.lessonPosition = i;
+            let blankSchedule = new ScheduleMySuffix(null, null, '', i, true, null, null, null, null, null, '', null, '', '', '');
             daySchedule.push(blankSchedule);
         }
 
@@ -146,8 +145,7 @@ export class TeacherScheduleComponent implements OnInit {
             item["schedule"] = [];
 
             for(let i = 1; i <= 10; i++) {
-                let blankSchedule = new ScheduleMySuffix();
-                blankSchedule.lessonPosition = i;
+                let blankSchedule = new ScheduleMySuffix(null, null, '', i, true, null, null, null, null, null, '', null, '', '', '');
                 item["schedule"].push(blankSchedule);
             }
 

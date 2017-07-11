@@ -44,21 +44,11 @@ export class TeacherHomeScheduleComponent implements OnInit {
         this.teacherHomeService.getCurrentTeacher().subscribe(
             (res: Response) => {
                 this.currentTeacher = res.json();
-                this.loadLessons(this.currentTeacher.id);
                 this.loadForms(this.currentTeacher.id);
                 this.loadSchedule(this.currentTeacher.id);
-                // res.json().lessons.forEach((lesson) => {
-                //     this.lessons.push(lesson);
-                // });
-            },
-            (res: Response) => this.onError(res.json())
-        );
-    }
-
-    loadLessons(teacherId: number) {
-        this.teacherHomeService.queryLesson(teacherId).subscribe(
-            (res: Response) => {
-                this.lessons = res.json();
+                res.json().lessons.forEach((lesson) => {
+                    this.lessons.push(lesson);
+                });
             },
             (res: Response) => this.onError(res.json())
         );

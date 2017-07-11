@@ -2,6 +2,8 @@ package com.inva.hipstertest.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.inva.hipstertest.service.LessonService;
+import com.inva.hipstertest.service.PupilService;
+import com.inva.hipstertest.service.dto.PupilDTO;
 import com.inva.hipstertest.web.rest.util.HeaderUtil;
 import com.inva.hipstertest.service.dto.LessonDTO;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Lesson.
@@ -94,9 +98,9 @@ public class LessonResource {
      */
     @GetMapping("/teacher-home/lessons/teacher/{teacherId}")
     @Timed
-    public List<LessonDTO> findAllByTeacherId(@PathVariable("teacherId") Long teacherId) {
+    public List<LessonDTO> getAllLessonsByCurrentTeacher(@PathVariable("teacherId") Long teacherId) {
         log.debug("REST request to get all lessons for the current teacher : {}", teacherId);
-        return lessonService.findAllByTeacherId(teacherId);
+        return lessonService.getAllLessonsByTeacherId(teacherId);
     }
 
 
@@ -108,9 +112,9 @@ public class LessonResource {
      */
     @GetMapping("/pupilhome/distinctform/{formId}")
     @Timed
-    public List<LessonDTO> findAllByFormId(@PathVariable("formId") Long formId) {
-        log.debug("REST request to get all distinct lessons for the form : {}", formId);
-        return lessonService.findAllByFormId(formId);
+    public List<LessonDTO> getDistinctLessonsForForm(@PathVariable("formId") Long formId) {
+        log.debug("REST request to get all distinct lessons for the current form : {}", formId);
+        return lessonService.getDistinctLessonsForForm(formId);
     }
 
     /**

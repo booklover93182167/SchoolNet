@@ -29,8 +29,8 @@ public class ParentPagePOJO {
         return lessonId;
     }
 
-    public void setLessonId(Long lessonId) {
-        this.lessonId = lessonId;
+    public void setLessonId(Long lessongId) {
+        this.lessonId = lessongId;
     }
 
     public ZonedDateTime getDate() {

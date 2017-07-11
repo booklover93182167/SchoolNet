@@ -9,6 +9,10 @@ import java.util.List;
  */
 public interface AttendancesService {
 
+
+    List<AttendancesDTO> findAllByPupilAndLessonId(Long pupilId, Long lessonId);
+
+
     /**
      * Save a attendances.
      *
@@ -40,28 +44,13 @@ public interface AttendancesService {
     void delete(Long id);
 
     /**
-     * Find all by pupil id and lesson id.
-     *
-     * @param pupilId the id of the pupil
-     * @param lessonId the id of the lesson
-     * @return list of entities
-     */
-    List<AttendancesDTO> findAllByPupilIdAndLessonId(Long pupilId, Long lessonId);
-
-    /**
-     * Find all by pupil id and exact date.
+     * Find all by Pupil id and date.
      *
      * @param date requested date
      * @return list of entities
      */
-    List<AttendancesDTO> findAllByPupilIdAndExactDate(Long pupilId, String date);
+    List<AttendancesDTO> findAllMembersByPupilIdAndDateBetween(String date);
 
-    /**
-     * Find all by course Id.
-     *
-     * @param courseId the id of the course
-     * @return list of entities
-     */
-    List<AttendancesDTO> findAllByCourseId(Long courseId);
+    List<AttendancesDTO> findAllWherePupilIdInAndScheduleIdIn(Long teacherId, Long formId, Long lessonId);
 
 }
