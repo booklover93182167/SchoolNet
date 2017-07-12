@@ -1,8 +1,10 @@
 package com.inva.hipstertest.freemarker.controllers;
 
+import com.inva.hipstertest.domain.Form;
 import com.inva.hipstertest.domain.User;
 import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.service.dto.*;
+import com.inva.hipstertest.service.mapper.FormMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -30,15 +32,17 @@ public class TeacherGradebookController {
     private final AttendancesService attendancesService;
     private final SchoolService schoolService;
     private final FormService formService;
+    private final FormMapper formMapper;
 
     public TeacherGradebookController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService,
-                                      AttendancesService attendancesService, SchoolService schoolService, FormService formService) {
+                                      AttendancesService attendancesService, SchoolService schoolService, FormService formService, FormMapper formMapper) {
         this.teacherService = teacherService;
         this.scheduleService = scheduleService;
         this.pupilService = pupilService;
         this.attendancesService = attendancesService;
         this.schoolService = schoolService;
         this.formService = formService;
+        this.formMapper = formMapper;
     }
 
     @RequestMapping(value = "/freemarker/teacher-gradebook", method = RequestMethod.GET)
@@ -131,7 +135,12 @@ public class TeacherGradebookController {
             model.addAttribute("currentUser", teacher);
             return "schoolDisabledPage";
         }
-        String formName=formService.findFormByTeacherId(teacher.getId()).getName();
+        Form  form=formMapper.formDTOToForm(formService.findFormByTeacherId(teacher.getId()));
+        if (form==null){
+            model.addAttribute("currentUser", teacher);
+            return "teacherHaveNoClassPage";
+        }
+        String formName=form.getName();
             model.addAttribute("currentUser", teacher);
             model.addAttribute("formName", formName);
         return "teacher-mgmt/teacher-my-class";
