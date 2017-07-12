@@ -1,6 +1,7 @@
 package com.inva.hipstertest.repository;
 
 
+import com.inva.hipstertest.domain.Pupil;
 import com.inva.hipstertest.domain.School;
 
 import com.inva.hipstertest.domain.Teacher;

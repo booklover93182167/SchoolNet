@@ -1,6 +1,8 @@
 package com.inva.hipstertest.freemarker.controllers;
 
 import com.codahale.metrics.annotation.Timed;
+import com.inva.hipstertest.freemarker.searchcriteria.ClassroomSearchCriteria;
+import com.inva.hipstertest.freemarker.searchcriteria.FormSearchCriteria;
 import com.inva.hipstertest.freemarker.searchcriteria.ScheduleSearchCriteria;
 import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.service.dto.*;
@@ -181,13 +183,29 @@ public class HeadTeacherController {
         return classrooms;
     }
 
+    @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/classrooms-wp", method = RequestMethod.POST)
+    public @ResponseBody List<ClassroomDTO> getAvailableClassroomBySearchCriteria(@RequestBody ClassroomSearchCriteria classroomSearchCriteria){
+        log.debug("Create Ajax request to search available forms by search criteria");
+        Validate.notNull(classroomSearchCriteria.getLessonPosition(), "Field 'lessonPosition' on classroomSearchCriteria can not be null.");
+        Validate.notNull(classroomSearchCriteria.getDate(), "Field 'Date' on  classroomSearchCriteria can not be nul.");
+        return classroomService.findAvailableClassroomsByCurrentSchoolAndSearchCriteria(classroomSearchCriteria);
+    }
+
     @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/schedule", method = RequestMethod.POST)
     public @ResponseBody List<ScheduleDTO> getScheduleBySearchCriteria(@RequestBody ScheduleSearchCriteria scheduleSearchCriteria){
         log.debug("Create Ajax request to search schedule by search criteria");
-        Validate.notNull(scheduleSearchCriteria.getId(), "Field 'id' on search criteria can not be empty.");
-        Validate.notNull(scheduleSearchCriteria.getScheduleFilterType(), "Field 'Schedule type' on search criteria can not be empty.");
-        Validate.notNull(scheduleSearchCriteria.getDate(), "Field 'Date' on search criteria can not be empty.");
+        Validate.notNull(scheduleSearchCriteria.getId(), "Field 'id' on scheduleSearchCriteria can not be null.");
+        Validate.notNull(scheduleSearchCriteria.getScheduleFilterType(), "Field 'Schedule type' on scheduleSearchCriteria can not be null.");
+        Validate.notNull(scheduleSearchCriteria.getDate(), "Field 'Date' on scheduleSearchCriteria can not be null.");
         return scheduleService.getScheduleBySearchCriteria(scheduleSearchCriteria);
+    }
+
+    @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/forms-wp", method = RequestMethod.POST)
+    public @ResponseBody List<FormDTO> getAvailableFormsBySearchCriteria(@RequestBody FormSearchCriteria formSearchCriteria){
+        log.debug("Create Ajax request to search available forms by search criteria");
+        Validate.notNull(formSearchCriteria.getLessonPosition(), "Field 'lessonPosition' on formSearchCreteria can not be null.");
+        Validate.notNull(formSearchCriteria.getDate(), "Field 'Date' on  formSearchCreteria can not be nul.");
+        return formService.findAvailableFormsByCurrentSchoolAndSearchCriteria(formSearchCriteria);
     }
 
     /**

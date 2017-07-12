@@ -1,17 +1,21 @@
 package com.inva.hipstertest.service.impl;
 
+import com.inva.hipstertest.freemarker.searchcriteria.FormSearchCriteria;
+import com.inva.hipstertest.repository.SchoolRepository;
 import com.inva.hipstertest.repository.TeacherRepository;
 import com.inva.hipstertest.service.FormService;
 import com.inva.hipstertest.domain.Form;
 import com.inva.hipstertest.repository.FormRepository;
 import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.mapper.FormMapper;
+import com.inva.hipstertest.service.util.DataUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,10 +33,13 @@ public class FormServiceImpl implements FormService{
     @Autowired
     private TeacherRepository teacherRepository;
 
+    private SchoolRepository schoolRepository;
+
     private final FormMapper formMapper;
 
-    public FormServiceImpl(FormRepository formRepository, FormMapper formMapper) {
+    public FormServiceImpl(FormRepository formRepository, SchoolRepository schoolRepository, FormMapper formMapper) {
         this.formRepository = formRepository;
+        this.schoolRepository = schoolRepository;
         this.formMapper = formMapper;
     }
 
@@ -137,5 +144,14 @@ public class FormServiceImpl implements FormService{
         return formRepository.findAllUnassignedFormsByCurrentSchool(idSchool).stream()
             .map(formMapper::formToFormDTO)
             .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public List<FormDTO> findAvailableFormsByCurrentSchoolAndSearchCriteria(FormSearchCriteria formSearchCriteria) {
+        ZonedDateTime date = DataUtil.getZonedDateTime(formSearchCriteria.getDate());
+        log.debug("Request to get all available Forms for current school by search criteria");
+        Long schoolId = teacherRepository.findTeacherByCurrentUser().getId();
+        List<Form> forms = formRepository.findAllAvailableFormsByCurrentSchoolAndSearchCriteria(schoolId, date, formSearchCriteria.getLessonPosition());
+        return formMapper.formsToFormDTOs(forms);
     }
 }

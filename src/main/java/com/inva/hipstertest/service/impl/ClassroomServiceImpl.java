@@ -1,18 +1,22 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.Teacher;
+import com.inva.hipstertest.freemarker.searchcriteria.ClassroomSearchCriteria;
 import com.inva.hipstertest.repository.TeacherRepository;
 import com.inva.hipstertest.service.ClassroomService;
 import com.inva.hipstertest.domain.Classroom;
 import com.inva.hipstertest.repository.ClassroomRepository;
 import com.inva.hipstertest.service.dto.ClassroomDTO;
 import com.inva.hipstertest.service.mapper.ClassroomMapper;
+import com.inva.hipstertest.service.util.DataUtil;
+import freemarker.template.utility.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -106,5 +110,14 @@ public class ClassroomServiceImpl implements ClassroomService {
         return classroomRepository.findAllClassroomsByCurrentSchool(idSchool).stream()
             .map(classroomMapper::classroomToClassroomDTO)
             .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public List<ClassroomDTO> findAvailableClassroomsByCurrentSchoolAndSearchCriteria(ClassroomSearchCriteria classroomSearchCriteria) {
+        ZonedDateTime date = DataUtil.getZonedDateTime(classroomSearchCriteria.getDate());
+        log.debug("Request to get all available Classrooms for current school by search criteria");
+        Long schoolId = teacherRepository.findTeacherByCurrentUser().getId();
+        List<Classroom> classrooms = classroomRepository.findAllAvailableClassroomsBySchoolIdAndSearchCriteria(schoolId, classroomSearchCriteria.getLessonPosition(), date);
+        return classroomMapper.classroomsToClassroomDTOs(classrooms);
     }
 }
