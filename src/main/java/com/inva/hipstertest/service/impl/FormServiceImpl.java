@@ -138,4 +138,11 @@ public class FormServiceImpl implements FormService{
             .map(formMapper::formToFormDTO)
             .collect(Collectors.toCollection(LinkedList::new));
     }
+
+    @Override
+    public FormDTO findFormByTeacherId(Long teacherId) {
+        Form form=formRepository.findFormByTeacherId(teacherId);
+        FormDTO formDTO = formMapper.formToFormDTO(form);
+        return formDTO;
+    }
 }

@@ -1,16 +1,15 @@
 package com.inva.hipstertest.freemarker.controllers;
 
+import com.inva.hipstertest.domain.User;
 import com.inva.hipstertest.service.*;
-import com.inva.hipstertest.service.dto.AttendancesDTO;
-import com.inva.hipstertest.service.dto.PupilDTO;
-import com.inva.hipstertest.service.dto.ScheduleDTO;
-import com.inva.hipstertest.service.dto.TeacherDTO;
+import com.inva.hipstertest.service.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,14 +29,16 @@ public class TeacherGradebookController {
     private final PupilService pupilService;
     private final AttendancesService attendancesService;
     private final SchoolService schoolService;
+    private final FormService formService;
 
     public TeacherGradebookController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService,
-                                      AttendancesService attendancesService, SchoolService schoolService) {
+                                      AttendancesService attendancesService, SchoolService schoolService, FormService formService) {
         this.teacherService = teacherService;
         this.scheduleService = scheduleService;
         this.pupilService = pupilService;
         this.attendancesService = attendancesService;
         this.schoolService = schoolService;
+        this.formService = formService;
     }
 
     @RequestMapping(value = "/freemarker/teacher-gradebook", method = RequestMethod.GET)
@@ -118,5 +119,23 @@ public class TeacherGradebookController {
         attendancesService.save(attendancesDTO);
         return attendancesDTO;
     }
+
+
+
+    @RequestMapping(value = "freemarker/teacher-my-class", method = RequestMethod.GET)
+    public String myClass(@ModelAttribute("model") ModelMap model) {
+        TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
+        log.debug("request to get school status by current user");
+        Boolean schoolEnabled=schoolService.getSchoolStatus(teacher.getSchoolId());
+        if (schoolEnabled==false){
+            model.addAttribute("currentUser", teacher);
+            return "schoolDisabledPage";
+        }
+        String formName=formService.findFormByTeacherId(teacher.getId()).getName();
+            model.addAttribute("currentUser", teacher);
+            model.addAttribute("formName", formName);
+        return "teacher-mgmt/teacher-my-class";
+    }
+
 
 }

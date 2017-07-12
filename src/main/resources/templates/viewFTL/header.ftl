@@ -64,6 +64,16 @@
                 <#--</li>-->
                 <#--</@security.authorize>-->
 
+                <@security.authorize  access="hasAnyRole('ROLE_TEACHER', 'ROLE_HEAD_TEACHER')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/freemarker/teacher-my-class">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <span><@spring.message "teacher.myClass"/></span>
+                        </a>
+                    </li>
+                </@security.authorize>
+
+
                 <@security.authorize  access="hasRole('ROLE_PUPIL')">
                 <li class="nav-item dropdown pointer">
                     <a class="nav-link dropdown-toggle" href="/freemarker/pupil-home" id="pupil-menu" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
