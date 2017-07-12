@@ -23,7 +23,6 @@ $('.table td:not(:first-child)').on('click', function () {
     datePrepare($(this).index() - 1);
     if (scheduleId) {
         $('.modal-teacher #teacher_input').prop('disabled', false);
-        fillUpLessonPosition();
         getListTeachersForModals();
         loadLessons($('.modal-teacher #lessons'), filterTypeForModalTeacher);
         getListLessonType($('.modal-teacher #lesson_type'));
@@ -39,7 +38,7 @@ $('.table td:not(:first-child)').on('click', function () {
         $('.modal-teacher #date').attr('value', dateForTeacherModal.toISOString().slice(0, 10));
         // set lesson position to teachers modal window ---------------------------
 
-        fillUpLessonPosition();
+        fillUpLessonPosition($('.modal-teacher #lesson_position'), selectedLessonPosition);
         setTeacherToModalWindow();
         loadLessons($('.modal-teacher #lessons'), filterTypeForModalTeacher);
         getListLessonType($('.modal-teacher #lesson_type'));
@@ -55,12 +54,12 @@ function datePrepare(weekDay) {
     nullifyTimeInDate(dateForTeacherModal);
 }
 
-function fillUpLessonPosition() { // TODO: it doesn't works correctly
-    // $('.modal-teacher #lesson_position').html('');;
+function fillUpLessonPosition(target, lessonPosition) { // TODO: it doesn't works correctly
+    target.html('');
     $('<option>')
-        .text(selectedLessonPosition)
-        .val(selectedLessonPosition)
-        .appendTo($('.modal-teacher #lesson_position'));
+        .text(lessonPosition)
+        .val(lessonPosition)
+        .appendTo(target);
 }
 
 function setTeacherToModalWindow() {
@@ -205,7 +204,7 @@ function loadCurrentSchedule() {
             // set date from stored schedule
             $('.modal-body #date').html('').attr('value', response.date.slice(0, 10));
             // set lesson position
-            fillUpLessonPosition();
+            fillUpLessonPosition($('.modal-teacher #lesson_position'), response.lessonPosition);
             // teacher
 
             // lesson
