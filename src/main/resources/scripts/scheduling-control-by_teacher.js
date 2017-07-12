@@ -1,3 +1,5 @@
+var filterTypeForModalTeacher = 'BY_TEACHER';
+var dateForTeacherModal = new Date();
 var scheduleToEdit;
 var scheduleId;
 var selectedTeacher;
@@ -12,20 +14,21 @@ $('#target-element').on('change', function () {
 
 $('.modal-teacher #teacher').on('change', function () {
     selectedTeacherId = $(this).find("option:selected").val();
-    loadLessons();
+    loadLessons($('.modal-teacher #lessons'), filterTypeForModalTeacher);
 });
 
 $('.table td:not(:first-child)').on('click', function () {
     selectedLessonPosition = $(this).closest("tr").prevAll("tr").length + 1;
     scheduleId = $(this).attr('id');
+    datePrepare($(this).index() - 1);
     if (scheduleId) {
         $('.modal-teacher #teacher_input').prop('disabled', false);
         fillUpLessonPosition();
         getListTeachersForModals();
-        loadLessons();
-        getListLessonType();
-        getListFormsForModal();
-        getListClassroomsForModal();
+        loadLessons($('.modal-teacher #lessons'), filterTypeForModalTeacher);
+        getListLessonType($('.modal-teacher #lesson_type'));
+        getListFormsForModal($('.modal-teacher #form_name'));
+        getListClassroomsForModal($('.modal-teacher #classroom_name'));
 
         loadCurrentSchedule();
 
@@ -33,25 +36,26 @@ $('.table td:not(:first-child)').on('click', function () {
         $('.modal-teacher #teacher_input').prop('disabled', true);
         // set schedule date to teachers modal window ---------------------------
         $('.modal-body #date').html('');
-        var tt = getMonday(selectedDate);
-        var date = new Date(tt);
-        var newDate = new Date(date);
-        var weekDay = $(this).index() - 1;
-        newDate.setDate(newDate.getDate() + weekDay);
-        selectedDate = newDate.toISOString().slice(0, 19);
-        $('.modal-teacher #date').attr('value', newDate.toISOString().slice(0, 10));
+        $('.modal-teacher #date').attr('value', dateForTeacherModal.toISOString().slice(0, 10));
         // set lesson position to teachers modal window ---------------------------
 
         fillUpLessonPosition();
         setTeacherToModalWindow();
-        loadLessons();
-        getListLessonType();
-        getListFormsForModal();
-        getListClassroomsForModal();
+        loadLessons($('.modal-teacher #lessons'), filterTypeForModalTeacher);
+        getListLessonType($('.modal-teacher #lesson_type'));
+        getListFormsForModal($('.modal-teacher #form_name'));
+        getListClassroomsForModal($('.modal-teacher #classroom_name'));
     }
 });
 
-function fillUpLessonPosition() {
+function datePrepare(weekDay) {
+    var tt = getMonday(selectedDate);
+    var newDate = new Date(tt);
+    dateForTeacherModal.setDate(newDate.getDate() + weekDay);
+    nullifyTimeInDate(dateForTeacherModal);
+}
+
+function fillUpLessonPosition() { // TODO: it doesn't works correctly
     // $('.modal-teacher #lesson_position').html('');;
     $('<option>')
         .text(selectedLessonPosition)
@@ -71,13 +75,13 @@ function setTeacherToModalWindow() {
         .appendTo($('.modal-teacher #teacher'));
 }
 
-function getListLessonType() {
+function getListLessonType(target) {
     $.ajax({
         url: "/freemarker/teacher-mgmt/schedule-mgmt/lesson-type",
         type: "GET",
         contentType: "application/json",
         success: function (response) {
-            fillUpSelectElement($('.modal-teacher #lesson_type'), response);
+            fillUpSelectElement(target, response);
         },
         error: function (e) {
             console.log(e.message);
@@ -85,10 +89,10 @@ function getListLessonType() {
     });
 }
 
-function getListFormsForModal() {
+function getListFormsForModal(target) {
     var searchParams = {
         lessonPosition: selectedLessonPosition,
-        date: selectedDate
+        date: dateForTeacherModal.toISOString().slice(0, 19)
     };
     $.ajax({
         url: "/freemarker/teacher-mgmt/schedule-mgmt/forms-wp",
@@ -96,7 +100,7 @@ function getListFormsForModal() {
         contentType: "application/json",
         data: JSON.stringify(searchParams),
         success: function (response) {
-            fillUpSelectElement($('.modal-teacher #form_name'), response);
+            fillUpSelectElement(target, response);
         },
         error: function (e) {
             console.log(e.message);
@@ -104,10 +108,11 @@ function getListFormsForModal() {
     });
 }
 
-function getListClassroomsForModal() {
+function getListClassroomsForModal(target) {
+
     var searchParams = {
         lessonPosition: selectedLessonPosition,
-        date: selectedDate
+        date: dateForTeacherModal.toISOString().slice(0, 19)
     };
     $.ajax({
         url: "/freemarker/teacher-mgmt/schedule-mgmt/classrooms-wp",
@@ -115,7 +120,7 @@ function getListClassroomsForModal() {
         contentType: "application/json",
         data: JSON.stringify(searchParams),
         success: function (response) {
-            fillUpSelectElement($('.modal-teacher #classroom_name'), response);
+            fillUpSelectElement(target, response);
         },
         error: function (e) {
             console.log(e.message);
@@ -123,10 +128,10 @@ function getListClassroomsForModal() {
     });
 }
 
-function loadLessons() {
+function loadLessons(target, filterType) {
     var searchParams = {
         id: selectedTeacherId,
-        lessonFilterType: 'BY_TEACHER'
+        lessonFilterType: filterType
     };
     $.ajax({
         url: "/freemarker/teacher-mgmt/schedule-mgmt/lessons",
@@ -134,7 +139,7 @@ function loadLessons() {
         contentType: "application/json",
         data: JSON.stringify(searchParams),
         success: function (response) {
-            fillUpSelectElement($('.modal-teacher #lessons'), response);
+            fillUpSelectElement(target, response);
         },
         error: function (e) {
             console.log(e.message);
@@ -179,8 +184,8 @@ function saveSchedule() {
         contentType: "application/json",
         data: JSON.stringify(schedule),
         success: function (response) {
-
-            fillUpScheduleTable(response);
+            alert('Save!')
+            // fillUpScheduleTable(response);
 
         },
         error: function (e) {
@@ -227,7 +232,7 @@ function getListTeachersForModals() {
         success: function (response) {
             fillUpSelectTeachers($('.modal-teacher #teacher'), response);
             if (response[0])
-                teacherId = response[0].id;
+                selectedTeacherId = response[0].id;
         },
 
         error: function (e) {

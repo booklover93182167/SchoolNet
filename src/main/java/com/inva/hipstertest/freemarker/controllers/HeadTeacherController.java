@@ -187,7 +187,7 @@ public class HeadTeacherController {
     public @ResponseBody List<ClassroomDTO> getAvailableClassroomBySearchCriteria(@RequestBody ClassroomSearchCriteria classroomSearchCriteria){
         log.debug("Create Ajax request to search available forms by search criteria");
         Validate.notNull(classroomSearchCriteria.getLessonPosition(), "Field 'lessonPosition' on classroomSearchCriteria can not be null.");
-        Validate.notNull(classroomSearchCriteria.getDate(), "Field 'Date' on  classroomSearchCriteria can not be nul.");
+        Validate.notNull(classroomSearchCriteria.getDate(), "Field 'Date' on  classroomSearchCriteria can not be null.");
         return classroomService.findAvailableClassroomsByCurrentSchoolAndSearchCriteria(classroomSearchCriteria);
     }
 
@@ -204,7 +204,7 @@ public class HeadTeacherController {
     public @ResponseBody List<FormDTO> getAvailableFormsBySearchCriteria(@RequestBody FormSearchCriteria formSearchCriteria){
         log.debug("Create Ajax request to search available forms by search criteria");
         Validate.notNull(formSearchCriteria.getLessonPosition(), "Field 'lessonPosition' on formSearchCreteria can not be null.");
-        Validate.notNull(formSearchCriteria.getDate(), "Field 'Date' on  formSearchCreteria can not be nul.");
+        Validate.notNull(formSearchCriteria.getDate(), "Field 'Date' on  formSearchCreteria can not be null.");
         return formService.findAvailableFormsByCurrentSchoolAndSearchCriteria(formSearchCriteria);
     }
 
@@ -214,7 +214,7 @@ public class HeadTeacherController {
      * @param scheduleId schedule id
      * @return the ScheduleDTO.
      */
-    @RequestMapping("/freemarker/teacher-mgmt/schedule-mgmt/schedule/{scheduleId}")
+    @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/schedule/{scheduleId}", method = RequestMethod.GET)
     public @ResponseBody ScheduleDTO getSchedulesById(@PathVariable("scheduleId") Long scheduleId) {
         log.debug("Request to get schedule by id : {}", scheduleId);
         ScheduleDTO scheduleDTO = scheduleService.findOne(scheduleId);

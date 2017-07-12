@@ -33,6 +33,12 @@ function getMonday(date) {
     return new Date(date.setDate(diff));
 }
 
+function nullifyTimeInDate(date) {
+    date.setHours(3);
+    date.setMinutes(0);
+    date.setSeconds(0);
+}
+
 function setTableHeader(dateStart) {
     var monday = getMonday(dateStart);
     var tableHeader = $('.table tr').eq(0);
