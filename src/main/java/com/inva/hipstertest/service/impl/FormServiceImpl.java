@@ -150,7 +150,7 @@ public class FormServiceImpl implements FormService{
     public List<FormDTO> findAvailableFormsByCurrentSchoolAndSearchCriteria(FormSearchCriteria formSearchCriteria) {
         ZonedDateTime date = DataUtil.getZonedDateTime(formSearchCriteria.getDate());
         log.debug("Request to get all available Forms for current school by search criteria");
-        Long schoolId = teacherRepository.findTeacherByCurrentUser().getId();
+        long schoolId = teacherRepository.findOneWithSchool().getSchool().getId();
         List<Form> forms = formRepository.findAllAvailableFormsByCurrentSchoolAndSearchCriteria(schoolId, date, formSearchCriteria.getLessonPosition());
         return formMapper.formsToFormDTOs(forms);
     }

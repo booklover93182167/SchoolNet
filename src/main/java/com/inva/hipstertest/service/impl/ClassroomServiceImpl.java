@@ -116,7 +116,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     public List<ClassroomDTO> findAvailableClassroomsByCurrentSchoolAndSearchCriteria(ClassroomSearchCriteria classroomSearchCriteria) {
         ZonedDateTime date = DataUtil.getZonedDateTime(classroomSearchCriteria.getDate());
         log.debug("Request to get all available Classrooms for current school by search criteria");
-        Long schoolId = teacherRepository.findTeacherByCurrentUser().getId();
+        long schoolId = teacherRepository.findOneWithSchool().getSchool().getId();
         List<Classroom> classrooms = classroomRepository.findAllAvailableClassroomsBySchoolIdAndSearchCriteria(schoolId, classroomSearchCriteria.getLessonPosition(), date);
         return classroomMapper.classroomsToClassroomDTOs(classrooms);
     }

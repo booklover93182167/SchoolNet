@@ -111,7 +111,6 @@ function getListClassroomsForModal() {
     };
     $.ajax({
         url: "/freemarker/teacher-mgmt/schedule-mgmt/classrooms-wp",
-        // type: "GET",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(searchParams),
