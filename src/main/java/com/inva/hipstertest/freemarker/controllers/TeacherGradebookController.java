@@ -1,6 +1,8 @@
 package com.inva.hipstertest.freemarker.controllers;
 
+import com.codahale.metrics.annotation.Timed;
 import com.inva.hipstertest.domain.Form;
+import com.inva.hipstertest.domain.Pupil;
 import com.inva.hipstertest.domain.User;
 import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.service.dto.*;
@@ -13,9 +15,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.Comparator;
@@ -49,13 +53,13 @@ public class TeacherGradebookController {
     public ModelAndView home(@ModelAttribute("model") ModelMap model) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
         log.debug("request to get school status by current user");
-               Boolean schoolEnabled=schoolService.getSchoolStatus(teacher.getSchoolId());
-        if (schoolEnabled==false){
-                       model.addAttribute("currentUser", teacher);
+        Boolean schoolEnabled = schoolService.getSchoolStatus(teacher.getSchoolId());
+        if (schoolEnabled == false) {
+            model.addAttribute("currentUser", teacher);
             return new ModelAndView("schoolDisabledPage");
         }
         List<ScheduleDTO> formsAndLessons = scheduleService.findFormsAndLessonsByTeacherId(teacher.getId());
-        if(formsAndLessons.isEmpty()) {
+        if (formsAndLessons.isEmpty()) {
             return new ModelAndView("redirect:/freemarker/error");
         }
         Collections.sort(formsAndLessons, (o1, o2) -> o1.getFormName().compareTo(o2.getFormName()));
@@ -67,19 +71,19 @@ public class TeacherGradebookController {
     public String gradebook(@ModelAttribute("model") ModelMap model, @PageableDefault(value = 10) Pageable pageable, @PathVariable Long formId, @PathVariable Long lessonId) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
         log.debug("request to get school status by current user");
-                Boolean schoolEnabled=schoolService.getSchoolStatus(teacher.getSchoolId());
-                if (schoolEnabled==false){
-                        model.addAttribute("currentUser", teacher);
-                       return "schoolDisabledPage";
-                   }
+        Boolean schoolEnabled = schoolService.getSchoolStatus(teacher.getSchoolId());
+        if (schoolEnabled == false) {
+            model.addAttribute("currentUser", teacher);
+            return "schoolDisabledPage";
+        }
         List<ScheduleDTO> formsAndLessons = scheduleService.findFormsAndLessonsByTeacherId(teacher.getId());
-        if(formsAndLessons.isEmpty()) {
+        if (formsAndLessons.isEmpty()) {
             return "redirect:/freemarker/error";
         }
         ScheduleDTO formAndLesson = null;
 
-        for(ScheduleDTO item : formsAndLessons) {
-            if(item.getFormId() == formId && item.getLessonId() == lessonId) {
+        for (ScheduleDTO item : formsAndLessons) {
+            if (item.getFormId() == formId && item.getLessonId() == lessonId) {
                 formAndLesson = item;
             }
         }
@@ -109,8 +113,8 @@ public class TeacherGradebookController {
 
     public long pages(int size, Long teacherId, Long formId, Long lessonId, ZonedDateTime today) {
         long all = scheduleService.countSchedulesForGradeBook(teacherId, formId, lessonId, today);
-        long realPage = all/size;
-        if(all % size == 0){
+        long realPage = all / size;
+        if (all % size == 0) {
             return realPage;
         }
         return realPage + 1;
@@ -125,25 +129,49 @@ public class TeacherGradebookController {
     }
 
 
-
     @RequestMapping(value = "freemarker/teacher-my-class", method = RequestMethod.GET)
     public String myClass(@ModelAttribute("model") ModelMap model) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
         log.debug("request to get school status by current user");
-        Boolean schoolEnabled=schoolService.getSchoolStatus(teacher.getSchoolId());
-        if (schoolEnabled==false){
+        Boolean schoolEnabled = schoolService.getSchoolStatus(teacher.getSchoolId());
+        if (schoolEnabled == false) {
             model.addAttribute("currentUser", teacher);
             return "schoolDisabledPage";
         }
-        Form  form=formMapper.formDTOToForm(formService.findFormByTeacherId(teacher.getId()));
-        if (form==null){
+        Form form = formMapper.formDTOToForm(formService.findFormByTeacherId(teacher.getId()));
+        if (form == null) {
             model.addAttribute("currentUser", teacher);
             return "teacherHaveNoClassPage";
         }
-        String formName=form.getName();
-            model.addAttribute("currentUser", teacher);
-            model.addAttribute("formName", formName);
+
+        String formName = form.getName();
+        model.addAttribute("currentUser", teacher);
+        model.addAttribute("formName", formName);
         return "teacher-mgmt/teacher-my-class";
+    }
+
+    @RequestMapping(value = "freemarker/teacher-my-class/newPupil/{formId}", method = RequestMethod.GET)
+    public ModelAndView teacherNewPupil(@PathVariable Long formId) {
+        return new ModelAndView("teacher-mgmt/teacher-my-class-createNewPupil");
+    }
+
+
+    /**
+     * Creates new pupil in form.
+     */
+    @PostMapping(value = "freemarker/teacher-my-class/newPupil/{formId}")
+    @Timed
+    public ModelAndView teacherCreatePupil(PupilDTO pupilDTO, @PathVariable Long formId, BindingResult bindingResult, String emailFail) throws URISyntaxException {
+        log.debug("Freemarker request to save pupil : {}", pupilDTO);
+        log.debug(pupilDTO.getFirstName() + " " + pupilDTO.getLastName() + " " + pupilDTO.getEmail());
+        PupilDTO result = pupilService.savePupilWithUser(pupilDTO, formId);
+        emailFail = "Invalid e-mail";
+        if (!result.getEnabled()) {
+            // handle email already in use
+            return new ModelAndView("teacher-mgmt/teacher-my-class-createNewPupil", "emailFail", emailFail);
+        }
+        // handle creation success
+        return new ModelAndView("redirect:/freemarker/teacher-my-class");
     }
 
 

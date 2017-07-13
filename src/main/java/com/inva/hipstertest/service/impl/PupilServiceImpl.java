@@ -1,17 +1,24 @@
 package com.inva.hipstertest.service.impl;
 
-import com.inva.hipstertest.domain.Pupil;
+import com.inva.hipstertest.domain.*;
 import com.inva.hipstertest.repository.PupilRepository;
+import com.inva.hipstertest.service.FormService;
+import com.inva.hipstertest.service.MailService;
 import com.inva.hipstertest.service.PupilService;
 import com.inva.hipstertest.service.dto.PupilDTO;
+import com.inva.hipstertest.service.mapper.FormMapper;
 import com.inva.hipstertest.service.mapper.PupilMapper;
+import com.inva.hipstertest.support.methods.ROLE_ENUM;
+import com.inva.hipstertest.support.methods.SupportCreate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -19,17 +26,24 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-public class PupilServiceImpl implements PupilService {
+public class PupilServiceImpl extends SupportCreate implements PupilService {
 
     private final Logger log = LoggerFactory.getLogger(PupilServiceImpl.class);
 
     private final PupilRepository pupilRepository;
 
     private final PupilMapper pupilMapper;
+    private final FormMapper formMapper;
+    private final FormService formService;
 
-    public PupilServiceImpl(PupilRepository pupilRepository, PupilMapper pupilMapper) {
+    @Autowired
+    private MailService mailService;
+
+    public PupilServiceImpl(PupilRepository pupilRepository, PupilMapper pupilMapper, FormMapper formMapper, FormService formService) {
         this.pupilRepository = pupilRepository;
         this.pupilMapper = pupilMapper;
+        this.formMapper = formMapper;
+        this.formService = formService;
     }
 
     /**
@@ -110,5 +124,32 @@ public class PupilServiceImpl implements PupilService {
         List<Pupil> pupils = pupilRepository.findAllByParentId(parentId);
         List<PupilDTO> pupilDTOs = pupilMapper.pupilsToPupilDTOs(pupils);
         return pupilDTOs;
+    }
+
+    /**
+     * Save a pupil.
+     */
+    @Override
+    public PupilDTO savePupilWithUser(PupilDTO pupilDTO, Long formId) {
+        log.debug("Request to save pupil : {}", pupilDTO);
+
+        pupilDTO.setFormId(formId);
+        Map<String, Object> information = super.savePupilWithRole(pupilDTO, ROLE_ENUM.PUPIL);
+
+        if (information.get("error") != null) {
+            pupilDTO.setEnabled(false);
+            return pupilDTO;
+        }
+
+        User user = (User) information.get("userObject");
+        String content = (String) information.get("content");
+        pupilDTO.setEnabled(true);
+        Pupil pupil = pupilMapper.pupilDTOToPupil(pupilDTO);
+        /* NEED CREATE NEW EMAIL */
+        mailService.sendSimpleEmailTry(user, content); // sendSimpleEmail(pupilDTO.getEmail(), content);
+        Form form = formMapper.formDTOToForm(formService.findOne(formId));
+        pupil.setForm(form);
+        pupil.setUser(user);
+        return pupilMapper.pupilToPupilDTO(pupilRepository.save(pupil));
     }
 }

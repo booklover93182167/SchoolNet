@@ -23,19 +23,31 @@
     <tfoot>
     <tr>
         <th colspan="2">
-            <button type="button" class="btn btn-outline-primary">New pupil</button>
+            <button type="button" class="btn btn-outline-primary"
+                    onclick="window.location.href='teacher-my-class/newPupil/${model.currentUser.formId}'">New pupil</button>
         </th>
 
     </tr>
     </tfoot>
     <tbody>
-    <tr>
-        <td>Cell</td>
-        <td>Cell
-            <button type="button" class="btn btn-outline-info btn-sm" style="margin-left: 70px">New parent</button>
-        </td>
 
+    <#list model.currentUser.form.pupilsId as i>
+    <tr>
+        <td>${i.firstName } ${i.lastName }</td>
+        <td>
+            <#if i.parents??>
+                <#list i.parents as k>
+                ${k.firstName } ${k.lastName} <br></#list>
+
+            </#if>
+
+
+
+
+            <button type="button" class="btn btn-outline-info btn-sm">New parent</button>
+        </td>
     </tr>
+    </#list>
 
 
     </tbody>
