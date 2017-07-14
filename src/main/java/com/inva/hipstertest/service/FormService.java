@@ -53,5 +53,7 @@ public interface FormService {
 
     List<FormDTO> findAllUnassignedFormsByCurrentSchool();
 
-    List<FormDTO> findAvailableFormsByCurrentSchoolAndSearchCriteria(FormSearchCriteria formSearchCreteria);
+    List<FormDTO> findAvailableFormsByCurrentSchoolAndSearchCriteria(FormSearchCriteria formSearchCriteria);
+
+    List<FormDTO> findAllAvailablePlusOneById(FormSearchCriteria formSearchCriteria);
 }

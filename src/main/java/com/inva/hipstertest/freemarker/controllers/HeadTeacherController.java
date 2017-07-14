@@ -25,20 +25,16 @@ public class HeadTeacherController {
     private final Logger log = LoggerFactory.getLogger(HeadTeacherController.class);
     private final TeacherService teacherService;
     private final ScheduleService scheduleService;
-    private final SchoolService schoolService;
     private final ClassroomService classroomService;
     private final FormService formService;
-    private final UserService userService;
     private static final String ENTITY_NAME = "teacher";
 
-    public HeadTeacherController(TeacherService teacherService, ScheduleService scheduleService, SchoolService schoolService,
-                                 ClassroomService classroomService, FormService formService, UserService userService){
+    public HeadTeacherController(TeacherService teacherService, ScheduleService scheduleService,
+                                 ClassroomService classroomService, FormService formService){
         this.teacherService = teacherService;
         this.scheduleService = scheduleService;
-        this.schoolService = schoolService;
         this.classroomService = classroomService;
         this.formService = formService;
-        this.userService = userService;
     }
 
     /**
@@ -133,8 +129,7 @@ public class HeadTeacherController {
     @RequestMapping(value = "freemarker/teacher-mgmt/teacher-mgmt-edit", method = RequestMethod.POST)
     public @ResponseBody TeacherDTO editRequest(@RequestBody Long id){
         log.debug("Create Ajax edit request");
-        TeacherDTO teacherDTOToSend = teacherService.findOne(id);
-        return teacherDTOToSend;
+        return teacherService.findOne(id);
     }
 
     @RequestMapping(value = "freemarker/teacher-mgmt/teacher-mgmt-save", method = RequestMethod.POST)
@@ -153,8 +148,7 @@ public class HeadTeacherController {
     @RequestMapping(value = "freemarker/teacher-mgmt/teacher-mgmt-get-av-forms", method = RequestMethod.GET)
     public @ResponseBody List<FormDTO> getAvailableForms(){
         log.debug("Create Ajax request for available forms");
-        List<FormDTO> forms = formService.findAllUnassignedFormsByCurrentSchool();
-        return forms;
+        return formService.findAllUnassignedFormsByCurrentSchool();
     }
 
     @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt", method = RequestMethod.GET)
@@ -165,22 +159,19 @@ public class HeadTeacherController {
     @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/forms", method = RequestMethod.GET)
     public @ResponseBody List<FormDTO> getAllFormsFromCurrentSchool(){
         log.debug("Create Ajax request for all forms");
-        List<FormDTO> forms = formService.findAllFormsByCurrentSchool();
-        return forms;
+        return formService.findAllFormsByCurrentSchool();
     }
 
     @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/teachers", method = RequestMethod.GET)
     public @ResponseBody List<TeacherDTO> getAllTeachersFromCurrentSchool(){
         log.debug("Create Ajax request for all teachers");
-        List<TeacherDTO> teachers = teacherService.findAllByCurrentSchool();
-        return teachers;
+        return teacherService.findAllByCurrentSchool();
     }
 
     @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/classrooms", method = RequestMethod.GET)
     public @ResponseBody List<ClassroomDTO> getAllClassroomsFromCurrentSchool(){
         log.debug("Create Ajax request for all classrooms");
-        List<ClassroomDTO> classrooms = classroomService.findAllByCurrentSchool();
-        return classrooms;
+        return classroomService.findAllByCurrentSchool();
     }
 
     @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/classrooms-wp", method = RequestMethod.POST)
@@ -188,7 +179,10 @@ public class HeadTeacherController {
         log.debug("Create Ajax request to search available forms by search criteria");
         Validate.notNull(classroomSearchCriteria.getLessonPosition(), "Field 'lessonPosition' on classroomSearchCriteria can not be null.");
         Validate.notNull(classroomSearchCriteria.getDate(), "Field 'Date' on  classroomSearchCriteria can not be null.");
-        return classroomService.findAvailableClassroomsByCurrentSchoolAndSearchCriteria(classroomSearchCriteria);
+        if (classroomSearchCriteria.getClassroomId() != null) {
+            return classroomService.findAvailablePlusOneById(classroomSearchCriteria);
+        }
+        return classroomService.findAvailableByCurrentSchoolAndSearchCriteria(classroomSearchCriteria);
     }
 
     @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/schedule", method = RequestMethod.POST)
@@ -203,8 +197,11 @@ public class HeadTeacherController {
     @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/forms-wp", method = RequestMethod.POST)
     public @ResponseBody List<FormDTO> getAvailableFormsBySearchCriteria(@RequestBody FormSearchCriteria formSearchCriteria){
         log.debug("Create Ajax request to search available forms by search criteria");
-        Validate.notNull(formSearchCriteria.getLessonPosition(), "Field 'lessonPosition' on formSearchCreteria can not be null.");
-        Validate.notNull(formSearchCriteria.getDate(), "Field 'Date' on  formSearchCreteria can not be null.");
+        Validate.notNull(formSearchCriteria.getLessonPosition(), "Field 'lessonPosition' on formSearchCriteria can not be null.");
+        Validate.notNull(formSearchCriteria.getDate(), "Field 'Date' on  formSearchCriteria can not be null.");
+        if (formSearchCriteria.getFormId() != null) {
+            return formService.findAllAvailablePlusOneById(formSearchCriteria);
+        }
         return formService.findAvailableFormsByCurrentSchoolAndSearchCriteria(formSearchCriteria);
     }
 
@@ -217,8 +214,7 @@ public class HeadTeacherController {
     @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/schedule/{scheduleId}", method = RequestMethod.GET)
     public @ResponseBody ScheduleDTO getSchedulesById(@PathVariable("scheduleId") Long scheduleId) {
         log.debug("Request to get schedule by id : {}", scheduleId);
-        ScheduleDTO scheduleDTO = scheduleService.findOne(scheduleId);
-        return scheduleDTO;
+        return scheduleService.findOne(scheduleId);
     }
 
 

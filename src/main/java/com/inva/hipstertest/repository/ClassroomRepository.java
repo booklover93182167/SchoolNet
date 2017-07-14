@@ -19,8 +19,9 @@ public interface ClassroomRepository extends JpaRepository<Classroom, Long> {
     List<Classroom> findAllClassroomsByCurrentSchool(@Param("id") long id);
 
     @Query("select distinct classroom from Classroom classroom join classroom.schedules schedule where classroom.enabled = true " +
-        "and classroom.school.id = :schoolId and schedule.lessonPosition <> :lessonPosition and schedule.date <> :date")
+        "and classroom.school.id = :schoolId and schedule.lessonPosition <> :lessonPosition and schedule.date between :date and :endDate")
     List<Classroom> findAllAvailableClassroomsBySchoolIdAndSearchCriteria(@Param("schoolId") Long schoolId,
                                                                           @Param("lessonPosition") Integer lessonPosition,
-                                                                          @Param("date") ZonedDateTime date);
+                                                                          @Param("date") ZonedDateTime date,
+                                                                          @Param("endDate") ZonedDateTime endDate);
 }

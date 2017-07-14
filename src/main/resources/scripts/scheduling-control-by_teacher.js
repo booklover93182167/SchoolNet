@@ -1,11 +1,17 @@
 var filterTypeForModalTeacher = 'BY_TEACHER';
 var dateForTeacherModal = new Date();
+var formIdFromCurrentSchedule;
+var classroomIdFromCurrentSchedule;
 var scheduleToEdit;
 var scheduleId;
 var selectedTeacher;
 var selectedTeacherId = 1;
+var selectedLessonId;
+var selectedLesson_typeId = 1;
 var selectedLessonPosition;
-
+var selectedFormId;
+var selectedClassroomId;
+var isEmpty = true;
 
 $('#target-element').on('change', function () {
     selectedTeacher = $(this).find("option:selected").text();
@@ -17,17 +23,31 @@ $('.modal-teacher #teacher').on('change', function () {
     loadLessons($('.modal-teacher #lessons'), filterTypeForModalTeacher);
 });
 
+$('.modal-teacher #lessons').on('change', function () {
+    selectedLessonId = $(this).find("option:selected").val();
+});
+
+$('.modal-teacher #lesson_type').on('change', function () {
+    selectedLesson_typeId = $(this).find("option:selected").val();
+});
+
+$('.modal-teacher #form_name').on('change', function () {
+    selectedFormId = $(this).find("option:selected").val();
+});
+
+$('.modal-teacher #classroom_name').on('change', function () {
+    selectedClassroomId = $(this).find("option:selected").val();
+});
+
 $('.table td:not(:first-child)').on('click', function () {
     selectedLessonPosition = $(this).closest("tr").prevAll("tr").length + 1;
     scheduleId = $(this).attr('id');
     datePrepare($(this).index() - 1);
     if (scheduleId) {
-        $('.modal-teacher #teacher_input').prop('disabled', false);
+        // $('.modal-teacher #teacher_input').prop('disabled', false);
         getListTeachersForModals();
         loadLessons($('.modal-teacher #lessons'), filterTypeForModalTeacher);
         getListLessonType($('.modal-teacher #lesson_type'));
-        getListFormsForModal($('.modal-teacher #form_name'));
-        getListClassroomsForModal($('.modal-teacher #classroom_name'));
 
         loadCurrentSchedule();
 
@@ -51,10 +71,9 @@ function datePrepare(weekDay) {
     var tt = getMonday(selectedDate);
     var newDate = new Date(tt);
     dateForTeacherModal.setDate(newDate.getDate() + weekDay);
-    nullifyTimeInDate(dateForTeacherModal);
 }
 
-function fillUpLessonPosition(target, lessonPosition) { // TODO: it doesn't works correctly
+function fillUpLessonPosition(target, lessonPosition) {
     target.html('');
     $('<option>')
         .text(lessonPosition)
@@ -81,6 +100,9 @@ function getListLessonType(target) {
         contentType: "application/json",
         success: function (response) {
             fillUpSelectElement(target, response);
+            if (response[0]) {
+                selectedLesson_typeId = response[0].id
+            }
         },
         error: function (e) {
             console.log(e.message);
@@ -90,8 +112,9 @@ function getListLessonType(target) {
 
 function getListFormsForModal(target) {
     var searchParams = {
+        formId: formIdFromCurrentSchedule,
         lessonPosition: selectedLessonPosition,
-        date: dateForTeacherModal.toISOString().slice(0, 19)
+        date: dateForTeacherModal
     };
     $.ajax({
         url: "/freemarker/teacher-mgmt/schedule-mgmt/forms-wp",
@@ -100,6 +123,10 @@ function getListFormsForModal(target) {
         data: JSON.stringify(searchParams),
         success: function (response) {
             fillUpSelectElement(target, response);
+            formIdFromCurrentSchedule = '';
+            if (response[0]) {
+                selectedFormId = response[0].id
+            }
         },
         error: function (e) {
             console.log(e.message);
@@ -110,8 +137,9 @@ function getListFormsForModal(target) {
 function getListClassroomsForModal(target) {
 
     var searchParams = {
+        classroomId: classroomIdFromCurrentSchedule,
         lessonPosition: selectedLessonPosition,
-        date: dateForTeacherModal.toISOString().slice(0, 19)
+        date: dateForTeacherModal
     };
     $.ajax({
         url: "/freemarker/teacher-mgmt/schedule-mgmt/classrooms-wp",
@@ -120,6 +148,10 @@ function getListClassroomsForModal(target) {
         data: JSON.stringify(searchParams),
         success: function (response) {
             fillUpSelectElement(target, response);
+            classroomIdFromCurrentSchedule = ''
+            if (response[0]) {
+                selectedClassroomId = response[0].id
+            }
         },
         error: function (e) {
             console.log(e.message);
@@ -139,6 +171,9 @@ function loadLessons(target, filterType) {
         data: JSON.stringify(searchParams),
         success: function (response) {
             fillUpSelectElement(target, response);
+            if (response[0]) {
+                selectedLessonId = response[0].id
+            }
         },
         error: function (e) {
             console.log(e.message);
@@ -166,33 +201,6 @@ function fillUpSelectTeachers(target, listOfElements) {
     })
 }
 
-function saveSchedule() {
-    var schedule = {
-        date: '',
-        enabled: '',
-        lessonPosition: '',
-        teacherId: '',
-        lessonId: '',
-        lessonTypeId: '',
-        formId: '',
-        classroomId: ''
-    };
-    $.ajax({
-        url: "/freemarker/teacher-mgmt/schedule-mgmt/schedule-create",
-        type: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(schedule),
-        success: function (response) {
-            alert('Save!')
-            // fillUpScheduleTable(response);
-
-        },
-        error: function (e) {
-            console.log(e.message);
-        }
-    })
-}
-
 function loadCurrentSchedule() {
     $.ajax({
         url: "/freemarker/teacher-mgmt/schedule-mgmt/schedule/" + scheduleId,
@@ -200,20 +208,31 @@ function loadCurrentSchedule() {
         contentType: "application/json",
         success: function (response) {
             scheduleToEdit = response;
+            formIdFromCurrentSchedule = response.formId;
+            selectedFormId = response.formId;
+            classroomIdFromCurrentSchedule = response.classroomId;
+            selectedClassroomId = response.classroomId;
+            selectedLessonId = response.lessonId;
+            selectedLesson_typeId = response.lessonTypeId;
+
+
+            getListFormsForModal($('.modal-teacher #form_name'));
+            // classroom
+            getListClassroomsForModal($('.modal-teacher #classroom_name'));
+            $('.modal-teacher #classroom_name').val(response.classroomId); // TODO: doesn't works correctly
 
             // set date from stored schedule
             $('.modal-body #date').html('').attr('value', response.date.slice(0, 10));
             // set lesson position
             fillUpLessonPosition($('.modal-teacher #lesson_position'), response.lessonPosition);
             // teacher
-
+            $('.modal-teacher #teacher_input').val(response.teacherId);
             // lesson
-
+            $('.modal-teacher #lessons').val(response.lessonId);
             // lesson type
-
+            $('.modal-teacher #lesson_type').val(response.lessonTypeId);
             // form
-
-            // classroom
+            $('.modal-teacher #form_name').val(response.formId);
 
 
         },
@@ -223,7 +242,7 @@ function loadCurrentSchedule() {
     })
 }
 
-function getListTeachersForModals() {
+function getListTeachersForModals() { // TODO: change to 'POST' method with searching parameters: date, lessonPosition.
     $.ajax({
         url: "/freemarker/teacher-mgmt/schedule-mgmt/teachers",
         type: "GET",
@@ -240,17 +259,25 @@ function getListTeachersForModals() {
     });
 }
 
+function saveSchedule() {
+    if (scheduleId) {
+        updateSchedule();
+    } else {
+        saveNewSchedule();
+    }
+}
+
 function updateSchedule() {
     var schedule = {
-        id: '',
-        date: '',
-        enabled: '',
-        lessonPosition: '',
-        teacherId: '',
-        lessonId: '',
-        lessonTypeId: '',
-        formId: '',
-        classroomId: ''
+        id: scheduleToEdit.id,
+        date: scheduleToEdit.date,
+        enabled: true,
+        lessonPosition: scheduleToEdit.lessonPosition,
+        teacherId: selectedTeacherId,
+        lessonId: selectedLessonId,
+        lessonTypeId: selectedLesson_typeId,
+        formId: selectedFormId,
+        classroomId: selectedClassroomId
     };
     $.ajax({
         url: "/freemarker/teacher-mgmt/schedule-mgmt/schedule-create",
@@ -258,7 +285,7 @@ function updateSchedule() {
         contentType: "application/json",
         data: JSON.stringify(schedule),
         success: function (response) {
-
+            alert('update!');
             fillUpScheduleTable(response);
 
         },
@@ -268,3 +295,29 @@ function updateSchedule() {
     })
 }
 
+function saveNewSchedule() {
+    var schedule = {
+        date: dateForTeacherModal,
+        enabled: true,
+        lessonPosition: selectedLessonPosition,
+        teacherId: selectedTeacherId,
+        lessonId: selectedLessonId,
+        lessonTypeId: selectedLesson_typeId,
+        formId: selectedFormId,
+        classroomId: selectedClassroomId
+    };
+    $.ajax({
+        url: "/freemarker/teacher-mgmt/schedule-mgmt/schedule-create",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(schedule),
+        success: function (response) {
+            alert('Save!')
+            // fillUpScheduleTable(response);
+
+        },
+        error: function (e) {
+            console.log(e.message);
+        }
+    })
+}

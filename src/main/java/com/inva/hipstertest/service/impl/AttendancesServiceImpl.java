@@ -1,22 +1,18 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.Attendances;
-import com.inva.hipstertest.domain.Pupil;
 import com.inva.hipstertest.repository.AttendancesRepository;
 import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.service.AttendancesService;
 import com.inva.hipstertest.service.dto.AttendancesDTO;
 import com.inva.hipstertest.service.mapper.AttendancesMapper;
-import com.inva.hipstertest.service.util.DataUtil;
+import com.inva.hipstertest.service.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -124,7 +120,7 @@ public class AttendancesServiceImpl implements AttendancesService{
     @Override
     public List<AttendancesDTO> findAllByPupilIdAndExactDate(Long pupilId, String date) {
         log.debug("Request to get attendances by pupil id {} and date {}", pupilId, date);
-        ZonedDateTime dateStart = DataUtil.getZonedDateTime(date);
+        ZonedDateTime dateStart = DateUtil.getZonedDateTime(date);
         ZonedDateTime dateEnd = dateStart.plusDays(1);
         List<Attendances> attendances = attendancesRepository.findAllByPupilIdAndDateBetween(pupilId, dateStart, dateEnd);
         List<AttendancesDTO> attendancesDTOs = attendancesMapper.attendancesToAttendancesDTOs(attendances);

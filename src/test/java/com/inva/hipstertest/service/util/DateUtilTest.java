@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 /**
  * Created by slavkosoltys on 28.06.17.
  */
-public class DataUtilTest {
+public class DateUtilTest {
     private final Map<String, ZonedDateTime> stringZonedDateTime = new HashMap<String, ZonedDateTime>();
 
     @Before
@@ -30,7 +30,7 @@ public class DataUtilTest {
     public void getZonedDateTime() throws Exception {
         for (Map.Entry<String, ZonedDateTime> entry :
             stringZonedDateTime.entrySet()) {
-            ZonedDateTime zonedDateTimeFromString = DataUtil.getZonedDateTime(entry.getKey());
+            ZonedDateTime zonedDateTimeFromString = DateUtil.getZonedDateTime(entry.getKey());
             assertEquals(entry.getValue(), zonedDateTimeFromString);
         }
     }

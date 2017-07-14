@@ -4,11 +4,12 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Utility class for parsing string to date
  */
-public class DataUtil {
+public class DateUtil {
 
     /**
      * Parsing String to ZonedDateTime obj.
@@ -20,7 +21,6 @@ public class DataUtil {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         LocalDateTime localDateTime = LocalDateTime.parse(date.substring(0,19), timeFormatter);
         ZoneId zoneId = ZoneId.systemDefault();
-        ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
-        return zonedDateTime;
+        return localDateTime.atZone(zoneId).truncatedTo(ChronoUnit.DAYS);
     }
 }

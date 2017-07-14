@@ -41,5 +41,7 @@ public interface ClassroomService {
 
     List<ClassroomDTO> findAllByCurrentSchool();
 
-    List<ClassroomDTO> findAvailableClassroomsByCurrentSchoolAndSearchCriteria(ClassroomSearchCriteria classroomSearchCriteria);
+    List<ClassroomDTO> findAvailableByCurrentSchoolAndSearchCriteria(ClassroomSearchCriteria classroomSearchCriteria);
+
+    List<ClassroomDTO> findAvailablePlusOneById(ClassroomSearchCriteria classroomSearchCriteria);
 }

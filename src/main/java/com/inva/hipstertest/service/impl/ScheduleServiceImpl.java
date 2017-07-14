@@ -7,7 +7,7 @@ import com.inva.hipstertest.repository.ScheduleRepository;
 import com.inva.hipstertest.service.ScheduleService;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
 import com.inva.hipstertest.service.mapper.ScheduleMapper;
-import com.inva.hipstertest.service.util.DataUtil;
+import com.inva.hipstertest.service.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -175,7 +175,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<ScheduleDTO> findAllByFormIdAndExactDate(Long formId, String date) {
         log.debug("Request to get schedules by formId {} and exact date {}", formId, date);
-        ZonedDateTime dateStart = DataUtil.getZonedDateTime(date);
+        ZonedDateTime dateStart = DateUtil.getZonedDateTime(date);
         ZonedDateTime dateEnd = dateStart.plusDays(1);
         List<Schedule> schedules = scheduleRepository.findAllByFormIdAndDateBetween(formId, dateStart, dateEnd);
         List<ScheduleDTO> scheduleDTOS = scheduleMapper.schedulesToScheduleDTOs(schedules);
@@ -206,11 +206,8 @@ public class ScheduleServiceImpl implements ScheduleService {
      */
     @Override
     public List<ScheduleDTO> getScheduleBySearchCriteria(ScheduleSearchCriteria scheduleSearchCriteria) {
-        ZonedDateTime date = DataUtil.getZonedDateTime(scheduleSearchCriteria.getDate());
-        ZonedDateTime lastMonday = date.with(ChronoField.DAY_OF_WEEK, 1);
-        ZoneId zoneId = ZoneId.systemDefault();
-        ZonedDateTime nextMonday = lastMonday.toLocalDate().atStartOfDay(zoneId).plusWeeks(1).minusDays(1);
-
+        ZonedDateTime lastMonday = scheduleSearchCriteria.getDate().with(ChronoField.DAY_OF_WEEK, 1);
+        ZonedDateTime nextMonday = lastMonday.plusWeeks(1).minusDays(1);
         List<Schedule> schedules;
         Long id = scheduleSearchCriteria.getId();
         switch (scheduleSearchCriteria.getScheduleFilterType()) {
