@@ -15,9 +15,9 @@
 <table class="table table-hover">
     <thead>
     <tr>
-        <th>Учень</th>
-        <th>Email</th>
-        <th>Батьки</th>
+        <th><@spring.message "teacher.gradebook.table.pupil.name"/></th>
+        <th><@spring.message "email"/></th>
+        <th><@spring.message "parents"/></th>
 
     </tr>
     </thead>
@@ -26,7 +26,7 @@
         <th colspan="2">
             <button type="button" class="btn btn-outline-primary"
                     onclick="window.location.href='/freemarker/teacher-my-class/newPupil/${model.currentUser.formId}'">
-                New pupil
+            <@spring.message "pupil.add"/>
             </button>
         </th>
 
@@ -45,7 +45,7 @@
                 <#list i.parents as k>
                 ${k.firstName } ${k.lastName} <br></#list>
             </#if>
-            <button type="button" class="btn btn-outline-info btn-sm">New parent</button>
+            <button type="button" class="btn btn-outline-info btn-sm"><@spring.message "addParent"/></button>
         </td>
     </tr>
     </#list>
