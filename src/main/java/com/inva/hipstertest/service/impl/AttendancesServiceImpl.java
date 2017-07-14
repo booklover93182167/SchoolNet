@@ -13,10 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,8 +42,8 @@ public class AttendancesServiceImpl implements AttendancesService{
 
     @Override
     public List<AttendancesDTO> findAllByPupilAndLessonId(Long pupilId, Long lessonId) {
-        log.debug("Request to findAllByPupilAndLessonId");
-        List<Attendances> attendances = attendancesRepository.findAllByPupilAndLessonId(pupilId, lessonId);
+        log.debug("Request to findAllByPupilIdAndLessonId");
+        List<Attendances> attendances = attendancesRepository.findAllByPupilIdAndLessonId(pupilId, lessonId);
         List<AttendancesDTO> attendancesDTOS = attendancesMapper.attendancesToAttendancesDTOs(attendances);
         return attendancesDTOS;
     }

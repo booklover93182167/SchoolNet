@@ -18,10 +18,9 @@ public interface AttendancesRepository extends JpaRepository<Attendances, Long> 
         " where attendances.enabled = true and attendances.pupil.id = :pupilId and schedule.date between :startDate and :endDate")
     List<Attendances> findAllMembersByPupilIdAndDateBetween(@Param("pupilId") Long pupilId, @Param("startDate") ZonedDateTime startDate, @Param("endDate") ZonedDateTime endDate);
 
-    // query to find all attendances for lesson and pupil
-    @Query(value = "select * from attendances where pupil_id = :pupilId and " +
-        "schedule_id in (select id from schedule where lesson_id = :lessonId)", nativeQuery = true)
-    List<Attendances> findAllByPupilAndLessonId(@Param("pupilId") Long pupilId, @Param("lessonId") Long lessonId);
+    @Query("select attendances from Attendances attendances join attendances.schedule schedule where attendances.pupil.id = :pupilId and " +
+        "schedule.lesson.id = :lessonId")
+    List<Attendances> findAllByPupilIdAndLessonId(@Param("pupilId") Long pupilId, @Param("lessonId") Long lessonId);
 
     // query to find all attendances for all pupils in the class for all lessons, that gives specific teacher, on specific subject, for this class
     @Query("select a from Attendances a where a.enabled = true " +
