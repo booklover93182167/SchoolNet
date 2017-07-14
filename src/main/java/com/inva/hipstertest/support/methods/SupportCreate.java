@@ -143,8 +143,8 @@ abstract public class SupportCreate {
         }else if(role.equals(ROLE_ENUM.PUPIL)){
             authority.setName("ROLE_PUPIL");
             auto.add(authority);
-            user.setActivated(false);
-            user.setActivationKey(RandomUtil.generateActivationKey());
+            //user.setActivated(true);
+           //user.setActivationKey(RandomUtil.generateActivationKey());
         }else if(role.equals(ROLE_ENUM.PARENT)){
             authority.setName("ROLE_PARENT");
             auto.add(authority);

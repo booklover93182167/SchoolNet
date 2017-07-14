@@ -15,8 +15,9 @@
 <table class="table table-hover">
     <thead>
     <tr>
-        <th style="width: 35%">Учень</th>
-        <th style="width: 65%">Батьки</th>
+        <th>Учень</th>
+        <th>Email</th>
+        <th>Батьки</th>
 
     </tr>
     </thead>
@@ -24,26 +25,26 @@
     <tr>
         <th colspan="2">
             <button type="button" class="btn btn-outline-primary"
-                    onclick="window.location.href='teacher-my-class/newPupil/${model.currentUser.formId}'">New pupil</button>
+                    onclick="window.location.href='/freemarker/teacher-my-class/newPupil/${model.currentUser.formId}'">
+                New pupil
+            </button>
         </th>
 
     </tr>
     </tfoot>
     <tbody>
 
-    <#list model.currentUser.form.pupilsId as i>
+    <#list model.pupils as i>
     <tr>
-        <td>${i.firstName } ${i.lastName }</td>
+        <td>${i.lastName } ${i.firstName }</td>
+        <td>
+
+        </td>
         <td>
             <#if i.parents??>
                 <#list i.parents as k>
                 ${k.firstName } ${k.lastName} <br></#list>
-
             </#if>
-
-
-
-
             <button type="button" class="btn btn-outline-info btn-sm">New parent</button>
         </td>
     </tr>

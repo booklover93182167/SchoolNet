@@ -18,8 +18,10 @@ public interface PupilMapper {
     @Mapping(source = "parents", target = "parents")
     @Mapping(source = "user.lastName", target = "lastName")
     @Mapping(source = "user.firstName", target = "firstName")
+    @Mapping(source = "user.email", target = "email")
     PupilDTO pupilToPupilDTO(Pupil pupil);
 
+    @Mapping(source = "user.email", target = "email")
     List<PupilDTO> pupilsToPupilDTOs(List<Pupil> pupils);
 
     @Mapping(source = "userId", target = "user")

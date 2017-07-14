@@ -134,7 +134,8 @@ public class PupilDTO implements Serializable {
     public String toString() {
         return "PupilDTO{" +
             "id=" + id +
-            ", enabled='" + enabled + "'" +
+            ", enabled=" + enabled +
+            ", email='" + email + '\'' +
             '}';
     }
 }

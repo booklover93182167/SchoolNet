@@ -4,9 +4,11 @@ import com.codahale.metrics.annotation.Timed;
 import com.inva.hipstertest.domain.Form;
 import com.inva.hipstertest.domain.Pupil;
 import com.inva.hipstertest.domain.User;
+import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.service.dto.*;
 import com.inva.hipstertest.service.mapper.FormMapper;
+import com.inva.hipstertest.service.mapper.PupilMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,9 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class TeacherGradebookController {
@@ -37,9 +37,12 @@ public class TeacherGradebookController {
     private final SchoolService schoolService;
     private final FormService formService;
     private final FormMapper formMapper;
+    private final PupilRepository pupilRepository;
+    private final PupilMapper pupilMapper;
 
     public TeacherGradebookController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService,
-                                      AttendancesService attendancesService, SchoolService schoolService, FormService formService, FormMapper formMapper) {
+                                      AttendancesService attendancesService, SchoolService schoolService, FormService formService,
+                                      FormMapper formMapper, PupilRepository pupilRepository, PupilMapper pupilMapper) {
         this.teacherService = teacherService;
         this.scheduleService = scheduleService;
         this.pupilService = pupilService;
@@ -47,6 +50,8 @@ public class TeacherGradebookController {
         this.schoolService = schoolService;
         this.formService = formService;
         this.formMapper = formMapper;
+        this.pupilRepository = pupilRepository;
+        this.pupilMapper = pupilMapper;
     }
 
     @RequestMapping(value = "/freemarker/teacher-gradebook", method = RequestMethod.GET)
@@ -145,8 +150,14 @@ public class TeacherGradebookController {
         }
 
         String formName = form.getName();
+
+        List<PupilDTO> pupils = pupilMapper.pupilsToPupilDTOs(pupilRepository.findAllByFormId(form.getId()));
+        Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
+        Collections.sort(pupils, comparatorLastNameFirstName);
         model.addAttribute("currentUser", teacher);
         model.addAttribute("formName", formName);
+        model.addAttribute("pupils", pupils);
+        System.out.println(pupils);
         return "teacher-mgmt/teacher-my-class";
     }
 
