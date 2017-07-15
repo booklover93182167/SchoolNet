@@ -22,6 +22,13 @@ public interface AttendancesRepository extends JpaRepository<Attendances, Long> 
         "schedule.lesson.id = :lessonId")
     List<Attendances> findAllByPupilIdAndLessonId(@Param("pupilId") Long pupilId, @Param("lessonId") Long lessonId);
 
+    @Query("select attendances from Attendances attendances join attendances.schedule schedule where attendances.pupil.id = :pupilId and " +
+        "schedule.lesson.id = :lessonId and schedule.date between :startDate and :endDate")
+    List<Attendances> findAllByPupilIdAndLessonIdAndDateBetween(@Param("pupilId") Long pupilId,
+                                                                @Param("lessonId") Long lessonId,
+                                                                @Param("startDate") ZonedDateTime startDate,
+                                                                @Param("endDate") ZonedDateTime endDate);
+
     // query to find all attendances for all pupils in the class for all lessons, that gives specific teacher, on specific subject, for this class
     @Query("select a from Attendances a where a.enabled = true " +
         "and a.pupil.id in (select p.id from Pupil p left join p.form form where p.enabled = true and form.id = :formId) " +
