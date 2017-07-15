@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +36,6 @@ public class ReportBatchJob {
 
     @Scheduled(cron = "0,10 * * * * *")
     public void run() {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>> JOB <<<<<<<<<<<<<<<<<<<<<<");
         List<Form> forms = formRepository.findAll();
         for (Form form : forms) {
             List<Lesson> lessons = lessonRepository.getDistinctLessonsByFormId(form.getId());
@@ -43,7 +43,6 @@ public class ReportBatchJob {
             for (Pupil pupil : pupils) {
                 analyzePupilGradesByLessons(pupil, lessons);
             }
-
         }
     }
 
@@ -64,16 +63,23 @@ public class ReportBatchJob {
                     message.append(pupil.getUser().getFirstName()).append(" ").append(pupil.getUser().getLastName())
                         .append(" FORM NAME - ").append(pupil.getForm().getName()).append(" from LESSON - ")
                         .append(lesson.getName()).append(" have average rating: ").append((double) sum / countGrades);
-                    for (Parent parent : parentRepository.findAllByPupilId(pupil.getId())) {
-                        Notification notification = new Notification();
-                        notification.setUser(parent.getUser());
-                        notification.setType(NotificationType.GRADE);
-                        notification.setMessage(message.toString());
-                        notificationRepository.save(notification);
-                    }
+                    informUsers(pupil, message);
                     message.setLength(0);
                 }
             }
         }
+    }
+
+    private void informUsers(Pupil pupil, StringBuilder message) {
+        List<Notification> notifications = new ArrayList<>();
+        List<Parent> parents = parentRepository.findAllByPupilId(pupil.getId());
+        if (parents != null) {
+            for (Parent parent : parents) {
+                notifications.add(Notification.builder().user(parent.getUser()).message(message.toString()).type(NotificationType.GRADE).build());
+            }
+        }
+        User teacher = pupil.getForm().getTeacher().getUser();
+        notifications.add(Notification.builder().user(teacher).message(message.toString()).type(NotificationType.GRADE).build());
+        notificationRepository.save(notifications);
     }
 }

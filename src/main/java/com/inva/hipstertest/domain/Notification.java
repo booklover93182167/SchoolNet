@@ -37,6 +37,16 @@ public class Notification implements Serializable {
     @ManyToOne(optional = false)
     private User user;
 
+    public Notification() {
+    }
+
+    private Notification(Builder builder) {
+        this.type = builder.type;
+        this.message = builder.message;
+        this.user = builder.user;
+    }
+
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -47,6 +57,14 @@ public class Notification implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public NotificationType getType() {
+        return type;
+    }
+
+    public void setType(NotificationType type) {
+        this.type = type;
     }
 
     public String getMessage() {
@@ -97,11 +115,39 @@ public class Notification implements Serializable {
             '}';
     }
 
-    public NotificationType getType() {
-        return type;
+    public static Builder builder() {
+        return new Builder();
     }
 
-    public void setType(NotificationType type) {
-        this.type = type;
+    public static class Builder {
+
+        private Long id;
+        private NotificationType type;
+        private String message;
+        private User user;
+
+        public Builder type(NotificationType type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder message(String message) {
+            this.message = message;
+            return this;
+        }
+
+
+        public Builder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public Notification build() {
+            return new Notification(this);
+        }
+
+
     }
+
+
 }
