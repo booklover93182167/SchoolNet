@@ -1,8 +1,7 @@
 package com.inva.hipstertest.domain;
 
-import com.inva.hipstertest.config.Constants;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.inva.hipstertest.config.Constants;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CascadeType;
@@ -15,10 +14,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
-import java.time.ZonedDateTime;
 
 /**
  * A user.
@@ -43,7 +42,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     @NotNull
     @Size(min = 60, max = 60)
-    @Column(name = "password_hash",length = 60)
+    @Column(name = "password_hash", length = 60)
     private String password;
 
     @Size(min = 1, max = 50)
@@ -93,6 +92,18 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @BatchSize(size = 20)
     @Cascade(CascadeType.MERGE)
     private Set<Authority> authorities = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<Notification> notifications = new HashSet<>();
+
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Set<Notification> notifications) {
+        this.notifications = notifications;
+    }
 
     public Long getId() {
         return id;
@@ -176,11 +187,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
     }
 
     public ZonedDateTime getResetDate() {
-       return resetDate;
+        return resetDate;
     }
 
     public void setResetDate(ZonedDateTime resetDate) {
-       this.resetDate = resetDate;
+        this.resetDate = resetDate;
     }
 
     public String getLangKey() {

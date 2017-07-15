@@ -1,13 +1,8 @@
 package com.inva.hipstertest.batch;
 
-import com.inva.hipstertest.domain.Attendances;
-import com.inva.hipstertest.domain.Form;
-import com.inva.hipstertest.domain.Lesson;
-import com.inva.hipstertest.domain.Pupil;
-import com.inva.hipstertest.repository.AttendancesRepository;
-import com.inva.hipstertest.repository.FormRepository;
-import com.inva.hipstertest.repository.LessonRepository;
-import com.inva.hipstertest.repository.PupilRepository;
+import com.inva.hipstertest.domain.*;
+import com.inva.hipstertest.domain.enums.NotificationType;
+import com.inva.hipstertest.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -24,6 +19,9 @@ public class ReportBatchJob {
     private PupilRepository pupilRepository;
 
     @Autowired
+    private ParentRepository parentRepository;
+
+    @Autowired
     private FormRepository formRepository;
 
     @Autowired
@@ -31,6 +29,9 @@ public class ReportBatchJob {
 
     @Autowired
     private AttendancesRepository attendancesRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     @Scheduled(cron = "0,10 * * * * *")
     public void run() {
@@ -47,6 +48,7 @@ public class ReportBatchJob {
     }
 
     private void analyzePupilGradesByLessons(Pupil pupil, List<Lesson> lessons) {
+        StringBuilder message = new StringBuilder("");
         for (Lesson lesson : lessons) {
             int countGrades = 0;
             int sum = 0;
@@ -59,9 +61,17 @@ public class ReportBatchJob {
             }
             if (countGrades > 0) {
                 if (sum / countGrades < 7) {
-                    System.out.println("!!!!!!!!!" + pupil.getUser().getFirstName() + " FORM NAME - " +
-                        pupil.getForm().getName() + " from LESSON -" + lesson.getName() + "have average rating: " +
-                        sum / countGrades + "!!!!!!!!!");
+                    message.append(pupil.getUser().getFirstName()).append(" ").append(pupil.getUser().getLastName())
+                        .append(" FORM NAME - ").append(pupil.getForm().getName()).append(" from LESSON - ")
+                        .append(lesson.getName()).append(" have average rating: ").append((double) sum / countGrades);
+                    for (Parent parent : parentRepository.findAllByPupilId(pupil.getId())) {
+                        Notification notification = new Notification();
+                        notification.setUser(parent.getUser());
+                        notification.setType(NotificationType.GRADE);
+                        notification.setMessage(message.toString());
+                        notificationRepository.save(notification);
+                    }
+                    message.setLength(0);
                 }
             }
         }
