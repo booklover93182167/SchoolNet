@@ -51,7 +51,7 @@ public class ReportBatchJob {
 
     private void analyzePupilGradesByLessons(Pupil pupil, List<Lesson> lessons, SampleView view, Integer precinct) {
         StringBuilder message = new StringBuilder("");
-        ZonedDateTime endDate = ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS);
+        ZonedDateTime today = ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS);
         ZonedDateTime startDate;
 
         for (Lesson lesson : lessons) {
@@ -60,20 +60,17 @@ public class ReportBatchJob {
             List<Attendances> attendances;
             switch (view) {
                 case WEEK:
-                    startDate = endDate.minusWeeks(1);
-                    attendances = attendancesRepository.findAllByPupilIdAndLessonIdAndDateBetween(pupil.getId(), lesson.getId(), startDate, endDate);
-                    break;
-                case MONTH:
-                    startDate = endDate.minusMonths(1);
-                    attendances = attendancesRepository.findAllByPupilIdAndLessonIdAndDateBetween(pupil.getId(), lesson.getId(), startDate, endDate);
+                    startDate = today.minusWeeks(1);
+                    attendances = attendancesRepository.findAllByPupilIdAndLessonIdAndDateBetween(pupil.getId(), lesson.getId(), startDate, today);
                     break;
                 case QUARTER:
-                    startDate = endDate.minusMonths(3);
-                    attendances = attendancesRepository.findAllByPupilIdAndLessonIdAndDateBetween(pupil.getId(), lesson.getId(), startDate, endDate);
+                    startDate = today.minusMonths(3);
+                    attendances = attendancesRepository.findAllByPupilIdAndLessonIdAndDateBetween(pupil.getId(), lesson.getId(), startDate, today);
                     break;
+                case MONTH:
                 default:
-                    startDate = endDate.minusMonths(1);
-                    attendances = attendancesRepository.findAllByPupilIdAndLessonIdAndDateBetween(pupil.getId(), lesson.getId(), startDate, endDate);
+                    startDate = today.minusMonths(1);
+                    attendances = attendancesRepository.findAllByPupilIdAndLessonIdAndDateBetween(pupil.getId(), lesson.getId(), startDate, today);
                     break;
             }
             for (Attendances grade : attendances) {
