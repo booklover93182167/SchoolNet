@@ -85,7 +85,7 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public List<LessonDTO> getDistinctLessonsForForm(Long formId) {
         log.debug("Request to get distinct Lessons by form {}", formId);
-        List<Lesson> lessons = lessonRepository.getDistinctLessonsForForm(formId);
+        List<Lesson> lessons = lessonRepository.getDistinctLessonsByFormId(formId);
         List<LessonDTO> lessonDTOS = lessonMapper.lessonsToLessonDTOs(lessons);
         return lessonDTOS;
     }
