@@ -2,14 +2,20 @@
 <@h.header>
 
 </@h.header>
-<link rel="stylesheet" type="text/css" href="/scripts/teacher-mgmt-popup.css">
+<link rel="stylesheet" type="text/css" href="/scripts/admin-home-popup.css">
 <br>
 <div id="header">
     <h2>
         <div style=" position: absolute;">
-            <span><@spring.message "hello"/>, ${model.currentUser.firstName} ${model.currentUser.lastName}</span></div>
+            <p class="text-right" style="font-style: italic"><@spring.message "hello"/>
+                , ${model.currentUser.firstName} ${model.currentUser.lastName}</p></div>
         <br>
-        <span><@spring.message "teacher.class"/> ${model.formName} </span>
+    <@spring.message "teacher.class"/> ${model.formName}
+        <button type="button" class="btn btn-primary btn-lg" style="margin-left: 84%;"
+                onclick="window.location.href='/freemarker/teacher-my-class/newPupil/${model.currentUser.formId}'">
+        <@spring.message "pupil.add"/>
+        </button>
+
     </h2>
 </div>
 <table class="table table-hover">
@@ -21,31 +27,26 @@
 
     </tr>
     </thead>
-    <tfoot>
-    <tr>
-        <th colspan="2">
-            <button type="button" class="btn btn-outline-primary"
-                    onclick="window.location.href='/freemarker/teacher-my-class/newPupil/${model.currentUser.formId}'">
-            <@spring.message "pupil.add"/>
-            </button>
-        </th>
 
-    </tr>
-    </tfoot>
     <tbody>
 
     <#list model.pupils as i>
     <tr>
-        <td>${i.lastName } ${i.firstName }</td>
+        <td><p style="text-shadow:5px 5px 15px grey;">${i.lastName } ${i.firstName }</p></td>
         <td>
-
+            ${i.email}
         </td>
         <td>
             <#if i.parents??>
                 <#list i.parents as k>
-                ${k.firstName } ${k.lastName} <br></#list>
+                    <p style="text-shadow:5px 5px 10px grey;margin-bottom: 0px;margin-top: 10px;"> ${k.firstName } ${k.lastName}
+                        <br></p>
+                    <i class="fa fa-envelope-open-o" aria-hidden="true">
+                    ${k.email} </i><br>
+                </#list>
             </#if>
-            <button type="button" class="btn btn-outline-info btn-sm"><@spring.message "addParent"/></button>
+            <button type="button" class="btn btn-outline-info btn-sm"
+                    style="margin-top: 10px;"><@spring.message "addParent"/></button>
         </td>
     </tr>
     </#list>

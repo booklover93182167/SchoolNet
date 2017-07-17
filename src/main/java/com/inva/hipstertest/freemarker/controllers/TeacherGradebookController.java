@@ -157,7 +157,6 @@ public class TeacherGradebookController {
         model.addAttribute("currentUser", teacher);
         model.addAttribute("formName", formName);
         model.addAttribute("pupils", pupils);
-        System.out.println(pupilRepository.findAllByFormId(form.getId()));
         return "teacher-mgmt/teacher-my-class";
     }
 

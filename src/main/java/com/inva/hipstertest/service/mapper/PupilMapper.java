@@ -21,7 +21,6 @@ public interface PupilMapper {
     @Mapping(source = "user.email", target = "email")
     PupilDTO pupilToPupilDTO(Pupil pupil);
 
-    @Mapping(source = "user.email", target = "email")
     List<PupilDTO> pupilsToPupilDTOs(List<Pupil> pupils);
 
     @Mapping(source = "userId", target = "user")
