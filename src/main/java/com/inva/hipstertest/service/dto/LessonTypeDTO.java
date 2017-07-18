@@ -1,6 +1,7 @@
 package com.inva.hipstertest.service.dto;
 
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,8 +12,10 @@ public class LessonTypeDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private Boolean enabled;
 
+    @NotNull
     private String name;
 
     public Long getId() {
