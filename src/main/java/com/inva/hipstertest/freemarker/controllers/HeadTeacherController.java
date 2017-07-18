@@ -59,7 +59,7 @@ public class HeadTeacherController {
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("schoolEnabled", schoolEnabled);
         model.addAttribute("teachers", teachers);
-        if (schoolEnabled == false) {
+        if (!schoolEnabled) {
             model.addAttribute("currentUser", currentUser);
             return "schoolDisabledPage";
         }
@@ -71,7 +71,7 @@ public class HeadTeacherController {
         TeacherDTO teacherDTO = new TeacherDTO();
         TeacherDTO currentUser = teacherService.findTeacherByCurrentUser();
             Boolean schoolEnabled=schoolService.getSchoolStatus(currentUser.getSchoolId());
-               if (schoolEnabled==false){
+               if (!schoolEnabled){
                        model.addAttribute("currentUser", currentUser);
                        return  new ModelAndView ("schoolDisabledPage");
                    }
@@ -148,8 +148,7 @@ public class HeadTeacherController {
     public @ResponseBody
     TeacherDTO editRequest(@RequestBody Long id) {
         log.debug("Create Ajax edit request");
-        TeacherDTO teacherDTOToSend = teacherService.findOne(id);
-        return teacherDTOToSend;
+        return teacherService.findOne(id);
     }
 
     @RequestMapping(value = "freemarker/teacher-mgmt/teacher-mgmt-save", method = RequestMethod.POST)
@@ -171,8 +170,7 @@ public class HeadTeacherController {
     public @ResponseBody
     List<FormDTO> getAvailableForms() {
         log.debug("Create Ajax request for available forms");
-        List<FormDTO> forms = formService.findAllUnassignedFormsByCurrentSchool();
-        return forms;
+        return formService.findAllUnassignedFormsByCurrentSchool();
     }
 
 }

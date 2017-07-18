@@ -49,7 +49,7 @@ public class PupilController {
         PupilDTO currentUser = pupilService.findPupilByCurrentUser();
 
         Boolean schoolEnabled = schoolService.getSchoolStatus(schoolService.getSchoolIdByForm(currentUser.getFormId()));
-        if (schoolEnabled == false) {
+        if (!schoolEnabled) {
             model.addAttribute("currentUser", currentUser);
             return "schoolDisabledPage";
         }
@@ -68,8 +68,7 @@ public class PupilController {
     public @ResponseBody
     List<ScheduleDTO> getListSchedulesByDate(@PathVariable String date) {
         log.debug("Request to get schedule for current pupil by date : {}", date);
-        List<ScheduleDTO> scheduleDTO = scheduleService.findAllByFormIdAndDate(date);
-        return scheduleDTO;
+        return scheduleService.findAllByFormIdAndDate(date);
     }
 
     /**
@@ -82,8 +81,7 @@ public class PupilController {
     public @ResponseBody
     List<AttendancesDTO> getListAttendancesByDate(@PathVariable String date) {
         log.debug("Request to get attendance for current pupil by date : {}", date);
-        List<AttendancesDTO> attendancesDTOs = attendancesService.findAllMembersByPupilIdAndDateBetween(date);
-        return attendancesDTOs;
+        return attendancesService.findAllMembersByPupilIdAndDateBetween(date);
     }
 
     /**
@@ -96,8 +94,7 @@ public class PupilController {
     public @ResponseBody
     TeacherDTO editRequest(@RequestBody Long id) {
         log.debug("Request to get teacher {}", id);
-        TeacherDTO teacherDTO = teacherService.findOne(id);
-        return teacherDTO;
+        return teacherService.findOne(id);
     }
 
     /**
@@ -113,7 +110,7 @@ public class PupilController {
 
         PupilDTO currentUser = pupilService.findPupilByCurrentUser();
         Boolean schoolEnabled = schoolService.getSchoolStatus(schoolService.getSchoolIdByForm(currentUser.getFormId()));
-        if (schoolEnabled == false) {
+        if (!schoolEnabled) {
             model.addAttribute("currentUser", currentUser);
             return "schoolDisabledPage";
         }

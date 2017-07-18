@@ -34,9 +34,10 @@ public interface SchoolRepository extends JpaRepository<School, Long> {
     @Query("SELECT COUNT(s) FROM School s where s.enabled = false")
     Long countAllDisabledSchools();
 
-    @Query(value = " SELECT school.id FROM schoolnet.school\n" +
-        "join form on form.school_id=school.id\n" +
-        "where form.id=:formId", nativeQuery = true)
+//    @Query(value = " SELECT school.id FROM schoolnet.school\n" +
+//        "join form on form.school_id=school.id\n" +
+//        "where form.id=:formId", nativeQuery = true)
+    @Query("select school.id from School school join school.forms form where form.id = :formId")
     Long getSchoolIdByForm(@Param("formId") Long formId);
 
 }
