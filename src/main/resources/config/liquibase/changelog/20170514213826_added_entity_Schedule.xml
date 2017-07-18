@@ -43,7 +43,7 @@
             </column>
 
             <column name="lesson_type_id" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="form_id" type="bigint">
