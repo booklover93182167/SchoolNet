@@ -50,6 +50,9 @@ public class Schedule implements Serializable {
     @NotNull
     private Lesson lesson;
 
+    @ManyToOne
+    private LessonType lessonType;
+
     @ManyToOne(optional = false)
     @NotNull
     private Form form;
@@ -228,5 +231,13 @@ public class Schedule implements Serializable {
             ", lessonPosition='" + lessonPosition + "'" +
             ", enabled='" + enabled + "'" +
             '}';
+    }
+
+    public LessonType getLessonType() {
+        return lessonType;
+    }
+
+    public void setLessonType(LessonType lessonType) {
+        this.lessonType = lessonType;
     }
 }
