@@ -18,6 +18,7 @@ import java.util.List;
  * Service Implementation for managing LessonType.
  */
 @Service
+@Transactional
 public class LessonTypeServiceImpl implements LessonTypeService{
 
     private final Logger log = LoggerFactory.getLogger(LessonTypeServiceImpl.class);
@@ -38,7 +39,6 @@ public class LessonTypeServiceImpl implements LessonTypeService{
      * @return the persisted entity
      */
     @Override
-    @Transactional
     public LessonTypeDTO save(LessonTypeDTO lessonTypeDTO) {
         log.debug("Request to save LessonType : {}", lessonTypeDTO);
         LessonType lessonType = lessonTypeMapper.lessonTypeDTOToLessonType(lessonTypeDTO);
@@ -53,6 +53,7 @@ public class LessonTypeServiceImpl implements LessonTypeService{
      *  @return the list of entities
      */
     @Override
+    @Transactional(readOnly = true)
     public Page<LessonTypeDTO> findAll(Pageable pageable) {
         log.debug("Request to get all LessonTypes");
         Page<LessonType> result = lessonTypeRepository.findAll(pageable);
@@ -66,6 +67,7 @@ public class LessonTypeServiceImpl implements LessonTypeService{
      *  @return the entity
      */
     @Override
+    @Transactional(readOnly = true)
     public LessonTypeDTO findOne(Long id) {
         log.debug("Request to get LessonType : {}", id);
         LessonType lessonType = lessonTypeRepository.findOne(id);
@@ -78,7 +80,6 @@ public class LessonTypeServiceImpl implements LessonTypeService{
      *  @param id the id of the entity
      */
     @Override
-    @Transactional
     public void delete(Long id) {
         log.debug("Request to delete LessonType : {}", id);
         lessonTypeRepository.delete(id);
@@ -90,6 +91,7 @@ public class LessonTypeServiceImpl implements LessonTypeService{
      *  @return the list of entities
      */
     @Override
+    @Transactional(readOnly = true)
     public List<LessonTypeDTO> findAll() {
         log.debug("Request to get all LessonTypes");
         List<LessonType> lessonTypeList = lessonTypeRepository.findAll();
