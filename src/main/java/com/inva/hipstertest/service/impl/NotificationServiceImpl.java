@@ -17,7 +17,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 /**
- * Created by slavkosoltys on 16.07.17.
+ * Service Implementation for managing Notification
  */
 @Service
 public class NotificationServiceImpl implements NotificationService {
