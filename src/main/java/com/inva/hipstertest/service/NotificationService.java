@@ -30,7 +30,7 @@ public interface NotificationService {
      * Get all notifications by {@link User} for last week
      *
      * @param user {@link User} entity
-     * @param period
+     * @param period period of notification
      * @return list of notifications
      */
     List<NotificationDTO> findAllByUserForLastWeek(User user, NotificationPeriod period);
