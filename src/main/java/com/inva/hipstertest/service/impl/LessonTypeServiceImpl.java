@@ -78,6 +78,7 @@ public class LessonTypeServiceImpl implements LessonTypeService{
      *  @param id the id of the entity
      */
     @Override
+    @Transactional
     public void delete(Long id) {
         log.debug("Request to delete LessonType : {}", id);
         lessonTypeRepository.delete(id);
