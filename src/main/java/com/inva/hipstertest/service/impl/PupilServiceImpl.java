@@ -2,9 +2,11 @@ package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.*;
 import com.inva.hipstertest.repository.PupilRepository;
+import com.inva.hipstertest.repository.TeacherRepository;
 import com.inva.hipstertest.service.FormService;
 import com.inva.hipstertest.service.MailService;
 import com.inva.hipstertest.service.PupilService;
+import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.dto.PupilDTO;
 import com.inva.hipstertest.service.mapper.FormMapper;
 import com.inva.hipstertest.service.mapper.PupilMapper;
@@ -35,15 +37,18 @@ public class PupilServiceImpl extends SupportCreate implements PupilService {
     private final PupilMapper pupilMapper;
     private final FormMapper formMapper;
     private final FormService formService;
+    private final TeacherRepository teacherRepository;
 
     @Autowired
     private MailService mailService;
 
-    public PupilServiceImpl(PupilRepository pupilRepository, PupilMapper pupilMapper, FormMapper formMapper, FormService formService) {
+    public PupilServiceImpl(PupilRepository pupilRepository, PupilMapper pupilMapper, FormMapper formMapper, FormService formService,
+                            TeacherRepository teacherRepository) {
         this.pupilRepository = pupilRepository;
         this.pupilMapper = pupilMapper;
         this.formMapper = formMapper;
         this.formService = formService;
+        this.teacherRepository = teacherRepository;
     }
 
     /**
@@ -151,5 +156,27 @@ public class PupilServiceImpl extends SupportCreate implements PupilService {
         pupil.setForm(form);
         pupil.setUser(user);
         return pupilMapper.pupilToPupilDTO(pupilRepository.save(pupil));
+    }
+
+    @Override
+        public void deletePupilFromForm(Long formId, Long pupilId) {
+        log.debug("Request to delete pupil");
+        Pupil pupil = pupilRepository.findOne(pupilId);
+        if (pupil.getForm().getId().equals(formId)){
+            pupil.setForm(null);
+            pupilRepository.save(pupil);
+            System.out.println("deleted");
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PupilDTO> findAllUnassignedPupilsByCurrentSchool() {
+        log.debug("Request to get all unasigned pupils for current school");
+        //long idSchool = teacherRepository.findOneWithSchool().getSchool().getId();
+
+        return pupilRepository.findAllUnassignedPupilsByCurrentSchool().stream()
+            .map(pupilMapper::pupilToPupilDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 }

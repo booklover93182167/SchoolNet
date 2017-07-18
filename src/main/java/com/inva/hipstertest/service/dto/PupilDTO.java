@@ -33,6 +33,16 @@ public class PupilDTO implements Serializable {
 
     private String email;
 
+    private Boolean schoolEnabled;
+
+    public Boolean getSchoolEnabled() {
+        return schoolEnabled;
+    }
+
+    public void setSchoolEnabled(Boolean schoolEnabled) {
+        this.schoolEnabled = schoolEnabled;
+    }
+
     public String getEmail() {
         return email;
     }

@@ -11,7 +11,8 @@
         <span>Create a new  pupil</span>
     </h2>
 </div>
-<form name="create" action="/freemarker/teacher-my-class/newPupil/${formId}" method="post">
+
+<form name="create" action="freemarker/teacher-my-class/newPupil/${formId}" method="post">
     <div class="body">
         <div class="form-group">
             <label class="form-control-label" for="firstName"><@spring.message "firstname"/></label>
@@ -29,7 +30,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-info" data-dismiss="modal"
-                onclick="window.location.href='/freemarker/teacher-my-class/'">
+                onclick="window.location.href='/freemarker/teacher-mgmt/'">
             <span class="fa fa-arrow-left"></span>&nbsp;<span><@spring.message "back"/></span>
         </button>
         <button type="button" class="btn btn-default" data-dismiss="modal"
@@ -63,6 +64,10 @@
         </div>
     </div>
 </div>
+
+<#list model.unassignedPupils as k>
+${k.firstName } ${k.lastName}
+</#list>
 <script src="/scripts/teachermgmt.js"></script>
 
 <@h.footer>

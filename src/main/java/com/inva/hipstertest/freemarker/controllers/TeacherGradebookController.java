@@ -154,6 +154,8 @@ public class TeacherGradebookController {
         List<PupilDTO> pupils = pupilMapper.pupilsToPupilDTOs(pupilRepository.findAllByFormId(form.getId()));
         Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
         Collections.sort(pupils, comparatorLastNameFirstName);
+        List<PupilDTO> unassignedPupils = pupilService.findAllUnassignedPupilsByCurrentSchool();
+        model.addAttribute("unassignedPupils", unassignedPupils);
         model.addAttribute("currentUser", teacher);
         model.addAttribute("formName", formName);
         model.addAttribute("pupils", pupils);
@@ -161,7 +163,10 @@ public class TeacherGradebookController {
     }
 
     @RequestMapping(value = "freemarker/teacher-my-class/newPupil/{formId}", method = RequestMethod.GET)
-    public ModelAndView teacherNewPupil(@PathVariable Long formId) {
+    public ModelAndView teacherNewPupil(@ModelAttribute("model") ModelMap model, @PathVariable Long formId) {
+
+        List<PupilDTO> unassignedPupils = pupilService.findAllUnassignedPupilsByCurrentSchool();
+        model.addAttribute("unassignedPupils", unassignedPupils);
         return new ModelAndView("teacher-mgmt/teacher-my-class-createNewPupil");
     }
 
@@ -171,17 +176,36 @@ public class TeacherGradebookController {
      */
     @PostMapping(value = "freemarker/teacher-my-class/newPupil/{formId}")
     @Timed
-    public ModelAndView teacherCreatePupil(PupilDTO pupilDTO, @PathVariable Long formId, BindingResult bindingResult, String emailFail) throws URISyntaxException {
+    public ModelAndView teacherCreatePupil(@ModelAttribute("model") ModelMap model,PupilDTO pupilDTO, @PathVariable Long formId, BindingResult bindingResult, String emailFail) throws URISyntaxException {
         log.debug("Freemarker request to save pupil : {}", pupilDTO);
         log.debug(pupilDTO.getFirstName() + " " + pupilDTO.getLastName() + " " + pupilDTO.getEmail());
         PupilDTO result = pupilService.savePupilWithUser(pupilDTO, formId);
         emailFail = "Invalid e-mail";
+
         if (!result.getEnabled()) {
             // handle email already in use
             return new ModelAndView("teacher-mgmt/teacher-my-class-createNewPupil", "emailFail", emailFail);
         }
         // handle creation success
         return new ModelAndView("redirect:/freemarker/teacher-my-class");
+    }
+
+    /**
+     * Deletes pupil from class
+     *
+     * @param pupilId pupil to delete
+     */
+    @RequestMapping(value = "/freemarker/teacher-my-class-delete/{pupilId}", method = RequestMethod.GET)
+    public ModelAndView deletePupil(@ModelAttribute("model") ModelMap model, @PathVariable Long pupilId) {
+        log.debug("Freemarker request to delete pupil : {}", pupilId);
+        TeacherDTO currentTeacher = teacherService.findTeacherByCurrentUser();
+        PupilDTO pupilToDelete = pupilService.findOne(pupilId);
+        if (currentTeacher.getFormId().equals(pupilToDelete.getFormId())) {
+            pupilService.deletePupilFromForm(pupilToDelete.getFormId(), pupilId);
+            return new ModelAndView("redirect:/freemarker/teacher-my-class");
+        } else {
+            return new ModelAndView("redirect:/freemarker/teacher-my-class");
+        }
     }
 
 

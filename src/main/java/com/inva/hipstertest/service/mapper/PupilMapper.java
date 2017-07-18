@@ -19,6 +19,7 @@ public interface PupilMapper {
     @Mapping(source = "user.lastName", target = "lastName")
     @Mapping(source = "user.firstName", target = "firstName")
     @Mapping(source = "user.email", target = "email")
+    @Mapping(source = "form.school.enabled", target = "schoolEnabled")
     PupilDTO pupilToPupilDTO(Pupil pupil);
 
     List<PupilDTO> pupilsToPupilDTOs(List<Pupil> pupils);
