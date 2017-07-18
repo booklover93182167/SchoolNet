@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 public class AverageGradeBatchJob {
 
     /**
-     * every 20:00:00, working days.
+     * every Wednesday at 19:00:00.
      */
     private static final String CRON_EXPRESSION = "0 0 19 ? * WED";
 
@@ -52,7 +52,7 @@ public class AverageGradeBatchJob {
     private MailService mailService;
 
     /**
-     * Analyzes pupils attendances and create notifications for related users (parents and teacher)
+     * Analyzes pupils attendances, create notifications for related users (parents (send mail) and teacher)
      * if average grade is less than threshold.
      */
     @Scheduled(cron = CRON_EXPRESSION)
