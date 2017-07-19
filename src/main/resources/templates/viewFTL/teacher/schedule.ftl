@@ -2,7 +2,7 @@
 <@h.header
 cssSources = [
 "/scripts/bootstrap-datepiker/datepicker.css",
-"/scripts/scheduling-control.css"]
+"/scripts/schedule.css"]
 jsSources = [
 "/scripts/bootstrap-datepiker/bootstrap-datepicker.js",
 "/scripts/bootstrap-datepiker/bootstrap-datepicker.uk.js",
