@@ -141,7 +141,7 @@ public class TeacherGradebookController {
             model.addAttribute("currentUser", teacher);
             return "schoolDisabledPage";
         }
-        Form form = formMapper.formDTOToForm(formService.findFormByTeacherId(teacher.getId()));
+        Form form = formMapper.formDTOToForm(formService.findOneByTeacherId(teacher.getId()));
         if (form == null) {
             model.addAttribute("currentUser", teacher);
             return "teacherHaveNoClassPage";
