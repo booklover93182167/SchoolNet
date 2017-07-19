@@ -158,14 +158,14 @@
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="account-menu">
 
-                        <a class="dropdown-item" (click)="collapseNavbar()" href="javascript:void(0);">
-                            <i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
-                            <span><@spring.message "navbar.settings"/></span>
-                        </a>
-                        <a class="dropdown-item" (click)="collapseNavbar()" href="javascript:void(0);">
-                            <i class="fa fa-fw fa-clock-o" aria-hidden="true"></i>
-                            <span><@spring.message "navbar.password"/></span>
-                        </a>
+                        <#--<a class="dropdown-item" (click)="collapseNavbar()" href="javascript:void(0);">-->
+                            <#--<i class="fa fa-fw fa-wrench" aria-hidden="true"></i>-->
+                            <#--<span><@spring.message "navbar.settings"/></span>-->
+                        <#--</a>-->
+                        <#--<a class="dropdown-item" (click)="collapseNavbar()" href="javascript:void(0);">-->
+                            <#--<i class="fa fa-fw fa-clock-o" aria-hidden="true"></i>-->
+                            <#--<span><@spring.message "navbar.password"/></span>-->
+                        <#--</a>-->
                         <@security.authorize access="isAuthenticated()">
                         <a class="dropdown-item" id="logout" href="/freemarker/logout">
                             <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>
