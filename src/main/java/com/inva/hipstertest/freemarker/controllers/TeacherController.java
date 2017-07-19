@@ -40,7 +40,7 @@ public class TeacherController {
 
     @RequestMapping(value = "/freemarker/teacher/schedule", method = RequestMethod.GET)
     public String scheduling(@ModelAttribute("model") ModelMap model) {
-        return "schedule";
+        return "teacher/schedule";
     }
 
     @RequestMapping(value = "freemarker/teacher/schedule/forms", method = RequestMethod.GET)
