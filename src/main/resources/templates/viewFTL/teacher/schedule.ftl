@@ -12,7 +12,7 @@ jsSources = [
 <div class="container-fluid">
     <div class="row">
         <div class="page-header">
-            <h3>Scheduling control</h3>
+            <h3><@spring.message "navbar.schedule"/></h3>
         </div>
     </div>
 
@@ -26,9 +26,8 @@ jsSources = [
             <br>
             <div class="row">
                 <select class="form-control" id="target">
-                    <option value="BY_TEACHER">Teacher</option>
-                    <option value="BY_FORM">Form</option>
-                    <option value="BY_CLASSROOM">Classroom</option>
+                    <option value="BY_TEACHER"><@spring.message "pupil.home.table.teacher"/></option>
+                    <option value="BY_CLASSROOM"><@spring.message "pupil.home.table.classroom"/></option>
                 </select>
             </div>
             <br>
@@ -39,7 +38,7 @@ jsSources = [
         <div class="col-md-9" id="schedule">
             <table class="table table-bordered table-hover" style="margin: auto">
                 <thead>
-                <th># Pos</th>
+                <th># №</th>
                 <#list 1..7 as week_day>
                 <th id="${week_day}"></th>
                 </#list>
