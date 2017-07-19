@@ -45,6 +45,12 @@
             <column name="enabled" type="boolean"/>
         </loadData>
         <loadData encoding="UTF-8"
+                  file="config/liquibase/lesson_type.csv"
+                  separator=";"
+                  tableName="lesson_type">
+            <column name="enabled" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
                   file="config/liquibase/parent.csv"
                   separator=";"
                   tableName="parent">

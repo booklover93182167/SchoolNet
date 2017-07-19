@@ -11,15 +11,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 /**
- * Created by slavkosoltys on 16.07.17.
+ * Service Implementation for managing Notification
  */
 @Service
+@Transactional(readOnly = true)
 public class NotificationServiceImpl implements NotificationService {
 
     private final Logger log = LoggerFactory.getLogger(LessonServiceImpl.class);
