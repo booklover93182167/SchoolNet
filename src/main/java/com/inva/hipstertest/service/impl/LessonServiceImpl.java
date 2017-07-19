@@ -72,7 +72,7 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public List<LessonDTO> getAllLessonsByTeacherId(Long teacherId) {
         log.debug("Request to get all Lessons by teacher {}", teacherId);
-        List<Lesson> lessons = lessonRepository.getAllLessonsByTeacherId(teacherId);
+        List<Lesson> lessons = lessonRepository.findAllByTeacherId(teacherId);
         List<LessonDTO> lessonDTOs = lessonMapper.lessonsToLessonDTOs(lessons);
         return lessonDTOs;
     }

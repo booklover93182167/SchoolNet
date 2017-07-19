@@ -14,7 +14,7 @@ import java.util.List;
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
     @Query("select lessons from Lesson lessons join lessons.teachers teacher where teacher.id =:teacherId")
-    List<Lesson> getAllLessonsByTeacherId(@Param("teacherId") Long teacherId);
+    List<Lesson> findAllByTeacherId(@Param("teacherId") Long teacherId);
 
     @Query("select distinct lesson from Lesson lesson join lesson.schedules schedule where schedule.form.id = :formId")
     List<Lesson> getDistinctLessonsByFormId(@Param("formId") Long formId);
