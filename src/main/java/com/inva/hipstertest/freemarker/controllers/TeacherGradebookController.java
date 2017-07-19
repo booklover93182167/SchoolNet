@@ -159,7 +159,7 @@ public class TeacherGradebookController {
     }
 
     @RequestMapping(value = "freemarker/teacher-my-class/newPupil/{formId}", method = RequestMethod.GET)
-    public ModelAndView teacherNewPupil( @PathVariable Long formId) {
+    public ModelAndView teacherNewPupil(@PathVariable Long formId) {
 
         return new ModelAndView("teacher-mgmt/teacher-my-class-createNewPupil");
     }
@@ -219,5 +219,12 @@ public class TeacherGradebookController {
     List<FormDTO> getAvailableForms() {
         log.debug("Create Ajax request for forms");
         return formService.findAllFormsByCurrentSchool();
+    }
+
+    @RequestMapping(value = "freemarker/teacher-my-class/newParent/{pupilId}", method = RequestMethod.GET)
+    public ModelAndView teacherNewParent(@ModelAttribute("model") ModelMap model, @PathVariable Long pupilId) {
+        PupilDTO pupil = pupilService.findOne(pupilId);
+        model.addAttribute("pupil", pupil);
+        return new ModelAndView("teacher-mgmt/teacher-my-class-createParent");
     }
 }

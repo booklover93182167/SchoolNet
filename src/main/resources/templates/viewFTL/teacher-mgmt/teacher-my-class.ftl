@@ -21,8 +21,8 @@
 <table class="table table-hover">
     <thead>
     <tr>
-        <th><@spring.message "teacher.gradebook.table.pupil.name"/></th>
-        <th><@spring.message "email"/></th>
+        <th style="width: 30%"><@spring.message "teacher.gradebook.table.pupil.name"/></th>
+        <th style="width: 30%"><@spring.message "email"/></th>
         <th><@spring.message "parents"/></th>
 
     </tr>
@@ -109,16 +109,16 @@
             <#if i.parents??>
                 <#list i.parents as k>
                     <p style="text-shadow:5px 5px 10px grey;margin-bottom: 0px;margin-top: 10px;"> ${k.firstName } ${k.lastName}
-                        <button type="button" class="close" aria-label="Close" title="delete">
+                        <a type="button" class="close" aria-label="Close" title="Delete">
                             <span aria-hidden="true">&times;</span>
-                        </button>
+                        </a>
                         <br></p>
                     <i class="fa fa-envelope-open-o" aria-hidden="true">
                     ${k.email} </i><br>
                 </#list>
             </#if>
             <button type="button" class="btn btn-outline-info btn-sm"
-                    style="margin-top: 10px;"><@spring.message "addParent"/></button>
+                    style="margin-top: 10px;" onclick="window.location.href='/freemarker/teacher-my-class/newParent/${i.id}'"><@spring.message "addParent"/></button>
         </td>
 
 
