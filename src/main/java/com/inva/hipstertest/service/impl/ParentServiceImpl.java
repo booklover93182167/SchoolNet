@@ -126,10 +126,14 @@ public class ParentServiceImpl extends SupportCreate implements ParentService {
     @Override
     public ParentDTO saveParentWithUser(ParentDTO parentDTO, Long pupilId) {
         log.debug("Request to save parent : {}", parentDTO);
+        System.out.println("0000000000000000000");
+        Set<PupilDTO> pupilsSet=new HashSet<>();
+        pupilsSet.add(pupilService.findOne(pupilId));
+        parentDTO.setPupils(pupilsSet);
 
-        parentDTO.getPupils().add(pupilService.findOne(pupilId));
+        System.out.println("1111111111111111111111");
         Map<String, Object> information = super.saveParentWithRole(parentDTO, ROLE_ENUM.PARENT);
-
+        System.out.println("22222222222222222222222222");
         if (information.get("error") != null) {
             parentDTO.setEnabled(false);
             return parentDTO;
@@ -142,7 +146,9 @@ public class ParentServiceImpl extends SupportCreate implements ParentService {
         /* NEED CREATE NEW EMAIL */
         mailService.sendSimpleEmailTry(user, content);
         Pupil pupil = pupilMapper.pupilDTOToPupil(pupilService.findOne(pupilId));
-        parent.getPupils().add(pupil);
+        Set<Pupil> pupils=new HashSet<>();
+        pupils.add(pupil);
+        parent.setPupils(pupils);
         parent.setUser(user);
         return parentMapper.parentToParentDTO(parentRepository.save(parent));
     }

@@ -27,7 +27,7 @@ public class ParentDTO implements Serializable {
 
     private String email;
 
-    private Set<PupilDTO> pupils =new HashSet<>();
+    private Set<PupilDTO> pupils;
 
     public Set<PupilDTO> getPupils() {
         return pupils;
