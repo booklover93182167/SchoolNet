@@ -44,7 +44,7 @@
 
                 <@security.authorize access="hasRole('ROLE_TEACHER')">
                     <li class="nav-item">
-                        <a class="nav-link" href="/freemarker/teacher-mgmt/schedule">
+                        <a class="nav-link" href="/freemarker/teacher/schedule">
                             <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
                             <span><@spring.message "navbar.schedule.mgnt"/></span>
                         </a>
