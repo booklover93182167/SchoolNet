@@ -31,6 +31,26 @@ public class PupilDTO implements Serializable {
 
     private String lastName;
 
+    private String email;
+
+    private Boolean schoolEnabled;
+
+    public Boolean getSchoolEnabled() {
+        return schoolEnabled;
+    }
+
+    public void setSchoolEnabled(Boolean schoolEnabled) {
+        this.schoolEnabled = schoolEnabled;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -38,7 +58,6 @@ public class PupilDTO implements Serializable {
     public void setFirstName(String pupilFirstName) {
         this.firstName = pupilFirstName;
     }
-
 
 
     public String getLastName() {
@@ -64,6 +83,7 @@ public class PupilDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public Boolean getEnabled() {
         return enabled;
     }
@@ -107,7 +127,9 @@ public class PupilDTO implements Serializable {
 
         PupilDTO pupilDTO = (PupilDTO) o;
 
-        if ( ! Objects.equals(id, pupilDTO.id)) { return false; }
+        if (!Objects.equals(id, pupilDTO.id)) {
+            return false;
+        }
 
         return true;
     }
@@ -121,7 +143,8 @@ public class PupilDTO implements Serializable {
     public String toString() {
         return "PupilDTO{" +
             "id=" + id +
-            ", enabled='" + enabled + "'" +
+            ", enabled=" + enabled +
+            ", email='" + email + '\'' +
             '}';
     }
 }
