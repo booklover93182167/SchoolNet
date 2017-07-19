@@ -47,15 +47,15 @@ $(function () {
     $("#pupil-select a").click(function () {
         var newPupilFormId = $(this).data("pupil-form-id");
         var newPupilId = $(this).data("pupil-id");
-        var newPupilSchoolEnabled = $(this).data("pupil-form-school-enabled");
+        //var newPupilSchoolEnabled = $(this).data("pupil-form-school-enabled");
 
         if (pupilId == newPupilId) {
             return;
         }
         pupilId = newPupilId;
-        if (newPupilSchoolEnabled == false) {
-            loadSchoolDisabledMessage();
-        } else {
+    //   if (newPupilSchoolEnabled == false) {
+      //      loadSchoolDisabledMessage();
+      //  } else {
             if (pupilFormId != newPupilFormId) {
                 pupilFormId = newPupilFormId;
                 loadSchedule();
@@ -63,7 +63,7 @@ $(function () {
             } else {
                 loadAttendance();
             }
-        }
+    //    }
     });
 
     $("#pupil-select a:last").trigger("click");
@@ -182,9 +182,9 @@ $(function () {
         });
     }
 
-    function loadSchoolDisabledMessage() {
-        console.log("loadSchoolDisabledMessage()");
-        $("#message").style.color(red);
-    }
-
+   // function loadSchoolDisabledMessage() {
+    //    console.log("loadSchoolDisabledMessage()");
+    //    $("#message").style.color(red);
+   // }
+//
 });

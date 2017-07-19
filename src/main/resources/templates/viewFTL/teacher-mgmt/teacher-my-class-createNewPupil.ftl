@@ -65,9 +65,7 @@
     </div>
 </div>
 
-<#list model.unassignedPupils as k>
-${k.firstName } ${k.lastName}
-</#list>
+
 <script src="/scripts/teachermgmt.js"></script>
 
 <@h.footer>

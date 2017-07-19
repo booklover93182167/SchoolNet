@@ -62,8 +62,10 @@ public interface PupilService {
 
     PupilDTO savePupilWithUser(PupilDTO pupilDTO, Long formId);
 
-    void deletePupilFromForm(Long formId, Long pupilId);
 
-    List<PupilDTO> findAllUnassignedPupilsByCurrentSchool();
+
+
+
+  PupilDTO saveEditedPupil(PupilDTO pupilDTO) ;
 
 }

@@ -32,20 +32,86 @@
 
     <#list model.pupils as i>
     <tr>
-        <td><p style="text-shadow:5px 5px 15px grey;">${i.lastName } ${i.firstName }
-            <button type="button" class="close" aria-label="Close" onclick="showDisableModal(${i.id})" title="delete">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </p></td>
         <td>
-            ${i.email}
+            <p style="text-shadow:5px 5px 15px grey;">${i.lastName } ${i.firstName }
+                <button id="edit" type="submit" class="btn btn-primary btn-sm"
+                        onclick="editPupilAjax(${i.id})">
+                    <span class="fa fa-pencil"></span>
+                    <span class="hidden-md-down"><@spring.message "school.edit"/></span>
+                </button>
+            </p>
+            <div id="editPopup" class="editModal">
+                <div class="modal-content3">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="form-control-label" for="firstName"><@spring.message "firstname"/></label>
+                            <input type="text" class="form-control" id="firstNameEdit" name="firstName" minlength=3 maxlength=50 required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" minlength=3 maxlength=50 required><@spring.message "lastname"/></label>
+                            <input type="text" class="form-control" id="lastNameEdit" name="lastName" minlength=3 maxlength=50 required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="email"><@spring.message "email"/></label>
+                            <input type="email" class="form-control" id="emailEdit" name="email"
+                                   required minlength="7" maxlength="100">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="formName"><@spring.message "teacherm.form"/><span id="currentForm">-</label>
+                            <button id="assign" class="btn btn-secondary"
+                                    onclick="showFormAssignModal()">
+                                <span class="fa fa-plus"></span>
+                                <span id="assignchange"><@spring.message "teacherm.assign"/></span>
+                            </button>
+                            <button id="remove" class="btn btn-secondary"
+                                    onclick="removeFormAssignment()">
+                                <span class="fa fa-minus"></span>
+                                <span id="assignchange"><@spring.message "teacherm.remove"/></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                onclick="hideEditModal()">
+                            <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.cancel"/></span>
+                        </button>
+                        <button type="submit" class="btn btn-danger"
+                                onclick="savePupil()">
+                            <span class="fa fa-save"></span>&nbsp;<span><@spring.message "save"/></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="formAssign" class="editModal">
+                <div class="modal-content3">
+                    <div class="modal-body">
+                        <select class="form-control form-control-lg" id="forms" style="width: auto">
+                            <option value=""><@spring.message "teacherm.select"/></option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info"
+                                onclick="hideFormAssignModal()">
+                            <span class="fa fa-arrow-left"></span>&nbsp;<span><@spring.message "back"/></span>
+                        </button>
+                        <button type="submit" class="btn btn-primary"
+                                onclick="assignPupilToForm()">
+                            <span class="fa fa-save"></span>&nbsp;<span><@spring.message "save"/></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+        ${i.email}
         </td>
         <td>
             <#if i.parents??>
                 <#list i.parents as k>
-                    <p style="text-shadow:5px 5px 10px grey;margin-bottom: 0px;margin-top: 10px;"> ${k.firstName } ${k.lastName} <button type="button" class="close" aria-label="Close" title="delete">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <p style="text-shadow:5px 5px 10px grey;margin-bottom: 0px;margin-top: 10px;"> ${k.firstName } ${k.lastName}
+                        <button type="button" class="close" aria-label="Close" title="delete">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         <br></p>
                     <i class="fa fa-envelope-open-o" aria-hidden="true">
                     ${k.email} </i><br>
@@ -55,33 +121,15 @@
                     style="margin-top: 10px;"><@spring.message "addParent"/></button>
         </td>
 
-        <div class="deleteModal" id="delete${i.id}">
-            <div class="modal-content2">
-                <div class="modal-body">
-                    <h2><@spring.message "pupil.delete"/> ${i.firstName} ${i.lastName} <@spring.message "pupil.fromClass"/></h2>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            onclick="removeDisableModal(${i.id})">
-                        <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.cancel"/></span>
-                    </button>
-                    <button type="submit" class="btn btn-success"
-                            onclick="window.location.href='/freemarker/teacher-my-class-delete/${i.id}'">
-                        <span class="fa fa-check"></span><span><@spring.message "yes"/></span>
-                    </button>
-                </div>
-            </div>
-        </div>
 
     </tr>
     </#list>
 
 
     </tbody>
+
+
 </table>
-<#list model.unassignedPupils as k>
-${k.firstName } ${k.lastName}
-</#list>
 <script src="/scripts/teacher-my-class.js"></script>
 <@h.footer>
 

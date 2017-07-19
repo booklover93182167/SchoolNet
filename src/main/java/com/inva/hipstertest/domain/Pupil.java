@@ -39,9 +39,8 @@ public class Pupil implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Attendances> attendances = new HashSet<>();
 
-    @ManyToOne
-        //(optional = false)
-    //@NotNull
+    @ManyToOne(optional = false)
+    @NotNull
     private Form form;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "pupils")

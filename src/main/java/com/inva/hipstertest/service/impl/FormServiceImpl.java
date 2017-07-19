@@ -122,10 +122,8 @@ public class FormServiceImpl implements FormService{
     public List<FormDTO> findAllFormsByCurrentSchool() {
         log.debug("Request to get all Forms for current school");
         long idSchool = teacherRepository.findOneWithSchool().getSchool().getId();
-
-        return formRepository.findAllFormsByCurrentSchool(idSchool).stream()
-            .map(formMapper::formToFormDTO)
-            .collect(Collectors.toCollection(LinkedList::new));
+List<FormDTO> formDTOs=formMapper.formsToFormDTOs(formRepository.findAllFormsByCurrentSchool(idSchool));
+        return formDTOs;
     }
 
     @Override

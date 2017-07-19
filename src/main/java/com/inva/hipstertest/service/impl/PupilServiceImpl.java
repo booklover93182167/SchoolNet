@@ -3,11 +3,11 @@ package com.inva.hipstertest.service.impl;
 import com.inva.hipstertest.domain.*;
 import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.repository.TeacherRepository;
-import com.inva.hipstertest.service.FormService;
-import com.inva.hipstertest.service.MailService;
-import com.inva.hipstertest.service.PupilService;
+import com.inva.hipstertest.repository.UserRepository;
+import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.dto.PupilDTO;
+import com.inva.hipstertest.service.dto.TeacherDTO;
 import com.inva.hipstertest.service.mapper.FormMapper;
 import com.inva.hipstertest.service.mapper.PupilMapper;
 import com.inva.hipstertest.support.methods.ROLE_ENUM;
@@ -38,17 +38,24 @@ public class PupilServiceImpl extends SupportCreate implements PupilService {
     private final FormMapper formMapper;
     private final FormService formService;
     private final TeacherRepository teacherRepository;
+    private final TeacherService teacherService;
+    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Autowired
     private MailService mailService;
 
     public PupilServiceImpl(PupilRepository pupilRepository, PupilMapper pupilMapper, FormMapper formMapper, FormService formService,
-                            TeacherRepository teacherRepository) {
+                            TeacherRepository teacherRepository, TeacherService teacherService, UserService userService,
+                            UserRepository userRepository) {
         this.pupilRepository = pupilRepository;
         this.pupilMapper = pupilMapper;
         this.formMapper = formMapper;
         this.formService = formService;
         this.teacherRepository = teacherRepository;
+        this.teacherService = teacherService;
+        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -158,25 +165,39 @@ public class PupilServiceImpl extends SupportCreate implements PupilService {
         return pupilMapper.pupilToPupilDTO(pupilRepository.save(pupil));
     }
 
-    @Override
-        public void deletePupilFromForm(Long formId, Long pupilId) {
-        log.debug("Request to delete pupil");
-        Pupil pupil = pupilRepository.findOne(pupilId);
-        if (pupil.getForm().getId().equals(formId)){
-            pupil.setForm(null);
-            pupilRepository.save(pupil);
-            System.out.println("deleted");
-        }
+
+
+
+    /**
+     * Save a pupil after editing.
+     *
+     * @param pupilDTO the entity to save
+     * @return the persisted entity
+     */
+    public PupilDTO saveEditedPupil(PupilDTO pupilDTO) {
+        log.debug("Request to save pupil : {}", pupilDTO);
+        Pupil pupil = pupilMapper.pupilDTOToPupil(pupilDTO);
+        TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
+        User pupilUser = userService.getUserWithAuthorities(pupilDTO.getUserId());System.out.println("000000000000000000000000");
+        // modify only if are from same school
+        //if (teacher.getSchoolId().equals(pupil.getForm().getSchool().getId())) {
+
+            pupilUser.setEmail(pupilDTO.getEmail());System.out.println("111111111111111111111111");
+            pupilUser.setFirstName(pupilDTO.getFirstName());System.out.println("222222222222222222222222");
+            pupilUser.setLastName(pupilDTO.getLastName());
+
+            userRepository.save(pupilUser);
+
+
+            FormDTO formDTO = formService.findOne(pupilDTO.getFormId());
+            pupilDTO.setFormId(formDTO.getId());
+            save(pupilDTO);
+
+
+            pupil = pupilRepository.save(pupil);
+       // }
+        PupilDTO result = pupilMapper.pupilToPupilDTO(pupil);
+        return result;
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<PupilDTO> findAllUnassignedPupilsByCurrentSchool() {
-        log.debug("Request to get all unasigned pupils for current school");
-        //long idSchool = teacherRepository.findOneWithSchool().getSchool().getId();
-
-        return pupilRepository.findAllUnassignedPupilsByCurrentSchool().stream()
-            .map(pupilMapper::pupilToPupilDTO)
-            .collect(Collectors.toCollection(LinkedList::new));
-    }
 }
