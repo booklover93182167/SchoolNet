@@ -3,7 +3,7 @@ package com.inva.hipstertest.service.dto;
 
 import com.inva.hipstertest.domain.Parent;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,9 +31,6 @@ public class PupilDTO implements Serializable {
 
     private String lastName;
 
-
-
-
     public String getFirstName() {
         return firstName;
     }
@@ -41,6 +38,7 @@ public class PupilDTO implements Serializable {
     public void setFirstName(String pupilFirstName) {
         this.firstName = pupilFirstName;
     }
+
 
 
     public String getLastName() {
@@ -66,7 +64,6 @@ public class PupilDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
     public Boolean getEnabled() {
         return enabled;
     }
@@ -110,9 +107,7 @@ public class PupilDTO implements Serializable {
 
         PupilDTO pupilDTO = (PupilDTO) o;
 
-        if (!Objects.equals(id, pupilDTO.id)) {
-            return false;
-        }
+        if ( ! Objects.equals(id, pupilDTO.id)) { return false; }
 
         return true;
     }

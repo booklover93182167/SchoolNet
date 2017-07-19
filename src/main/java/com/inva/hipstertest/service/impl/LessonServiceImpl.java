@@ -1,6 +1,7 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.Lesson;
+import com.inva.hipstertest.freemarker.searchcriteria.LessonsSearchCriteria;
 import com.inva.hipstertest.repository.LessonRepository;
 import com.inva.hipstertest.service.LessonService;
 import com.inva.hipstertest.service.dto.LessonDTO;
@@ -114,5 +115,25 @@ public class LessonServiceImpl implements LessonService {
     public void delete(Long id) {
         log.debug("Request to delete Lesson : {}", id);
         lessonRepository.delete(id);
+    }
+
+    @Override
+    public List<LessonDTO> getLessonsBySearchCriteria(LessonsSearchCriteria lessonSearchCriteria) {
+        List<Lesson> lessons;
+        Long id = lessonSearchCriteria.getId();
+        switch (lessonSearchCriteria.getLessonFilterType()) {
+            case BY_FORM:
+                lessons = lessonRepository.findAll();
+                break;
+            case BY_TEACHER:
+                lessons = lessonRepository.findAllByTeacherId(id);
+                break;
+            case BY_CLASSROOM:
+                lessons = lessonRepository.findAll();
+                break;
+            default:
+                throw new RuntimeException("invalid search criteria 'lessonsFor' ");
+        }
+        return lessonMapper.lessonsToLessonDTOs(lessons);
     }
 }

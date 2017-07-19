@@ -1,7 +1,9 @@
 package com.inva.hipstertest.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inva.hipstertest.config.Constants;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CascadeType;

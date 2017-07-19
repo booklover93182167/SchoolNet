@@ -1,6 +1,10 @@
 package com.inva.hipstertest.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -47,6 +51,18 @@ public class School implements Serializable {
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Teacher> teachers = new HashSet<>();
+
+    public School() {
+    }
+
+    private School(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.enabled = builder.enabled;
+        this.classrooms = builder.classrooms;
+        this.forms = builder.forms;
+        this.teachers = builder.teachers;
+    }
 
     public Long getId() {
         return id;
@@ -184,5 +200,53 @@ public class School implements Serializable {
             ", name='" + name + "'" +
             ", enabled='" + enabled + "'" +
             '}';
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private String name;
+        private Boolean enabled;
+        private Set<Classroom> classrooms = new HashSet<>();
+        private Set<Form> forms = new HashSet<>();
+        private Set<Teacher> teachers = new HashSet<>();
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder enabled(Boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public Builder classrooms(Set<Classroom> classrooms) {
+            this.classrooms = classrooms;
+            return this;
+        }
+
+        public Builder forms(Set<Form> forms) {
+            this.forms = forms;
+            return this;
+        }
+
+        public Builder teachers(Set<Teacher> teachers) {
+            this.teachers = teachers;
+            return this;
+        }
+
+        public School build(){
+            return new School(this);
+        }
     }
 }

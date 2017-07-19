@@ -1,4 +1,4 @@
-package com.inva.hipstertest.freemarker.pojo;
+package com.inva.hipstertest.freemarker.searchcriteria;
 
 import java.time.ZonedDateTime;
 

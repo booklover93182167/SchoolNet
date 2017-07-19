@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -24,4 +25,11 @@ public interface FormRepository extends JpaRepository<Form, Long> {
 
     @Query("select form from Form form where form.teacher.id =:teacherId")
     Form findOneByTeacherId(@Param("teacherId") long teacherId);
+
+    @Query("select distinct form from Form form join form.schedules schedule where form.enabled = true and form.school.id = :schoolId" +
+        " and schedule.lessonPosition <> :lessonPosition and schedule.date between :date and :endDate")
+    List<Form> findAllAvailableByCurrentSchoolAndSearchCriteria(@Param("schoolId") Long schoolId,
+                                                                @Param("lessonPosition") Integer lessonPosition,
+                                                                @Param("date") ZonedDateTime date,
+                                                                @Param("endDate") ZonedDateTime endDate);
 }
