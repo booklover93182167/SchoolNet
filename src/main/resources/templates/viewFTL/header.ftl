@@ -42,6 +42,14 @@
                     </li>
                 </@security.authorize>
 
+                <@security.authorize access="hasRole('ROLE_TEACHER')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/freemarker/teacher-mgmt/schedule">
+                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                            <span><@spring.message "navbar.schedule.mgnt"/></span>
+                        </a>
+                    </li>
+                </@security.authorize>
                 <#--<@security.authorize  access="hasRole('ROLE_HEAD_TEACHER')">-->
                 <#--<li class="nav-item dropdown pointer">-->
                     <#--<a class="nav-link dropdown-toggle" href="javascript:void(0);" id="head-teacher-menu" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">-->
