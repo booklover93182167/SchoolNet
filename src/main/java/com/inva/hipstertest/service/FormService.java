@@ -56,4 +56,6 @@ public interface FormService {
     List<FormDTO> findAvailableFormsByCurrentSchoolAndSearchCriteria(FormSearchCriteria formSearchCriteria);
 
     List<FormDTO> findAllAvailablePlusOneById(FormSearchCriteria formSearchCriteria);
+
+    FormDTO findFormByTeacherId(Long teacherId);
 }

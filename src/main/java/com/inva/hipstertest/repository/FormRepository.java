@@ -26,6 +26,9 @@ public interface FormRepository extends JpaRepository<Form, Long> {
     @Query("select form from Form form where form.teacher.id =:teacherId")
     Form findOneByTeacherId(@Param("teacherId") long teacherId);
 
+    @Query("select teacher.form from Teacher teacher where teacher.id =:teacherId")
+    Form findFormByTeacherId(@Param("teacherId") long teacherId);
+
     @Query("select distinct form from Form form join form.schedules schedule where form.enabled = true and form.school.id = :schoolId" +
         " and schedule.lessonPosition <> :lessonPosition and schedule.date between :date and :endDate")
     List<Form> findAllAvailableByCurrentSchoolAndSearchCriteria(@Param("schoolId") Long schoolId,
