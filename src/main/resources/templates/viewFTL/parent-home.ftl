@@ -16,9 +16,7 @@ jsSources = [
 "/scripts/parent-home.js"
 ]/>
 
-<div class="container">
-    <div class="row content">
-        <div class="col-sm-12 text-left">
+<div class="container-fluid">
 
         <#if model.pupilList?size == 0>
             <h1><@spring.message "parent.page.havenopupils"/></h1>
@@ -127,8 +125,6 @@ jsSources = [
 
         </#if>
 
-        </div>
-    </div>
 </div>
 
 <@h.footer/>

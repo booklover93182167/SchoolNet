@@ -10,7 +10,7 @@ id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;a
 23;pupil4;$2a$10$TkrBbhiIkgmdIZ14CAKgC.GmfOd7RiRc73vgWxnBFgEMh/VCACyLm;Петро;Варятов;pupil4@sample.com;;true;en;;06630182816933036094;admin;2017-05-17 16:06:48;2017-05-17 16:06:48;admin;2017-05-17 16:06:48
 24;pupil5;$2a$10$rgY8vPfk2DmQVZ2NoZ5zNO3PA7F71k8ZvQDLNtI3dvOksxF4b4EA6;Вадим;Бігун;pupil5@sample.com;;true;en;;96520331946788608273;admin;2017-05-17 16:07:53;2017-05-17 16:07:53;admin;2017-05-17 16:07:53
 25;parent1;$2a$10$Rmzd3mXond/Y6TOM4hkOxOBnUesco5HHsHzBqWTVt5e/1Dak2onhO;Сергій;Висоцький;parent1@sample.com;;true;en;;88670438068753033152;admin;2017-05-17 16:10:32;2017-05-17 16:10:32;admin;2017-05-17 16:11:06
-26;parent2;$2a$10$pmotXDz2qrONhOqNGDY7v.1PQGSnRF0mwq7OpeZ0iAkAW5hDfOsx6;Олег;Гіляка;parent2@sample.com;;true;en;;63124394235809109682;admin;2017-05-17 16:10:49;2017-05-17 16:10:49;admin;2017-05-17 16:10:49
+26;parent2;$2a$10$pmotXDz2qrONhOqNGDY7v.1PQGSnRF0mwq7OpeZ0iAkAW5hDfOsx6;Жанна;Висоцька;parent2@sample.com;;true;en;;63124394235809109682;admin;2017-05-17 16:10:49;2017-05-17 16:10:49;admin;2017-05-17 16:10:49
 27;parent3;$2a$10$TR0gFM2ej9V1orsfiEZUC.2nHr6obWceTsdOXwgCdFI/mJtHta0YK;Василь;Мудрий;parent3@sample.com;;true;en;;65708505029259770560;admin;2017-05-17 16:11:22;2017-05-17 16:11:22;admin;2017-05-17 16:11:22
 28;parent4;$2a$10$oZr9rcj7lcYqM4QyACFaFOhKlm8Mea8TRDHC1HjZulTOVbdWg1ck2;Іван;Гарячий;parent4@sample.com;;true;en;;55586069494152028441;admin;2017-05-17 16:11:35;2017-05-17 16:11:35;admin;2017-05-17 16:11:35
 29;parent5;$2a$10$liIdDGozR8Ip.FbKPHqLv.rGgfJalxWZ7653Lpwyc7sQOpjrvfLe2;Олена;Криворук;parent5@sample.com;;true;en;;13915420923013662446;admin;2017-05-17 16:11:51;2017-05-17 16:11:51;admin;2017-05-17 16:11:51

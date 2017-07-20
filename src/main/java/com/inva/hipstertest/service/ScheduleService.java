@@ -80,8 +80,6 @@ public interface ScheduleService {
      */
     List<ScheduleDTO> findAllBySchoolId(Long schoolId);
 
-    List<ScheduleDTO> findFormsAndLessonsByTeacherId(Long teacherId);
-
     Page<ScheduleDTO> findAllByFormIdLessonIdMaxDate(Pageable pageable, Long formId, Long lessonId, ZonedDateTime maxDate);
 
     Long countAllByFormIdLessonIdMaxDate(Long formId, Long lessonId, ZonedDateTime maxDate);

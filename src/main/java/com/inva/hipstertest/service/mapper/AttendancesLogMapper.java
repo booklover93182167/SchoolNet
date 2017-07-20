@@ -13,7 +13,13 @@ import java.util.List;
 public interface AttendancesLogMapper {
 
     @Mapping(source = "teacher.id", target = "teacherId")
+    @Mapping(source = "teacher.user.firstName", target = "teacherFirstName")
+    @Mapping(source = "teacher.user.lastName", target = "teacherLastName")
     @Mapping(source = "attendances.id", target = "attendancesId")
+    @Mapping(source = "attendances.pupil.user.firstName", target = "pupilFirstName")
+    @Mapping(source = "attendances.pupil.user.lastName", target = "pupilLastName")
+    @Mapping(source = "attendances.schedule.lesson.name", target = "lessonName")
+    @Mapping(source = "attendances.schedule.form.name", target = "formName")
     AttendancesLogDTO attendancesLogToAttendancesLogDTO(AttendancesLog attendancesLog);
 
     List<AttendancesLogDTO> attendancesLogsToAttendancesLogDTOs(List<AttendancesLog> attendancesLogs);

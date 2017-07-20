@@ -108,11 +108,24 @@
                 </@security.authorize>
 
                 <@security.authorize  access="hasAnyRole('ROLE_TEACHER', 'ROLE_HEAD_TEACHER')">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/freemarker/teacher-gradebook">
+                    <li class="nav-item dropdown pointer">
+                        <a class="nav-link dropdown-toggle" href="/freemarker/teacher-gradebook" id="pupil-menu" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                        <span>
                             <i class="fa fa-book" aria-hidden="true"></i>
                             <span><@spring.message "navbar.gradebook"/></span>
+                            <b class="caret"></b>
+                        </span>
                         </a>
+                        <div class="dropdown-menu" aria-labelledby="head-teacher-menu">
+                            <a class="dropdown-item" (click)="collapseNavbar()" href="/freemarker/teacher-gradebook">
+                                <i class="fa fa-book" aria-hidden="true"></i>
+                                <span><@spring.message "navbar.gradebook"/></span>
+                            </a>
+                            <a class="dropdown-item" (click)="collapseNavbar()" href="/freemarker/attendances-log">
+                                <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                <span><@spring.message "navbar.attendances-log"/></span>
+                            </a>
+                        </div>
                     </li>
                 </@security.authorize>
 

@@ -27,6 +27,18 @@ public class AttendancesLogDTO implements Serializable {
 
     private Long attendancesId;
 
+    private String teacherFirstName;
+
+    private String teacherLastName;
+
+    private String pupilFirstName;
+
+    private String pupilLastName;
+
+    private String lessonName;
+
+    private String formName;
+
     public Long getId() {
         return id;
     }
@@ -109,5 +121,53 @@ public class AttendancesLogDTO implements Serializable {
             ", newGrade='" + newGrade + "'" +
             ", reason='" + reason + "'" +
             '}';
+    }
+
+    public String getTeacherFirstName() {
+        return teacherFirstName;
+    }
+
+    public void setTeacherFirstName(String teacherFirstName) {
+        this.teacherFirstName = teacherFirstName;
+    }
+
+    public String getTeacherLastName() {
+        return teacherLastName;
+    }
+
+    public void setTeacherLastName(String teacherLastName) {
+        this.teacherLastName = teacherLastName;
+    }
+
+    public String getPupilFirstName() {
+        return pupilFirstName;
+    }
+
+    public void setPupilFirstName(String pupilFirstName) {
+        this.pupilFirstName = pupilFirstName;
+    }
+
+    public String getPupilLastName() {
+        return pupilLastName;
+    }
+
+    public void setPupilLastName(String pupilLastName) {
+        this.pupilLastName = pupilLastName;
+    }
+
+    public String getLessonName() {
+        return lessonName;
+    }
+
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
+    }
+
+    public String getFormName() {
+        return formName;
+    }
+
+    public void setFormName(String formName) {
+        this.formName = formName;
     }
 }

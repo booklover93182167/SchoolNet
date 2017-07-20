@@ -155,7 +155,15 @@ public class HeadTeacherController {
      * @return scheduling control view
      */
     @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt", method = RequestMethod.GET)
-    public String scheduleControl() {
+    public String scheduling(@ModelAttribute("model") ModelMap model) {
+        TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
+        model.addAttribute("teacher", teacher);
+        log.debug("request to get school status by current user");
+        Boolean schoolEnabled = schoolService.getSchoolStatus(teacher.getSchoolId());
+        if (schoolEnabled == false) {
+            model.addAttribute("currentUser", teacher);
+            return "schoolDisabledPage";
+        }
         return "scheduling-control";
     }
 

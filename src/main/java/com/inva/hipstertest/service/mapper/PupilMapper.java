@@ -27,7 +27,7 @@ public interface PupilMapper {
     @Mapping(source = "userId", target = "user")
     @Mapping(target = "attendances", ignore = true)
     @Mapping(source = "formId",target="form")
-    @Mapping(source = "parents",target="parents")
+    //@Mapping(target = "parents", ignore=true)
     Pupil pupilDTOToPupil(PupilDTO pupilDTO);
 
     List<Pupil> pupilDTOsToPupils(List<PupilDTO> pupilDTOs);
