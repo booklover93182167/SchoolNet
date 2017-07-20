@@ -42,6 +42,8 @@ public class ScheduleDTO implements Serializable {
 
     private String lessonTypeId;
 
+    private String lessonTypeName;
+
     private String formName;
 
     private String classroomName;
@@ -192,5 +194,13 @@ public class ScheduleDTO implements Serializable {
 
     public void setLessonTypeId(String lessonTypeId) {
         this.lessonTypeId = lessonTypeId;
+    }
+
+    public String getLessonTypeName() {
+        return lessonTypeName;
+    }
+
+    public void setLessonTypeName(String lessonTypeName) {
+        this.lessonTypeName = lessonTypeName;
     }
 }

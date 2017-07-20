@@ -20,6 +20,7 @@ public interface ScheduleMapper {
     @Mapping(source = "classroom.id", target = "classroomId")
     @Mapping(source = "teacher.id", target = "teacherId")
     @Mapping(source = "lessonType.id", target = "lessonTypeId")
+    @Mapping(source = "lessonType.name", target = "lessonTypeName")
     @Mapping(source = "teacher.user.lastName", target = "teacherLastName")
     @Mapping(source = "teacher.user.firstName", target = "teacherFirstName")
     ScheduleDTO scheduleToScheduleDTO(Schedule schedule);

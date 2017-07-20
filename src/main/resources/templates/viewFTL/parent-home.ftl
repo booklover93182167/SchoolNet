@@ -20,7 +20,7 @@ jsSources = [
     <div class="row content">
         <div class="col-sm-12 text-left">
 
-        <#if model["pupilList"]?size == 0>
+        <#if model.pupilList?size == 0>
             <h1><@spring.message "parent.page.havenopupils"/></h1>
         <#else>
 
@@ -35,17 +35,22 @@ jsSources = [
             <br><br>
             <div class="font-weight-bold"><@spring.message "parent.page.selectpupil"/></div>
             <ul class="nav nav-pills" id="pupil-select" role="tablist">
-            <#list model["pupilList"] as pupil>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#pupil${pupil.id}" role="tab" aria-controls="pupil${pupil.id}" data-pupil-id="${pupil.id}" data-pupil-form-id="${pupil.formId}"
-                       <#--data-pupil-form-school-enabled="${pupil.schoolEnabled?string('true', 'false')}-->
-        ">${pupil.firstName} ${pupil.lastName} [${pupil.formName}]</a>
-                </li>
-            </#list>
+                <#list model.pupilList as pupil>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#pupil${pupil.id}" role="tab" aria-controls="pupil${pupil.id}" data-pupil-id="${pupil.id}" data-pupil-form-id="${pupil.formId}">${pupil.firstName} ${pupil.lastName} [${pupil.formName}]</a>
+                    </li>
+                </#list>
             </ul>
             <br>
             <div class="clearfix"></div>
-<#--<div id="message" style="width: 300px; height: 100px; background-color: chartreuse"> </div>-->
+
+            <div class="alert alert-danger" style="display: none;" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Error!</strong> Couldn't load schedule/subjects/grades.
+            </div>
+
             <div class="card">
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" role="tablist">
@@ -63,29 +68,29 @@ jsSources = [
                         <div class="tab-pane" id="week-schedule" role="tabpanel">
 
                             <table class="table table-striped">
-                            <#list 0..10 as tableRow>
+                                <#list 0..10 as tableRow>
 
-                                <tr>
-                                    <#list 0..7 as tableCol>
-                                        <#if tableCol == 0>
-                                            <#if tableRow == 0>
-                                                <td class="lesson-position">
-                                                    <@spring.message "schedule.lesson.position"/>
-                                                </td>
+                                    <tr>
+                                        <#list 0..7 as tableCol>
+                                            <#if tableCol == 0>
+                                                <#if tableRow == 0>
+                                                    <td class="lesson-position">
+                                                        <@spring.message "schedule.lesson.position"/>
+                                                    </td>
+                                                <#else>
+                                                    <td class="lesson-position">${tableRow}</td>
+                                                </#if>
                                             <#else>
-                                                <td class="lesson-position">${tableRow}</td>
+                                                <#if tableRow == 0>
+                                                    <td class="day-of-week"></td>
+                                                <#else>
+                                                    <td class="for-clear"></td>
+                                                </#if>
                                             </#if>
-                                        <#else>
-                                            <#if tableRow == 0>
-                                                <td class="day-of-week"></td>
-                                            <#else>
-                                                <td class="for-clear"></td>
-                                            </#if>
-                                        </#if>
-                                    </#list>
-                                </tr>
+                                        </#list>
+                                    </tr>
 
-                            </#list>
+                                </#list>
                             </table>
 
                         </div>

@@ -71,7 +71,7 @@
                   separator=";"
                   tableName="teacher_lesson"/>
         <loadData encoding="UTF-8"
-                  file="config/liquibase/schedule2.csv"
+                  file="config/liquibase/schedule.csv"
                   separator=";"
                   tableName="schedule">
             <column name="enabled" type="boolean"/>

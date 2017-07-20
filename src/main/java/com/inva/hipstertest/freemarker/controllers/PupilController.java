@@ -68,7 +68,8 @@ public class PupilController {
     public @ResponseBody
     List<ScheduleDTO> getListSchedulesByDate(@PathVariable String date) {
         log.debug("Request to get schedule for current pupil by date : {}", date);
-        return scheduleService.findAllByFormIdAndDate(date);
+        PupilDTO pupil = pupilService.findPupilByCurrentUser();
+        return scheduleService.findAllByFormIdAndDate(pupil.getFormId(), date);
     }
 
     /**
@@ -81,7 +82,8 @@ public class PupilController {
     public @ResponseBody
     List<AttendancesDTO> getListAttendancesByDate(@PathVariable String date) {
         log.debug("Request to get attendance for current pupil by date : {}", date);
-        return attendancesService.findAllMembersByPupilIdAndDateBetween(date);
+        PupilDTO pupil = pupilService.findPupilByCurrentUser();
+        return attendancesService.findAllByPupilIdAndDate(pupil.getId(), date);
     }
 
     /**
