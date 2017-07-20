@@ -139,7 +139,7 @@ public class HeadTeacherController {
         return teacherService.findOne(id);
     }
 
-    @RequestMapping(value = "freemarker/teacher-mgmt/teacher-mgmt-save", method = RequestMethod.POST)
+    @RequestMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-save", method = RequestMethod.POST)
     public @ResponseBody
     String saveRequest(@RequestBody @Valid TeacherDTO teacherDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -156,7 +156,7 @@ public class HeadTeacherController {
     }
 
 
-    @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/teachers", method = RequestMethod.GET)
+    @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/teachers", method = RequestMethod.GET)
     public @ResponseBody List<TeacherDTO> getAllTeachersFromCurrentSchool(){
         log.debug("Create Ajax request for all teachers");
         return teacherService.findAllByCurrentSchool();

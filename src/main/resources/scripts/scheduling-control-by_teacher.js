@@ -280,13 +280,12 @@ function updateSchedule() {
         classroomId: selectedClassroomId
     };
     $.ajax({
-        url: "/freemarker/teacher-mgmt/schedule-mgmt/schedule-create",
+        url: "/freemarker/teacher-mgmt/schedule-mgmt/schedule-update",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(schedule),
         success: function (response) {
             fillUpOneScheduleFieldInTable(response);
-
         },
         error: function (e) {
             console.log(e.message);
@@ -312,7 +311,6 @@ function saveNewSchedule() {
         data: JSON.stringify(schedule),
         success: function (response) {
             fillUpOneScheduleFieldInTable(response);
-
         },
         error: function (e) {
             console.log(e.message);

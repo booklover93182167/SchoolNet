@@ -53,34 +53,40 @@ public class ScheduleController {
      * @param scheduleId schedule id
      * @return the Schedule DTO.
      */
-    @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/schedule/{scheduleId}", method = RequestMethod.GET)
+    @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/schedule/{scheduleId}", method = RequestMethod.GET)
     public @ResponseBody ScheduleDTO getSchedulesById(@PathVariable("scheduleId") Long scheduleId) {
         log.debug("Request to get schedule by id : {}", scheduleId);
         return scheduleService.findOne(scheduleId);
     }
 
-    @PostMapping("/freemarker/teacher-mgmt/schedule-mgmt/schedule-create")
+    /**
+     * Save new schedule.
+     *
+     * @param scheduleDTO the scheduleDTO to create
+     * @return stored schedule DTO
+     */
+    @PostMapping("freemarker/teacher-mgmt/schedule-mgmt/schedule-create")
     @Timed
-    public ResponseEntity<ScheduleDTO> createNewSchedule(@Valid @RequestBody ScheduleDTO scheduleDTO) throws URISyntaxException {
-        log.debug("REST request to save Schedule : {}", scheduleDTO);
-        if (scheduleDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idExists", "A new schedule cannot already have an ID")).body(null);
-        }
+    public @ResponseBody ScheduleDTO createNewSchedule(@Valid @RequestBody ScheduleDTO scheduleDTO) {
+        log.debug("request to save new Schedule : {}", scheduleDTO);
         ScheduleDTO result = scheduleService.save(scheduleDTO);
-        return ResponseEntity.created(new URI("/api/schedules/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        if (result != null) result = scheduleService.findOne(result.getId());
+        return result;
     }
-//    /**
-//     * Creates new schedule .
-//     */
-//    @PostMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/schedule-create")
-//    @Timed
-//    public ScheduleDTO createNewSchedule(@Valid @RequestBody ScheduleDTO scheduleDTO) {
-//        log.debug("Request to save new schedule : {}", scheduleDTO);
-//        ScheduleDTO result = scheduleService.save(scheduleDTO);
-//        return scheduleService.findOne(result.getId());
-//    }
+
+    /**
+     * Updates an existing schedule.
+     *
+     * @param scheduleDTO the scheduleDTO to update
+     * @return updated schedule DTO
+     */
+    @PostMapping("freemarker/teacher-mgmt/schedule-mgmt/schedule-update")
+    @Timed
+    public ScheduleDTO updateSchedule(@Valid @RequestBody ScheduleDTO scheduleDTO) {
+        log.debug("REST request to update Schedule : {}", scheduleDTO);
+        ScheduleDTO result = scheduleService.save(scheduleDTO);
+        return scheduleService.findOne(result.getId());
+    }
 
 
 
