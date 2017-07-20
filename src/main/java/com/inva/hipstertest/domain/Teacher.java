@@ -42,8 +42,8 @@ public class Teacher implements Serializable {
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "teacher_lesson",
-               joinColumns = @JoinColumn(name="teachers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="lessons_id", referencedColumnName="id"))
+        joinColumns = @JoinColumn(name = "teachers_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "lessons_id", referencedColumnName = "id"))
     private Set<Lesson> lessons = new HashSet<>();
 
     @ManyToOne(optional = false)

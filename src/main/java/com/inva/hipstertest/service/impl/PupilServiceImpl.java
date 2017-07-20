@@ -1,6 +1,8 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.*;
+import com.inva.hipstertest.domain.User;
+import com.inva.hipstertest.repository.FormRepository;
 import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.repository.TeacherRepository;
 import com.inva.hipstertest.repository.UserRepository;
@@ -34,6 +36,8 @@ public class PupilServiceImpl extends SupportCreate implements PupilService {
 
     private final PupilRepository pupilRepository;
 
+    private final FormRepository formRepository;
+
     private final PupilMapper pupilMapper;
     private final FormMapper formMapper;
     private final FormService formService;
@@ -45,17 +49,18 @@ public class PupilServiceImpl extends SupportCreate implements PupilService {
     @Autowired
     private MailService mailService;
 
-    public PupilServiceImpl(PupilRepository pupilRepository, PupilMapper pupilMapper, FormMapper formMapper, FormService formService,
+    public PupilServiceImpl(PupilRepository pupilRepository, FormRepository formRepository, PupilMapper pupilMapper, FormMapper formMapper, FormService formService,
                             TeacherRepository teacherRepository, TeacherService teacherService, UserService userService,
                             UserRepository userRepository) {
         this.pupilRepository = pupilRepository;
+        this.formRepository = formRepository;
+        this.userRepository = userRepository;
         this.pupilMapper = pupilMapper;
         this.formMapper = formMapper;
         this.formService = formService;
         this.teacherRepository = teacherRepository;
         this.teacherService = teacherService;
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     /**

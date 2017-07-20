@@ -1,8 +1,5 @@
 package com.inva.hipstertest.service.dto;
 
-import com.inva.hipstertest.service.dto.FormDTO;
-import com.inva.hipstertest.service.dto.LessonDTO;
-
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -21,11 +18,11 @@ public class TeacherDTO implements Serializable {
     private Long formId;
 
     private String formName;
-    private FormDTO form;   // what
+    private FormDTO form;
 
-    private Set<LessonDTO> lessons = new HashSet<>(); // the hell
+    private Set<LessonDTO> lessons = new HashSet<>();
 
-    private Set<String> lessonsName = new HashSet<>(); // is this?
+    private Set<String> lessonsName = new HashSet<>();
 
     private Long schoolId;
 
@@ -45,7 +42,7 @@ public class TeacherDTO implements Serializable {
         this.form = form;
     }
 
-    public Set<String > getLessonsName() {
+    public Set<String> getLessonsName() {
         return lessonsName;
     }
 
@@ -68,6 +65,7 @@ public class TeacherDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public Boolean getEnabled() {
         return enabled;
     }

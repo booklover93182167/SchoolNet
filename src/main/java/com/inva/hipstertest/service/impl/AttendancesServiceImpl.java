@@ -7,13 +7,16 @@ import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.service.AttendancesService;
 import com.inva.hipstertest.service.dto.AttendancesDTO;
 import com.inva.hipstertest.service.mapper.AttendancesMapper;
-import com.inva.hipstertest.service.util.DataUtil;
+import com.inva.hipstertest.service.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -105,6 +108,7 @@ public class AttendancesServiceImpl implements AttendancesService{
         attendancesRepository.delete(id);
     }
 
+
     /**
      * Get all attendances by requested date and current pupil id.
      *
@@ -113,7 +117,7 @@ public class AttendancesServiceImpl implements AttendancesService{
      */
     @Override
     public List<AttendancesDTO> findAllMembersByPupilIdAndDateBetween(String date) {
-        ZonedDateTime dateStart = DataUtil.getZonedDateTime(date);
+        ZonedDateTime dateStart = DateUtil.getZonedDateTime(date);
         ZonedDateTime dateEnd = dateStart.plusDays(1);
         Pupil pupil = pupilRepository.findPupilByCurrentUser();
         log.debug("Request to get attendances by pupil and date {}", date);

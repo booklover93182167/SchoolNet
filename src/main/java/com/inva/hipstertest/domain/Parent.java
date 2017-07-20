@@ -36,8 +36,8 @@ public class Parent implements Serializable {
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "parent_pupil",
-               joinColumns = @JoinColumn(name="parents_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="pupils_id", referencedColumnName="id"))
+        joinColumns = @JoinColumn(name = "parents_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "pupils_id", referencedColumnName = "id"))
     private Set<Pupil> pupils;
 
     public Long getId() {

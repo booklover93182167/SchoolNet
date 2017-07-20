@@ -2,12 +2,13 @@ package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.Pupil;
 import com.inva.hipstertest.domain.Schedule;
+import com.inva.hipstertest.freemarker.searchcriteria.ScheduleSearchCriteria;
 import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.repository.ScheduleRepository;
 import com.inva.hipstertest.service.ScheduleService;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
 import com.inva.hipstertest.service.mapper.ScheduleMapper;
-import com.inva.hipstertest.service.util.DataUtil;
+import com.inva.hipstertest.service.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,9 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.time.temporal.ChronoField;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,7 +72,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Transactional(readOnly = true)
     public List<ScheduleDTO> findAll() {
         log.debug("Request to get all Schedules");
-        //log.debug(scheduleRepository.findAllByFormId(1L).toString());
         List<ScheduleDTO> result = scheduleRepository.findAll().stream()
             .map(scheduleMapper::scheduleToScheduleDTO)
             .collect(Collectors.toCollection(LinkedList::new));
@@ -133,7 +135,7 @@ public class ScheduleServiceImpl implements ScheduleService {
      */
     @Override
     public List<ScheduleDTO> findAllByFormIdAndDate(String date) {
-        ZonedDateTime dateStart = DataUtil.getZonedDateTime(date);
+        ZonedDateTime dateStart = DateUtil.getZonedDateTime(date);
         ZonedDateTime dateEnd = dateStart.plusDays(1);
         Pupil currentPupil = pupilRepository.findPupilByCurrentUser();
         log.debug("Request to get schedules by pupil form and date {}", date);
@@ -152,7 +154,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Transactional(readOnly = true)
     public List<ScheduleDTO> findAllBySchoolId(Long schoolId) {
         log.debug("Request to get all Schedules by school id : {}", schoolId);
-        //log.debug(scheduleRepository.findAllByFormId(1L).toString());
         List<ScheduleDTO> result = scheduleRepository.findAllBySchoolId(schoolId).stream()
             .map(scheduleMapper::scheduleToScheduleDTO)
             .collect(Collectors.toCollection(LinkedList::new));
@@ -181,4 +182,31 @@ public class ScheduleServiceImpl implements ScheduleService {
         return scheduleRepository.countSchedulesForGradeBook(teacherId, formId, lessonId, today);
     }
 
+    /**
+     * Get all schedules by searching parameters.
+     *
+     * @param scheduleSearchCriteria searching parameters
+     * @return the list of entities.
+     */
+    @Override
+    public List<ScheduleDTO> getScheduleBySearchCriteria(ScheduleSearchCriteria scheduleSearchCriteria) {
+        ZonedDateTime lastMonday = scheduleSearchCriteria.getDate().with(ChronoField.DAY_OF_WEEK, 1);
+        ZonedDateTime nextMonday = lastMonday.plusWeeks(1).minusDays(1);
+        List<Schedule> schedules;
+        Long id = scheduleSearchCriteria.getId();
+        switch (scheduleSearchCriteria.getScheduleFilterType()) {
+            case BY_FORM:
+                schedules = scheduleRepository.findAllMembersByFormIdAndDateBetween(id, lastMonday, nextMonday);
+                break;
+            case BY_TEACHER:
+                schedules = scheduleRepository.findAllByTeacherIdAndDateBetween(id, lastMonday, nextMonday);
+                break;
+            case BY_CLASSROOM:
+                schedules = scheduleRepository.findAllMembersByClassroomIdAndDateBetween(id, lastMonday, nextMonday);
+                break;
+            default:
+                throw new RuntimeException("invalid schedule type");
+        }
+        return scheduleMapper.schedulesToScheduleDTOs(schedules);
+    }
 }
