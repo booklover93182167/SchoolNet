@@ -1,17 +1,18 @@
 package com.inva.hipstertest.service.impl;
 
-import com.inva.hipstertest.freemarker.searchcriteria.FormSearchCriteria;
+import com.inva.hipstertest.domain.Form;
+import com.inva.hipstertest.freemarker.searchcriteria.SearchCriteria;
+import com.inva.hipstertest.repository.FormRepository;
+import com.inva.hipstertest.repository.SchoolRepository;
 import com.inva.hipstertest.repository.TeacherRepository;
 import com.inva.hipstertest.service.FormService;
-import com.inva.hipstertest.domain.Form;
-import com.inva.hipstertest.repository.FormRepository;
 import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.mapper.FormMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -32,10 +33,13 @@ public class FormServiceImpl implements FormService{
     @Autowired
     private TeacherRepository teacherRepository;
 
+    private SchoolRepository schoolRepository;
+
     private final FormMapper formMapper;
 
-    public FormServiceImpl(FormRepository formRepository, FormMapper formMapper) {
+    public FormServiceImpl(FormRepository formRepository, SchoolRepository schoolRepository, FormMapper formMapper) {
         this.formRepository = formRepository;
+        this.schoolRepository = schoolRepository;
         this.formMapper = formMapper;
     }
 
@@ -125,7 +129,7 @@ public class FormServiceImpl implements FormService{
     public List<FormDTO> findAllFormsByCurrentSchool() {
         log.debug("Request to get all Forms for current school");
         long idSchool = teacherRepository.findOneWithSchool().getSchool().getId();
-List<FormDTO> formDTOs=formMapper.formsToFormDTOs(formRepository.findAllFormsByCurrentSchool(idSchool));
+        List<FormDTO> formDTOs=formMapper.formsToFormDTOs(formRepository.findAllFormsByCurrentSchool(idSchool));
         return formDTOs;
     }
 
@@ -141,25 +145,17 @@ List<FormDTO> formDTOs=formMapper.formsToFormDTOs(formRepository.findAllFormsByC
     }
 
     @Override
-    public List<FormDTO> findAvailableFormsByCurrentSchoolAndSearchCriteria(FormSearchCriteria formSearchCriteria) {
-        ZonedDateTime date = formSearchCriteria.getDate().truncatedTo(ChronoUnit.DAYS);
-        ZonedDateTime endDate = date.plusDays(1).minusNanos(1);
+    public List<FormDTO> findAvailableFormsByCurrentSchoolAndSearchCriteria(SearchCriteria searchCriteria) {
+        ZonedDateTime date = searchCriteria.getDate().truncatedTo(ChronoUnit.DAYS);
         log.debug("Request to get all available Forms for current school by search criteria");
         long schoolId = teacherRepository.findOneWithSchool().getSchool().getId();
-        List<Form> forms = formRepository.findAllAvailableByCurrentSchoolAndSearchCriteria(schoolId, formSearchCriteria.getLessonPosition(), date, endDate);
+        List<Form> forms = formRepository.findAllAvailableByCurrentSchoolAndSearchCriteria(schoolId, searchCriteria.getLessonPosition(), date);
         return formMapper.formsToFormDTOs(forms);
     }
 
-    public List<FormDTO> findAllAvailablePlusOneById(FormSearchCriteria formSearchCriteria) {
-        List<FormDTO> forms = findAvailableFormsByCurrentSchoolAndSearchCriteria(formSearchCriteria);
-        forms.add(formMapper.formToFormDTO(formRepository.findOne(formSearchCriteria.getFormId())));
+    public List<FormDTO> findAllAvailablePlusOneById(SearchCriteria searchCriteria) {
+        List<FormDTO> forms = findAvailableFormsByCurrentSchoolAndSearchCriteria(searchCriteria);
+        forms.add(formMapper.formToFormDTO(formRepository.findOne(searchCriteria.getId())));
         return forms;
-    }
-
-    @Override
-    public FormDTO findFormByTeacherId(Long teacherId) {
-        Form form=formRepository.findFormByTeacherId(teacherId);
-        FormDTO formDTO = formMapper.formToFormDTO(form);
-        return formDTO;
     }
 }

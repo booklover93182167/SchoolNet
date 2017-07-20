@@ -1,33 +1,37 @@
 package com.inva.hipstertest.freemarker.controllers;
 
 import com.codahale.metrics.annotation.Timed;
+import com.inva.hipstertest.freemarker.searchcriteria.LessonsSearchCriteria;
 import com.inva.hipstertest.service.LessonService;
+import com.inva.hipstertest.service.LessonTypeService;
 import com.inva.hipstertest.service.SchoolService;
 import com.inva.hipstertest.service.TeacherService;
 import com.inva.hipstertest.service.dto.LessonDTO;
+import com.inva.hipstertest.service.dto.LessonTypeDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 @Controller
 public class LessonController {
+
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final LessonService lessonService;
+    private final LessonTypeService lessonTypeService;
     private final TeacherService teacherService;
     private final SchoolService schoolService;
 
-    public LessonController(LessonService lessonService, TeacherService teacherService, SchoolService schoolService) {
+    public LessonController(LessonService lessonService, LessonTypeService lessonTypeService, TeacherService teacherService, SchoolService schoolService) {
         this.lessonService = lessonService;
+        this.lessonTypeService = lessonTypeService;
         this.teacherService = teacherService;
         this.schoolService = schoolService;
     }
@@ -68,5 +72,31 @@ public class LessonController {
         } else {
             return "redirect:error";
         }
+    }
+
+    /**
+     * Request to get lessons by search options.
+     *
+     * @param lessonSearchCriteria search options
+     * @return list of formDTOs
+     */
+    @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/lessons", method = RequestMethod.POST)
+    public @ResponseBody
+    List<LessonDTO> getLessonsBySearchCriteria(@RequestBody LessonsSearchCriteria lessonSearchCriteria){
+        log.debug("Create Ajax request to search lessons by search criteria");
+        Validate.notNull(lessonSearchCriteria.getId(), "Field 'id' on search criteria can not be empty.");
+        Validate.notNull(lessonSearchCriteria.getFilterType(), "Field 'Lessons for' on search criteria can not be empty.");
+        return lessonService.getLessonsBySearchCriteria(lessonSearchCriteria);
+    }
+
+    /**
+     * Request to get all lesson type.
+     *
+     * @return list of formDTOs
+     */
+    @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/lesson-type", method = RequestMethod.GET)
+    public @ResponseBody List<LessonTypeDTO> getLessonType(){
+        log.debug("Create Ajax request for lesson type");
+        return lessonTypeService.findAll();
     }
 }

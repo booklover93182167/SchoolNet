@@ -1,6 +1,6 @@
 package com.inva.hipstertest.service;
 
-import com.inva.hipstertest.freemarker.searchcriteria.ClassroomSearchCriteria;
+import com.inva.hipstertest.freemarker.searchcriteria.SearchCriteria;
 import com.inva.hipstertest.service.dto.ClassroomDTO;
 import java.util.List;
 
@@ -41,7 +41,7 @@ public interface ClassroomService {
 
     List<ClassroomDTO> findAllByCurrentSchool();
 
-    List<ClassroomDTO> findAvailableByCurrentSchoolAndSearchCriteria(ClassroomSearchCriteria classroomSearchCriteria);
+    List<ClassroomDTO> findAvailableByCurrentSchoolAndSearchCriteria(SearchCriteria searchCriteria);
 
-    List<ClassroomDTO> findAvailablePlusOneById(ClassroomSearchCriteria classroomSearchCriteria);
+    List<ClassroomDTO> findAvailablePlusOneById(SearchCriteria searchCriteria);
 }

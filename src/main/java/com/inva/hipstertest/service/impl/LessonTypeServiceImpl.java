@@ -1,5 +1,6 @@
 package com.inva.hipstertest.service.impl;
 
+import com.inva.hipstertest.service.LessonTypeService;
 import com.inva.hipstertest.domain.LessonType;
 import com.inva.hipstertest.repository.LessonTypeRepository;
 import com.inva.hipstertest.service.LessonTypeService;
@@ -9,10 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing LessonType.
@@ -57,7 +61,7 @@ public class LessonTypeServiceImpl implements LessonTypeService{
     public Page<LessonTypeDTO> findAll(Pageable pageable) {
         log.debug("Request to get all LessonTypes");
         Page<LessonType> result = lessonTypeRepository.findAll(pageable);
-        return result.map(lessonTypeMapper::lessonTypeToLessonTypeDTO);
+        return result.map(lessonType -> lessonTypeMapper.lessonTypeToLessonTypeDTO(lessonType));
     }
 
     /**
@@ -71,7 +75,8 @@ public class LessonTypeServiceImpl implements LessonTypeService{
     public LessonTypeDTO findOne(Long id) {
         log.debug("Request to get LessonType : {}", id);
         LessonType lessonType = lessonTypeRepository.findOne(id);
-        return lessonTypeMapper.lessonTypeToLessonTypeDTO(lessonType);
+        LessonTypeDTO lessonTypeDTO = lessonTypeMapper.lessonTypeToLessonTypeDTO(lessonType);
+        return lessonTypeDTO;
     }
 
     /**

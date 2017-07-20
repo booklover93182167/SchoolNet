@@ -8,7 +8,7 @@ import com.inva.hipstertest.repository.ScheduleRepository;
 import com.inva.hipstertest.service.ScheduleService;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
 import com.inva.hipstertest.service.mapper.ScheduleMapper;
-import com.inva.hipstertest.service.util.DataUtil;
+import com.inva.hipstertest.service.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -18,10 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
+import java.time.temporal.ChronoField;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,7 +73,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Transactional(readOnly = true)
     public List<ScheduleDTO> findAll() {
         log.debug("Request to get all Schedules");
-        //log.debug(scheduleRepository.findAllByFormId(1L).toString());
         List<ScheduleDTO> result = scheduleRepository.findAll().stream()
             .map(scheduleMapper::scheduleToScheduleDTO)
             .collect(Collectors.toCollection(LinkedList::new));
@@ -135,7 +136,7 @@ public class ScheduleServiceImpl implements ScheduleService {
      */
     @Override
     public List<ScheduleDTO> findAllByFormIdAndDate(String date) {
-        ZonedDateTime dateStart = DataUtil.getZonedDateTime(date);
+        ZonedDateTime dateStart = DateUtil.getZonedDateTime(date);
         ZonedDateTime dateEnd = dateStart.plusDays(1);
         Pupil currentPupil = pupilRepository.findPupilByCurrentUser();
         log.debug("Request to get schedules by pupil form and date {}", date);
@@ -154,7 +155,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Transactional(readOnly = true)
     public List<ScheduleDTO> findAllBySchoolId(Long schoolId) {
         log.debug("Request to get all Schedules by school id : {}", schoolId);
-        //log.debug(scheduleRepository.findAllByFormId(1L).toString());
         List<ScheduleDTO> result = scheduleRepository.findAllBySchoolId(schoolId).stream()
             .map(scheduleMapper::scheduleToScheduleDTO)
             .collect(Collectors.toCollection(LinkedList::new));

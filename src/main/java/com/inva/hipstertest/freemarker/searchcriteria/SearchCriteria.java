@@ -1,17 +1,15 @@
 package com.inva.hipstertest.freemarker.searchcriteria;
 
-import com.inva.hipstertest.domain.enums.FilterType;
-
 import java.time.ZonedDateTime;
 
 /**
- * Created by slavkosoltys on 06.07.17.
+ * Created by slavkosoltys on 12.07.17.
  */
-public class ScheduleSearchCriteria {
+public class SearchCriteria {
 
     private Long id;
+    private Integer lessonPosition;
     private ZonedDateTime date;
-    private FilterType filterType;
 
     public Long getId() {
         return id;
@@ -21,12 +19,12 @@ public class ScheduleSearchCriteria {
         this.id = id;
     }
 
-    public FilterType getScheduleFilterType() {
-        return filterType;
+    public Integer getLessonPosition() {
+        return lessonPosition;
     }
 
-    public void setScheduleFilterType(FilterType filterType) {
-        this.filterType = filterType;
+    public void setLessonPosition(Integer lessonPosition) {
+        this.lessonPosition = lessonPosition;
     }
 
     public ZonedDateTime getDate() {
@@ -36,4 +34,6 @@ public class ScheduleSearchCriteria {
     public void setDate(ZonedDateTime date) {
         this.date = date;
     }
+
+
 }

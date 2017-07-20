@@ -84,5 +84,11 @@ public interface ScheduleService {
 
     Long countSchedulesForGradeBook(Long teacherId, Long formId, Long lessonId, ZonedDateTime today);
 
+    /**
+     * Get all schedules by search criteria.
+     *
+     * @param scheduleSearchCriteria search options
+     * @return the list of entities
+     */
     List<ScheduleDTO> getScheduleBySearchCriteria(ScheduleSearchCriteria scheduleSearchCriteria);
 }

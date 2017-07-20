@@ -1,17 +1,11 @@
 package com.inva.hipstertest.freemarker.controllers;
 
 import com.codahale.metrics.annotation.Timed;
-import com.inva.hipstertest.service.FormService;
 import com.inva.hipstertest.service.SchoolService;
 import com.inva.hipstertest.service.TeacherService;
-import com.inva.hipstertest.service.UserService;
-import com.inva.hipstertest.service.dto.FormDTO;
 import com.inva.hipstertest.service.dto.TeacherDTO;
-import com.inva.hipstertest.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class HeadTeacherController {
@@ -29,16 +22,11 @@ public class HeadTeacherController {
     private final Logger log = LoggerFactory.getLogger(HeadTeacherController.class);
     private final TeacherService teacherService;
     private final SchoolService schoolService;
-    private final FormService formService;
-    private final UserService userService;
     private static final String ENTITY_NAME = "teacher";
 
-    public HeadTeacherController(TeacherService teacherService, SchoolService schoolService,
-                                 FormService formService, UserService userService) {
+    public HeadTeacherController(TeacherService teacherService, SchoolService schoolService) {
         this.teacherService = teacherService;
         this.schoolService = schoolService;
-        this.formService = formService;
-        this.userService = userService;
     }
 
     /**
@@ -161,16 +149,18 @@ public class HeadTeacherController {
         return "Success";
     }
 
-    /**
-     * Request to get available forms to assign to Teacher
-     *
-     * @return available forms
-     */
-    @RequestMapping(value = "freemarker/teacher-mgmt/teacher-mgmt-get-av-forms", method = RequestMethod.GET)
-    public @ResponseBody
-    List<FormDTO> getAvailableForms() {
-        log.debug("Create Ajax request for available forms");
-        return formService.findAllUnassignedFormsByCurrentSchool();
+
+    @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt", method = RequestMethod.GET)
+    public String scheduling() {
+        return "scheduling-control";
     }
+
+
+    @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/teachers", method = RequestMethod.GET)
+    public @ResponseBody List<TeacherDTO> getAllTeachersFromCurrentSchool(){
+        log.debug("Create Ajax request for all teachers");
+        return teacherService.findAllByCurrentSchool();
+    }
+
 
 }
