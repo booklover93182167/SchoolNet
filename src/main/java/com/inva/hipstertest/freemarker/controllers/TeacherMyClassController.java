@@ -29,9 +29,7 @@ public class TeacherMyClassController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final TeacherService teacherService;
-    private final ScheduleService scheduleService;
     private final PupilService pupilService;
-    private final AttendancesService attendancesService;
     private final SchoolService schoolService;
     private final FormService formService;
     private final FormMapper formMapper;
@@ -39,13 +37,11 @@ public class TeacherMyClassController {
     private final PupilMapper pupilMapper;
     private final ParentService parentService;
 
-    public TeacherMyClassController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService,
-                                    AttendancesService attendancesService, SchoolService schoolService, FormService formService,
+    public TeacherMyClassController(TeacherService teacherService, PupilService pupilService,
+                                     SchoolService schoolService, FormService formService,
                                     FormMapper formMapper, PupilRepository pupilRepository, PupilMapper pupilMapper, ParentService parentService) {
         this.teacherService = teacherService;
-        this.scheduleService = scheduleService;
         this.pupilService = pupilService;
-        this.attendancesService = attendancesService;
         this.schoolService = schoolService;
         this.formService = formService;
         this.formMapper = formMapper;
