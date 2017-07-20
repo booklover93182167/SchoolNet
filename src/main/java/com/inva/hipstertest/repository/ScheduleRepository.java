@@ -41,9 +41,6 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Query("select s from Schedule s where s.form.id = :formId and s.date between :startDate and :endDate")
     List<Schedule> findAllByFormIdAndDateBetween(@Param("formId") Long formId, @Param("startDate") ZonedDateTime startDate, @Param("endDate") ZonedDateTime endDate);
 
-    @Query("select s from Schedule s where s.enabled = true and s.teacher.id = :teacherId group by s.form.id, s.lesson.id")
-    List<Schedule> findFormsAndLessonsByTeacherId(@Param("teacherId") Long teacherId);
-
     @Query("select s from Schedule s where s.enabled = true and s.form.id = :formId and s.lesson.id = :lessonId and s.date <= :maxDate order by s.date")
     Page<Schedule> findAllByFormIdLessonIdMaxDate(Pageable pageable, @Param("formId") Long formId, @Param("lessonId") Long lessonId, @Param("maxDate") ZonedDateTime maxDate);
 

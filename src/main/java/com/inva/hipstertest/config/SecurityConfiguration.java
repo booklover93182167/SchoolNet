@@ -105,6 +105,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/freemarker/parent-home").hasAuthority(AuthoritiesConstants.PARENT)
             .antMatchers("/freemarker/teacher-gradebook").hasAnyAuthority(AuthoritiesConstants.TEACHER, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/freemarker/teacher-gradebook/**").hasAnyAuthority(AuthoritiesConstants.TEACHER, AuthoritiesConstants.HEAD_TEACHER)
+            .antMatchers("/freemarker/attendances-log").hasAnyAuthority(AuthoritiesConstants.TEACHER, AuthoritiesConstants.HEAD_TEACHER)
+            .antMatchers("/freemarker/attendances-log/**").hasAnyAuthority(AuthoritiesConstants.TEACHER, AuthoritiesConstants.HEAD_TEACHER)
             .antMatchers("/freemarker/freemarkertest/**").permitAll() // change
 
             .antMatchers("/api/register").permitAll()
