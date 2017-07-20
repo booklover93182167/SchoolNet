@@ -1,12 +1,9 @@
 package com.inva.hipstertest.freemarker.controllers;
 
 import com.codahale.metrics.annotation.Timed;
-import com.inva.hipstertest.freemarker.searchcriteria.ClassroomSearchCriteria;
-import com.inva.hipstertest.freemarker.searchcriteria.FormSearchCriteria;
-import com.inva.hipstertest.freemarker.searchcriteria.ScheduleSearchCriteria;
-import com.inva.hipstertest.service.*;
-import com.inva.hipstertest.service.dto.*;
-import org.apache.commons.lang3.Validate;
+import com.inva.hipstertest.service.SchoolService;
+import com.inva.hipstertest.service.TeacherService;
+import com.inva.hipstertest.service.dto.TeacherDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,18 +22,11 @@ public class HeadTeacherController {
     private final Logger log = LoggerFactory.getLogger(HeadTeacherController.class);
     private final TeacherService teacherService;
     private final SchoolService schoolService;
-    private final ScheduleService scheduleService;
-    private final ClassroomService classroomService;
-    private final FormService formService;
     private static final String ENTITY_NAME = "teacher";
 
-    public HeadTeacherController(TeacherService teacherService, SchoolService schoolService, ScheduleService scheduleService,
-                                 ClassroomService classroomService, FormService formService){
+    public HeadTeacherController(TeacherService teacherService, SchoolService schoolService) {
         this.teacherService = teacherService;
         this.schoolService = schoolService;
-        this.scheduleService = scheduleService;
-        this.classroomService = classroomService;
-        this.formService = formService;
     }
 
     /**
@@ -159,28 +149,12 @@ public class HeadTeacherController {
         return "Success";
     }
 
-    /**
-     * Request to get available forms to assign to Teacher
-     *
-     * @return available forms
-     */
-    @RequestMapping(value = "freemarker/teacher-mgmt/teacher-mgmt-get-av-forms", method = RequestMethod.GET)
-    public @ResponseBody
-    List<FormDTO> getAvailableForms() {
-        log.debug("Create Ajax request for available forms");
-        return formService.findAllUnassignedFormsByCurrentSchool();
-    }
 
     @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt", method = RequestMethod.GET)
-    public String scheduling(@ModelAttribute("model") ModelMap model) {
+    public String scheduling() {
         return "scheduling-control";
     }
 
-    @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/forms", method = RequestMethod.GET)
-    public @ResponseBody List<FormDTO> getAllFormsFromCurrentSchool(){
-        log.debug("Create Ajax request for all forms");
-        return formService.findAllFormsByCurrentSchool();
-    }
 
     @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/teachers", method = RequestMethod.GET)
     public @ResponseBody List<TeacherDTO> getAllTeachersFromCurrentSchool(){
@@ -188,53 +162,5 @@ public class HeadTeacherController {
         return teacherService.findAllByCurrentSchool();
     }
 
-    @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/classrooms", method = RequestMethod.GET)
-    public @ResponseBody List<ClassroomDTO> getAllClassroomsFromCurrentSchool(){
-        log.debug("Create Ajax request for all classrooms");
-        return classroomService.findAllByCurrentSchool();
-    }
-
-    @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/classrooms-wp", method = RequestMethod.POST)
-    public @ResponseBody List<ClassroomDTO> getAvailableClassroomBySearchCriteria(@RequestBody ClassroomSearchCriteria classroomSearchCriteria){
-        log.debug("Create Ajax request to search available forms by search criteria");
-        Validate.notNull(classroomSearchCriteria.getLessonPosition(), "Field 'lessonPosition' on classroomSearchCriteria can not be null.");
-        Validate.notNull(classroomSearchCriteria.getDate(), "Field 'Date' on  classroomSearchCriteria can not be null.");
-        if (classroomSearchCriteria.getClassroomId() != null) {
-            return classroomService.findAvailablePlusOneById(classroomSearchCriteria);
-        }
-        return classroomService.findAvailableByCurrentSchoolAndSearchCriteria(classroomSearchCriteria);
-    }
-
-    @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/schedule", method = RequestMethod.POST)
-    public @ResponseBody List<ScheduleDTO> getScheduleBySearchCriteria(@RequestBody ScheduleSearchCriteria scheduleSearchCriteria){
-        log.debug("Create Ajax request to search schedule by search criteria");
-        Validate.notNull(scheduleSearchCriteria.getId(), "Field 'id' on scheduleSearchCriteria can not be null.");
-        Validate.notNull(scheduleSearchCriteria.getScheduleFilterType(), "Field 'Schedule type' on scheduleSearchCriteria can not be null.");
-        Validate.notNull(scheduleSearchCriteria.getDate(), "Field 'Date' on scheduleSearchCriteria can not be null.");
-        return scheduleService.getScheduleBySearchCriteria(scheduleSearchCriteria);
-    }
-
-    @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/forms-wp", method = RequestMethod.POST)
-    public @ResponseBody List<FormDTO> getAvailableFormsBySearchCriteria(@RequestBody FormSearchCriteria formSearchCriteria){
-        log.debug("Create Ajax request to search available forms by search criteria");
-        Validate.notNull(formSearchCriteria.getLessonPosition(), "Field 'lessonPosition' on formSearchCriteria can not be null.");
-        Validate.notNull(formSearchCriteria.getDate(), "Field 'Date' on  formSearchCriteria can not be null.");
-        if (formSearchCriteria.getFormId() != null) {
-            return formService.findAllAvailablePlusOneById(formSearchCriteria);
-        }
-        return formService.findAvailableFormsByCurrentSchoolAndSearchCriteria(formSearchCriteria);
-    }
-
-    /**
-     * Get schedule by id.
-     *
-     * @param scheduleId schedule id
-     * @return the ScheduleDTO.
-     */
-    @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/schedule/{scheduleId}", method = RequestMethod.GET)
-    public @ResponseBody ScheduleDTO getSchedulesById(@PathVariable("scheduleId") Long scheduleId) {
-        log.debug("Request to get schedule by id : {}", scheduleId);
-        return scheduleService.findOne(scheduleId);
-    }
 
 }
