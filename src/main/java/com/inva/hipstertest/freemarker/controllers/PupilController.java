@@ -69,7 +69,7 @@ public class PupilController {
     List<ScheduleDTO> getListSchedulesByDate(@PathVariable String date) {
         log.debug("Request to get schedule for current pupil by date : {}", date);
         PupilDTO pupil = pupilService.findPupilByCurrentUser();
-        return scheduleService.findAllByFormIdAndDate(pupil.getId(), date);
+        return scheduleService.findAllByFormIdAndDate(pupil.getFormId(), date);
     }
 
     /**

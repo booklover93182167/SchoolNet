@@ -68,7 +68,9 @@ public interface ScheduleService {
      * @param date requested date
      * @return the list of entities
      */
-    List<ScheduleDTO> findAllByFormIdAndDate(Long pupilId, String date);
+    List<ScheduleDTO> findAllByFormIdAndDate(Long formId, String date);
+
+    List<ScheduleDTO> findAllByFormIdAndDateBetween(Long formId, ZonedDateTime startDate, ZonedDateTime endDate);
 
     /**
      * Get all the schedules by school id.

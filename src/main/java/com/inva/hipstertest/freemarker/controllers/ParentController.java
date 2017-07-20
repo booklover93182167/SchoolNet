@@ -1,6 +1,6 @@
 package com.inva.hipstertest.freemarker.controllers;
 
-import com.inva.hipstertest.freemarker.searchcriteria.ParentPagePOJO;
+import com.inva.hipstertest.freemarker.searchcriteria.PupilSearchCriteria;
 import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.service.dto.AttendancesDTO;
 import com.inva.hipstertest.service.dto.LessonDTO;
@@ -12,10 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.DayOfWeek;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+
+import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 @Controller
 public class ParentController {
@@ -48,37 +51,28 @@ public class ParentController {
 
     @RequestMapping(value = "freemarker/parent-home/schedule", method = RequestMethod.POST)
     public @ResponseBody
-    List<ScheduleDTO> pupilSchedule(@RequestBody ParentPagePOJO parentPagePOJO){
-        log.debug("Create ajax request for pupil schedule by pupil id and date: " + parentPagePOJO.getDate());
-        List<ScheduleDTO> scheduleDTOs = scheduleService.findAllByFormId(parentPagePOJO.getPupilFormId());
-        long currentDayOfWeek = parentPagePOJO.getDate().getDayOfWeek().getValue() % 7;
-        ZonedDateTime prevSunday = parentPagePOJO.getDate().minusDays(currentDayOfWeek);
-        ZonedDateTime nextSunday = parentPagePOJO.getDate().plusDays(7 - currentDayOfWeek);
-        List<ScheduleDTO> filteredScheduleDTOs = new LinkedList<ScheduleDTO>();
-
-        for (ScheduleDTO schedule : scheduleDTOs) {
-            if( schedule.getDate().compareTo(prevSunday) > 0 && schedule.getDate().compareTo(nextSunday) < 0  ) {
-                filteredScheduleDTOs.add(schedule);
-            }
-        }
-
-        return filteredScheduleDTOs;
+    List<ScheduleDTO> pupilSchedule(@RequestBody PupilSearchCriteria pupilSearchCriteria){
+        log.debug("Create ajax request for pupil schedule by pupil id and date: " + pupilSearchCriteria.getDate());
+        ZonedDateTime startDay = pupilSearchCriteria.getDate().truncatedTo(ChronoUnit.DAYS).with(previousOrSame(DayOfWeek.SUNDAY));;
+        ZonedDateTime endDate = startDay.plusDays(6);
+        List<ScheduleDTO> scheduleDTOs = scheduleService.findAllByFormIdAndDateBetween(pupilSearchCriteria.getPupilFormId(), startDay, endDate);
+        return scheduleDTOs;
     }
 
     @RequestMapping(value = "freemarker/parent-home/lessons", method = RequestMethod.POST)
     public @ResponseBody
-    List<LessonDTO> pupilLessons(@RequestBody ParentPagePOJO parentPagePOJO){
+    List<LessonDTO> pupilLessons(@RequestBody PupilSearchCriteria pupilSearchCriteria){
         log.debug("Create ajax request for pupil lessons");
-        List<LessonDTO> lessonDTOs = lessonService.getDistinctLessonsForForm(parentPagePOJO.getPupilFormId());
+        List<LessonDTO> lessonDTOs = lessonService.getDistinctLessonsForForm(pupilSearchCriteria.getPupilFormId());
         Collections.sort(lessonDTOs, (o1, o2) -> o1.getName().compareTo(o2.getName()));
         return lessonDTOs;
     }
 
     @RequestMapping(value = "freemarker/parent-home/attendance", method = RequestMethod.POST)
     public @ResponseBody
-    List<AttendancesDTO> pupilAttendance(@RequestBody ParentPagePOJO parentPagePOJO){
+    List<AttendancesDTO> pupilAttendance(@RequestBody PupilSearchCriteria pupilSearchCriteria){
         log.debug("Create ajax request for pupil attendance by lesson id");
-        List<AttendancesDTO> attendancesDTO = attendancesService.findAllByPupilAndLessonId(parentPagePOJO.getPupilId(), parentPagePOJO.getLessonId());
+        List<AttendancesDTO> attendancesDTO = attendancesService.findAllByPupilAndLessonId(pupilSearchCriteria.getPupilId(), pupilSearchCriteria.getLessonId());
         Collections.sort(attendancesDTO, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
         return attendancesDTO;
     }
