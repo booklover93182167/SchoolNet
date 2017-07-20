@@ -1,5 +1,7 @@
 $(function() {
 
+    $('[data-toggle="tooltip"]').tooltip();
+
     $("#sizeSelector").change(function () {
         $("#sizeChangerForm").submit();
     });
@@ -51,52 +53,68 @@ $(function() {
     });
 
     $("input").bind("enterKey", function(e) {
-        var string_value = $(this).val();
-        var int_value = parseInt($(this).val(), 10);
-        console.log("int_value: " + int_value);
+        var sNewGrade = $(this).val();
+        var iNewGrade = parseInt($(this).val(), 10);
 
-        if (string_value) {
-            if (int_value < 0 || int_value > 12 || isNaN(int_value)) {
+        if (sNewGrade) {
+            if (iNewGrade < 0 || iNewGrade > 12 || isNaN(iNewGrade)) {
                 alert("Invalid grade!");
                 return;
             }
         }
 
-        var id = selectedTd.data("attendance-id");
-        var grade = int_value;
-        var enabled = true;
-        var pupilId = selectedTd.data("pupil-id");
-        var scheduleId = selectedTd.data("schedule-id");
-        var attendanceDTO;
+        var attendance = {
+            grade: iNewGrade,
+            enabled: true,
+            pupilId: selectedTd.data("pupil-id"),
+            scheduleId: selectedTd.data("schedule-id")
+        };
 
-        if (id == -1) {
-            attendanceDTO = {
-                grade: grade,
-                enabled: enabled,
-                pupilId: pupilId,
-                scheduleId: scheduleId
-            };
-        } else {
-            attendanceDTO = {
-                id : id,
-                grade: grade,
-                enabled: enabled,
-                pupilId: pupilId,
-                scheduleId: scheduleId
-            };
+        if (selectedTd.data("attendance-id") != -1) {
+            attendance.id = selectedTd.data("attendance-id");
         }
+
         $.ajax({
             url : "/freemarker/teacher-gradebook/update",
             type : "POST",
             contentType : "application/json",
-            data : JSON.stringify(attendanceDTO),
+            data : JSON.stringify(attendance),
             success : function (response) {
-                selectedTd.find("input").attr("value", (!string_value ? "" : response.grade));
-                selectedTd.find("div").text((!string_value ? "-" : response.grade));
+                var attendanceLog = {
+                    date: new Date(Date.now()),
+                    oldGrade: backupValue,
+                    newGrade: iNewGrade,
+                    reason: "",
+                    teacherId: $("#teacher-id").val(),
+                    attendancesId: response.id
+                };
+                logAttendance(attendanceLog);
+
+                selectedTd.data("attendance-id", response.id);
+                selectedTd.find("input").attr("value", (!sNewGrade ? "" : response.grade));
+                selectedTd.find("div").text((!sNewGrade ? "-" : response.grade));
                 hideInputShowDiv();
+            },
+            error: function() {
+                alert("Error while editing attendance");
             }
         });
     });
+
+    function logAttendance(attendance) {
+        $.ajax({
+            url : "/freemarker/teacher-gradebook/log-attendance",
+            type : "POST",
+            contentType : "application/json",
+            data : JSON.stringify(attendance),
+            success : function (response) {
+                console.log("Attendance successfully logged");
+            },
+            error: function() {
+                console.log("Error while logging attendance");
+            }
+        });
+    }
 
     $("input").keyup(function(e){
         if (e.keyCode === 13) {

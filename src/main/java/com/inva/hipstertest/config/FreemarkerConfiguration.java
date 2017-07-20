@@ -1,6 +1,7 @@
 package com.inva.hipstertest.config;
 
 import freemarker.template.TemplateException;
+import no.api.freemarker.java8.Java8ObjectWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.MessageSource;
@@ -45,6 +46,7 @@ public class FreemarkerConfiguration extends WebMvcConfigurerAdapter {
         FreeMarkerConfigurer result = new FreeMarkerConfigurer();
         freemarker.template.Configuration configuration = factory.createConfiguration();
         configuration.addAutoImport("spring", "spring.ftl");
+        configuration.setObjectWrapper(new Java8ObjectWrapper(freemarker.template.Configuration.VERSION_2_3_23));
         result.setConfiguration(configuration);
         return result;
     }

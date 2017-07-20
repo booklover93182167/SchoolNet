@@ -68,7 +68,9 @@ public interface ScheduleService {
      * @param date requested date
      * @return the list of entities
      */
-    List<ScheduleDTO> findAllByFormIdAndDate(String date);
+    List<ScheduleDTO> findAllByFormIdAndDate(Long formId, String date);
+
+    List<ScheduleDTO> findAllByFormIdAndDateBetween(Long formId, ZonedDateTime startDate, ZonedDateTime endDate);
 
     /**
      * Get all the schedules by school id.
@@ -80,9 +82,9 @@ public interface ScheduleService {
 
     List<ScheduleDTO> findFormsAndLessonsByTeacherId(Long teacherId);
 
-    Page<ScheduleDTO> findSchedulesByTeacherIdFormIdSubjectIdMaxDate(Pageable pageable, Long teacherId, Long formId, Long lessonId, ZonedDateTime today);
+    Page<ScheduleDTO> findAllByFormIdLessonIdMaxDate(Pageable pageable, Long formId, Long lessonId, ZonedDateTime maxDate);
 
-    Long countSchedulesForGradeBook(Long teacherId, Long formId, Long lessonId, ZonedDateTime today);
+    Long countAllByFormIdLessonIdMaxDate(Long formId, Long lessonId, ZonedDateTime maxDate);
 
     /**
      * Get all schedules by search criteria.
