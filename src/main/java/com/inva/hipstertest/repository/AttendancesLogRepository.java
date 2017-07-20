@@ -12,4 +12,6 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface AttendancesLogRepository extends JpaRepository<AttendancesLog,Long> {
 
+    List<AttendancesLog> findAllByOrderByIdDesc();
+
 }

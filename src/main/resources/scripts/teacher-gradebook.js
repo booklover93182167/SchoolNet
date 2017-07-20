@@ -129,4 +129,51 @@ $(function() {
         }
     });
 
+    $("#forms").change(function () {
+        var formId = $('#forms option:selected').val();
+
+        if(isNaN(formId)) {
+            return;
+        }
+
+        loadLessons(formId);
+    });
+
+    $("#lessons").change(function () {
+        var formId = parseInt($('#forms option:selected').val());
+        var lessonId = parseInt($('#lessons option:selected').val());
+
+        if(isNaN(formId) || isNaN(lessonId)) {
+            return;
+        }
+
+        var size = parseInt($('#sizeSelector option:selected').val());
+
+        window.location.href = '/freemarker/teacher-gradebook/'+formId+'/'+lessonId+'?size='+size;
+    });
+
+    function loadLessons(formId) {
+        $.ajax({
+            url : "/freemarker/teacher-gradebook/lessons",
+            type : "POST",
+            contentType : "application/json",
+            data : JSON.stringify(formId),
+            success : function (response) {
+                $(".alert").alert('close');
+
+                $("#lessons").empty();
+
+                $("#lessons").append($("<option></option>").text("Choose lesson..."));
+                $.each(response, function(i, lesson) {
+                    $("#lessons").append($("<option></option>").attr("value", lesson.id).text(lesson.name));
+                });
+            },
+            error: function() {
+                //$(".alert").alert();
+            }
+        });
+    }
+
+    loadLessons($('#forms option:selected').val());
+
 });
