@@ -67,7 +67,7 @@ public class TeacherMyClassController {
             return "schoolDisabledPage";
         }
         Form form = formMapper.formDTOToForm(formService.findOneByTeacherId(teacher.getId()));
-        if (form == null) {
+        if (form.getId().equals(null)) {
             model.addAttribute("currentUser", teacher);
             return "teacherHaveNoClassPage";
         }
@@ -77,12 +77,7 @@ public class TeacherMyClassController {
         List<PupilDTO> pupils = pupilMapper.pupilsToPupilDTOs(pupilRepository.findAllByFormId(form.getId()));
         Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
         Collections.sort(pupils, comparatorLastNameFirstName);
-//        for (PupilDTO pupil:pupils
-//             ) {
-//            List<ParentDTO> parents=parentService.findParentOfPupil(pupil.getId());
-//
-//            model.addAttribute("parents", parents);
-//        }
+
         model.addAttribute("currentUser", teacher);
         model.addAttribute("formName", formName);
         model.addAttribute("pupils", pupils);
