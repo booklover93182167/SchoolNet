@@ -80,3 +80,8 @@ function assignPupilToForm(){
     editedPupil.formId = selected;
     hideFormAssignModal();
 }
+function showDeleteModal(id) {
+    var deleteId = "delete"+id;
+    var deleteModal = document.getElementById(deleteId);
+    deleteModal.style.display = "block";
+}

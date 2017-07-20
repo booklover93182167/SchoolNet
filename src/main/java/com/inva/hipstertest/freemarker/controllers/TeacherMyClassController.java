@@ -2,10 +2,12 @@ package com.inva.hipstertest.freemarker.controllers;
 
 import com.codahale.metrics.annotation.Timed;
 import com.inva.hipstertest.domain.Form;
+import com.inva.hipstertest.domain.Parent;
 import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.service.dto.*;
 import com.inva.hipstertest.service.mapper.FormMapper;
+import com.inva.hipstertest.service.mapper.ParentMapper;
 import com.inva.hipstertest.service.mapper.PupilMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,10 +38,12 @@ public class TeacherMyClassController {
     private final PupilRepository pupilRepository;
     private final PupilMapper pupilMapper;
     private final ParentService parentService;
+    private final ParentMapper parentMapper;
+
 
     public TeacherMyClassController(TeacherService teacherService, PupilService pupilService,
                                      SchoolService schoolService, FormService formService,
-                                    FormMapper formMapper, PupilRepository pupilRepository, PupilMapper pupilMapper, ParentService parentService) {
+                                    FormMapper formMapper, PupilRepository pupilRepository, PupilMapper pupilMapper, ParentService parentService, ParentMapper parentMapper) {
         this.teacherService = teacherService;
         this.pupilService = pupilService;
         this.schoolService = schoolService;
@@ -48,6 +52,7 @@ public class TeacherMyClassController {
         this.pupilRepository = pupilRepository;
         this.pupilMapper = pupilMapper;
         this.parentService = parentService;
+        this.parentMapper = parentMapper;
     }
 
 
@@ -166,5 +171,20 @@ public class TeacherMyClassController {
         }
         // handle creation success
         return new ModelAndView("redirect:/freemarker/teacher-my-class");
+    }
+
+    /**
+     * Deletes Parent by ID
+     *
+     * @param id - ID of parent to be deleted
+     */
+    @GetMapping("/freemarker/teacher-my-class/deleteParent/{id}")
+    @Timed
+    public ModelAndView teacherDeleteParent(@PathVariable Long id) {
+        log.debug("Freemarker request to delete parent : {}", id);
+
+            parentService.delete(id);
+            return new ModelAndView("redirect:/freemarker/teacher-my-class");
+
     }
 }

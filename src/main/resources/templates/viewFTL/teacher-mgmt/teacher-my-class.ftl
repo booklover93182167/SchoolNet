@@ -113,9 +113,27 @@
             <#if i.parents??>
                 <#list i.parents as k>
                     <p style="text-shadow:5px 5px 10px grey;margin-bottom: 0px;margin-top: 10px;"> <strong>${k.firstName } ${k.lastName}
-                        <a type="button" class="close" aria-label="Close" title="Delete">
+                        <a type="button" class="close" aria-label="Close" title="Delete"
+                           onclick="showDeleteModal(${k.id})">
                             <span aria-hidden="true">&times;</span>
                         </a>
+                        <div class="deleteModal" id="delete${k.id}">
+                            <div class="modal-content2">
+                                <div class="modal-body">
+                                    <h2><@spring.message "teacherm.deleteconf"/> ${k.firstName} ${k.lastName}?</h2>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                            onclick="removeDeleteModal(${k.id})">
+                                        <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.cancel"/></span>
+                                    </button>
+                                    <button type="submit" class="btn btn-danger"
+                                            onclick="window.location.href='/freemarker/teacher-my-class/deleteParent/${k.id}'">
+                                        <span class="fa fa-remove"></span>&nbsp;<span><@spring.message "school.delete"/></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <br></strong></p>
                     <i class="fa fa-envelope-open-o" aria-hidden="true">
                     ${k.email} </i><br>
