@@ -40,8 +40,8 @@ public class TeacherMyClassController {
     private final ParentService parentService;
 
     public TeacherMyClassController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService,
-                                      AttendancesService attendancesService, SchoolService schoolService, FormService formService,
-                                      FormMapper formMapper, PupilRepository pupilRepository, PupilMapper pupilMapper, ParentService parentService) {
+                                    AttendancesService attendancesService, SchoolService schoolService, FormService formService,
+                                    FormMapper formMapper, PupilRepository pupilRepository, PupilMapper pupilMapper, ParentService parentService) {
         this.teacherService = teacherService;
         this.scheduleService = scheduleService;
         this.pupilService = pupilService;
@@ -55,8 +55,6 @@ public class TeacherMyClassController {
     }
 
 
-
-
     @RequestMapping(value = "freemarker/teacher-my-class", method = RequestMethod.GET)
     public String myClass(@ModelAttribute("model") ModelMap model) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
@@ -66,22 +64,23 @@ public class TeacherMyClassController {
             model.addAttribute("currentUser", teacher);
             return "schoolDisabledPage";
         }
-        Form form = formMapper.formDTOToForm(formService.findOneByTeacherId(teacher.getId()));
-        if (form.getId().equals(null)) {
+        Form form = formMapper.formDTOToForm(teacher.getForm());
+        if (form==null) {
             model.addAttribute("currentUser", teacher);
             return "teacherHaveNoClassPage";
+        } else {
+
+            String formName = form.getName();
+
+            List<PupilDTO> pupils = pupilMapper.pupilsToPupilDTOs(pupilRepository.findAllByFormId(form.getId()));
+            Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
+            Collections.sort(pupils, comparatorLastNameFirstName);
+
+            model.addAttribute("currentUser", teacher);
+            model.addAttribute("formName", formName);
+            model.addAttribute("pupils", pupils);
+            return "teacher-mgmt/teacher-my-class";
         }
-
-        String formName = form.getName();
-
-        List<PupilDTO> pupils = pupilMapper.pupilsToPupilDTOs(pupilRepository.findAllByFormId(form.getId()));
-        Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
-        Collections.sort(pupils, comparatorLastNameFirstName);
-
-        model.addAttribute("currentUser", teacher);
-        model.addAttribute("formName", formName);
-        model.addAttribute("pupils", pupils);
-        return "teacher-mgmt/teacher-my-class";
     }
 
     @RequestMapping(value = "freemarker/teacher-my-class/newPupil/{formId}", method = RequestMethod.GET)
