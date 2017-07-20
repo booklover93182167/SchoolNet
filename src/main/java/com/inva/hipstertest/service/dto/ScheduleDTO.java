@@ -26,12 +26,15 @@ public class ScheduleDTO implements Serializable {
     @NotNull
     private Boolean enabled;
 
+    @NotNull
     private Long lessonId;
 
+    @NotNull
     private Long formId;
 
     private Long classroomId;
 
+    @NotNull
     private Long teacherId;
 
     private String teacherLastName;
@@ -40,6 +43,7 @@ public class ScheduleDTO implements Serializable {
 
     private String lessonName;
 
+    @NotNull
     private String lessonTypeId;
 
     private String lessonTypeName;
