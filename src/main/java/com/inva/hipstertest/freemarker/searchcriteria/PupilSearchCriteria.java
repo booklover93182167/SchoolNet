@@ -2,7 +2,7 @@ package com.inva.hipstertest.freemarker.searchcriteria;
 
 import java.time.ZonedDateTime;
 
-public class ParentPagePOJO {
+public class PupilSearchCriteria {
 
     private Long pupilId;
     private Long pupilFormId;

@@ -1,15 +1,22 @@
 .gradebook tr th {
     vertical-align: middle;
 }
-.gradebook .date,
-.gradebook .attendance {
-    text-align: center;
-}
 .gradebook tr th.number {
     width: 2%;
 }
-.gradebook tr th.fullname {
-}
 .gradebook tr th.date {
     width: 6%;
+}
+
+.lesson-type-2 {
+    background: #5bc0de;
+}
+.lesson-type-3 {
+    background: #0275d8;
+}
+.lesson-type-4 {
+    background: #d9534f;
+}
+.lesson-type-5 {
+    background: #5cb85c;
 }
