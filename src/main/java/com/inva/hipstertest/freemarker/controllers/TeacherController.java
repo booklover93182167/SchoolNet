@@ -74,7 +74,6 @@ public class TeacherController {
 
     @RequestMapping(value = "freemarker/teacher/schedule/schedule", method = RequestMethod.POST)
     public @ResponseBody List<ScheduleDTO> getScheduleBySearchCriteria(@RequestBody ScheduleSearchCriteria scheduleSearchCriteria){
-        log.debug("Create Ajax request to search schedule by search criteria");
         Validate.notNull(scheduleSearchCriteria.getId(), "Field 'id' on scheduleSearchCriteria can not be null.");
         Validate.notNull(scheduleSearchCriteria.getScheduleFilterType(), "Field 'Schedule type' on scheduleSearchCriteria can not be null.");
         Validate.notNull(scheduleSearchCriteria.getDate(), "Field 'Date' on scheduleSearchCriteria can not be null.");
@@ -83,7 +82,6 @@ public class TeacherController {
 
     @RequestMapping(value = "/freemarker/teacher/schedule/forms-wp", method = RequestMethod.POST)
     public @ResponseBody List<FormDTO> getAvailableFormsBySearchCriteria(@RequestBody SearchCriteria searchCriteria){
-        log.debug("Create Ajax request to search available forms by search criteria");
         Validate.notNull(searchCriteria.getLessonPosition(), "Field 'lessonPosition' on formSearchCriteria can not be null.");
         Validate.notNull(searchCriteria.getDate(), "Field 'Date' on  formSearchCriteria can not be null.");
         if (searchCriteria.getId() != null) {
