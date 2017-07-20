@@ -146,19 +146,7 @@ function fillUpScheduleTable(schedules) {
     refreshTable();
     schedules.forEach(function (el) {
         if (el.id) {
-            var dayToCorrect = new Date(el.date).getDay();
-            var day = dayToCorrect === 0 ? 7 : dayToCorrect;
-            var selector = $('.table tr').eq(el.lessonPosition);
-            if (target === 'BY_TEACHER') {
-                selector.find("td").eq(day).html(el.lessonName + "<br> Classroom: " + el.classroomName + "<br> Form: " + el.formName)
-                    .attr("isEmpty", "false").attr("id", el.id);
-            } else if (target === 'BY_FORM') {
-                selector.find("td").eq(day).html(el.lessonName + "<br> Classroom: " + el.classroomName + "<br> Teacher: " + el.teacherFirstName + ' ' + el.teacherLastName)
-                    .attr("isEmpty", "false").attr("id", el.id);
-            } else if (target === 'BY_CLASSROOM') {
-                selector.find("td").eq(day).html(el.lessonName + "<br> Form: " + el.formName + "<br> Teacher: " + el.teacherFirstName + ' ' + el.teacherLastName)
-                    .attr("isEmpty", "false").attr("id", el.id);
-            }
+            fillUpOneScheduleFieldInTable(el)
         }
     });
 }
@@ -178,8 +166,6 @@ function fillUpOneScheduleFieldInTable(el) {
             .attr("isEmpty", "false").attr("id", el.id);
     }
 }
-
-
 
 
 function refreshTable() {
