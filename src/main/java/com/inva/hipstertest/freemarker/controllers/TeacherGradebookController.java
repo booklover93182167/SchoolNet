@@ -1,5 +1,7 @@
 package com.inva.hipstertest.freemarker.controllers;
 
+import com.codahale.metrics.annotation.Timed;
+import com.inva.hipstertest.domain.Form;
 import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.service.dto.*;
@@ -69,18 +71,13 @@ public class TeacherGradebookController {
             return "schoolDisabledPage";
         }
 
-        List<ScheduleDTO> formsAndLessons = scheduleService.findFormsAndLessonsByTeacherId(teacher.getId());
+        List<FormDTO> forms = formService.findAllFormsByCurrentSchool();
+        model.addAttribute("forms", forms);
 
-        if (formsAndLessons.isEmpty()) {
-            model.addAttribute("error", 1);
+        if (!formId.isPresent() || !lessonId.isPresent()) {
             return "teacher-gradebook";
         }
 
-        if (!formId.isPresent() || !lessonId.isPresent()) {
-            return "redirect:/freemarker/teacher-gradebook/" + formsAndLessons.get(0).getFormId() + "/" + formsAndLessons.get(0).getLessonId();
-        }
-
-        model.addAttribute("formsAndLessons", formsAndLessons);
         model.addAttribute("form", formService.findOne(formId.get()));
         model.addAttribute("lesson", lessonService.findOne(lessonId.get()));
 
@@ -95,7 +92,6 @@ public class TeacherGradebookController {
         List<AttendancesDTO> attendances = attendancesService.findAllByFormIdAndLessonId(formId.get(), lessonId.get());
         Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
 
-        Collections.sort(formsAndLessons, (o1, o2) -> o1.getLessonName().compareTo(o2.getLessonName()));
         Collections.sort(pupils, comparatorLastNameFirstName);
 
         model.addAttribute("minDateForEdit", ZonedDateTime.now().minusDays(14));
@@ -116,6 +112,15 @@ public class TeacherGradebookController {
             return realPage;
         }
         return realPage + 1;
+    }
+
+    @RequestMapping(value = "freemarker/teacher-gradebook/lessons", method = RequestMethod.POST)
+    public @ResponseBody
+    List<LessonDTO> formLessons(@RequestBody Long formId){
+        log.debug("Create ajax request to get lessons for form " + formId);
+        List<LessonDTO> lessonDTOs = lessonService.getDistinctLessonsForForm(formId);
+        Collections.sort(lessonDTOs, (o1, o2) -> o1.getName().compareTo(o2.getName()));
+        return lessonDTOs;
     }
 
     @RequestMapping(value = "/freemarker/teacher-gradebook/update", method = RequestMethod.POST)

@@ -56,7 +56,7 @@ public class AttendancesLogServiceImpl implements AttendancesLogService{
     @Transactional(readOnly = true)
     public List<AttendancesLogDTO> findAll() {
         log.debug("Request to get all AttendancesLogs");
-        List<AttendancesLogDTO> result = attendancesLogRepository.findAll().stream()
+        List<AttendancesLogDTO> result = attendancesLogRepository.findAllByOrderByIdDesc().stream()
             .map(attendancesLogMapper::attendancesLogToAttendancesLogDTO)
             .collect(Collectors.toCollection(LinkedList::new));
 
