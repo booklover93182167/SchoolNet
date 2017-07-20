@@ -285,8 +285,7 @@ function updateSchedule() {
         contentType: "application/json",
         data: JSON.stringify(schedule),
         success: function (response) {
-            alert('update!');
-            fillUpScheduleTable(response);
+            fillUpOneScheduleFieldInTable(response);
 
         },
         error: function (e) {
@@ -312,8 +311,7 @@ function saveNewSchedule() {
         contentType: "application/json",
         data: JSON.stringify(schedule),
         success: function (response) {
-            alert('Save!')
-            // fillUpScheduleTable(response);
+            fillUpOneScheduleFieldInTable(response);
 
         },
         error: function (e) {

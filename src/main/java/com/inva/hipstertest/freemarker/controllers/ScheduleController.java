@@ -1,19 +1,30 @@
 package com.inva.hipstertest.freemarker.controllers;
 
+import com.codahale.metrics.annotation.Timed;
 import com.inva.hipstertest.freemarker.searchcriteria.ScheduleSearchCriteria;
 import com.inva.hipstertest.service.ScheduleService;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
+import com.inva.hipstertest.service.dto.TeacherDTO;
+import com.inva.hipstertest.web.rest.util.HeaderUtil;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Controller
 public class ScheduleController {
+
+    private static final String ENTITY_NAME = "schedule";
 
     private final Logger log = LoggerFactory.getLogger(NotificationController.class);
 
@@ -47,4 +58,30 @@ public class ScheduleController {
         log.debug("Request to get schedule by id : {}", scheduleId);
         return scheduleService.findOne(scheduleId);
     }
+
+    @PostMapping("/freemarker/teacher-mgmt/schedule-mgmt/schedule-create")
+    @Timed
+    public ResponseEntity<ScheduleDTO> createNewSchedule(@Valid @RequestBody ScheduleDTO scheduleDTO) throws URISyntaxException {
+        log.debug("REST request to save Schedule : {}", scheduleDTO);
+        if (scheduleDTO.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idExists", "A new schedule cannot already have an ID")).body(null);
+        }
+        ScheduleDTO result = scheduleService.save(scheduleDTO);
+        return ResponseEntity.created(new URI("/api/schedules/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+//    /**
+//     * Creates new schedule .
+//     */
+//    @PostMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/schedule-create")
+//    @Timed
+//    public ScheduleDTO createNewSchedule(@Valid @RequestBody ScheduleDTO scheduleDTO) {
+//        log.debug("Request to save new schedule : {}", scheduleDTO);
+//        ScheduleDTO result = scheduleService.save(scheduleDTO);
+//        return scheduleService.findOne(result.getId());
+//    }
+
+
+
 }
