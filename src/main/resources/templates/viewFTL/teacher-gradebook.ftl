@@ -11,9 +11,7 @@ jsSources = [
 "/scripts/teacher-gradebook.js"
 ]/>
 
-<div class="container">
-    <div class="row content">
-        <div class="col-sm-12 text-left">
+<div class="container-fluid">
 
             <br>
             <h1>${pagetitle}</h1>
@@ -134,8 +132,6 @@ jsSources = [
 
         </#if>
 
-        </div>
-    </div>
 </div>
 
 <@h.footer/>

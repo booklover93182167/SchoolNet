@@ -1,7 +1,6 @@
 package com.inva.hipstertest.freemarker.controllers;
 
 import com.codahale.metrics.annotation.Timed;
-import com.inva.hipstertest.domain.AttendancesLog;
 import com.inva.hipstertest.domain.Form;
 import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.service.*;
