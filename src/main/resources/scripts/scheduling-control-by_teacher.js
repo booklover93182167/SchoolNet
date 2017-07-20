@@ -43,14 +43,11 @@ $('.table td:not(:first-child)').on('click', function () {
     selectedLessonPosition = $(this).closest("tr").prevAll("tr").length + 1;
     scheduleId = $(this).attr('id');
     datePrepare($(this).index() - 1);
+    setTeacherToModalWindow();
     if (scheduleId) {
-        // $('.modal-teacher #teacher_input').prop('disabled', false);
-        getListTeachersForModals();
         loadLessons($('.modal-teacher #lessons'), filterTypeForModalTeacher);
         getListLessonType($('.modal-teacher #lesson_type'));
-
         loadCurrentSchedule();
-
     } else {
         $('.modal-teacher #teacher_input').prop('disabled', true);
         // set schedule date to teachers modal window ---------------------------
@@ -59,7 +56,6 @@ $('.table td:not(:first-child)').on('click', function () {
         // set lesson position to teachers modal window ---------------------------
 
         fillUpLessonPosition($('.modal-teacher #lesson_position'), selectedLessonPosition);
-        setTeacherToModalWindow();
         loadLessons($('.modal-teacher #lessons'), filterTypeForModalTeacher);
         getListLessonType($('.modal-teacher #lesson_type'));
         getListFormsForModal($('.modal-teacher #form_name'));
@@ -148,7 +144,7 @@ function getListClassroomsForModal(target) {
         data: JSON.stringify(searchParams),
         success: function (response) {
             fillUpSelectElement(target, response);
-            classroomIdFromCurrentSchedule = ''
+            classroomIdFromCurrentSchedule = '';
             if (response[0]) {
                 selectedClassroomId = response[0].id
             }
@@ -226,7 +222,7 @@ function loadCurrentSchedule() {
             // set lesson position
             fillUpLessonPosition($('.modal-teacher #lesson_position'), response.lessonPosition);
             // teacher
-            $('.modal-teacher #teacher_input').val(response.teacherId);
+            // $('.modal-teacher #teacher_input').val(response.teacherId);
             // lesson
             $('.modal-teacher #lessons').val(response.lessonId);
             // lesson type
@@ -260,10 +256,24 @@ function getListTeachersForModals() { // TODO: change to 'POST' method with sear
 }
 
 function saveSchedule() {
-    if (scheduleId) {
-        updateSchedule();
-    } else {
+    if (!scheduleId) {
         saveNewSchedule();
+    }
+}
+
+function deleteSchedule() {
+    if (scheduleToEdit.id) {
+        $.ajax({
+            url: "/freemarker/teacher-mgmt/schedule-mgmt/schedule-delete/" + scheduleToEdit.id,
+            type: "GET",
+            contentType: "application/json",
+            success: function () {
+                loadSchedule();
+            },
+            error: function (e) {
+                console.log(e.message);
+            }
+        });
     }
 }
 

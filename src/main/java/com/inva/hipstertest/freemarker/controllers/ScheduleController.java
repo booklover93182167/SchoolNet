@@ -4,21 +4,14 @@ import com.codahale.metrics.annotation.Timed;
 import com.inva.hipstertest.freemarker.searchcriteria.ScheduleSearchCriteria;
 import com.inva.hipstertest.service.ScheduleService;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
-import com.inva.hipstertest.service.dto.TeacherDTO;
-import com.inva.hipstertest.web.rest.util.HeaderUtil;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @Controller
@@ -74,20 +67,33 @@ public class ScheduleController {
         return result;
     }
 
-    /**
-     * Updates an existing schedule.
-     *
-     * @param scheduleDTO the scheduleDTO to update
-     * @return updated schedule DTO
-     */
-    @PostMapping("freemarker/teacher-mgmt/schedule-mgmt/schedule-update")
-    @Timed
-    public ScheduleDTO updateSchedule(@Valid @RequestBody ScheduleDTO scheduleDTO) {
-        log.debug("REST request to update Schedule : {}", scheduleDTO);
-        ScheduleDTO result = scheduleService.save(scheduleDTO);
-        return scheduleService.findOne(result.getId());
-    }
+//    /**
+//     * Updates an existing schedule.
+//     *
+//     * @param scheduleDTO the scheduleDTO to update
+//     * @return updated schedule DTO
+//     */
+//    @PostMapping("freemarker/teacher-mgmt/schedule-mgmt/schedule-update")
+//    @Timed
+//    public ScheduleDTO updateSchedule(@Valid @RequestBody ScheduleDTO scheduleDTO) {
+//        log.debug("REST request to update Schedule : {}", scheduleDTO);
+//        ScheduleDTO result = scheduleService.save(scheduleDTO);
+//        return scheduleService.findOne(result.getId());
+//    }
 
+
+    /**
+     * Delete schedule by id.
+     *
+     * @param scheduleId schedule id
+     * @return the Schedule DTO.
+     */
+    @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/schedule-delete/{scheduleId}", method = RequestMethod.GET)
+    public @ResponseBody
+    void deleteSchedule(@PathVariable("scheduleId") Long scheduleId) {
+        log.debug("Request to delete schedule by id : {}", scheduleId);
+        scheduleService.delete(scheduleId);
+    }
 
 
 }

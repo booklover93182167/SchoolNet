@@ -107,12 +107,16 @@ jsSources = [
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"
+                            onclick="deleteSchedule()">
+                            <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.delete"/></span>
+                        </button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             <span class="fa fa-ban"></span>&nbsp;<span><@spring.message "school.cancel"/></span>
                         </button>
                         <button type="submit" class="btn btn-success" data-dismiss="modal"
                         onclick="saveSchedule()">
-                            <span class="fa fa-save"></span>&nbsp;<span><@spring.message "save"/></span>
+                            <span class="fa fa-save"></span>&nbsp;<span><@spring.message "school.save"/></span>
                         </button>
                     </div>
                 </div>
