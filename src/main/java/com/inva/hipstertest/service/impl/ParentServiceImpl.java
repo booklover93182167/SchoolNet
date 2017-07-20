@@ -129,7 +129,7 @@ public class ParentServiceImpl extends SupportCreate implements ParentService {
         System.out.println("0000000000000000000");
         Set<PupilDTO> pupilsSet=new HashSet<>();
         pupilsSet.add(pupilService.findOne(pupilId));
-        parentDTO.setPupils(pupilsSet);
+        //parentDTO.setPupils(pupilsSet);
 
         System.out.println("1111111111111111111111");
         Map<String, Object> information = super.saveParentWithRole(parentDTO, ROLE_ENUM.PARENT);

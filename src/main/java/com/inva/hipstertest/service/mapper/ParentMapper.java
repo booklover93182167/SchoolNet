@@ -9,14 +9,13 @@ import java.util.List;
 /**
  * Mapper for the entity Parent and its DTO ParentDTO.
  */
-@Mapper(componentModel = "spring", uses = {UserMapper.class, PupilMapper.class, })
+@Mapper(componentModel = "spring", uses = {UserMapper.class, })
 public interface ParentMapper {
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "user.lastName", target = "lastName")
     @Mapping(source = "user.firstName", target = "firstName")
     @Mapping(source = "user.email", target = "email")
-    @Mapping(source = "pupils", target = "pupils")
     ParentDTO parentToParentDTO(Parent parent);
 
     List<ParentDTO> parentsToParentDTOs(List<Parent> parents);

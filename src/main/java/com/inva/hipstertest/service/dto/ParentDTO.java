@@ -27,15 +27,15 @@ public class ParentDTO implements Serializable {
 
     private String email;
 
-    private Set<PupilDTO> pupils;
+   // private Set<PupilDTO> pupils;
 
-    public Set<PupilDTO> getPupils() {
-        return pupils;
-    }
-
-    public void setPupils(Set<PupilDTO> pupils) {
-        this.pupils = pupils;
-    }
+//    public Set<PupilDTO> getPupils() {
+//        return pupils;
+//    }
+//
+//    public void setPupils(Set<PupilDTO> pupils) {
+//        this.pupils = pupils;
+//    }
 
     public String getEmail() {
         return email;
