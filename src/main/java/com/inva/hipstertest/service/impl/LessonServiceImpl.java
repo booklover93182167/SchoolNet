@@ -117,6 +117,12 @@ public class LessonServiceImpl implements LessonService {
         lessonRepository.delete(id);
     }
 
+    /**
+     * Get all lessons by search criteria.
+     *
+     * @param lessonSearchCriteria search options
+     * @return list of lesson DTO's
+     */
     @Override
     public List<LessonDTO> getLessonsBySearchCriteria(LessonsSearchCriteria lessonSearchCriteria) {
         List<Lesson> lessons;

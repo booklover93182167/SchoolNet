@@ -13,8 +13,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
-    @Query("select lessons from Lesson lessons join lessons.teachers teacher where teacher.id =:teacherId")
-    List<Lesson> findAllByTeacherId(@Param("teacherId") Long teacherId);
+    @Query("select lessons from Lesson lessons join lessons.teachers teacher where teacher.id = :teacherId")
+    List<Lesson>  findAllByTeacherId(@Param("teacherId") Long teacherId);
 
     @Query("select distinct lesson from Lesson lesson join lesson.schedules schedule where schedule.form.id = :formId")
     List<Lesson> getDistinctLessonsByFormId(@Param("formId") Long formId);
