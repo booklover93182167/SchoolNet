@@ -139,7 +139,7 @@ public class HeadTeacherController {
         return teacherService.findOne(id);
     }
 
-    @RequestMapping(value = "freemarker/teacher-mgmt/teacher-mgmt-save", method = RequestMethod.POST)
+    @RequestMapping(value = "/freemarker/teacher-mgmt/teacher-mgmt-save", method = RequestMethod.POST)
     public @ResponseBody
     String saveRequest(@RequestBody @Valid TeacherDTO teacherDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -149,7 +149,11 @@ public class HeadTeacherController {
         return "Success";
     }
 
-
+    /**
+     * Scheduling control entry point
+     *
+     * @return scheduling control view
+     */
     @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt", method = RequestMethod.GET)
     public String scheduling(@ModelAttribute("model") ModelMap model) {
         TeacherDTO teacher = teacherService.findTeacherByCurrentUser();
@@ -164,7 +168,12 @@ public class HeadTeacherController {
     }
 
 
-    @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/teachers", method = RequestMethod.GET)
+    /**
+     * Get all teachers from current school.
+     *
+     * @return list of teachers DTOs
+     */
+    @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/teachers", method = RequestMethod.GET)
     public @ResponseBody List<TeacherDTO> getAllTeachersFromCurrentSchool(){
         log.debug("Create Ajax request for all teachers");
         return teacherService.findAllByCurrentSchool();
