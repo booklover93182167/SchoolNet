@@ -3,7 +3,7 @@ package com.inva.hipstertest.service.dto;
 
 import com.inva.hipstertest.domain.Parent;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;

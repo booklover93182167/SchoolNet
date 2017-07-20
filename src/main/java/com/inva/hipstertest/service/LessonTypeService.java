@@ -1,6 +1,6 @@
 package com.inva.hipstertest.service;
 
-import com.inva.hipstertest.service.dto.LessonDTO;
+import com.inva.hipstertest.domain.LessonType;
 import com.inva.hipstertest.service.dto.LessonTypeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

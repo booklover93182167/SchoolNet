@@ -45,7 +45,7 @@ public class Pupil implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "pupils")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Parent> parents ;
+    private Set<Parent> parents;
 
     public Long getId() {
         return id;
