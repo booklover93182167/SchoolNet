@@ -25,7 +25,7 @@ import java.time.ZonedDateTime;
 import java.util.*;
 
 @Controller
-public class TeacherController {
+public class TeacherGradebookController {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -41,10 +41,10 @@ public class TeacherController {
     private final LessonService lessonService;
     private final AttendancesLogService attendancesLogService;
 
-    public TeacherController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService,
-                             AttendancesService attendancesService, SchoolService schoolService, FormService formService,
-                             FormMapper formMapper, PupilRepository pupilRepository, PupilMapper pupilMapper,
-                             LessonService lessonService, AttendancesLogService attendancesLogService) {
+    public TeacherGradebookController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService,
+                                      AttendancesService attendancesService, SchoolService schoolService, FormService formService,
+                                      FormMapper formMapper, PupilRepository pupilRepository, PupilMapper pupilMapper,
+                                      LessonService lessonService, AttendancesLogService attendancesLogService) {
         this.teacherService = teacherService;
         this.scheduleService = scheduleService;
         this.pupilService = pupilService;
