@@ -34,16 +34,11 @@ public class TeacherGradebookController {
     private final AttendancesService attendancesService;
     private final SchoolService schoolService;
     private final FormService formService;
-    private final FormMapper formMapper;
-    private final PupilRepository pupilRepository;
-    private final PupilMapper pupilMapper;
     private final LessonService lessonService;
     private final AttendancesLogService attendancesLogService;
-    private final ParentService parentService;
 
     public TeacherGradebookController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService,
                                       AttendancesService attendancesService, SchoolService schoolService, FormService formService,
-                                      FormMapper formMapper, PupilRepository pupilRepository, PupilMapper pupilMapper, ParentService parentService,
                                       LessonService lessonService, AttendancesLogService attendancesLogService) {
         this.teacherService = teacherService;
         this.scheduleService = scheduleService;
@@ -51,12 +46,8 @@ public class TeacherGradebookController {
         this.attendancesService = attendancesService;
         this.schoolService = schoolService;
         this.formService = formService;
-        this.formMapper = formMapper;
-        this.pupilRepository = pupilRepository;
-        this.pupilMapper = pupilMapper;
         this.lessonService = lessonService;
         this.attendancesLogService = attendancesLogService;
-        this.parentService = parentService;
     }
 
     @RequestMapping(value = {"/freemarker/teacher-gradebook", "/freemarker/teacher-gradebook/{formId}/{lessonId}"}, method = RequestMethod.GET)

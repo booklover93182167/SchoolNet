@@ -38,12 +38,11 @@ public class TeacherMyClassController {
     private final PupilRepository pupilRepository;
     private final PupilMapper pupilMapper;
     private final ParentService parentService;
-    private final ParentMapper parentMapper;
 
 
     public TeacherMyClassController(TeacherService teacherService, PupilService pupilService,
                                      SchoolService schoolService, FormService formService,
-                                    FormMapper formMapper, PupilRepository pupilRepository, PupilMapper pupilMapper, ParentService parentService, ParentMapper parentMapper) {
+                                    FormMapper formMapper, PupilRepository pupilRepository, PupilMapper pupilMapper, ParentService parentService) {
         this.teacherService = teacherService;
         this.pupilService = pupilService;
         this.schoolService = schoolService;
@@ -52,7 +51,6 @@ public class TeacherMyClassController {
         this.pupilRepository = pupilRepository;
         this.pupilMapper = pupilMapper;
         this.parentService = parentService;
-        this.parentMapper = parentMapper;
     }
 
 
