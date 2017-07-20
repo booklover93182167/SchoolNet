@@ -1,6 +1,6 @@
 package com.inva.hipstertest.freemarker.controllers;
 
-import com.inva.hipstertest.freemarker.searchcriteria.ClassroomSearchCriteria;
+import com.inva.hipstertest.freemarker.searchcriteria.SearchCriteria;
 import com.inva.hipstertest.service.ClassroomService;
 import com.inva.hipstertest.service.dto.ClassroomDTO;
 import org.apache.commons.lang3.Validate;
@@ -38,19 +38,19 @@ public class ClassroomController {
     /**
      * Request to get available classrooms by search options.
      *
-     * @param classroomSearchCriteria Search options
+     * @param searchCriteria Search options
      * @return list of classroomDTOs
      */
     @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/classrooms-wp", method = RequestMethod.POST)
     public @ResponseBody
-    List<ClassroomDTO> getAvailableClassroomBySearchCriteria(@RequestBody ClassroomSearchCriteria classroomSearchCriteria){
+    List<ClassroomDTO> getAvailableClassroomBySearchCriteria(@RequestBody SearchCriteria searchCriteria){
         log.debug("Create Ajax request to search available forms by search criteria");
-        Validate.notNull(classroomSearchCriteria.getLessonPosition(), "Field 'lessonPosition' on classroomSearchCriteria can not be null.");
-        Validate.notNull(classroomSearchCriteria.getDate(), "Field 'Date' on  classroomSearchCriteria can not be null.");
-        if (classroomSearchCriteria.getClassroomId() != null) {
-            return classroomService.findAvailablePlusOneById(classroomSearchCriteria);
+        Validate.notNull(searchCriteria.getLessonPosition(), "Field 'lessonPosition' on searchCriteria can not be null.");
+        Validate.notNull(searchCriteria.getDate(), "Field 'Date' on  searchCriteria can not be null.");
+        if (searchCriteria.getId() != null) {
+            return classroomService.findAvailablePlusOneById(searchCriteria);
         }
-        return classroomService.findAvailableByCurrentSchoolAndSearchCriteria(classroomSearchCriteria);
+        return classroomService.findAvailableByCurrentSchoolAndSearchCriteria(searchCriteria);
     }
 
 }

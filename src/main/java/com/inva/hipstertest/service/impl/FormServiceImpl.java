@@ -1,7 +1,7 @@
 package com.inva.hipstertest.service.impl;
 
 import com.inva.hipstertest.domain.Form;
-import com.inva.hipstertest.freemarker.searchcriteria.FormSearchCriteria;
+import com.inva.hipstertest.freemarker.searchcriteria.SearchCriteria;
 import com.inva.hipstertest.repository.FormRepository;
 import com.inva.hipstertest.repository.SchoolRepository;
 import com.inva.hipstertest.repository.TeacherRepository;
@@ -145,17 +145,17 @@ public class FormServiceImpl implements FormService{
     }
 
     @Override
-    public List<FormDTO> findAvailableFormsByCurrentSchoolAndSearchCriteria(FormSearchCriteria formSearchCriteria) {
-        ZonedDateTime date = formSearchCriteria.getDate().truncatedTo(ChronoUnit.DAYS);
+    public List<FormDTO> findAvailableFormsByCurrentSchoolAndSearchCriteria(SearchCriteria searchCriteria) {
+        ZonedDateTime date = searchCriteria.getDate().truncatedTo(ChronoUnit.DAYS);
         log.debug("Request to get all available Forms for current school by search criteria");
         long schoolId = teacherRepository.findOneWithSchool().getSchool().getId();
-        List<Form> forms = formRepository.findAllAvailableByCurrentSchoolAndSearchCriteria(schoolId, formSearchCriteria.getLessonPosition(), date);
+        List<Form> forms = formRepository.findAllAvailableByCurrentSchoolAndSearchCriteria(schoolId, searchCriteria.getLessonPosition(), date);
         return formMapper.formsToFormDTOs(forms);
     }
 
-    public List<FormDTO> findAllAvailablePlusOneById(FormSearchCriteria formSearchCriteria) {
-        List<FormDTO> forms = findAvailableFormsByCurrentSchoolAndSearchCriteria(formSearchCriteria);
-        forms.add(formMapper.formToFormDTO(formRepository.findOne(formSearchCriteria.getFormId())));
+    public List<FormDTO> findAllAvailablePlusOneById(SearchCriteria searchCriteria) {
+        List<FormDTO> forms = findAvailableFormsByCurrentSchoolAndSearchCriteria(searchCriteria);
+        forms.add(formMapper.formToFormDTO(formRepository.findOne(searchCriteria.getId())));
         return forms;
     }
 }

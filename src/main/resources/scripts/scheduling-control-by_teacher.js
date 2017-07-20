@@ -162,7 +162,7 @@ function getListClassroomsForModal(target) {
 function loadLessons(target, filterType) {
     var searchParams = {
         id: selectedTeacherId,
-        lessonFilterType: filterType
+        filterType: filterType
     };
     $.ajax({
         url: "/freemarker/teacher-mgmt/schedule-mgmt/lessons",

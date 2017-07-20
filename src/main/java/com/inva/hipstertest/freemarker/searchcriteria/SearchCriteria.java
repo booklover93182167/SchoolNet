@@ -5,18 +5,18 @@ import java.time.ZonedDateTime;
 /**
  * Created by slavkosoltys on 12.07.17.
  */
-public class FormSearchCriteria {
+public class SearchCriteria {
 
-    private Long formId;
+    private Long id;
     private Integer lessonPosition;
     private ZonedDateTime date;
 
-    public Long getFormId() {
-        return formId;
+    public Long getId() {
+        return id;
     }
 
-    public void setFormId(Long formId) {
-        this.formId = formId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Integer getLessonPosition() {
@@ -34,4 +34,6 @@ public class FormSearchCriteria {
     public void setDate(ZonedDateTime date) {
         this.date = date;
     }
+
+
 }

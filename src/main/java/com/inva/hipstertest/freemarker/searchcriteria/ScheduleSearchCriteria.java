@@ -1,6 +1,6 @@
 package com.inva.hipstertest.freemarker.searchcriteria;
 
-import com.inva.hipstertest.domain.enums.ScheduleFilterType;
+import com.inva.hipstertest.domain.enums.FilterType;
 
 import java.time.ZonedDateTime;
 
@@ -11,7 +11,7 @@ public class ScheduleSearchCriteria {
 
     private Long id;
     private ZonedDateTime date;
-    private ScheduleFilterType scheduleFilterType;
+    private FilterType filterType;
 
     public Long getId() {
         return id;
@@ -21,12 +21,12 @@ public class ScheduleSearchCriteria {
         this.id = id;
     }
 
-    public ScheduleFilterType getScheduleFilterType() {
-        return scheduleFilterType;
+    public FilterType getScheduleFilterType() {
+        return filterType;
     }
 
-    public void setScheduleFilterType(ScheduleFilterType scheduleFilterType) {
-        this.scheduleFilterType = scheduleFilterType;
+    public void setScheduleFilterType(FilterType filterType) {
+        this.filterType = filterType;
     }
 
     public ZonedDateTime getDate() {

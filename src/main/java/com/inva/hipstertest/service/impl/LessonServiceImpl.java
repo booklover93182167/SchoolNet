@@ -127,7 +127,7 @@ public class LessonServiceImpl implements LessonService {
     public List<LessonDTO> getLessonsBySearchCriteria(LessonsSearchCriteria lessonSearchCriteria) {
         List<Lesson> lessons;
         Long id = lessonSearchCriteria.getId();
-        switch (lessonSearchCriteria.getLessonFilterType()) {
+        switch (lessonSearchCriteria.getFilterType()) {
             case BY_FORM:
                 lessons = lessonRepository.findAll();
                 break;

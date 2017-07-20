@@ -1,6 +1,6 @@
 package com.inva.hipstertest.freemarker.searchcriteria;
 
-import com.inva.hipstertest.domain.enums.LessonFilterType;
+import com.inva.hipstertest.domain.enums.FilterType;
 
 /**
  * Created by slavkosoltys on 10.07.17.
@@ -8,7 +8,7 @@ import com.inva.hipstertest.domain.enums.LessonFilterType;
 public class LessonsSearchCriteria {
 
     private Long id;
-    private LessonFilterType lessonFilterType;
+    private FilterType filterType;
 
     public Long getId() {
         return id;
@@ -18,11 +18,11 @@ public class LessonsSearchCriteria {
         this.id = id;
     }
 
-    public LessonFilterType getLessonFilterType() {
-        return lessonFilterType;
+    public FilterType getFilterType() {
+        return filterType;
     }
 
-    public void setLessonFilterType(LessonFilterType lessonFilterType) {
-        this.lessonFilterType = lessonFilterType;
+    public void setFilterType(FilterType filterType) {
+        this.filterType = filterType;
     }
 }
