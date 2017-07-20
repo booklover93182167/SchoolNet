@@ -1,6 +1,6 @@
 <#import "header.ftl" as h>
 
-<#assign pagetitle><@spring.message "teacher.gradebook.page.title"/> <#if model.form??>${model.form.name}</#if>, <#if model.lesson??>${model.lesson.name}</#if></#assign>
+<#assign pagetitle><@spring.message "teacher.gradebook.page.title"/> <#if model.form??>${model.form.name}, </#if><#if model.lesson??>${model.lesson.name}</#if></#assign>
 
 <@h.header
 pagetitle = "${pagetitle}"
