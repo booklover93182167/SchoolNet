@@ -1,8 +1,5 @@
 package com.inva.hipstertest.freemarker.controllers;
 
-import com.codahale.metrics.annotation.Timed;
-import com.inva.hipstertest.domain.AttendancesLog;
-import com.inva.hipstertest.domain.Form;
 import com.inva.hipstertest.repository.PupilRepository;
 import com.inva.hipstertest.service.*;
 import com.inva.hipstertest.service.dto.*;
@@ -44,8 +41,7 @@ public class TeacherGradebookController {
 
     public TeacherGradebookController(TeacherService teacherService, ScheduleService scheduleService, PupilService pupilService,
                                       AttendancesService attendancesService, SchoolService schoolService, FormService formService,
-                                      FormMapper formMapper, PupilRepository pupilRepository, PupilMapper pupilMapper, ParentService parentService) {
-                                      FormMapper formMapper, PupilRepository pupilRepository, PupilMapper pupilMapper,
+                                      FormMapper formMapper, PupilRepository pupilRepository, PupilMapper pupilMapper, ParentService parentService,
                                       LessonService lessonService, AttendancesLogService attendancesLogService) {
         this.teacherService = teacherService;
         this.scheduleService = scheduleService;

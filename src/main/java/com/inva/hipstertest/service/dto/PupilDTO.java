@@ -25,7 +25,7 @@ public class PupilDTO implements Serializable {
 
     private String formName;
 
-   // private Set<ParentDTO> parents;
+    private Set<ParentDTO> parents;
 
     private String firstName;
 
@@ -68,13 +68,13 @@ public class PupilDTO implements Serializable {
         this.lastName = pupilLastName;
     }
 
-//    public Set<ParentDTO> getParents() {
-//        return parents;
-//    }
-//
-//    public void setParents(Set<ParentDTO> parents) {
-//        this.parents = parents;
-//    }
+    public Set<ParentDTO> getParents() {
+        return parents;
+    }
+
+    public void setParents(Set<ParentDTO> parents) {
+        this.parents = parents;
+    }
 
     public Long getId() {
         return id;

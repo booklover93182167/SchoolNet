@@ -126,14 +126,11 @@ public class ParentServiceImpl extends SupportCreate implements ParentService {
     @Override
     public ParentDTO saveParentWithUser(ParentDTO parentDTO, Long pupilId) {
         log.debug("Request to save parent : {}", parentDTO);
-        System.out.println("0000000000000000000");
         Set<PupilDTO> pupilsSet=new HashSet<>();
         pupilsSet.add(pupilService.findOne(pupilId));
         //parentDTO.setPupils(pupilsSet);
 
-        System.out.println("1111111111111111111111");
         Map<String, Object> information = super.saveParentWithRole(parentDTO, ROLE_ENUM.PARENT);
-        System.out.println("22222222222222222222222222");
         if (information.get("error") != null) {
             parentDTO.setEnabled(false);
             return parentDTO;

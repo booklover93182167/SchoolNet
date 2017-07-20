@@ -77,6 +77,12 @@ public class TeacherMyClassController {
         List<PupilDTO> pupils = pupilMapper.pupilsToPupilDTOs(pupilRepository.findAllByFormId(form.getId()));
         Comparator<PupilDTO> comparatorLastNameFirstName = Comparator.comparing(PupilDTO::getLastName).thenComparing(PupilDTO::getFirstName);
         Collections.sort(pupils, comparatorLastNameFirstName);
+//        for (PupilDTO pupil:pupils
+//             ) {
+//            List<ParentDTO> parents=parentService.findParentOfPupil(pupil.getId());
+//
+//            model.addAttribute("parents", parents);
+//        }
         model.addAttribute("currentUser", teacher);
         model.addAttribute("formName", formName);
         model.addAttribute("pupils", pupils);
@@ -126,7 +132,7 @@ public class TeacherMyClassController {
 
     @RequestMapping(value = "freemarker/teacher-my-class-savePupil", method = RequestMethod.POST)
     public @ResponseBody
-    String saveRequest(@RequestBody @Valid PupilDTO pupilDTO, BindingResult bindingResult) {
+    String saveRequest(@RequestBody PupilDTO pupilDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "Error";
         }
