@@ -69,12 +69,7 @@
                             <button id="assign" class="btn btn-secondary"
                                     onclick="showFormAssignModal()">
                                 <span class="fa fa-plus"></span>
-                                <span id="assignchange"><@spring.message "teacherm.assign"/></span>
-                            </button>
-                            <button id="remove" class="btn btn-secondary"
-                                    onclick="removeFormAssignment()">
-                                <span class="fa fa-minus"></span>
-                                <span id="assignchange"><@spring.message "teacherm.remove"/></span>
+                                <span id="assignchange"><@spring.message "pupil.changeClass"/></span>
                             </button>
                         </div>
                     </div>
