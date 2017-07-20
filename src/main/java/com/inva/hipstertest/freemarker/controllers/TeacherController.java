@@ -1,8 +1,7 @@
 package com.inva.hipstertest.freemarker.controllers;
 
-import com.inva.hipstertest.freemarker.searchcriteria.ClassroomSearchCriteria;
-import com.inva.hipstertest.freemarker.searchcriteria.FormSearchCriteria;
 import com.inva.hipstertest.freemarker.searchcriteria.ScheduleSearchCriteria;
+import com.inva.hipstertest.freemarker.searchcriteria.SearchCriteria;
 import com.inva.hipstertest.service.ClassroomService;
 import com.inva.hipstertest.service.FormService;
 import com.inva.hipstertest.service.ScheduleService;
@@ -63,14 +62,14 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/freemarker/teacher/schedule/classrooms-wp", method = RequestMethod.POST)
-    public @ResponseBody List<ClassroomDTO> getAvailableClassroomBySearchCriteria(@RequestBody ClassroomSearchCriteria classroomSearchCriteria){
+    public @ResponseBody List<ClassroomDTO> getAvailableClassroomBySearchCriteria(@RequestBody SearchCriteria searchCriteria){
         log.debug("Create Ajax request to search available forms by search criteria");
-        Validate.notNull(classroomSearchCriteria.getLessonPosition(), "Field 'lessonPosition' on classroomSearchCriteria can not be null.");
-        Validate.notNull(classroomSearchCriteria.getDate(), "Field 'Date' on  classroomSearchCriteria can not be null.");
-        if (classroomSearchCriteria.getClassroomId() != null) {
-            return classroomService.findAvailablePlusOneById(classroomSearchCriteria);
+        Validate.notNull(searchCriteria.getLessonPosition(), "Field 'lessonPosition' on classroomSearchCriteria can not be null.");
+        Validate.notNull(searchCriteria.getDate(), "Field 'Date' on  classroomSearchCriteria can not be null.");
+        if (searchCriteria.getId() != null) {
+            return classroomService.findAvailablePlusOneById(searchCriteria);
         }
-        return classroomService.findAvailableByCurrentSchoolAndSearchCriteria(classroomSearchCriteria);
+        return classroomService.findAvailableByCurrentSchoolAndSearchCriteria(searchCriteria);
     }
 
     @RequestMapping(value = "freemarker/teacher/schedule/schedule", method = RequestMethod.POST)
@@ -83,14 +82,14 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/freemarker/teacher/schedule/forms-wp", method = RequestMethod.POST)
-    public @ResponseBody List<FormDTO> getAvailableFormsBySearchCriteria(@RequestBody FormSearchCriteria formSearchCriteria){
+    public @ResponseBody List<FormDTO> getAvailableFormsBySearchCriteria(@RequestBody SearchCriteria searchCriteria){
         log.debug("Create Ajax request to search available forms by search criteria");
-        Validate.notNull(formSearchCriteria.getLessonPosition(), "Field 'lessonPosition' on formSearchCriteria can not be null.");
-        Validate.notNull(formSearchCriteria.getDate(), "Field 'Date' on  formSearchCriteria can not be null.");
-        if (formSearchCriteria.getFormId() != null) {
-            return formService.findAllAvailablePlusOneById(formSearchCriteria);
+        Validate.notNull(searchCriteria.getLessonPosition(), "Field 'lessonPosition' on formSearchCriteria can not be null.");
+        Validate.notNull(searchCriteria.getDate(), "Field 'Date' on  formSearchCriteria can not be null.");
+        if (searchCriteria.getId() != null) {
+            return formService.findAllAvailablePlusOneById(searchCriteria);
         }
-        return formService.findAvailableFormsByCurrentSchoolAndSearchCriteria(formSearchCriteria);
+        return formService.findAvailableFormsByCurrentSchoolAndSearchCriteria(searchCriteria);
     }
 
     @RequestMapping(value = "/freemarker/teacher/schedule/schedule/{scheduleId}", method = RequestMethod.GET)
