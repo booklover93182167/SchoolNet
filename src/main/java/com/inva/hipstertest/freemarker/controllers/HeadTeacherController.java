@@ -149,13 +149,22 @@ public class HeadTeacherController {
         return "Success";
     }
 
-
+    /**
+     * Scheduling control entry point
+     *
+     * @return scheduling control view
+     */
     @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt", method = RequestMethod.GET)
-    public String scheduling() {
+    public String scheduleControl() {
         return "scheduling-control";
     }
 
 
+    /**
+     * Get all teachers from current school.
+     *
+     * @return list of teachers DTOs
+     */
     @RequestMapping(value = "/freemarker/teacher-mgmt/schedule-mgmt/teachers", method = RequestMethod.GET)
     public @ResponseBody List<TeacherDTO> getAllTeachersFromCurrentSchool(){
         log.debug("Create Ajax request for all teachers");

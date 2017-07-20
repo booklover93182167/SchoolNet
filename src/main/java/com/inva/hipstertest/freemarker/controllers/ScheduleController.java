@@ -1,6 +1,5 @@
 package com.inva.hipstertest.freemarker.controllers;
 
-import com.codahale.metrics.annotation.Timed;
 import com.inva.hipstertest.freemarker.searchcriteria.ScheduleSearchCriteria;
 import com.inva.hipstertest.service.ScheduleService;
 import com.inva.hipstertest.service.dto.ScheduleDTO;
@@ -8,6 +7,8 @@ import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,17 +28,17 @@ public class ScheduleController {
     /**
      * Request to get schedules by search options.
      *
-     * @param scheduleSearchCriteria search options
+     * @param criteria search options
      * @return list of Schedule DTOs
      */
     @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/schedule", method = RequestMethod.POST)
     public @ResponseBody
-    List<ScheduleDTO> getScheduleBySearchCriteria(@RequestBody ScheduleSearchCriteria scheduleSearchCriteria){
+    List<ScheduleDTO> getScheduleBySearchCriteria(@RequestBody ScheduleSearchCriteria criteria) {
         log.debug("Create Ajax request to search schedule by search criteria");
-        Validate.notNull(scheduleSearchCriteria.getId(), "Field 'id' on scheduleSearchCriteria can not be null.");
-        Validate.notNull(scheduleSearchCriteria.getScheduleFilterType(), "Field 'Schedule type' on scheduleSearchCriteria can not be null.");
-        Validate.notNull(scheduleSearchCriteria.getDate(), "Field 'Date' on scheduleSearchCriteria can not be null.");
-        return scheduleService.getScheduleBySearchCriteria(scheduleSearchCriteria);
+        Validate.notNull(criteria.getId(), "Field 'id' on scheduleSearchCriteria can not be null.");
+        Validate.notNull(criteria.getScheduleFilterType(), "Field 'Schedule type' on scheduleSearchCriteria can not be null.");
+        Validate.notNull(criteria.getDate(), "Field 'Date' on scheduleSearchCriteria can not be null.");
+        return scheduleService.getScheduleBySearchCriteria(criteria);
     }
 
     /**
@@ -59,28 +60,14 @@ public class ScheduleController {
      * @return stored schedule DTO
      */
     @PostMapping("freemarker/teacher-mgmt/schedule-mgmt/schedule-create")
-    @Timed
     public @ResponseBody ScheduleDTO createNewSchedule(@Valid @RequestBody ScheduleDTO scheduleDTO) {
         log.debug("request to save new Schedule : {}", scheduleDTO);
         ScheduleDTO result = scheduleService.save(scheduleDTO);
-        if (result != null) result = scheduleService.findOne(result.getId());
+        if (result != null) {
+            result = scheduleService.findOne(result.getId());
+        }
         return result;
     }
-
-//    /**
-//     * Updates an existing schedule.
-//     *
-//     * @param scheduleDTO the scheduleDTO to update
-//     * @return updated schedule DTO
-//     */
-//    @PostMapping("freemarker/teacher-mgmt/schedule-mgmt/schedule-update")
-//    @Timed
-//    public ScheduleDTO updateSchedule(@Valid @RequestBody ScheduleDTO scheduleDTO) {
-//        log.debug("REST request to update Schedule : {}", scheduleDTO);
-//        ScheduleDTO result = scheduleService.save(scheduleDTO);
-//        return scheduleService.findOne(result.getId());
-//    }
-
 
     /**
      * Delete schedule by id.
@@ -90,10 +77,9 @@ public class ScheduleController {
      */
     @RequestMapping(value = "freemarker/teacher-mgmt/schedule-mgmt/schedule-delete/{scheduleId}", method = RequestMethod.GET)
     public @ResponseBody
-    void deleteSchedule(@PathVariable("scheduleId") Long scheduleId) {
+    ResponseEntity deleteSchedule(@PathVariable("scheduleId") Long scheduleId) {
         log.debug("Request to delete schedule by id : {}", scheduleId);
         scheduleService.delete(scheduleId);
+        return new ResponseEntity(HttpStatus.OK);
     }
-
-
 }
