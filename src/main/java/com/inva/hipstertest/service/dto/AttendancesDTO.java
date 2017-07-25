@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * A DTO for the Attendances entity.
  */
-public class AttendancesDTO implements Serializable {
+public class  AttendancesDTO implements Serializable {
 
     private Long id;
 
